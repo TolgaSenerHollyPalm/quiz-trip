@@ -35,6 +35,21 @@
   color: var(--color-muted);
 }
 
+.report {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px var(--space);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+}
+
+.failed {
+  color: var(--color-danger);
+  font-weight: 600;
+}
+
 .version {
   margin-top: auto;
   padding-top: 24px;

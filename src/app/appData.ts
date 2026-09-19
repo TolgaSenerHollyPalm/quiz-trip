@@ -1,12 +1,20 @@
 import { createContext, useContext } from 'react'
 import { newTrip } from '../game/trip.ts'
 import type { TripState } from '../game/types.ts'
+import type { SyncResult } from '../packs/sync.ts'
 import type { Pack } from '../packs/types.ts'
+
+export interface PackSync {
+  running: boolean
+  result?: SyncResult // of the last sync since the app was opened
+}
 
 export interface AppData {
   packs: Pack[]
   trips: Record<string, TripState>
   saveTrip: (trip: TripState) => void
+  sync: PackSync
+  startSync: () => void
 }
 
 export const AppDataContext = createContext<AppData | null>(null)

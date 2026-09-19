@@ -1,5 +1,6 @@
 import { openDB, type DBSchema, type IDBPDatabase } from 'idb'
 import type { TripState } from '../game/types.ts'
+import type { PackStore } from '../packs/sync.ts'
 import type { Pack } from '../packs/types.ts'
 
 interface QuizTripDB extends DBSchema {
@@ -26,15 +27,27 @@ export async function loadAll(): Promise<{ packs: Pack[]; trips: TripState[] }> 
   return { packs, trips }
 }
 
-/** Stores the packs the device does not have yet, or only has in an older version, in one transaction. */
-export async function installPacks(packs: Pack[]): Promise<void> {
-  const db = await database()
-  const tx = db.transaction('packs', 'readwrite')
-  for (const pack of packs) {
+/** Packs only: syncing never opens a transaction on the trips store. */
+export const packStore: PackStore = {
+  async versions() {
+    const db = await database()
+    return new Map((await db.getAll('packs')).map((pack) => [pack.id, pack.version]))
+  },
+  // Checked and written in one transaction, so a pack is never replaced by an older version.
+  async saveIfNewer(pack) {
+    const db = await database()
+    const tx = db.transaction('packs', 'readwrite')
     const stored = await tx.store.get(pack.id)
-    if (!stored || stored.version < pack.version) await tx.store.put(pack)
-  }
-  await tx.done
+    const newer = !stored || stored.version < pack.version
+    if (newer) await tx.store.put(pack)
+    await tx.done
+    return newer
+  },
+}
+
+/** Stores the bundled packs the device does not have yet, or only has in an older version. */
+export async function installPacks(packs: Pack[]): Promise<void> {
+  for (const pack of packs) await packStore.saveIfNewer(pack)
 }
 
 export async function saveTrip(trip: TripState): Promise<void> {
