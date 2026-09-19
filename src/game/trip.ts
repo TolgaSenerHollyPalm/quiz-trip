@@ -1,4 +1,5 @@
 import type { Pack } from '../packs/types.ts'
+import { settlePredictions } from './predictions.ts'
 import { buildRound } from './quiz.ts'
 import type { Rng } from './random.ts'
 import { turnPoints } from './scoring.ts'
@@ -75,11 +76,15 @@ export function updatePlayers(trip: TripState, players: Player[]): TripState {
   const rounds = trip.rounds
     .map((round) => ({ ...round, scores: onlyKept(round.scores) }))
     .filter((round) => Object.keys(round.scores).length > 0)
-  const predictions = trip.predictions.map((prediction) => ({
-    ...prediction,
-    guesses: onlyKept(prediction.guesses),
-    ...(prediction.points && { points: onlyKept(prediction.points) }),
-  }))
+  // An open prediction may now have every guess it needs; a resolved one may have a new closest player.
+  const predictions = settlePredictions(
+    trip.predictions.map((prediction) => ({
+      ...prediction,
+      guesses: onlyKept(prediction.guesses),
+      ...(prediction.points && { points: onlyKept(prediction.points) }),
+    })),
+    players,
+  )
   // A round in progress cannot go on without one of its players.
   const currentRound = trip.currentRound?.turns.every((turn) => keep.has(turn.playerId))
     ? trip.currentRound

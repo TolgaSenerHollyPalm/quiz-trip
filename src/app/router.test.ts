@@ -11,6 +11,14 @@ describe('routes', () => {
     { screen: 'play', packId: 'eg-sharm-el-sheikh' },
     { screen: 'result', packId: 'eg-sharm-el-sheikh', roundId: 'a1b2' },
     { screen: 'scores', packId: 'eg-sharm-el-sheikh' },
+    { screen: 'settings', packId: 'eg-sharm-el-sheikh' },
+    { screen: 'settings', packId: 'eg-sharm-el-sheikh', add: 'hotel-floor' },
+    { screen: 'predictions', packId: 'eg-sharm-el-sheikh' },
+    { screen: 'prediction-new', packId: 'eg-sharm-el-sheikh' },
+    { screen: 'prediction', packId: 'eg-sharm-el-sheikh', predictionId: 'p1' },
+    { screen: 'guess', packId: 'eg-sharm-el-sheikh', predictionId: 'p1' },
+    { screen: 'guess', packId: 'eg-sharm-el-sheikh', predictionId: 'p1', playerId: 'a' },
+    { screen: 'prediction-result', packId: 'eg-sharm-el-sheikh', predictionId: 'p1' },
   ])('survive a round trip through the URL: %o', (route) => {
     expect(parseRoute(href(route))).toEqual(route)
   })

@@ -1,4 +1,5 @@
 import { useTrip } from '../app/appData.ts'
+import { predictionTotals } from '../game/predictions.ts'
 import { quizTotals, rankPlayers } from '../game/scoring.ts'
 import Missing from '../ui/Missing.tsx'
 import Screen from '../ui/Screen.tsx'
@@ -10,10 +11,16 @@ export default function ScoreboardScreen({ packId }: { packId: string }) {
   if (!pack) return <Missing message="Bu gezi paketi cihazda yok." back={{ screen: 'home' }} />
 
   const names = new Map(trip.players.map((player) => [player.id, player.nickname]))
+  const quiz = quizTotals(trip.rounds)
+  const predictions = predictionTotals(trip.predictions)
+  const totals = Object.fromEntries(
+    trip.players.map((player) => [player.id, (quiz[player.id] ?? 0) + (predictions[player.id] ?? 0)]),
+  )
   const standings = rankPlayers(
     trip.players.map((player) => player.id),
-    quizTotals(trip.rounds),
+    totals,
   )
+  const resolved = trip.predictions.filter((prediction) => prediction.status === 'resolved').length
 
   return (
     <Screen title="Skor tablosu" back={back}>
@@ -22,7 +29,7 @@ export default function ScoreboardScreen({ packId }: { packId: string }) {
       ) : (
         <>
           <p className={styles.note}>
-            {trip.rounds.length > 0 ? `${trip.rounds.length} tur oynandı.` : 'Henüz tur oynanmadı.'}
+            {trip.rounds.length} tur oynandı · {resolved} tahmin sonuçlandı
           </p>
           <table className={styles.table}>
             <thead>
@@ -32,6 +39,12 @@ export default function ScoreboardScreen({ packId }: { packId: string }) {
                 <th scope="col" className={styles.points}>
                   Quiz
                 </th>
+                <th scope="col" className={styles.points}>
+                  Tahmin
+                </th>
+                <th scope="col" className={styles.points}>
+                  Toplam
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -39,7 +52,9 @@ export default function ScoreboardScreen({ packId }: { packId: string }) {
                 <tr key={playerId} className={rank === 1 && points > 0 ? styles.first : undefined}>
                   <td>{rank}.</td>
                   <td className={styles.name}>{names.get(playerId)}</td>
-                  <td className={styles.points}>{points}</td>
+                  <td className={styles.points}>{quiz[playerId] ?? 0}</td>
+                  <td className={styles.points}>{predictions[playerId] ?? 0}</td>
+                  <td className={`${styles.points} ${styles.total}`}>{points}</td>
                 </tr>
               ))}
             </tbody>

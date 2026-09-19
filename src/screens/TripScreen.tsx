@@ -14,6 +14,8 @@ export default function TripScreen({ packId }: { packId: string }) {
   if (!pack) return <Missing message="Bu gezi paketi cihazda yok." back={{ screen: 'home' }} />
 
   const round = trip.currentRound
+  // Predictions that still need guesses or a result.
+  const waiting = trip.predictions.filter((prediction) => prediction.status !== 'resolved').length
   const quiz: Route =
     trip.players.length === 0 ? { screen: 'players', packId, next: 'quiz' } : { screen: 'quiz', packId }
 
@@ -36,6 +38,10 @@ export default function TripScreen({ packId }: { packId: string }) {
         </LinkButton>
       )}
 
+      <LinkButton to={{ screen: 'predictions', packId }} variant="primary" big>
+        {waiting > 0 ? `Tahminler (${waiting} bekliyor)` : 'Tahminler'}
+      </LinkButton>
+
       <LinkButton to={{ screen: 'scores', packId }}>Skor tablosu</LinkButton>
 
       {round ? (
@@ -47,6 +53,10 @@ export default function TripScreen({ packId }: { packId: string }) {
         <LinkButton to={{ screen: 'players', packId }}>
           {trip.players.length > 0 ? `Oyuncular (${trip.players.length})` : 'Oyuncuları ekle'}
         </LinkButton>
+      )}
+
+      {pack.predictionTemplates.some((template) => template.params) && (
+        <LinkButton to={{ screen: 'settings', packId }}>Gezi ayarları</LinkButton>
       )}
 
       <ConfirmDialog

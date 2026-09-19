@@ -122,7 +122,8 @@ describe('updatePlayers', () => {
     // r2 only had the deleted player, so it goes too.
     expect(updated.rounds).toEqual([{ id: 'r1', playedAt: '', scores: { a: 3 } }])
     expect(updated.predictions[0].guesses).toEqual({ a: 4 })
-    expect(updated.predictions[0].points).toEqual({ a: 0 })
+    // With the exact guess gone, the remaining guess is now the closest one.
+    expect(updated.predictions[0].points).toEqual({ a: 1 })
   })
 
   it('knows which players have points or predictions to lose', () => {

@@ -1,0 +1,31 @@
+/* Text styles shared by several screens. */
+.question {
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.meta {
+  margin-top: -8px;
+  color: var(--color-muted);
+}
+
+.hint {
+  font-size: 0.9rem;
+  color: var(--color-muted);
+}
+
+.problem {
+  color: var(--color-danger);
+  font-weight: 600;
+}
+
+.notice {
+  padding: 12px var(--space);
+  border-radius: var(--radius);
+  background: var(--color-warning-bg);
+}
+
+.heading {
+  font-size: 1.15rem;
+}

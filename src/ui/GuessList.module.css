@@ -1,0 +1,40 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: var(--tap-size);
+  padding: 8px var(--space);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+}
+
+.scored {
+  border: 2px solid var(--color-success);
+  background: var(--color-success-bg);
+}
+
+.name {
+  flex: 1;
+  min-width: 0;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.guess {
+  font-weight: 700;
+  text-align: right;
+}
+
+.points {
+  min-width: 3ch;
+  font-weight: 800;
+  text-align: right;
+  color: var(--color-success);
+}

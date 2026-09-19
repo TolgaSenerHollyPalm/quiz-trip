@@ -20,7 +20,14 @@ The service worker only runs in the production build, so test offline behaviour 
 
 Packs live in `public/packs/` and are listed in `public/packs/index.json`. The `eg-sharm-el-sheikh` pack is also built into the app, so a fresh install can play offline straight away.
 
-`npm test` checks every pack against the schema and against `index.json` (question count, version, title…). The deploy workflow runs the tests first, so a broken pack is never published.
+`npm test` checks every pack against the schema and against `index.json` (question count, version, title…). The deploy workflow runs the tests first, so a broken pack is never published. Bump a pack's `version` (in the pack and in `index.json`) whenever its content changes.
+
+Prediction templates are `number` or `choice`. A number template can have:
+
+- `format: "duration"`: the value is a number of minutes, entered and shown as HH:MM.
+- `params`: bounds that depend on the trip, entered in the app's trip settings, e.g.
+  `"params": { "min": { "key": "minFloor", "label": "En alt kat" }, "max": { "key": "maxFloor", "label": "En üst kat" } }`.
+  Templates that need the same value share the `key`.
 
 ## Deployment
 

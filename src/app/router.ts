@@ -9,6 +9,17 @@ export type Route =
   | { screen: 'play'; packId: string }
   | { screen: 'result'; packId: string; roundId: string }
   | { screen: 'scores'; packId: string }
+  | { screen: 'settings'; packId: string; add?: string } // add: template to add once its settings are saved
+  | { screen: 'predictions'; packId: string }
+  | { screen: 'prediction-new'; packId: string }
+  | { screen: 'prediction'; packId: string; predictionId: string }
+  | { screen: 'guess'; packId: string; predictionId: string; playerId?: string } // playerId: change one guess
+  | { screen: 'prediction-result'; packId: string; predictionId: string }
+
+const query = (params: Record<string, string | undefined>) => {
+  const entries = Object.entries(params).filter((entry): entry is [string, string] => entry[1] !== undefined)
+  return entries.length > 0 ? `?${new URLSearchParams(entries)}` : ''
+}
 
 export function href(route: Route): string {
   if (route.screen === 'home') return '#/'
@@ -17,42 +28,77 @@ export function href(route: Route): string {
     case 'trip':
       return trip
     case 'players':
-      return `${trip}/players${route.next ? `?next=${route.next}` : ''}`
+      return `${trip}/players${query({ next: route.next })}`
     case 'quiz':
-      return `${trip}/quiz`
     case 'play':
-      return `${trip}/play`
+    case 'scores':
+      return `${trip}/${route.screen}`
     case 'result':
       return `${trip}/result/${encodeURIComponent(route.roundId)}`
-    case 'scores':
-      return `${trip}/scores`
+    case 'settings':
+      return `${trip}/settings${query({ add: route.add })}`
+    case 'predictions':
+      return `${trip}/predictions`
+    case 'prediction-new':
+      return `${trip}/predictions/new`
+  }
+  const prediction = `${trip}/predictions/${encodeURIComponent(route.predictionId)}`
+  switch (route.screen) {
+    case 'prediction':
+      return prediction
+    case 'guess':
+      return `${prediction}/guess${query({ player: route.playerId })}`
+    case 'prediction-result':
+      return `${prediction}/result`
   }
 }
 
 export function parseRoute(hash: string): Route {
-  const [path, query = ''] = hash.replace(/^#/, '').split('?')
+  const [path, search = ''] = hash.replace(/^#/, '').split('?')
+  const params = new URLSearchParams(search)
   let parts: string[]
   try {
     parts = path.split('/').filter(Boolean).map(decodeURIComponent)
   } catch {
     return { screen: 'home' }
   }
-  const [section, packId, page, id] = parts
+  const [section, packId, page, id, action] = parts
   if (section !== 'trip' || !packId) return { screen: 'home' }
 
   switch (page) {
     case 'players':
-      return new URLSearchParams(query).get('next') === 'quiz'
-        ? { screen: 'players', packId, next: 'quiz' }
-        : { screen: 'players', packId }
+      return params.get('next') === 'quiz' ? { screen: 'players', packId, next: 'quiz' } : { screen: 'players', packId }
     case 'quiz':
     case 'play':
     case 'scores':
       return { screen: page, packId }
     case 'result':
       return id ? { screen: 'result', packId, roundId: id } : { screen: 'trip', packId }
+    case 'settings': {
+      const add = params.get('add')
+      return add ? { screen: 'settings', packId, add } : { screen: 'settings', packId }
+    }
+    case 'predictions':
+      return parsePredictionRoute(packId, id, action, params.get('player'))
     default:
       return { screen: 'trip', packId }
+  }
+}
+
+function parsePredictionRoute(packId: string, id?: string, action?: string, playerId?: string | null): Route {
+  if (!id) return { screen: 'predictions', packId }
+  if (id === 'new') return { screen: 'prediction-new', packId }
+  switch (action) {
+    case undefined:
+      return { screen: 'prediction', packId, predictionId: id }
+    case 'guess':
+      return playerId
+        ? { screen: 'guess', packId, predictionId: id, playerId }
+        : { screen: 'guess', packId, predictionId: id }
+    case 'result':
+      return { screen: 'prediction-result', packId, predictionId: id }
+    default:
+      return { screen: 'predictions', packId }
   }
 }
 

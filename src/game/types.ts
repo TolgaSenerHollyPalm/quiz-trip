@@ -45,6 +45,7 @@ export interface Prediction {
   templateId?: string // empty when the user wrote the question
   text: string
   type: 'number' | 'choice'
+  format?: 'duration' // minutes, entered and shown as HH:MM
   min?: number
   max?: number
   step?: number

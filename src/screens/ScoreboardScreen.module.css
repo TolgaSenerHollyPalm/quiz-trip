@@ -14,9 +14,19 @@
 
 .table th,
 .table td {
-  padding: 14px 12px;
+  padding: 14px 8px;
   border-bottom: 1px solid var(--color-border);
   text-align: left;
+}
+
+.table th:first-child,
+.table td:first-child {
+  padding-left: 12px;
+}
+
+.table th:last-child,
+.table td:last-child {
+  padding-right: 12px;
 }
 
 .table tr:last-child td {
@@ -38,6 +48,12 @@
 .table .points {
   font-weight: 700;
   text-align: right;
+}
+
+.table .total {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--color-primary);
 }
 
 .first td {

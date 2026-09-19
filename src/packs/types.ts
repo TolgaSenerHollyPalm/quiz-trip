@@ -14,15 +14,22 @@ export interface Question {
   explanation: string // shown after answering
 }
 
+/** A bound that depends on the trip, e.g. the hotel's lowest floor; its value is entered in the trip settings. */
+export interface TemplateParam {
+  key: string // templates needing the same value share the key
+  label: string // shown in the trip settings
+}
+
 export interface PredictionTemplate {
   id: string
   type: 'number' | 'choice'
   text: string
   unit?: string
+  format?: 'duration' // a number of minutes, entered and shown as HH:MM
   min?: number
   max?: number
   step?: number
-  params?: string[] // entered by hand for each trip
+  params?: { min?: TemplateParam; max?: TemplateParam }
   options?: string[] // type === 'choice'
 }
 

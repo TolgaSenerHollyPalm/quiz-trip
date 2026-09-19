@@ -1,11 +1,17 @@
 import { useEffect } from 'react'
+import AddPredictionScreen from '../screens/AddPredictionScreen.tsx'
+import GuessScreen from '../screens/GuessScreen.tsx'
 import HomeScreen from '../screens/HomeScreen.tsx'
 import PlayersScreen from '../screens/PlayersScreen.tsx'
 import PlayScreen from '../screens/PlayScreen.tsx'
+import PredictionResultScreen from '../screens/PredictionResultScreen.tsx'
+import PredictionScreen from '../screens/PredictionScreen.tsx'
+import PredictionsScreen from '../screens/PredictionsScreen.tsx'
 import QuizSettingsScreen from '../screens/QuizSettingsScreen.tsx'
 import RoundResultScreen from '../screens/RoundResultScreen.tsx'
 import ScoreboardScreen from '../screens/ScoreboardScreen.tsx'
 import TripScreen from '../screens/TripScreen.tsx'
+import TripSettingsScreen from '../screens/TripSettingsScreen.tsx'
 import AppDataProvider from './AppDataProvider.tsx'
 import { href, useRoute, type Route } from './router.ts'
 import UpdatePrompt from './UpdatePrompt.tsx'
@@ -45,5 +51,17 @@ function CurrentScreen({ route }: { route: Route }) {
       return <RoundResultScreen packId={route.packId} roundId={route.roundId} />
     case 'scores':
       return <ScoreboardScreen packId={route.packId} />
+    case 'settings':
+      return <TripSettingsScreen packId={route.packId} add={route.add} />
+    case 'predictions':
+      return <PredictionsScreen packId={route.packId} />
+    case 'prediction-new':
+      return <AddPredictionScreen packId={route.packId} />
+    case 'prediction':
+      return <PredictionScreen packId={route.packId} predictionId={route.predictionId} />
+    case 'guess':
+      return <GuessScreen packId={route.packId} predictionId={route.predictionId} playerId={route.playerId} />
+    case 'prediction-result':
+      return <PredictionResultScreen packId={route.packId} predictionId={route.predictionId} />
   }
 }

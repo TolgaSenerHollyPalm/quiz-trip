@@ -4,7 +4,7 @@
   "title": "Mısır — Sharm el-Şeyh",
   "country": "EG",
   "city": "Sharm el-Sheikh",
-  "version": 1,
+  "version": 2,
   "updatedAt": "2026-09-19",
   "questions": [
     {
@@ -1317,20 +1317,32 @@
       "text": "Odamız kaçıncı katta olacak?",
       "unit": "kat",
       "step": 1,
-      "params": [
-        "minFloor",
-        "maxFloor"
-      ]
+      "params": {
+        "min": {
+          "key": "minFloor",
+          "label": "En alt kat"
+        },
+        "max": {
+          "key": "maxFloor",
+          "label": "En üst kat"
+        }
+      }
     },
     {
       "id": "hotel-room-number",
       "type": "number",
       "text": "Oda numaramız kaç olacak?",
       "step": 1,
-      "params": [
-        "minRoom",
-        "maxRoom"
-      ]
+      "params": {
+        "min": {
+          "key": "minRoom",
+          "label": "En küçük oda numarası"
+        },
+        "max": {
+          "key": "maxRoom",
+          "label": "En büyük oda numarası"
+        }
+      }
     },
     {
       "id": "hotel-room-view",
@@ -1348,6 +1360,7 @@
       "type": "number",
       "text": "Uçak planlanan saatten kaç dakika geç kalkacak? (Zamanında veya erken kalkarsa 0)",
       "unit": "dk",
+      "format": "duration",
       "min": 0,
       "max": 600,
       "step": 1
@@ -1366,6 +1379,7 @@
       "type": "number",
       "text": "Bant çalışmaya başladıktan kaç dakika sonra ilk valizimiz gelecek?",
       "unit": "dk",
+      "format": "duration",
       "min": 0,
       "max": 120,
       "step": 1
@@ -1375,6 +1389,7 @@
       "type": "number",
       "text": "Havalimanından otele transfer kaç dakika sürecek?",
       "unit": "dk",
+      "format": "duration",
       "min": 0,
       "max": 180,
       "step": 1

@@ -1,0 +1,38 @@
+.handoff {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 35dvh;
+  text-align: center;
+}
+
+.label {
+  font-size: 1.2rem;
+  color: var(--color-muted);
+}
+
+.name {
+  font-size: clamp(2.5rem, 12vw, 4.5rem);
+  font-weight: 800;
+  line-height: 1.1;
+  overflow-wrap: anywhere;
+  color: var(--color-primary);
+}
+
+.saved,
+.done {
+  padding: 12px var(--space);
+  border-radius: var(--radius);
+  background: var(--color-success-bg);
+  color: var(--color-success);
+  font-weight: 700;
+}
+
+.player {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--color-primary);
+}

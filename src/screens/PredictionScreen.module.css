@@ -1,0 +1,36 @@
+.players {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.player {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: var(--tap-size);
+  padding: 8px var(--space);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+}
+
+.player a {
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.name {
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.result {
+  padding: 12px var(--space);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  border: 2px solid var(--color-primary);
+  font-size: 1.2rem;
+  font-weight: 800;
+}

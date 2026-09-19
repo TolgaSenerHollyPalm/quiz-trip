@@ -11,6 +11,11 @@ const isText = (value: unknown): value is string => typeof value === 'string' &&
 
 const isInteger = (value: unknown): value is number => typeof value === 'number' && Number.isInteger(value)
 
+const isNumber = (value: unknown): value is number => typeof value === 'number' && Number.isFinite(value)
+
+const hasDuplicates = (texts: string[]) =>
+  new Set(texts.map((text) => text.trim().toLocaleLowerCase('tr'))).size !== texts.length
+
 function isDate(value: unknown): boolean {
   if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return false
   const date = new Date(`${value}T00:00:00Z`)
@@ -71,7 +76,7 @@ function checkQuestions(questions: unknown[], errors: string[]) {
     const { options } = question
     if (!Array.isArray(options) || options.length !== 4 || !options.every(isText)) {
       errors.push(`${label}: options boş olmayan 4 şık içermeli.`)
-    } else if (new Set(options.map((option) => option.trim().toLocaleLowerCase('tr'))).size !== 4) {
+    } else if (hasDuplicates(options)) {
       errors.push(`${label}: aynı şık birden fazla kez yazılmış.`)
     }
 
@@ -85,6 +90,7 @@ function checkQuestions(questions: unknown[], errors: string[]) {
 
 function checkTemplates(templates: unknown[], errors: string[]) {
   const ids = new Set<string>()
+  const paramLabels = new Map<string, string>() // a shared param key must read the same everywhere
   templates.forEach((template, index) => {
     const label = isObject(template) && isText(template.id) ? `Şablon ${template.id}` : `Şablon #${index + 1}`
     if (!isObject(template)) {
@@ -96,9 +102,65 @@ function checkTemplates(templates: unknown[], errors: string[]) {
     else if (ids.has(template.id)) errors.push(`${label}: bu id başka bir şablonda da kullanılmış.`)
     else ids.add(template.id)
 
-    if (template.type !== 'number' && template.type !== 'choice') {
-      errors.push(`${label}: type "number" ya da "choice" olmalı.`)
-    }
     if (!isText(template.text)) errors.push(`${label}: text boş olamaz.`)
+    if (template.type === 'number') checkNumberTemplate(template, label, paramLabels, errors)
+    else if (template.type === 'choice') checkChoiceTemplate(template, label, errors)
+    else errors.push(`${label}: type "number" ya da "choice" olmalı.`)
   })
+}
+
+function checkNumberTemplate(
+  template: JsonObject,
+  label: string,
+  paramLabels: Map<string, string>,
+  errors: string[],
+) {
+  const { unit, format, min, max, step, params } = template
+  if (unit !== undefined && !isText(unit)) errors.push(`${label}: unit boş olmayan bir metin olmalı.`)
+  if (format !== undefined && format !== 'duration') errors.push(`${label}: format yalnızca "duration" olabilir.`)
+  for (const [name, value] of Object.entries({ min, max, step })) {
+    if (value !== undefined && !isNumber(value)) errors.push(`${label}: ${name} bir sayı olmalı.`)
+  }
+  if (isNumber(step) && step <= 0) errors.push(`${label}: step sıfırdan büyük olmalı.`)
+  if (isNumber(min) && isNumber(max) && min >= max) errors.push(`${label}: min, max değerinden küçük olmalı.`)
+  if (format === 'duration' && [min, max, step].some((value) => isNumber(value) && (!Number.isInteger(value) || value < 0))) {
+    errors.push(`${label}: süre şablonunda min, max ve step sıfır ya da pozitif tam dakika olmalı.`)
+  }
+  if (template.options !== undefined) errors.push(`${label}: number şablonunda options olamaz.`)
+
+  if (params === undefined) return
+  if (Array.isArray(params)) {
+    errors.push(`${label}: params { "min": { "key": …, "label": … }, "max": { … } } biçiminde yazılmalı.`)
+    return
+  }
+  if (!isObject(params)) {
+    errors.push(`${label}: params bir nesne olmalı.`)
+    return
+  }
+  const { min: minParam, max: maxParam, ...others } = params
+  if (Object.keys(others).length > 0) errors.push(`${label}: params yalnızca min ve max içerebilir.`)
+  if (minParam === undefined && maxParam === undefined) errors.push(`${label}: params en az min ya da max içermeli.`)
+  for (const [bound, param] of Object.entries({ min: minParam, max: maxParam })) {
+    if (param === undefined) continue
+    if (template[bound] !== undefined) errors.push(`${label}: ${bound} hem sabit değer hem params olarak verilmiş.`)
+    if (!isObject(param) || !isText(param.key) || !isText(param.label)) {
+      errors.push(`${label}: params.${bound} için key ve label gerekli.`)
+      continue
+    }
+    const known = paramLabels.get(param.key)
+    if (known === undefined) paramLabels.set(param.key, param.label)
+    else if (known !== param.label) errors.push(`${label}: "${param.key}" başka bir şablonda farklı label ile kullanılmış.`)
+  }
+}
+
+function checkChoiceTemplate(template: JsonObject, label: string, errors: string[]) {
+  const { options } = template
+  if (!Array.isArray(options) || options.length < 2 || !options.every(isText)) {
+    errors.push(`${label}: options boş olmayan en az 2 seçenek içermeli.`)
+  } else if (hasDuplicates(options)) {
+    errors.push(`${label}: aynı seçenek birden fazla kez yazılmış.`)
+  }
+  for (const key of ['unit', 'format', 'min', 'max', 'step', 'params']) {
+    if (template[key] !== undefined) errors.push(`${label}: choice şablonunda ${key} olamaz.`)
+  }
 }

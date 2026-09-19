@@ -69,3 +69,47 @@ describe('validatePack', () => {
     expect(errors).toHaveLength(2)
   })
 })
+
+function templateErrors(...templates: Record<string, unknown>[]): string[] {
+  const result = validatePack({ ...validPack(), predictionTemplates: templates })
+  return result.ok ? [] : result.errors
+}
+
+describe('prediction templates', () => {
+  const floor = {
+    id: 'floor',
+    type: 'number',
+    text: 'Kat?',
+    step: 1,
+    params: { min: { key: 'minFloor', label: 'En alt kat' }, max: { key: 'maxFloor', label: 'En üst kat' } },
+  }
+
+  it('accepts trip settings, durations and choices', () => {
+    const delay = { id: 'delay', type: 'number', text: 'Rötar?', format: 'duration', min: 0, max: 600, step: 1 }
+    const view = { id: 'view', type: 'choice', text: 'Manzara?', options: ['Deniz', 'Havuz'] }
+    expect(templateErrors(floor, delay, view)).toEqual([])
+  })
+
+  it.each<[string, Record<string, unknown>, string]>([
+    ['params written as a plain list', { ...floor, params: ['minFloor', 'maxFloor'] }, 'params { "min"'],
+    ['a setting without a label', { ...floor, params: { min: { key: 'minFloor' } } }, 'params.min için key ve label'],
+    ['a bound given twice', { ...floor, min: 0 }, 'min hem sabit değer hem params'],
+    ['an unknown setting', { ...floor, params: { ...floor.params, step: { key: 's', label: 'S' } } }, 'yalnızca min ve max'],
+    ['empty params', { ...floor, params: {} }, 'params en az min ya da max'],
+    ['min not below max', { id: 'n', type: 'number', text: 'Kaç?', min: 5, max: 5 }, 'min, max değerinden küçük'],
+    ['a step of zero', { id: 'n', type: 'number', text: 'Kaç?', step: 0 }, 'step sıfırdan büyük'],
+    ['an unknown format', { id: 'n', type: 'number', text: 'Kaç?', format: 'time' }, 'format yalnızca "duration"'],
+    ['a duration in part minutes', { id: 'n', type: 'number', text: 'Ne kadar?', format: 'duration', step: 0.5 }, 'tam dakika'],
+    ['options on a number', { id: 'n', type: 'number', text: 'Kaç?', options: ['A', 'B'] }, 'number şablonunda options'],
+    ['a choice with one option', { id: 'c', type: 'choice', text: 'Hangisi?', options: ['A'] }, 'en az 2 seçenek'],
+    ['the same option twice', { id: 'c', type: 'choice', text: 'Hangisi?', options: ['Deniz', 'deniz'] }, 'aynı seçenek'],
+    ['a range on a choice', { id: 'c', type: 'choice', text: 'Hangisi?', options: ['A', 'B'], min: 1 }, 'choice şablonunda min'],
+  ])('rejects %s', (_case, template, message) => {
+    expect(templateErrors(template)).toEqual([expect.stringContaining(message)])
+  })
+
+  it('rejects one setting shown with two different labels', () => {
+    const other = { ...floor, id: 'floor2', params: { min: { key: 'minFloor', label: 'Alt kat' } } }
+    expect(templateErrors(floor, other)).toEqual([expect.stringContaining('"minFloor" başka bir şablonda farklı label')])
+  })
+})
