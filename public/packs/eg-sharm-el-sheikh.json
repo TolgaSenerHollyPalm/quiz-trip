@@ -1,0 +1,1428 @@
+{
+  "schemaVersion": 1,
+  "id": "eg-sharm-el-sheikh",
+  "title": "Mısır — Sharm el-Şeyh",
+  "country": "EG",
+  "city": "Sharm el-Sheikh",
+  "version": 1,
+  "updatedAt": "2026-09-19",
+  "questions": [
+    {
+      "id": "eg-hist-001",
+      "category": "history",
+      "difficulty": "easy",
+      "text": "Tutankhamon'un mezarını 1922'de kim buldu?",
+      "options": [
+        "Giovanni Belzoni",
+        "Flinders Petrie",
+        "Howard Carter",
+        "Jean-François Champollion"
+      ],
+      "answerIndex": 2,
+      "explanation": "Howard Carter mezarı 1922'de Krallar Vadisi'nde neredeyse el değmemiş halde buldu."
+    },
+    {
+      "id": "eg-hist-002",
+      "category": "history",
+      "difficulty": "easy",
+      "text": "Gize'deki Büyük Piramit hangi firavun için yapıldı?",
+      "options": [
+        "Coser (Djoser)",
+        "Kefren (Khafre)",
+        "Mikerinos (Menkaure)",
+        "Keops (Khufu)"
+      ],
+      "answerIndex": 3,
+      "explanation": "Gize'deki üç piramidin en büyüğü Eski Krallık firavunu Keops'a (Khufu) aittir."
+    },
+    {
+      "id": "eg-hist-003",
+      "category": "history",
+      "difficulty": "medium",
+      "text": "Sakkara'daki basamaklı piramit hangi firavuna aittir?",
+      "options": [
+        "II. Ramses",
+        "Snefru",
+        "Coser (Djoser)",
+        "Keops (Khufu)"
+      ],
+      "answerIndex": 2,
+      "explanation": "Coser'in basamaklı piramidi, Mısır'ın bilinen en eski büyük taş piramididir."
+    },
+    {
+      "id": "eg-hist-004",
+      "category": "history",
+      "difficulty": "medium",
+      "text": "Coser'in basamaklı piramidinin mimarı olarak bilinen kişi kimdir?",
+      "options": [
+        "Hemiunu",
+        "Hapu oğlu Amenhotep",
+        "Senenmut",
+        "İmhotep"
+      ],
+      "answerIndex": 3,
+      "explanation": "İmhotep, Coser'in veziri ve basamaklı piramidin mimarı olarak bilinir; sonraki çağlarda tanrılaştırılmıştır."
+    },
+    {
+      "id": "eg-hist-005",
+      "category": "history",
+      "difficulty": "easy",
+      "text": "Hiyerogliflerin çözülmesinde anahtar rol oynayan taş hangisidir?",
+      "options": [
+        "Merneptah Steli",
+        "Narmer Paleti",
+        "Palermo Taşı",
+        "Rosetta Taşı"
+      ],
+      "answerIndex": 3,
+      "explanation": "Rosetta Taşı aynı metni hiyeroglif, demotik ve Yunanca olarak içerdiği için çözümün anahtarı oldu."
+    },
+    {
+      "id": "eg-hist-006",
+      "category": "history",
+      "difficulty": "medium",
+      "text": "Hiyeroglifleri 1822'de çözen Fransız bilgin kimdir?",
+      "options": [
+        "Auguste Mariette",
+        "Gaston Maspero",
+        "Pierre Montet",
+        "Jean-François Champollion"
+      ],
+      "answerIndex": 3,
+      "explanation": "Champollion çözümünü 1822'de duyurdu ve Mısırbilimin kurucusu sayılır."
+    },
+    {
+      "id": "eg-hist-007",
+      "category": "history",
+      "difficulty": "medium",
+      "text": "Rosetta Taşı bugün hangi müzede sergileniyor?",
+      "options": [
+        "Neues Museum (Berlin)",
+        "Louvre (Paris)",
+        "Mısır Müzesi (Kahire)",
+        "British Museum (Londra)"
+      ],
+      "answerIndex": 3,
+      "explanation": "Rosetta Taşı 1802'den beri Londra'daki British Museum'dadır."
+    },
+    {
+      "id": "eg-hist-008",
+      "category": "history",
+      "difficulty": "medium",
+      "text": "Ünlü Nefertiti büstünün aslı hangi şehirdedir?",
+      "options": [
+        "Paris",
+        "Kahire",
+        "Londra",
+        "Berlin"
+      ],
+      "answerIndex": 3,
+      "explanation": "Büst 1912'de Amarna'da bulundu ve bugün Berlin'deki Neues Museum'da sergileniyor."
+    },
+    {
+      "id": "eg-hist-009",
+      "category": "history",
+      "difficulty": "medium",
+      "text": "Güneş diski Aton'u tek tanrı ilan eden ve başkenti Amarna'ya taşıyan firavun kimdir?",
+      "options": [
+        "Akhenaton",
+        "II. Ramses",
+        "III. Thutmose",
+        "Horemheb"
+      ],
+      "answerIndex": 0,
+      "explanation": "Akhenaton'un dinî reformu ölümünden sonra geri alındı; eşi Nefertiti'ydi."
+    },
+    {
+      "id": "eg-hist-010",
+      "category": "history",
+      "difficulty": "medium",
+      "text": "II. Ramses'in Hititlerle yaptığı ünlü savaş hangisidir?",
+      "options": [
+        "Pelusium",
+        "Actium",
+        "Megiddo",
+        "Kadeş"
+      ],
+      "answerIndex": 3,
+      "explanation": "Kadeş Savaşı'nın ardından iki devlet, bilinen en eski yazılı barış antlaşmalarından birini yaptı."
+    },
+    {
+      "id": "eg-hist-011",
+      "category": "history",
+      "difficulty": "hard",
+      "text": "Kadeş Antlaşması'nın Hattuşa'da bulunan kil tablet nüshası Türkiye'de hangi müzede sergilenir?",
+      "options": [
+        "Antalya Müzesi",
+        "Efes Müzesi (Selçuk)",
+        "Anadolu Medeniyetleri Müzesi (Ankara)",
+        "İstanbul Arkeoloji Müzeleri"
+      ],
+      "answerIndex": 3,
+      "explanation": "Hattuşa'da bulunan tabletlerden ikisi İstanbul Arkeoloji Müzeleri'ndeki Eski Şark Eserleri Müzesi'nde, biri Berlin'de sergilenir."
+    },
+    {
+      "id": "eg-hist-012",
+      "category": "history",
+      "difficulty": "easy",
+      "text": "Yeni Krallık döneminde firavun olarak hüküm süren ve takma sakalla tasvir edilen kadın hükümdar kimdir?",
+      "options": [
+        "Nefertari",
+        "Tiye",
+        "Hatşepsut",
+        "Nefertiti"
+      ],
+      "answerIndex": 2,
+      "explanation": "Hatşepsut firavun unvanıyla hüküm sürdü; Deyr el-Bahri'deki tapınağıyla tanınır."
+    },
+    {
+      "id": "eg-hist-013",
+      "category": "history",
+      "difficulty": "easy",
+      "text": "Ptolemaios hanedanının son etkin hükümdarı kimdir?",
+      "options": [
+        "Nefertiti",
+        "Hatşepsut",
+        "VII. Kleopatra",
+        "Nefertari"
+      ],
+      "answerIndex": 2,
+      "explanation": "VII. Kleopatra'nın MÖ 30'daki ölümüyle Mısır Roma'ya bağlandı."
+    },
+    {
+      "id": "eg-hist-014",
+      "category": "history",
+      "difficulty": "medium",
+      "text": "Kleopatra'nın mensup olduğu Ptolemaios hanedanı hangi kökenliydi?",
+      "options": [
+        "Romalı",
+        "Nubyalı",
+        "Pers",
+        "Makedon-Yunan"
+      ],
+      "answerIndex": 3,
+      "explanation": "Hanedanı, Büyük İskender'in Makedon generallerinden I. Ptolemaios kurdu."
+    },
+    {
+      "id": "eg-hist-015",
+      "category": "history",
+      "difficulty": "medium",
+      "text": "MÖ 332'de Mısır'ı alan ve İskenderiye şehrini kuran kimdir?",
+      "options": [
+        "Augustus",
+        "Büyük İskender",
+        "II. Kambises",
+        "Jül Sezar"
+      ],
+      "answerIndex": 1,
+      "explanation": "Büyük İskender Mısır'ı Perslerden aldı ve kendi adını taşıyan İskenderiye'yi kurdu."
+    },
+    {
+      "id": "eg-hist-016",
+      "category": "history",
+      "difficulty": "medium",
+      "text": "Mısır hangi yıl Roma egemenliğine girdi?",
+      "options": [
+        "MS 70",
+        "MÖ 30",
+        "MÖ 332",
+        "MÖ 44"
+      ],
+      "answerIndex": 1,
+      "explanation": "Kleopatra ve Marcus Antonius'un yenilgisinden sonra Mısır MÖ 30'da Roma eyaleti oldu."
+    },
+    {
+      "id": "eg-hist-017",
+      "category": "history",
+      "difficulty": "easy",
+      "text": "Abu Simbel tapınaklarını hangi firavun yaptırdı?",
+      "options": [
+        "Tutankhamon",
+        "Keops (Khufu)",
+        "Akhenaton",
+        "II. Ramses"
+      ],
+      "answerIndex": 3,
+      "explanation": "Kayaya oyulmuş iki tapınak II. Ramses döneminde yapıldı; cephedeki dev heykeller onu tasvir eder."
+    },
+    {
+      "id": "eg-hist-018",
+      "category": "history",
+      "difficulty": "hard",
+      "text": "Abu Simbel tapınakları 1960'larda neden parçalara ayrılıp daha yükseğe taşındı?",
+      "options": [
+        "Deprem riski yüzünden",
+        "Asvan Yüksek Barajı'nın gölü altında kalmasın diye",
+        "Kum fırtınalarından korumak için",
+        "Süveyş Kanalı genişletildiği için"
+      ],
+      "answerIndex": 1,
+      "explanation": "UNESCO öncülüğündeki kampanyayla tapınaklar, Nasır Gölü'nün suları altında kalmaması için taşındı."
+    },
+    {
+      "id": "eg-hist-019",
+      "category": "history",
+      "difficulty": "hard",
+      "text": "Hiksosları Mısır'dan çıkaran ve Yeni Krallık'ı başlatan firavun kimdir?",
+      "options": [
+        "Narmer",
+        "I. Ahmose",
+        "II. Mentuhotep",
+        "III. Thutmose"
+      ],
+      "answerIndex": 1,
+      "explanation": "I. Ahmose, 18. Hanedan'ın kurucusu ve Yeni Krallık'ın ilk firavunu sayılır."
+    },
+    {
+      "id": "eg-hist-020",
+      "category": "history",
+      "difficulty": "medium",
+      "text": "Gize'deki Büyük Sfenks genellikle hangi firavuna atfedilir?",
+      "options": [
+        "Keops (Khufu)",
+        "II. Ramses",
+        "Tutankhamon",
+        "Kefren (Khafre)"
+      ],
+      "answerIndex": 3,
+      "explanation": "Sfenks, Kefren'in piramit kompleksinin parçası kabul edilir; bu yaygın görüştür, kesin kanıt yoktur."
+    },
+    {
+      "id": "eg-hist-021",
+      "category": "history",
+      "difficulty": "medium",
+      "text": "Süveyş Kanalı hangi yıl açıldı?",
+      "options": [
+        "1869",
+        "1956",
+        "1914",
+        "1798"
+      ],
+      "answerIndex": 0,
+      "explanation": "Kanal 1869'da açıldı. 1956 ise kanalın millileştirildiği yıldır."
+    },
+    {
+      "id": "eg-hist-022",
+      "category": "history",
+      "difficulty": "easy",
+      "text": "Tutankhamon yaklaşık kaç yaşında öldü?",
+      "options": [
+        "35-40",
+        "9-10",
+        "60'ın üzerinde",
+        "18-19"
+      ],
+      "answerIndex": 3,
+      "explanation": "Çocuk yaşta tahta çıktı ve yaklaşık 18-19 yaşında öldü."
+    },
+    {
+      "id": "eg-hist-023",
+      "category": "history",
+      "difficulty": "medium",
+      "text": "Krallar Vadisi hangi modern şehrin yakınındadır?",
+      "options": [
+        "Luksor",
+        "Asvan",
+        "Kahire",
+        "İskenderiye"
+      ],
+      "answerIndex": 0,
+      "explanation": "Krallar Vadisi, Nil'in batı yakasında, Luksor'un (antik Teb) karşısındadır."
+    },
+    {
+      "id": "eg-hist-024",
+      "category": "history",
+      "difficulty": "hard",
+      "text": "II. Ramses yaklaşık kaç yıl hüküm sürdü?",
+      "options": [
+        "Yaklaşık 25 yıl",
+        "Yaklaşık 66 yıl",
+        "Yaklaşık 40 yıl",
+        "Yaklaşık 10 yıl"
+      ],
+      "answerIndex": 1,
+      "explanation": "II. Ramses yaklaşık MÖ 1279-1213 arasında, 66 yıl kadar hüküm sürdü."
+    },
+    {
+      "id": "eg-hist-025",
+      "category": "history",
+      "difficulty": "hard",
+      "text": "Yukarı ve Aşağı Mısır'ın birleşmesini tasvir ettiği düşünülen ünlü eser hangisidir?",
+      "options": [
+        "Palermo Taşı",
+        "Rosetta Taşı",
+        "Dendera Zodyağı",
+        "Narmer Paleti"
+      ],
+      "answerIndex": 3,
+      "explanation": "Narmer Paleti'nde kral bir yüzde Yukarı Mısır, diğer yüzde Aşağı Mısır tacıyla görülür."
+    },
+    {
+      "id": "eg-hist-026",
+      "category": "history",
+      "difficulty": "hard",
+      "text": "İstanbul Sultanahmet Meydanı'ndaki Dikilitaş aslen hangi firavuna aittir?",
+      "options": [
+        "Hatşepsut",
+        "III. Thutmose",
+        "II. Ramses",
+        "Akhenaton"
+      ],
+      "answerIndex": 1,
+      "explanation": "Obelisk III. Thutmose tarafından Karnak'ta diktirildi; Roma imparatoru I. Theodosius 390'da İstanbul'da bugünkü yerine koydurdu."
+    },
+    {
+      "id": "eg-myth-001",
+      "category": "mythology",
+      "difficulty": "easy",
+      "text": "Çakal başlı mumyalama tanrısı kimdir?",
+      "options": [
+        "Horus",
+        "Sobek",
+        "Anubis",
+        "Thot"
+      ],
+      "answerIndex": 2,
+      "explanation": "Anubis mumyalamanın ve ölülere rehberliğin tanrısıdır."
+    },
+    {
+      "id": "eg-myth-002",
+      "category": "mythology",
+      "difficulty": "easy",
+      "text": "Şahin başlı, Osiris ile İsis'in oğlu olan ve krallıkla özdeşleşen tanrı kimdir?",
+      "options": [
+        "Anubis",
+        "Set",
+        "Horus",
+        "Ptah"
+      ],
+      "answerIndex": 2,
+      "explanation": "Her firavun 'yaşayan Horus' sayılırdı."
+    },
+    {
+      "id": "eg-myth-003",
+      "category": "mythology",
+      "difficulty": "medium",
+      "text": "İbis başlı yazı ve bilgelik tanrısı kimdir?",
+      "options": [
+        "Khnum",
+        "Anubis",
+        "Thot",
+        "Ra"
+      ],
+      "answerIndex": 2,
+      "explanation": "Thot yazıcıların koruyucusudur; kalbin tartılmasında sonucu o kaydeder."
+    },
+    {
+      "id": "eg-myth-004",
+      "category": "mythology",
+      "difficulty": "easy",
+      "text": "Kedi biçiminde tasvir edilen tanrıça kimdir?",
+      "options": [
+        "Bastet",
+        "Nut",
+        "Sekhmet",
+        "Hathor"
+      ],
+      "answerIndex": 0,
+      "explanation": "Bastet evin ve korumanın tanrıçasıdır; kedi heykelcikleri en yaygın hediyeliklerdendir."
+    },
+    {
+      "id": "eg-myth-005",
+      "category": "mythology",
+      "difficulty": "medium",
+      "text": "Dişi aslan başlı savaş tanrıçası kimdir?",
+      "options": [
+        "Maat",
+        "Neftis",
+        "İsis",
+        "Sekhmet"
+      ],
+      "answerIndex": 3,
+      "explanation": "Sekhmet hem savaşın ve hastalığın hem de şifanın tanrıçasıdır."
+    },
+    {
+      "id": "eg-myth-006",
+      "category": "mythology",
+      "difficulty": "medium",
+      "text": "Mite göre Osiris'i kim öldürdü?",
+      "options": [
+        "Anubis",
+        "Ra",
+        "Kardeşi Set",
+        "Oğlu Horus"
+      ],
+      "answerIndex": 2,
+      "explanation": "Set, kardeşi Osiris'i öldürüp tahtı ele geçirdi; sonunda Horus'a yenildi."
+    },
+    {
+      "id": "eg-myth-007",
+      "category": "mythology",
+      "difficulty": "medium",
+      "text": "Osiris'in bedenini yeniden bir araya getiren eşi kimdir?",
+      "options": [
+        "Hathor",
+        "Neftis",
+        "İsis",
+        "Nut"
+      ],
+      "answerIndex": 2,
+      "explanation": "İsis, Osiris'in eşi ve Horus'un annesidir."
+    },
+    {
+      "id": "eg-myth-008",
+      "category": "mythology",
+      "difficulty": "easy",
+      "text": "Osiris neyin hükümdarıdır?",
+      "options": [
+        "Gökyüzünün",
+        "Ölüler diyarının",
+        "Çölün",
+        "Nil'in kaynaklarının"
+      ],
+      "answerIndex": 1,
+      "explanation": "Osiris ölüler diyarının hükümdarı ve yeniden doğuşun tanrısıdır; yeşil tenli ve mumya gibi sarılı tasvir edilir."
+    },
+    {
+      "id": "eg-myth-009",
+      "category": "mythology",
+      "difficulty": "medium",
+      "text": "Öte dünya yargısında ölünün kalbi neyle tartılır?",
+      "options": [
+        "Bir skarabe ile",
+        "Horus'un Gözü ile",
+        "Altın bir ankh ile",
+        "Maat'ın tüyüyle"
+      ],
+      "answerIndex": 3,
+      "explanation": "Maat düzen ve adaleti temsil eder; kalp tüyden ağır gelirse ölü sınavı geçemez."
+    },
+    {
+      "id": "eg-myth-010",
+      "category": "mythology",
+      "difficulty": "hard",
+      "text": "Yargıda kalbi ağır gelenlerin kalbini yiyen canavarın adı nedir?",
+      "options": [
+        "Taweret",
+        "Apep (Apophis)",
+        "Bes",
+        "Ammit"
+      ],
+      "answerIndex": 3,
+      "explanation": "Ammit timsah, aslan ve su aygırı karışımı bir yaratık olarak tasvir edilir."
+    },
+    {
+      "id": "eg-myth-011",
+      "category": "mythology",
+      "difficulty": "easy",
+      "text": "Ankh sembolü neyi simgeler?",
+      "options": [
+        "Savaşı",
+        "Yaşamı",
+        "Ölümü",
+        "Nil'in taşkınını"
+      ],
+      "answerIndex": 1,
+      "explanation": "Halkalı haç biçimindeki ankh yaşamın simgesidir; tanrılar onu ellerinde taşır."
+    },
+    {
+      "id": "eg-myth-012",
+      "category": "mythology",
+      "difficulty": "hard",
+      "text": "Skarabe (bok böceği) biçiminde tasvir edilen doğan güneş tanrısı kimdir?",
+      "options": [
+        "Min",
+        "Khepri",
+        "Ptah",
+        "Khnum"
+      ],
+      "answerIndex": 1,
+      "explanation": "Khepri sabah güneşini temsil eder; skarabe bu yüzden yeniden doğuşun simgesidir."
+    },
+    {
+      "id": "eg-myth-013",
+      "category": "mythology",
+      "difficulty": "easy",
+      "text": "Timsah başlı tanrı kimdir?",
+      "options": [
+        "Set",
+        "Sobek",
+        "Ptah",
+        "Khnum"
+      ],
+      "answerIndex": 1,
+      "explanation": "Sobek Nil ve güçle ilişkilendirilir; Kom Ombo'daki çift tapınak Sobek ile Yaşlı Horus'a (Haroeris) adanmıştır."
+    },
+    {
+      "id": "eg-myth-014",
+      "category": "mythology",
+      "difficulty": "hard",
+      "text": "Mısır mitolojisinde gökyüzünü temsil eden tanrıça kimdir?",
+      "options": [
+        "Maat",
+        "Tefnut",
+        "Neftis",
+        "Nut"
+      ],
+      "answerIndex": 3,
+      "explanation": "Nut gök, eşi Geb ise yerdir; Osiris, İsis, Set ve Neftis onların çocuklarıdır."
+    },
+    {
+      "id": "eg-myth-015",
+      "category": "mythology",
+      "difficulty": "hard",
+      "text": "Güneş tanrısı Ra'nın gece yolculuğunda savaştığı kaos yılanının adı nedir?",
+      "options": [
+        "Ammit",
+        "Apep (Apophis)",
+        "Wadjet",
+        "Mehen"
+      ],
+      "answerIndex": 1,
+      "explanation": "Apep kaosu temsil eder; Ra'nın kayığı her gece onu yenerek güneşin yeniden doğmasını sağlar."
+    },
+    {
+      "id": "eg-myth-016",
+      "category": "mythology",
+      "difficulty": "medium",
+      "text": "Yeni Krallık'ta Teb'in baş tanrısı olan ve Ra ile birleştirilen tanrı kimdir?",
+      "options": [
+        "Ptah",
+        "Amon",
+        "Osiris",
+        "Aton"
+      ],
+      "answerIndex": 1,
+      "explanation": "Amon-Ra, Yeni Krallık'ın baş tanrısıydı; Karnak tapınağı ona adanmıştır."
+    },
+    {
+      "id": "eg-myth-017",
+      "category": "mythology",
+      "difficulty": "medium",
+      "text": "İnek boynuzları arasında güneş diskiyle tasvir edilen aşk ve müzik tanrıçası kimdir?",
+      "options": [
+        "Hathor",
+        "Bastet",
+        "Sekhmet",
+        "Maat"
+      ],
+      "answerIndex": 0,
+      "explanation": "Hathor aşk, müzik ve neşe tanrıçasıdır; Dendera tapınağı ona adanmıştır."
+    },
+    {
+      "id": "eg-myth-018",
+      "category": "mythology",
+      "difficulty": "medium",
+      "text": "Kanopik kavanozlara ne konurdu?",
+      "options": [
+        "Mumyalamada çıkarılan iç organlar",
+        "Kutsal Nil suyu",
+        "Mezar hazinesi",
+        "Parfüm ve yağlar"
+      ],
+      "answerIndex": 0,
+      "explanation": "Karaciğer, akciğerler, mide ve bağırsaklar dört ayrı kavanozda saklanırdı."
+    },
+    {
+      "id": "eg-myth-019",
+      "category": "mythology",
+      "difficulty": "hard",
+      "text": "Kanopik kavanozların kapakları kimleri temsil eder?",
+      "options": [
+        "Ra'nın dört kayıkçısını",
+        "Osiris'in dört kardeşini",
+        "Horus'un dört oğlunu",
+        "Dört ana yönün rüzgârlarını"
+      ],
+      "answerIndex": 2,
+      "explanation": "Horus'un dört oğlu (İmseti, Hapi, Duamutef, Kebehsenuef) organları korur."
+    },
+    {
+      "id": "eg-myth-020",
+      "category": "mythology",
+      "difficulty": "medium",
+      "text": "Uşabti heykelcikleri mezara neden konurdu?",
+      "options": [
+        "Firavunun ailesini temsil etmek için",
+        "Öte dünyada ölünün yerine çalışsınlar diye",
+        "Mezar soyguncularını korkutmak için",
+        "Tanrılara adak olarak"
+      ],
+      "answerIndex": 1,
+      "explanation": "Uşabtiler, öte dünyada ölüden istenecek işleri onun yerine yapacak hizmetkârlardı."
+    },
+    {
+      "id": "eg-geo-001",
+      "category": "geography",
+      "difficulty": "easy",
+      "text": "Sharm el-Şeyh hangi yarımadadadır?",
+      "options": [
+        "İber Yarımadası",
+        "Sina Yarımadası",
+        "Kırım Yarımadası",
+        "Arap Yarımadası"
+      ],
+      "answerIndex": 1,
+      "explanation": "Sharm el-Şeyh, Sina Yarımadası'nın güney ucundadır."
+    },
+    {
+      "id": "eg-geo-002",
+      "category": "geography",
+      "difficulty": "easy",
+      "text": "Sharm el-Şeyh hangi denizin kıyısındadır?",
+      "options": [
+        "Umman Denizi",
+        "Akdeniz",
+        "Kızıldeniz",
+        "Ölü Deniz"
+      ],
+      "answerIndex": 2,
+      "explanation": "Şehir, Kızıldeniz'in Akabe Körfezi'ne açıldığı noktadadır; mercan resifleriyle ünlüdür."
+    },
+    {
+      "id": "eg-geo-003",
+      "category": "geography",
+      "difficulty": "easy",
+      "text": "Mısır'ın başkenti neresidir?",
+      "options": [
+        "Gize",
+        "Kahire",
+        "İskenderiye",
+        "Luksor"
+      ],
+      "answerIndex": 1,
+      "explanation": "Kahire Nil kıyısındadır ve Mısır'ın en kalabalık şehridir."
+    },
+    {
+      "id": "eg-geo-004",
+      "category": "geography",
+      "difficulty": "easy",
+      "text": "Mısır'ın para birimi nedir?",
+      "options": [
+        "Riyal",
+        "Mısır lirası (pound)",
+        "Dirhem",
+        "Dinar"
+      ],
+      "answerIndex": 1,
+      "explanation": "Para birimi Mısır lirasıdır (EGP); Arapçada 'gineh' denir."
+    },
+    {
+      "id": "eg-geo-005",
+      "category": "geography",
+      "difficulty": "medium",
+      "text": "Sharm el-Şeyh yakınında, Sina'nın güney ucundaki ünlü milli park hangisidir?",
+      "options": [
+        "Vadi Rum",
+        "Ras Muhammed",
+        "Vadi el-Cimal",
+        "Beyaz Çöl"
+      ],
+      "answerIndex": 1,
+      "explanation": "Ras Muhammed Milli Parkı mercan resifleri ve dalış noktalarıyla tanınır."
+    },
+    {
+      "id": "eg-geo-006",
+      "category": "geography",
+      "difficulty": "medium",
+      "text": "Sharm el-Şeyh açıklarındaki, Akabe Körfezi'nin girişindeki boğaza adını veren ada hangisidir?",
+      "options": [
+        "Firavun Adası",
+        "Elefantin",
+        "Tiran",
+        "Giftun"
+      ],
+      "answerIndex": 2,
+      "explanation": "Tiran Boğazı, Akabe Körfezi'ni Kızıldeniz'e bağlar. Tiran Adası askerî bölgedir, adaya çıkılamaz; tekne turları çevresindeki resiflere gider."
+    },
+    {
+      "id": "eg-geo-007",
+      "category": "geography",
+      "difficulty": "medium",
+      "text": "Sina Yarımadası hangi iki körfezin arasındadır?",
+      "options": [
+        "Basra ve Umman körfezleri",
+        "Sirte ve Gabes körfezleri",
+        "Aden ve Umman körfezleri",
+        "Süveyş ve Akabe körfezleri"
+      ],
+      "answerIndex": 3,
+      "explanation": "Batıda Süveyş Körfezi, doğuda Akabe Körfezi vardır; ikisi de Kızıldeniz'in kollarıdır."
+    },
+    {
+      "id": "eg-geo-008",
+      "category": "geography",
+      "difficulty": "medium",
+      "text": "UNESCO Dünya Mirası listesindeki Azize Katerina Manastırı hangi dağın eteğindedir?",
+      "options": [
+        "Ağrı Dağı",
+        "Sina Dağı (Musa Dağı)",
+        "Nebo Dağı",
+        "Olimpos Dağı"
+      ],
+      "answerIndex": 1,
+      "explanation": "Manastır Sina'nın iç kesimindedir; Sharm el-Şeyh'ten günübirlik turlarla gidilir."
+    },
+    {
+      "id": "eg-geo-009",
+      "category": "geography",
+      "difficulty": "easy",
+      "text": "Nil nehri hangi denize dökülür?",
+      "options": [
+        "Akdeniz",
+        "Hint Okyanusu",
+        "Atlas Okyanusu",
+        "Kızıldeniz"
+      ],
+      "answerIndex": 0,
+      "explanation": "Nil güneyden kuzeye akar ve geniş bir delta oluşturarak Akdeniz'e dökülür."
+    },
+    {
+      "id": "eg-geo-010",
+      "category": "geography",
+      "difficulty": "easy",
+      "text": "Süveyş Kanalı hangi iki denizi birbirine bağlar?",
+      "options": [
+        "Akdeniz ve Karadeniz",
+        "Kızıldeniz ve Ölü Deniz",
+        "Kızıldeniz ve Basra Körfezi",
+        "Akdeniz ve Kızıldeniz"
+      ],
+      "answerIndex": 3,
+      "explanation": "Kanal sayesinde gemiler Afrika'yı dolaşmadan Avrupa ile Asya arasında gidip gelir."
+    },
+    {
+      "id": "eg-geo-011",
+      "category": "geography",
+      "difficulty": "medium",
+      "text": "Asvan Yüksek Barajı'nın oluşturduğu gölün adı nedir?",
+      "options": [
+        "Tana Gölü",
+        "Nasır Gölü",
+        "Viktorya Gölü",
+        "Karun Gölü"
+      ],
+      "answerIndex": 1,
+      "explanation": "Nasır Gölü dünyanın en büyük yapay göllerinden biridir; güney ucu Sudan'a uzanır."
+    },
+    {
+      "id": "eg-geo-012",
+      "category": "geography",
+      "difficulty": "medium",
+      "text": "Sina Yarımadası coğrafi olarak hangi kıtada sayılır?",
+      "options": [
+        "Asya",
+        "Hiçbiri, bir adadır",
+        "Afrika",
+        "Avrupa"
+      ],
+      "answerIndex": 0,
+      "explanation": "Süveyş Kanalı'nın doğusunda kalan Sina Asya'da sayılır; bu yüzden Mısır iki kıtaya yayılan bir ülkedir."
+    },
+    {
+      "id": "eg-geo-013",
+      "category": "geography",
+      "difficulty": "medium",
+      "text": "Mısır'ın batı komşusu hangi ülkedir?",
+      "options": [
+        "Libya",
+        "Tunus",
+        "Cezayir",
+        "Çad"
+      ],
+      "answerIndex": 0,
+      "explanation": "Mısır'ın batısında Libya, güneyinde Sudan vardır."
+    },
+    {
+      "id": "eg-geo-014",
+      "category": "geography",
+      "difficulty": "hard",
+      "text": "Sharm el-Şeyh'ten dalış turlarıyla gidilen, 1941'de batan ünlü İngiliz gemi batığı hangisidir?",
+      "options": [
+        "Salem Express",
+        "SS Thistlegorm",
+        "Zenobia",
+        "RMS Lusitania"
+      ],
+      "answerIndex": 1,
+      "explanation": "Thistlegorm, II. Dünya Savaşı'nda askerî malzeme taşırken batırıldı; ambarlarındaki motosiklet ve kamyonlar hâlâ görülebilir."
+    },
+    {
+      "id": "eg-geo-015",
+      "category": "geography",
+      "difficulty": "medium",
+      "text": "Sharm el-Şeyh'in restoran ve dükkânlarla dolu ünlü turistik koyu hangisidir?",
+      "options": [
+        "Soma Bay",
+        "Naama Bay",
+        "Makadi Bay",
+        "Abu Dabbab"
+      ],
+      "answerIndex": 1,
+      "explanation": "Naama Bay şehrin ana gezinti ve eğlence bölgesidir. Diğer üçü Kızıldeniz'in Afrika kıyısındadır."
+    },
+    {
+      "id": "eg-geo-016",
+      "category": "geography",
+      "difficulty": "medium",
+      "text": "2022'de Sharm el-Şeyh'te düzenlenen BM iklim zirvesi hangisiydi?",
+      "options": [
+        "COP28",
+        "COP25",
+        "COP26",
+        "COP27"
+      ],
+      "answerIndex": 3,
+      "explanation": "COP27 Kasım 2022'de Sharm el-Şeyh'te yapıldı. COP26 Glasgow'da, COP28 Dubai'de düzenlendi."
+    },
+    {
+      "id": "eg-geo-017",
+      "category": "geography",
+      "difficulty": "medium",
+      "text": "Antik Mısır'da 'Yukarı Mısır' ülkenin neresiydi?",
+      "options": [
+        "Güneyi",
+        "Batısı",
+        "Doğusu",
+        "Kuzeyi"
+      ],
+      "answerIndex": 0,
+      "explanation": "Adlandırma Nil'in akış yönüne göredir: nehir güneyden kuzeye aktığı için Yukarı Mısır güneyde, Aşağı Mısır (Delta) kuzeydedir."
+    },
+    {
+      "id": "eg-food-001",
+      "category": "food",
+      "difficulty": "easy",
+      "text": "Pirinç, makarna, mercimek, nohut, domates sosu ve kızarmış soğanla yapılan ünlü Mısır sokak yemeği hangisidir?",
+      "options": [
+        "Fettah",
+        "Molohiya",
+        "Koşari",
+        "Şakşuka"
+      ],
+      "answerIndex": 2,
+      "explanation": "Koşari Mısır'ın millî yemeği sayılır ve tamamen bitkiseldir."
+    },
+    {
+      "id": "eg-food-002",
+      "category": "food",
+      "difficulty": "medium",
+      "text": "Mısır usulü falafel 'taamiya' nohut yerine neyle yapılır?",
+      "options": [
+        "Börülce",
+        "Bakla",
+        "Bezelye",
+        "Mercimek"
+      ],
+      "answerIndex": 1,
+      "explanation": "Taamiya kuru bakladan yapılır; içi bol yeşillik yüzünden yeşil renklidir."
+    },
+    {
+      "id": "eg-food-003",
+      "category": "food",
+      "difficulty": "medium",
+      "text": "Uzun süre pişirilmiş bakladan yapılan geleneksel Mısır kahvaltısı hangisidir?",
+      "options": [
+        "Mahşi",
+        "Havavşi",
+        "Koşari",
+        "Ful medames"
+      ],
+      "answerIndex": 3,
+      "explanation": "Ful medames zeytinyağı, limon ve kimyonla servis edilir; otel kahvaltılarında mutlaka bulunur."
+    },
+    {
+      "id": "eg-food-004",
+      "category": "food",
+      "difficulty": "medium",
+      "text": "Hibiskus çiçeğinden yapılan, sıcak veya soğuk içilen kırmızı içeceğin adı nedir?",
+      "options": [
+        "Temirhindi",
+        "Sahlep",
+        "Sobia",
+        "Karkade"
+      ],
+      "answerIndex": 3,
+      "explanation": "Karkade Mısır'da çok yaygındır; otellerde karşılama içeceği olarak sık sunulur."
+    },
+    {
+      "id": "eg-food-005",
+      "category": "food",
+      "difficulty": "medium",
+      "text": "Aynı adlı yeşil yapraklı bitkiden yapılan, koyu kıvamlı yeşil Mısır yemeği hangisidir?",
+      "options": [
+        "Molohiya",
+        "Koşari",
+        "Baba gannuş",
+        "Fettah"
+      ],
+      "answerIndex": 0,
+      "explanation": "Molohiya sarımsak ve kişnişle tatlandırılır; pilav veya ekmekle yenir."
+    },
+    {
+      "id": "eg-food-006",
+      "category": "food",
+      "difficulty": "medium",
+      "text": "Hamur parçaları, süt ve kuruyemişle fırında yapılan, genellikle sıcak servis edilen Mısır tatlısı hangisidir?",
+      "options": [
+        "Ümmü Ali (Om Ali)",
+        "Künefe",
+        "Baklava",
+        "Basbusa"
+      ],
+      "answerIndex": 0,
+      "explanation": "Ümmü Ali 'Ali'nin annesi' demektir; Mısır'ın en bilinen tatlılarından biridir."
+    },
+    {
+      "id": "eg-food-007",
+      "category": "food",
+      "difficulty": "hard",
+      "text": "Mısır'ın geleneksel yassı ekmeği 'ayş baladi'deki 'ayş' kelimesi ekmekten başka ne anlama gelir?",
+      "options": [
+        "Toprak",
+        "Yaşam",
+        "Bereket",
+        "Güneş"
+      ],
+      "answerIndex": 1,
+      "explanation": "Mısır Arapçasında ekmeğe 'ayş' denir; kelime aynı zamanda 'yaşam' demektir."
+    },
+    {
+      "id": "eg-lang-001",
+      "category": "language",
+      "difficulty": "easy",
+      "text": "Mısır'ın resmî dili nedir?",
+      "options": [
+        "Fransızca",
+        "Kıptice",
+        "İngilizce",
+        "Arapça"
+      ],
+      "answerIndex": 3,
+      "explanation": "Resmî dil Arapçadır; günlük hayatta Mısır Arapçası lehçesi konuşulur."
+    },
+    {
+      "id": "eg-lang-002",
+      "category": "language",
+      "difficulty": "easy",
+      "text": "Arapça 'şükran' ne demektir?",
+      "options": [
+        "Merhaba",
+        "Güle güle",
+        "Lütfen",
+        "Teşekkürler"
+      ],
+      "answerIndex": 3,
+      "explanation": "'Şükran' teşekkür etmek için kullanılır."
+    },
+    {
+      "id": "eg-lang-003",
+      "category": "language",
+      "difficulty": "medium",
+      "text": "Mısır Arapçasında 'evet' nasıl denir?",
+      "options": [
+        "Bukra",
+        "La",
+        "Yalla",
+        "Aywa"
+      ],
+      "answerIndex": 3,
+      "explanation": "Günlük konuşmada 'evet' için 'aywa' kullanılır."
+    },
+    {
+      "id": "eg-lang-004",
+      "category": "language",
+      "difficulty": "easy",
+      "text": "Arapça 'la' ne demektir?",
+      "options": [
+        "Evet",
+        "Tamam",
+        "Belki",
+        "Hayır"
+      ],
+      "answerIndex": 3,
+      "explanation": "Israrcı satıcılara 'la, şükran' (hayır, teşekkürler) demek işe yarar."
+    },
+    {
+      "id": "eg-lang-005",
+      "category": "language",
+      "difficulty": "medium",
+      "text": "Pazarda 'Bikam?' diye sorarsanız ne sormuş olursunuz?",
+      "options": [
+        "Nerede?",
+        "Ne zaman?",
+        "Adın ne?",
+        "Kaç para?"
+      ],
+      "answerIndex": 3,
+      "explanation": "'Bikam?' Mısır Arapçasında fiyat sormak için kullanılır."
+    },
+    {
+      "id": "eg-lang-006",
+      "category": "language",
+      "difficulty": "easy",
+      "text": "Mısır'da sık duyacağınız 'yalla' ne demektir?",
+      "options": [
+        "Teşekkürler",
+        "Afedersiniz",
+        "Hadi, gidelim",
+        "Dur"
+      ],
+      "answerIndex": 2,
+      "explanation": "'Yalla' birini harekete geçirmek için söylenir."
+    },
+    {
+      "id": "eg-lang-007",
+      "category": "language",
+      "difficulty": "medium",
+      "text": "'Sabah el-hayr' ne demektir?",
+      "options": [
+        "Günaydın",
+        "İyi geceler",
+        "Afiyet olsun",
+        "Hoş geldiniz"
+      ],
+      "answerIndex": 0,
+      "explanation": "Karşılığında 'sabah en-nur' (aydınlık sabahlar) denir."
+    },
+    {
+      "id": "eg-lang-008",
+      "category": "language",
+      "difficulty": "medium",
+      "text": "Arapça 'hamsa' hangi sayıdır?",
+      "options": [
+        "3",
+        "7",
+        "10",
+        "5"
+      ],
+      "answerIndex": 3,
+      "explanation": "Vahid 1, itneyn 2, talata 3, arbaa 4, hamsa 5."
+    },
+    {
+      "id": "eg-lang-009",
+      "category": "language",
+      "difficulty": "hard",
+      "text": "Arapça 'bukra' ne demektir?",
+      "options": [
+        "Şimdi",
+        "Yarın",
+        "Dün",
+        "Bugün"
+      ],
+      "answerIndex": 1,
+      "explanation": "'Bukra' yarın demektir."
+    },
+    {
+      "id": "eg-lang-010",
+      "category": "language",
+      "difficulty": "hard",
+      "text": "Mısır Arapçasında 'meşi' ne demektir?",
+      "options": [
+        "Tamam, olur",
+        "Acele et",
+        "Pahalı",
+        "Hayır"
+      ],
+      "answerIndex": 0,
+      "explanation": "'Meşi' günlük konuşmada 'tamam, olur' anlamında kullanılır."
+    },
+    {
+      "id": "eg-lang-011",
+      "category": "language",
+      "difficulty": "hard",
+      "text": "Pazarlıkta satıcıya 'gali' derseniz ne demiş olursunuz?",
+      "options": [
+        "Pahalı",
+        "İstemiyorum",
+        "Ucuz",
+        "Güzel"
+      ],
+      "answerIndex": 0,
+      "explanation": "'Gali' pahalı demektir; pazarlığın klasik açılış cümlesidir."
+    },
+    {
+      "id": "eg-cult-001",
+      "category": "culture",
+      "difficulty": "medium",
+      "text": "Hiyerogliflerde kral adlarını çevreleyen oval çerçeveye ne denir?",
+      "options": [
+        "Kartuş",
+        "Stel",
+        "Sistrum",
+        "Pilon"
+      ],
+      "answerIndex": 0,
+      "explanation": "Kartuş, içindeki adın bir krala ait olduğunu gösterir; Champollion'un çözümünde de ipucu olmuştur."
+    },
+    {
+      "id": "eg-cult-002",
+      "category": "culture",
+      "difficulty": "easy",
+      "text": "Antik Mısırlıların yazı malzemesi yapmak için kullandığı, Nil kıyısında yetişen bitki hangisidir?",
+      "options": [
+        "Bambu",
+        "Keten",
+        "Lotus",
+        "Papirüs"
+      ],
+      "answerIndex": 3,
+      "explanation": "Papirüsün sapı şeritler halinde kesilip preslenerek yazı yüzeyi yapılırdı."
+    },
+    {
+      "id": "eg-cult-003",
+      "category": "culture",
+      "difficulty": "hard",
+      "text": "Firavunların alnındaki şahlanmış kobra simgesinin adı nedir?",
+      "options": [
+        "Uraeus",
+        "Ankh",
+        "Ced",
+        "Nemes"
+      ],
+      "answerIndex": 0,
+      "explanation": "Uraeus krallığın ve tanrısal korumanın simgesidir; Tutankhamon maskesinde akbabayla birlikte görülür."
+    },
+    {
+      "id": "eg-cult-004",
+      "category": "culture",
+      "difficulty": "hard",
+      "text": "Tutankhamon'un altın maskesindeki çizgili kumaş başlığın adı nedir?",
+      "options": [
+        "Hedjet",
+        "Deşret",
+        "Nemes",
+        "Uraeus"
+      ],
+      "answerIndex": 2,
+      "explanation": "Nemes çizgili kraliyet başlığıdır. Deşret Aşağı Mısır'ın kırmızı, hedjet Yukarı Mısır'ın beyaz tacıdır."
+    },
+    {
+      "id": "eg-cult-005",
+      "category": "culture",
+      "difficulty": "easy",
+      "text": "Gerçek antik eserleri Mısır'dan çıkarmak konusunda hangisi doğrudur?",
+      "options": [
+        "Vergisi ödenince serbesttir",
+        "Satıcının faturası yeterlidir",
+        "Yasaktır",
+        "Küçük parçalar serbesttir"
+      ],
+      "answerIndex": 2,
+      "explanation": "Antik eser ihracı yasaktır; hediyelik olarak yalnızca replika alınmalıdır."
+    },
+    {
+      "id": "eg-cult-006",
+      "category": "culture",
+      "difficulty": "medium",
+      "text": "Mısır'da resmî hafta sonu tatili hangi günlerdir?",
+      "options": [
+        "Cumartesi ve pazar",
+        "Yalnızca pazar",
+        "Perşembe ve cuma",
+        "Cuma ve cumartesi"
+      ],
+      "answerIndex": 3,
+      "explanation": "Resmî kurumlar ve bankalar cuma-cumartesi kapalıdır; turistik bölgeler her gün açıktır."
+    },
+    {
+      "id": "eg-cult-007",
+      "category": "culture",
+      "difficulty": "medium",
+      "text": "Mumyalamada genellikle bedenin içinde bırakılan organ hangisiydi?",
+      "options": [
+        "Akciğerler",
+        "Karaciğer",
+        "Kalp",
+        "Beyin"
+      ],
+      "answerIndex": 2,
+      "explanation": "Kalp düşüncenin ve kişiliğin merkezi sayılırdı; öte dünya yargısında tartılacağı için yerinde bırakılırdı."
+    },
+    {
+      "id": "eg-cult-008",
+      "category": "culture",
+      "difficulty": "medium",
+      "text": "Mumyalamada beyin genellikle nereden çıkarılırdı?",
+      "options": [
+        "Başın tepesinden açılan delikten",
+        "Burun deliğinden",
+        "Kulaktan",
+        "Ağızdan"
+      ],
+      "answerIndex": 1,
+      "explanation": "Beyin kancalı bir aletle burun yoluyla çıkarılır ve saklanmazdı."
+    },
+    {
+      "id": "eg-cult-009",
+      "category": "culture",
+      "difficulty": "hard",
+      "text": "Mısır bayrağının ortasındaki altın renkli simge nedir?",
+      "options": [
+        "Hilal ve yıldız",
+        "Sfenks",
+        "Kureyş Şahini",
+        "Selahaddin Kartalı"
+      ],
+      "answerIndex": 3,
+      "explanation": "Kırmızı, beyaz ve siyah şeritli bayrağın ortasında 1984'ten beri Selahaddin Kartalı yer alır."
+    },
+    {
+      "id": "eg-cult-010",
+      "category": "culture",
+      "difficulty": "easy",
+      "text": "Antik Mısır'da tek parça taştan yontulan, sivri uçlu dikili anıta ne denir?",
+      "options": [
+        "Mastaba",
+        "Pilon",
+        "Obelisk",
+        "Sfenks"
+      ],
+      "answerIndex": 2,
+      "explanation": "Obeliskler güneş tanrısıyla ilişkilidir ve genellikle tapınak girişlerine çift olarak dikilirdi."
+    },
+    {
+      "id": "eg-cult-011",
+      "category": "culture",
+      "difficulty": "medium",
+      "text": "'Ölüler Kitabı' nedir?",
+      "options": [
+        "Mezar soyguncularına karşı yazılmış lanetler",
+        "Ölünün öte dünyada yolunu bulması için mezara konan büyü ve dua metinleri",
+        "Mumyalama ustalarının el kitabı",
+        "Firavunların ölüm tarihlerinin kaydı"
+      ],
+      "answerIndex": 1,
+      "explanation": "Metinler genellikle papirüs rulolarına yazılıp ölüyle birlikte gömülürdü."
+    },
+    {
+      "id": "eg-cult-012",
+      "category": "culture",
+      "difficulty": "medium",
+      "text": "Uluslararası zirvelere ve barış görüşmelerine ev sahipliği yaptığı için Sharm el-Şeyh hangi lakapla anılır?",
+      "options": [
+        "Güneşin Şehri",
+        "Barış Şehri",
+        "Bin Minareli Şehir",
+        "Akdeniz'in Gelini"
+      ],
+      "answerIndex": 1,
+      "explanation": "Şehir 'Barış Şehri' olarak anılır. 'Bin Minareli Şehir' Kahire'nin, 'Akdeniz'in Gelini' İskenderiye'nin lakabıdır."
+    }
+  ],
+  "predictionTemplates": [
+    {
+      "id": "hotel-floor",
+      "type": "number",
+      "text": "Odamız kaçıncı katta olacak?",
+      "unit": "kat",
+      "step": 1,
+      "params": [
+        "minFloor",
+        "maxFloor"
+      ]
+    },
+    {
+      "id": "hotel-room-number",
+      "type": "number",
+      "text": "Oda numaramız kaç olacak?",
+      "step": 1,
+      "params": [
+        "minRoom",
+        "maxRoom"
+      ]
+    },
+    {
+      "id": "hotel-room-view",
+      "type": "choice",
+      "text": "Odamız nereye bakacak?",
+      "options": [
+        "Deniz",
+        "Havuz",
+        "Bahçe",
+        "Diğer"
+      ]
+    },
+    {
+      "id": "flight-delay",
+      "type": "number",
+      "text": "Uçak planlanan saatten kaç dakika geç kalkacak? (Zamanında veya erken kalkarsa 0)",
+      "unit": "dk",
+      "min": 0,
+      "max": 600,
+      "step": 1
+    },
+    {
+      "id": "landing-temperature",
+      "type": "number",
+      "text": "İndiğimizde pilotun veya telefonun söylediği hava sıcaklığı kaç derece olacak?",
+      "unit": "°C",
+      "min": 10,
+      "max": 50,
+      "step": 1
+    },
+    {
+      "id": "baggage-wait",
+      "type": "number",
+      "text": "Bant çalışmaya başladıktan kaç dakika sonra ilk valizimiz gelecek?",
+      "unit": "dk",
+      "min": 0,
+      "max": 120,
+      "step": 1
+    },
+    {
+      "id": "transfer-duration",
+      "type": "number",
+      "text": "Havalimanından otele transfer kaç dakika sürecek?",
+      "unit": "dk",
+      "min": 0,
+      "max": 180,
+      "step": 1
+    },
+    {
+      "id": "first-day-steps",
+      "type": "number",
+      "text": "İlk tam günün sonunda telefonun adımsayarı kaç adım gösterecek?",
+      "unit": "adım",
+      "min": 0,
+      "max": 50000,
+      "step": 100
+    },
+    {
+      "id": "bargain-discount",
+      "type": "number",
+      "text": "İlk pazarlığımızda ilk söylenen fiyattan yüzde kaç indirim alacağız?",
+      "unit": "%",
+      "min": 0,
+      "max": 95,
+      "step": 1
+    },
+    {
+      "id": "souvenir-count",
+      "type": "number",
+      "text": "Gezi sonunda toplam kaç parça hediyelik almış olacağız?",
+      "unit": "adet",
+      "min": 0,
+      "max": 100,
+      "step": 1
+    },
+    {
+      "id": "return-luggage-weight",
+      "type": "number",
+      "text": "Dönüşte en ağır valizimiz kaç kilo gelecek?",
+      "unit": "kg",
+      "min": 5,
+      "max": 40,
+      "step": 0.5
+    },
+    {
+      "id": "sea-temperature",
+      "type": "number",
+      "text": "İlk denize girdiğimiz gün otelin ilan ettiği deniz suyu sıcaklığı kaç derece olacak?",
+      "unit": "°C",
+      "min": 15,
+      "max": 35,
+      "step": 1
+    }
+  ]
+}

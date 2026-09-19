@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "packs": [
+    {
+      "id": "eg-sharm-el-sheikh",
+      "title": "Mısır — Sharm el-Şeyh",
+      "country": "EG",
+      "version": 1,
+      "file": "eg-sharm-el-sheikh.json",
+      "questionCount": 93,
+      "updatedAt": "2026-09-19"
+    }
+  ]
+}
