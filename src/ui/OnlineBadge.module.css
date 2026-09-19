@@ -1,0 +1,26 @@
+.badge {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.15);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.badge::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.online::before {
+  background: #4ade80;
+}
+
+.offline::before {
+  background: #cbd5e1;
+}

@@ -1,0 +1,9 @@
+.heading {
+  font-size: 1.2rem;
+}
+
+.note {
+  margin-top: -12px;
+  font-size: 0.9rem;
+  color: var(--color-muted);
+}

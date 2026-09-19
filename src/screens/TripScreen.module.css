@@ -1,0 +1,15 @@
+.resume {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: var(--space);
+  border: 2px solid var(--color-accent);
+  border-radius: var(--radius);
+  background: var(--color-warning-bg);
+}
+
+.hint {
+  margin-top: -8px;
+  font-size: 0.9rem;
+  color: var(--color-muted);
+}

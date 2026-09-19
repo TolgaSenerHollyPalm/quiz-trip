@@ -1,4 +1,5 @@
 import { useRegisterSW } from 'virtual:pwa-register/react'
+import { Button } from '../ui/Button.tsx'
 import styles from './UpdatePrompt.module.css'
 
 // The app can stay open for days during a trip, so look for a new version every hour while online.
@@ -33,17 +34,11 @@ export default function UpdatePrompt() {
       <p>{needRefresh ? 'Güncelleme hazır.' : 'Uygulama artık internetsiz de çalışır.'}</p>
       <div className={styles.actions}>
         {needRefresh && (
-          <button
-            type="button"
-            className={styles.primary}
-            onClick={() => void updateServiceWorker(true)}
-          >
+          <Button variant="primary" onClick={() => void updateServiceWorker(true)}>
             Yenile
-          </button>
+          </Button>
         )}
-        <button type="button" onClick={close}>
-          {needRefresh ? 'Sonra' : 'Tamam'}
-        </button>
+        <Button onClick={close}>{needRefresh ? 'Sonra' : 'Tamam'}</Button>
       </div>
     </div>
   )

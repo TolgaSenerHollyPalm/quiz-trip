@@ -1,0 +1,48 @@
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  min-height: var(--tap-size);
+  padding: 8px 20px;
+  border: 2px solid var(--color-primary);
+  border-radius: var(--radius);
+  font-size: 1.05rem;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.button:active {
+  transform: scale(0.98);
+}
+
+.button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.primary {
+  background: var(--color-primary);
+  color: #ffffff;
+}
+
+.secondary {
+  background: var(--color-surface);
+  color: var(--color-primary);
+}
+
+.danger {
+  border-color: var(--color-danger);
+  background: var(--color-danger);
+  color: #ffffff;
+}
+
+.big {
+  min-height: 72px;
+  font-size: 1.35rem;
+}

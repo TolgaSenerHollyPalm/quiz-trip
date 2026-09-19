@@ -1,21 +1,49 @@
-import styles from './App.module.css'
+import { useEffect } from 'react'
+import HomeScreen from '../screens/HomeScreen.tsx'
+import PlayersScreen from '../screens/PlayersScreen.tsx'
+import PlayScreen from '../screens/PlayScreen.tsx'
+import QuizSettingsScreen from '../screens/QuizSettingsScreen.tsx'
+import RoundResultScreen from '../screens/RoundResultScreen.tsx'
+import ScoreboardScreen from '../screens/ScoreboardScreen.tsx'
+import TripScreen from '../screens/TripScreen.tsx'
+import AppDataProvider from './AppDataProvider.tsx'
+import { href, useRoute, type Route } from './router.ts'
 import UpdatePrompt from './UpdatePrompt.tsx'
 
-const buildTime = new Date(__BUILD_TIME__).toLocaleString('tr-TR', {
-  dateStyle: 'short',
-  timeStyle: 'short',
-})
-
 export default function App() {
+  const route = useRoute()
+  const address = href(route)
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [address])
+
   return (
-    <div className={styles.shell}>
-      <main className={styles.main}>
-        <img src={`${import.meta.env.BASE_URL}favicon.svg`} alt="" width={112} height={112} />
-        <h1 className={styles.title}>Trip Quiz</h1>
-        <p className={styles.muted}>Oyunlar bir sonraki aşamada eklenecek.</p>
-      </main>
-      <footer className={styles.muted}>Sürüm: {buildTime}</footer>
+    <>
+      <AppDataProvider>
+        {/* Keyed by address so a screen starts fresh whenever the route changes. */}
+        <CurrentScreen key={address} route={route} />
+      </AppDataProvider>
       <UpdatePrompt />
-    </div>
+    </>
   )
+}
+
+function CurrentScreen({ route }: { route: Route }) {
+  switch (route.screen) {
+    case 'home':
+      return <HomeScreen />
+    case 'trip':
+      return <TripScreen packId={route.packId} />
+    case 'players':
+      return <PlayersScreen packId={route.packId} next={route.next} />
+    case 'quiz':
+      return <QuizSettingsScreen packId={route.packId} />
+    case 'play':
+      return <PlayScreen packId={route.packId} />
+    case 'result':
+      return <RoundResultScreen packId={route.packId} roundId={route.roundId} />
+    case 'scores':
+      return <ScoreboardScreen packId={route.packId} />
+  }
 }

@@ -4,11 +4,19 @@
   --color-surface: #ffffff;
   --color-text: #12201e;
   --color-muted: #4b5a57;
+  --color-border: #d3dedb;
   --color-primary: #0f766e;
+  --color-primary-dark: #0b5a54;
   --color-accent: #fbbf24;
+  --color-success: #15803d;
+  --color-success-bg: #dcfce7;
+  --color-danger: #b91c1c;
+  --color-danger-bg: #fee2e2;
+  --color-warning-bg: #fef3c7;
   --radius: 16px;
   --tap-size: 56px;
   --space: 16px;
+  --content-width: 640px;
 
   font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans', sans-serif;
   font-size: 18px;
@@ -32,23 +40,26 @@ body {
 
 h1,
 h2,
-p {
+h3,
+p,
+ol,
+ul {
   margin: 0;
 }
 
-button {
-  min-height: var(--tap-size);
-  padding: 0 1.25rem;
-  border: 2px solid var(--color-primary);
-  border-radius: var(--radius);
-  background: var(--color-surface);
-  color: var(--color-primary);
-  font: inherit;
-  font-weight: 600;
-  cursor: pointer;
+ol,
+ul {
+  padding: 0;
+  list-style: none;
 }
 
-button:focus-visible {
+button,
+input {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
   outline: 3px solid var(--color-accent);
   outline-offset: 2px;
 }

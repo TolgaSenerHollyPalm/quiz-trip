@@ -1,0 +1,25 @@
+.dialog {
+  width: min(100% - 2 * var(--space), 440px);
+  padding: 24px var(--space) var(--space);
+  border: 0;
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.dialog::backdrop {
+  background: rgb(0 0 0 / 0.5);
+}
+
+.title {
+  font-size: 1.25rem;
+}
+
+.body {
+  margin: 12px 0 20px;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+}

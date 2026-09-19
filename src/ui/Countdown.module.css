@@ -1,0 +1,27 @@
+.countdown {
+  position: relative;
+  height: 36px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--color-border);
+}
+
+.bar {
+  height: 100%;
+  background: var(--color-primary);
+  transition: width 0.2s linear;
+}
+
+.countdown[data-urgent='true'] .bar {
+  background: var(--color-danger);
+}
+
+.value {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  color: var(--color-text);
+  text-shadow: 0 0 6px rgb(255 255 255 / 0.9);
+}

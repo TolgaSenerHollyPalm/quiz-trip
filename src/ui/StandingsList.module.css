@@ -1,0 +1,39 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: var(--tap-size);
+  padding: 8px var(--space);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+}
+
+.first {
+  border: 2px solid var(--color-accent);
+  background: var(--color-warning-bg);
+}
+
+.rank {
+  min-width: 2ch;
+  font-weight: 700;
+  color: var(--color-muted);
+}
+
+.name {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-weight: 600;
+}
+
+.points {
+  font-weight: 700;
+  white-space: nowrap;
+}
