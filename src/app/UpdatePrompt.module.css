@@ -1,0 +1,30 @@
+.toast {
+  position: fixed;
+  inset: auto var(--space) var(--space);
+  max-width: 480px;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: var(--space);
+  border-radius: var(--radius);
+  background: var(--color-text);
+  color: var(--color-surface);
+  text-align: left;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 0.25);
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+}
+
+.actions button {
+  flex: 1;
+}
+
+.primary {
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+  color: var(--color-text);
+}
