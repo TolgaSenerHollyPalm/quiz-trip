@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import { useEffect, type ReactNode } from 'react'
 import { href, type Route } from '../app/router.ts'
 import styles from './Screen.module.css'
 
@@ -12,6 +12,13 @@ interface ScreenProps {
 }
 
 export default function Screen({ title, back, aside, wide, theme, children }: ScreenProps) {
+  // The page behind the screen is painted by <html>, so the trip's colour has to reach that far up.
+  useEffect(() => {
+    if (!theme) return undefined
+    document.documentElement.classList.add(theme)
+    return () => document.documentElement.classList.remove(theme)
+  }, [theme])
+
   const classes = [styles.screen, wide && styles.wide, theme].filter(Boolean).join(' ')
   return (
     <div className={classes}>
