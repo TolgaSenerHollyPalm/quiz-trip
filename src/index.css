@@ -1,22 +1,46 @@
-/* The game is passed around on one phone, often in a plane: big targets, big text. */
+/* The game is passed around on one phone, often in a plane: big targets, big text.
+   Every colour is a token, so the dark theme only has to redefine this list. */
 :root {
-  --color-bg: #f4f7f6;
+  color-scheme: light dark;
+
+  --color-bg: #f0faf8;
   --color-surface: #ffffff;
-  --color-text: #12201e;
-  --color-muted: #4b5a57;
-  --color-border: #d3dedb;
-  --color-primary: #0f766e;
-  --color-primary-dark: #0b5a54;
-  --color-accent: #fbbf24;
+  --color-text: #0a2422;
+  --color-muted: #4a6562;
+  --color-border: #cfe7e3;
+
+  --color-primary: #0a7d76;
+  --color-primary-bright: #12a79d;
+  --color-primary-dark: #075f59;
+  --color-primary-soft: #d8f4ef;
+  --color-on-primary: #ffffff;
+
+  --color-accent: #ff6b57;
+  --color-accent-soft: #ffe7e2;
+  --color-on-accent: #3d1008;
+
   --color-success: #15803d;
   --color-success-bg: #dcfce7;
-  --color-danger: #b91c1c;
-  --color-danger-bg: #fee2e2;
-  --color-warning-bg: #fef3c7;
-  --radius: 16px;
+  --color-danger: #c02626;
+  --color-danger-bg: #fdeaea;
+  --color-on-danger: #ffffff;
+  --color-warning-bg: #fff0e6;
+  --color-warning-text: #8a3b1e;
+  --color-info-bg: #e4eeff;
+  --color-info-text: #27467e;
+
+  --header-bg: linear-gradient(120deg, #0a7d76, #12a79d);
+  --header-text: #ffffff;
+  --toast-bg: #0a2422;
+  --toast-text: #f0faf8;
+  --shadow-card: 0 1px 2px rgb(10 36 34 / 0.05), 0 8px 20px rgb(10 36 34 / 0.05);
+  --shadow-raised: 0 6px 18px rgb(10 125 118 / 0.22);
+
+  --radius: 18px;
   --tap-size: 56px;
   --space: 16px;
   --content-width: 640px;
+  --wide-width: 960px;
 
   font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans', sans-serif;
   font-size: 18px;
@@ -25,6 +49,51 @@
   background-color: var(--color-bg);
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: transparent;
+}
+
+/* Follows the phone's own setting; there is no theme switch in the app. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #061a19;
+    --color-surface: #0f2b29;
+    --color-text: #e3f4f1;
+    --color-muted: #9bb8b4;
+    --color-border: #23504c;
+
+    --color-primary: #2dd4bf;
+    --color-primary-bright: #5eead4;
+    --color-primary-dark: #14b8a6;
+    --color-primary-soft: #10403c;
+    --color-on-primary: #05221f;
+
+    --color-accent: #ff8a75;
+    --color-accent-soft: #3b1e18;
+    --color-on-accent: #2b0a04;
+
+    --color-success: #4ade80;
+    --color-success-bg: #123420;
+    --color-danger: #fca5a5;
+    --color-danger-bg: #3c1717;
+    --color-on-danger: #3c0d0d;
+    --color-warning-bg: #3a2616;
+    --color-warning-text: #fbbf24;
+    --color-info-bg: #16304d;
+    --color-info-text: #c4d8ff;
+
+    --header-bg: #0f2b29;
+    --header-text: #e3f4f1;
+    --toast-bg: #17403c;
+    --toast-text: #e3f4f1;
+    --shadow-card: 0 1px 2px rgb(0 0 0 / 0.35);
+    --shadow-raised: 0 6px 18px rgb(0 0 0 / 0.45);
+  }
+}
+
+/* A mouse and a bigger screen can take a little more text. */
+@media (min-width: 900px) {
+  :root {
+    font-size: 19px;
+  }
 }
 
 *,

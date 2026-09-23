@@ -9,8 +9,8 @@
   gap: 12px;
   padding: var(--space);
   border-radius: var(--radius);
-  background: var(--color-text);
-  color: var(--color-surface);
+  background: var(--toast-bg);
+  color: var(--toast-text);
   box-shadow: 0 8px 24px rgb(0 0 0 / 0.25);
 }
 

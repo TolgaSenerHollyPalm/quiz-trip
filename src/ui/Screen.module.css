@@ -1,7 +1,13 @@
 .screen {
+  --width: var(--content-width);
   display: flex;
   flex-direction: column;
   min-height: 100dvh;
+}
+
+/* List screens can use the whole desktop window; the game screens stay a phone-sized column. */
+.wide {
+  --width: var(--wide-width);
 }
 
 .header {
@@ -12,9 +18,11 @@
   align-items: center;
   gap: 8px;
   min-height: 64px;
-  padding: 8px var(--space);
-  background: var(--color-primary);
-  color: #ffffff;
+  /* Lines the title up with the content column on a wide screen. */
+  padding: 8px max(var(--space), calc((100% - var(--width)) / 2));
+  background: var(--header-bg);
+  color: var(--header-text);
+  box-shadow: var(--shadow-card);
 }
 
 .back {
@@ -30,6 +38,12 @@
 
 .back:active {
   background: rgb(255 255 255 / 0.15);
+}
+
+@media (hover: hover) {
+  .back:hover {
+    background: rgb(255 255 255 / 0.15);
+  }
 }
 
 .title {
@@ -48,7 +62,7 @@
   flex-direction: column;
   gap: var(--space);
   width: 100%;
-  max-width: var(--content-width);
+  max-width: var(--width);
   margin: 0 auto;
   padding: 20px var(--space) 32px;
 }

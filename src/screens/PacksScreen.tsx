@@ -16,7 +16,7 @@ export default function PacksScreen() {
   const usedBy = (packId: string) => trips.filter((trip) => trip.packId === packId).length
 
   return (
-    <Screen title="Soru paketleri" back={{ screen: 'home' }}>
+    <Screen title="Soru paketleri" back={{ screen: 'home' }} wide>
       <PackUpdates />
       {sync.result && <SyncReport result={sync.result} />}
 

@@ -1,7 +1,12 @@
 .list {
-  display: flex;
-  flex-direction: column;
+  display: grid;
   gap: 10px;
+}
+
+@media (min-width: 720px) {
+  .list {
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  }
 }
 
 .pack {
@@ -13,6 +18,7 @@
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
   background: var(--color-surface);
+  box-shadow: var(--shadow-card);
 }
 
 .title {

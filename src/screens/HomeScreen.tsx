@@ -29,25 +29,32 @@ export default function HomeScreen() {
   }
 
   return (
-    <Screen title="Trip Quiz" aside={<OnlineBadge />}>
+    <Screen title="TripKit" aside={<OnlineBadge />} wide>
       <IosInstallHint />
-      <LinkButton to={{ screen: 'trip-new' }} variant="primary" big>
-        + Yeni gezi
-      </LinkButton>
+      <div className={styles.action}>
+        <LinkButton to={{ screen: 'trip-new' }} variant="primary" big>
+          + Yeni gezi
+        </LinkButton>
+      </div>
 
       {sorted.length === 0 ? (
         <p className={text.hint}>Henüz gezi yok. Nereye ve ne zaman gideceğini gir, sayaç başlasın.</p>
       ) : (
         <ul className={styles.list}>
           {sorted.map((trip) => {
-            const badge = countdownBadge(tripPhase(trip, today))
+            const phase = tripPhase(trip, today)
+            const badge = countdownBadge(phase)
             return (
               <li key={trip.id}>
                 <a className={styles.card} href={href({ screen: 'trip', tripId: trip.id })}>
                   <span className={styles.head}>
                     <TransportIcon transport={trip.transport} size={26} />
                     <span className={styles.title}>{trip.name}</span>
-                    {badge && <span className={styles.badge}>{badge}</span>}
+                    {badge && (
+                      <span className={`${styles.badge} ${phase.kind === 'after' ? styles.badgeDone : ''}`}>
+                        {badge}
+                      </span>
+                    )}
                   </span>
                   <span className={styles.details}>{details(trip)}</span>
                 </a>
@@ -57,7 +64,9 @@ export default function HomeScreen() {
         </ul>
       )}
 
-      <LinkButton to={{ screen: 'packs' }}>Soru paketleri ({packs.length})</LinkButton>
+      <div className={styles.action}>
+        <LinkButton to={{ screen: 'packs' }}>Soru paketleri ({packs.length})</LinkButton>
+      </div>
       <p className={styles.version}>Sürüm: {buildTime}</p>
     </Screen>
   )

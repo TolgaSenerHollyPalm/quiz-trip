@@ -28,7 +28,8 @@
 
 .primary {
   background: var(--color-primary);
-  color: #ffffff;
+  color: var(--color-on-primary);
+  box-shadow: var(--shadow-raised);
 }
 
 .secondary {
@@ -39,10 +40,25 @@
 .danger {
   border-color: var(--color-danger);
   background: var(--color-danger);
-  color: #ffffff;
+  color: var(--color-on-danger);
 }
 
 .big {
   min-height: 72px;
   font-size: 1.35rem;
+}
+
+@media (hover: hover) {
+  .primary:hover:not(:disabled) {
+    background: var(--color-primary-dark);
+    border-color: var(--color-primary-dark);
+  }
+
+  .secondary:hover:not(:disabled) {
+    background: var(--color-primary-soft);
+  }
+
+  .danger:hover:not(:disabled) {
+    filter: brightness(0.94);
+  }
 }

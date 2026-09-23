@@ -28,7 +28,7 @@ export default function ChecklistScreen({ tripId }: { tripId: string }) {
   const total = trip.checklist.length
 
   return (
-    <Screen title="Hazırlık listesi" back={{ screen: 'trip', tripId }}>
+    <Screen title="Hazırlık listesi" back={{ screen: 'trip', tripId }} wide>
       {total > 0 && (
         <p className={styles.progress}>
           <span className={styles.count}>
@@ -47,42 +47,44 @@ export default function ChecklistScreen({ tripId }: { tripId: string }) {
         </p>
       )}
 
-      {GROUPS.map(({ group, title, placeholder }) => {
-        const items = trip.checklist.filter((item) => item.group === group)
-        return (
-          <section key={group} className={styles.section}>
-            <h2 className={text.heading}>{title}</h2>
-            {items.length === 0 ? (
-              <p className={text.hint}>Bu bölümde henüz madde yok.</p>
-            ) : (
-              <ul className={styles.items}>
-                {items.map((item) => (
-                  <li key={item.id} className={styles.item}>
-                    <label className={styles.check}>
-                      <input
-                        type="checkbox"
-                        className={styles.box}
-                        checked={item.done}
-                        onChange={() => toggle(item.id)}
-                      />
-                      <span className={item.done ? styles.doneText : undefined}>{item.text}</span>
-                    </label>
-                    <button
-                      type="button"
-                      className={styles.remove}
-                      aria-label={`${item.text} maddesini sil`}
-                      onClick={() => remove(item.id)}
-                    >
-                      ×
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            )}
-            <AddRow placeholder={placeholder} onAdd={(itemText) => add(group, itemText)} />
-          </section>
-        )
-      })}
+      <div className={styles.sections}>
+        {GROUPS.map(({ group, title, placeholder }) => {
+          const items = trip.checklist.filter((item) => item.group === group)
+          return (
+            <section key={group} className={styles.section}>
+              <h2 className={text.heading}>{title}</h2>
+              {items.length === 0 ? (
+                <p className={text.hint}>Bu bölümde henüz madde yok.</p>
+              ) : (
+                <ul className={styles.items}>
+                  {items.map((item) => (
+                    <li key={item.id} className={styles.item}>
+                      <label className={styles.check}>
+                        <input
+                          type="checkbox"
+                          className={styles.box}
+                          checked={item.done}
+                          onChange={() => toggle(item.id)}
+                        />
+                        <span className={item.done ? styles.doneText : undefined}>{item.text}</span>
+                      </label>
+                      <button
+                        type="button"
+                        className={styles.remove}
+                        aria-label={`${item.text} maddesini sil`}
+                        onClick={() => remove(item.id)}
+                      >
+                        ×
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+              <AddRow placeholder={placeholder} onAdd={(itemText) => add(group, itemText)} />
+            </section>
+          )
+        })}
+      </div>
 
       <Button variant="primary" onClick={() => save(applySuggestions(trip))}>
         {total === 0 ? 'Önerilen listeyi getir' : 'Önerileri yenile'}

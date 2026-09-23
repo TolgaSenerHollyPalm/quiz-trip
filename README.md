@@ -1,6 +1,10 @@
-# Trip Quiz
+# TripKit
 
-Offline quiz and prediction game for a travel group, played on a single Android phone or tablet. Installed as a PWA from GitHub Pages; no backend.
+A trip companion that works offline: a countdown to departure, a packing and to-do list that follows the
+vehicle and the kind of holiday, and a quiz and prediction game for the journey itself. Installed as a PWA
+from GitHub Pages, on Android or iOS, and usable in a desktop browser; no backend.
+
+The repository, and with it the Pages URL, is still called `quiz-trip`.
 
 ## Development
 

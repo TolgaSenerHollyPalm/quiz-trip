@@ -9,12 +9,12 @@
 
 .open {
   background: var(--color-warning-bg);
-  color: #92400e;
+  color: var(--color-warning-text);
 }
 
 .locked {
-  background: #e0e7ff;
-  color: #3730a3;
+  background: var(--color-info-bg);
+  color: var(--color-info-text);
 }
 
 .resolved {

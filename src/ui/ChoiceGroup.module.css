@@ -36,5 +36,5 @@
 .option[aria-pressed='true'] {
   border-color: var(--color-primary);
   background: var(--color-primary);
-  color: #ffffff;
+  color: var(--color-on-primary);
 }
