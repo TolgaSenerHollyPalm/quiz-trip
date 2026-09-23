@@ -1,6 +1,7 @@
 /**
- * iPhones and iPads never offer to install a web app, so the app has to point at Safari's own
- * "Share → Add to Home Screen". Android needs no hint: Chrome offers the install itself.
+ * No browser on an iPhone or iPad offers to install a web app, so the app has to point at the browser's own
+ * "Share → Add to Home Screen". Every iOS browser reports itself as iPhone/iPad, so this covers all of them.
+ * Android needs no hint: Chrome offers the install itself.
  */
 export function showsIosInstallHint(userAgent: string, touchPoints: number, standalone: boolean): boolean {
   // An iPad reports itself as a Mac, so a touch screen is what tells them apart.

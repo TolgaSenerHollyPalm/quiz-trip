@@ -29,7 +29,7 @@ export default function IosInstallHint() {
   return (
     <aside className={styles.hint}>
       <p>
-        <strong>Uygulama gibi kullan:</strong> Safari’nin{' '}
+        <strong>Uygulama gibi kullan:</strong> Tarayıcının{' '}
         <svg className={styles.icon} viewBox="0 0 24 24" width="20" height="20" role="img" aria-label="Paylaş">
           <path
             d="M12 3v12M12 3l-3.5 3.5M12 3l3.5 3.5M6 11H5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-8a1 1 0 0 0-1-1h-1"
