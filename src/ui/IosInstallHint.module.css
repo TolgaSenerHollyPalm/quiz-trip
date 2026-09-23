@@ -1,0 +1,13 @@
+.hint {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: var(--space);
+  border: 2px solid var(--color-accent);
+  border-radius: var(--radius);
+  background: var(--color-warning-bg);
+}
+
+.icon {
+  vertical-align: -4px;
+}

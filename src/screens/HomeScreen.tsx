@@ -2,6 +2,7 @@ import { useAppData } from '../app/appData.ts'
 import { href } from '../app/router.ts'
 import type { SyncResult } from '../packs/sync.ts'
 import { Button } from '../ui/Button.tsx'
+import IosInstallHint from '../ui/IosInstallHint.tsx'
 import OnlineBadge from '../ui/OnlineBadge.tsx'
 import Screen from '../ui/Screen.tsx'
 import { useOnline } from '../ui/useOnline.ts'
@@ -15,6 +16,7 @@ export default function HomeScreen() {
 
   return (
     <Screen title="Trip Quiz" aside={<OnlineBadge />}>
+      <IosInstallHint />
       <h2 className={styles.heading}>Geziler</h2>
       {packs.length === 0 ? (
         <p>Cihazda henüz gezi paketi yok.</p>
