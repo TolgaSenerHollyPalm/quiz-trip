@@ -11,6 +11,7 @@ import OnlineBadge from '../ui/OnlineBadge.tsx'
 import Screen from '../ui/Screen.tsx'
 import text from '../ui/text.module.css'
 import TransportIcon from '../ui/TransportIcon.tsx'
+import { tripTheme } from '../ui/tripTheme.ts'
 import styles from './HomeScreen.module.css'
 
 const buildTime = new Date(__BUILD_TIME__).toLocaleString('tr-TR', { dateStyle: 'short', timeStyle: 'short' })
@@ -67,7 +68,7 @@ export default function HomeScreen() {
             const badge = countdownBadge(phase)
             return (
               <li key={trip.id}>
-                <a className={styles.card} href={href({ screen: 'trip', tripId: trip.id })}>
+                <a className={`${styles.card} ${tripTheme(trip.kind)}`} href={href({ screen: 'trip', tripId: trip.id })}>
                   <span className={styles.head}>
                     <TransportIcon transport={trip.transport} size={26} />
                     <span className={styles.title}>{trip.name}</span>

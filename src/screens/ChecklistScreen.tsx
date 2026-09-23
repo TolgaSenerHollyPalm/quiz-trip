@@ -10,7 +10,7 @@ import styles from './ChecklistScreen.module.css'
 
 const GROUPS = [
   { group: 'pack' as const, title: 'Alınacaklar', placeholder: 'Ör. fotoğraf makinesi' },
-  { group: 'do' as const, title: 'Yapılacaklar', placeholder: 'Ör. komşuya anahtar bırak' },
+  { group: 'do' as const, title: 'Yapılacaklar', placeholder: 'Ör. komşuya anahtar' },
 ]
 
 export default function ChecklistScreen({ tripId }: { tripId: string }) {
@@ -80,7 +80,7 @@ export default function ChecklistScreen({ tripId }: { tripId: string }) {
                   ))}
                 </ul>
               )}
-              <AddRow placeholder={placeholder} onAdd={(itemText) => add(group, itemText)} />
+              <AddRow title={title} placeholder={placeholder} onAdd={(itemText) => add(group, itemText)} />
             </section>
           )
         })}
@@ -96,7 +96,14 @@ export default function ChecklistScreen({ tripId }: { tripId: string }) {
   )
 }
 
-function AddRow({ placeholder, onAdd }: { placeholder: string; onAdd: (text: string) => void }) {
+interface AddRowProps {
+  title: string
+  placeholder: string
+  onAdd: (text: string) => void
+}
+
+/** The field takes the whole row; the button is a plus, so even a long item stays readable while typing. */
+function AddRow({ title, placeholder, onAdd }: AddRowProps) {
   const [draft, setDraft] = useState('')
   const submit = () => {
     const trimmed = draft.trim()
@@ -118,12 +125,19 @@ function AddRow({ placeholder, onAdd }: { placeholder: string; onAdd: (text: str
         value={draft}
         maxLength={80}
         placeholder={placeholder}
-        aria-label={placeholder}
+        aria-label={`${title} listesine yeni madde`}
         onChange={(event) => setDraft(event.target.value)}
       />
-      <Button type="submit" disabled={draft.trim() === ''}>
-        Ekle
-      </Button>
+      <button
+        type="submit"
+        className={styles.addButton}
+        disabled={draft.trim() === ''}
+        aria-label={`${title} listesine ekle`}
+      >
+        <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true">
+          <path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" />
+        </svg>
+      </button>
     </form>
   )
 }

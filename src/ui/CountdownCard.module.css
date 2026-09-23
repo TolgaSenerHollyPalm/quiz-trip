@@ -1,24 +1,19 @@
+/* Painted by the trip's holiday type: a gradient down to the surface, drawn with a deeper edge. */
 .card {
   display: flex;
   flex-direction: column;
   gap: 6px;
   padding: 20px var(--space);
-  border: 1px solid var(--color-border);
-  border-left: 6px solid var(--color-primary);
+  border: 2px solid var(--trip-edge);
   border-radius: var(--radius);
-  background: linear-gradient(135deg, var(--color-primary-soft), var(--color-surface) 65%);
+  background: linear-gradient(140deg, var(--trip-from), var(--trip-via, var(--trip-from)) 45%, var(--color-surface));
   box-shadow: var(--shadow-card);
 }
 
-/* Coral while the trip is still ahead, turquoise once it starts, quiet when it is over. */
-.before {
-  border-left-color: var(--color-accent);
-  background: linear-gradient(135deg, var(--color-accent-soft), var(--color-surface) 65%);
-}
-
+/* A finished or undated trip steps back rather than shouting a colour. */
 .after,
 .undated {
-  border-left-color: var(--color-border);
+  border-color: var(--color-border);
   background: var(--color-surface);
 }
 
@@ -36,7 +31,12 @@
 
 .head svg {
   flex: none;
-  color: var(--color-primary);
+  color: var(--trip-edge);
+}
+
+.after .head svg,
+.undated .head svg {
+  color: var(--color-muted);
 }
 
 .meta {

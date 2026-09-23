@@ -1,0 +1,99 @@
+/*
+ * A colour set per holiday type: a gentle gradient, a deeper edge to draw it, and a badge pair that
+ * stays readable. Cards read these four variables; nothing else knows which holiday it is.
+ */
+.other {
+  --trip-from: var(--color-primary-soft);
+  --trip-edge: var(--color-primary);
+  --trip-badge-bg: var(--color-primary);
+  --trip-badge-ink: var(--color-on-primary);
+}
+
+.beach {
+  --trip-from: #cdeeff;
+  --trip-edge: #1b7fb8;
+  --trip-badge-bg: #1b7fb8;
+  --trip-badge-ink: #ffffff;
+}
+
+/* A theme park: the yellow of the sign and the blue of the sky. */
+.fun {
+  --trip-from: #ffe7a8;
+  --trip-via: #dbe9ff;
+  --trip-edge: #d99a1f;
+  --trip-badge-bg: #e8a92a;
+  --trip-badge-ink: #2a1c00;
+}
+
+.winter {
+  --trip-from: #e9f3fa;
+  --trip-edge: #7ba3bd;
+  --trip-badge-bg: #6f96ad;
+  --trip-badge-ink: #ffffff;
+}
+
+.city {
+  --trip-from: #f2eadf;
+  --trip-edge: #a9784f;
+  --trip-badge-bg: #a9714a;
+  --trip-badge-ink: #ffffff;
+}
+
+.nature {
+  --trip-from: #d9f2dc;
+  --trip-edge: #3f8d4f;
+  --trip-badge-bg: #3f8d4f;
+  --trip-badge-ink: #ffffff;
+}
+
+.business {
+  --trip-from: #e4e9f3;
+  --trip-edge: #5a6b8c;
+  --trip-badge-bg: #5a6b8c;
+  --trip-badge-ink: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+  .beach {
+    --trip-from: #0d3047;
+    --trip-edge: #3f9bd0;
+    --trip-badge-bg: #4aa8dd;
+    --trip-badge-ink: #04202f;
+  }
+
+  .fun {
+    --trip-from: #3a2f12;
+    --trip-via: #16304d;
+    --trip-edge: #cfa03a;
+    --trip-badge-bg: #e8bf4d;
+    --trip-badge-ink: #2a1c00;
+  }
+
+  .winter {
+    --trip-from: #1c2f3b;
+    --trip-edge: #8badc2;
+    --trip-badge-bg: #9fc3d8;
+    --trip-badge-ink: #12242e;
+  }
+
+  .city {
+    --trip-from: #33281f;
+    --trip-edge: #b98a5e;
+    --trip-badge-bg: #c79a6d;
+    --trip-badge-ink: #2a1c10;
+  }
+
+  .nature {
+    --trip-from: #143320;
+    --trip-edge: #4e9e61;
+    --trip-badge-bg: #5fb573;
+    --trip-badge-ink: #06230f;
+  }
+
+  .business {
+    --trip-from: #1c2536;
+    --trip-edge: #7d90b5;
+    --trip-badge-bg: #8fa3c8;
+    --trip-badge-ink: #101a2b;
+  }
+}

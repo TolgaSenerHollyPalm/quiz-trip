@@ -19,7 +19,8 @@
   display: block;
   height: 100%;
   border-radius: 999px;
-  background: linear-gradient(90deg, var(--color-primary), var(--color-primary-bright));
+  /* The app's own two colours, the ones in the icon. */
+  background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
   transition: width 0.2s ease-out;
 }
 
@@ -105,11 +106,41 @@
 }
 
 .input {
-  flex: 1;
+  flex: 1 1 auto;
+  width: 100%;
   min-width: 0;
   min-height: var(--tap-size);
   padding: 0 14px;
   border: 2px solid var(--color-border);
   border-radius: var(--radius);
   background: var(--color-surface);
+}
+
+.input:focus {
+  border-color: var(--color-primary);
+  outline: none;
+}
+
+/* Just a plus: the field needs the width more than the word "Ekle" does. */
+.addButton {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: var(--tap-size);
+  height: var(--tap-size);
+  border: 2px solid var(--color-primary);
+  border-radius: var(--radius);
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.addButton:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.addButton:active:not(:disabled) {
+  transform: scale(0.96);
 }
