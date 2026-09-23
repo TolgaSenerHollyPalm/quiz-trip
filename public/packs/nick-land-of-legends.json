@@ -1,0 +1,1090 @@
+{
+  "schemaVersion": 1,
+  "id": "nick-land-of-legends",
+  "title": "Land of Legends — Nickelodeon",
+  "country": "TR",
+  "city": "Belek, Antalya",
+  "version": 1,
+  "updatedAt": "2026-09-23",
+  "questions": [
+    {
+      "id": "nlol-sb-001",
+      "category": "spongebob",
+      "difficulty": "easy",
+      "text": "SpongeBob hangi su altı şehrinde yaşar?",
+      "options": [
+        "Atlantis",
+        "Coral Bay",
+        "Sünger Şehri",
+        "Bikini Bottom"
+      ],
+      "answerIndex": 3,
+      "explanation": "SpongeBob, Bikini Bottom adlı su altı şehrinde yaşar."
+    },
+    {
+      "id": "nlol-sb-002",
+      "category": "spongebob",
+      "difficulty": "easy",
+      "text": "SpongeBob'un evi neye benzer?",
+      "options": [
+        "Kayaya",
+        "Deniz kabuğuna",
+        "Ananasa",
+        "Mercana"
+      ],
+      "answerIndex": 2,
+      "explanation": "SpongeBob dev bir ananasın içinde yaşar."
+    },
+    {
+      "id": "nlol-sb-003",
+      "category": "spongebob",
+      "difficulty": "easy",
+      "text": "SpongeBob'un evcil hayvanı hangisidir?",
+      "options": [
+        "Larry (yıldız)",
+        "Gary (salyangoz)",
+        "Puffy (balık)",
+        "Karen (bilgisayar)"
+      ],
+      "answerIndex": 1,
+      "explanation": "Gary, SpongeBob'un evcil salyangozudur ve kedi gibi 'miyav' der."
+    },
+    {
+      "id": "nlol-sb-004",
+      "category": "spongebob",
+      "difficulty": "easy",
+      "text": "SpongeBob'un en yakın arkadaşı hangi deniz yıldızıdır?",
+      "options": [
+        "Larry",
+        "Squidward",
+        "Patrick Star",
+        "Sandy Cheeks"
+      ],
+      "answerIndex": 2,
+      "explanation": "Patrick Star, SpongeBob'un en yakın arkadaşı ve komşusudur."
+    },
+    {
+      "id": "nlol-sb-005",
+      "category": "spongebob",
+      "difficulty": "medium",
+      "text": "Patrick Star'ın evi neye benzer?",
+      "options": [
+        "Bir deniz kestanesine",
+        "Bir tekneye",
+        "Bir kayaya",
+        "Bir midyeye"
+      ],
+      "answerIndex": 2,
+      "explanation": "Patrick, SpongeBob'un evinin yanındaki bir kayanın altında yaşar."
+    },
+    {
+      "id": "nlol-sb-006",
+      "category": "spongebob",
+      "difficulty": "medium",
+      "text": "SpongeBob nerede fry cook (mutfak elemanı) olarak çalışır?",
+      "options": [
+        "Chum Bucket",
+        "Barnacle Cafe",
+        "Krusty Krab",
+        "Kelp Bistro"
+      ],
+      "answerIndex": 2,
+      "explanation": "SpongeBob, Mr. Krabs'ın restoranı Krusty Krab'da çalışır."
+    },
+    {
+      "id": "nlol-sb-007",
+      "category": "spongebob",
+      "difficulty": "medium",
+      "text": "Krusty Krab'ın komşu rakip restoranının adı nedir?",
+      "options": [
+        "Weenie Hut",
+        "Kelp Shack",
+        "Salty Spitoon",
+        "Chum Bucket"
+      ],
+      "answerIndex": 3,
+      "explanation": "Plankton'un restoranı Chum Bucket, Krusty Krab'ın tam karşısındadır."
+    },
+    {
+      "id": "nlol-sb-008",
+      "category": "spongebob",
+      "difficulty": "medium",
+      "text": "Krusty Krab'ın sahibi kimdir?",
+      "options": [
+        "Mrs. Puff",
+        "Squidward",
+        "Plankton",
+        "Mr. Krabs"
+      ],
+      "answerIndex": 3,
+      "explanation": "Eugene Krabs (Mr. Krabs) restoranın parayı çok seven sahibidir."
+    },
+    {
+      "id": "nlol-sb-009",
+      "category": "spongebob",
+      "difficulty": "medium",
+      "text": "Squidward Tentacles hangi tür bir canlıdır?",
+      "options": [
+        "Kalamar",
+        "Deniz salyangozu",
+        "Mürekkep balığı",
+        "Ahtapot"
+      ],
+      "answerIndex": 3,
+      "explanation": "Squidward'ın adında 'kalamar' geçse de o aslında bir ahtapottur; kolayca çizilebilsin diye sekiz yerine altı bacaklı gösterilir."
+    },
+    {
+      "id": "nlol-sb-010",
+      "category": "spongebob",
+      "difficulty": "medium",
+      "text": "Squidward hangi müzik aletini çalar?",
+      "options": [
+        "Trompet",
+        "Keman",
+        "Gitar",
+        "Klarnet"
+      ],
+      "answerIndex": 3,
+      "explanation": "Squidward kendini yetenekli sanar ama klarnetteki icraları genelde çok kötüdür."
+    },
+    {
+      "id": "nlol-sb-011",
+      "category": "spongebob",
+      "difficulty": "medium",
+      "text": "Krabby Patty'lerin gizli tarifini kim çalmaya çalışır durur?",
+      "options": [
+        "Sandy",
+        "Mrs. Puff",
+        "Squidward",
+        "Plankton"
+      ],
+      "answerIndex": 3,
+      "explanation": "Küçük tek gözlü Plankton, Krabby Patty formülünü çalmak için sürekli plan yapar."
+    },
+    {
+      "id": "nlol-sb-012",
+      "category": "spongebob",
+      "difficulty": "medium",
+      "text": "Sandy Cheeks hangi eyaletten gelen bir sincaptır?",
+      "options": [
+        "Teksas",
+        "New York",
+        "Kaliforniya",
+        "Florida"
+      ],
+      "answerIndex": 0,
+      "explanation": "Sandy, Bikini Bottom'da su geçirmez bir kubbede yaşayan Teksaslı bir sincaptır."
+    },
+    {
+      "id": "nlol-sb-013",
+      "category": "spongebob",
+      "difficulty": "medium",
+      "text": "SpongeBob ve arkadaşları hangi hobiyi bir ağla avlanarak yapar?",
+      "options": [
+        "Denizanası avlama (jellyfishing)",
+        "Midye toplama",
+        "Balık tutma",
+        "Yosun biçme"
+      ],
+      "answerIndex": 0,
+      "explanation": "Jellyfish Fields'te ağlarla denizanası avlamak SpongeBob'un en sevdiği aktivitelerdendir."
+    },
+    {
+      "id": "nlol-sb-014",
+      "category": "spongebob",
+      "difficulty": "hard",
+      "text": "SpongeBob, tekne sürme ehliyeti için kimin okuluna gider?",
+      "options": [
+        "Squidward",
+        "Mrs. Puff",
+        "Mr. Krabs",
+        "Sandy"
+      ],
+      "answerIndex": 1,
+      "explanation": "Mrs. Puff'ın Denizcilik Okulu'nda SpongeBob yıllardır sınavı geçemez."
+    },
+    {
+      "id": "nlol-sb-015",
+      "category": "spongebob",
+      "difficulty": "hard",
+      "text": "SpongeBob SquarePants dizisinin yaratıcısı kimdir?",
+      "options": [
+        "Craig McCracken",
+        "Butch Hartman",
+        "Stephen Hillenburg",
+        "Kevin Eastman"
+      ],
+      "answerIndex": 2,
+      "explanation": "Deniz biyoloğu ve animatör Stephen Hillenburg diziyi yarattı."
+    },
+    {
+      "id": "nlol-sb-016",
+      "category": "spongebob",
+      "difficulty": "medium",
+      "text": "SpongeBob dizisi ilk olarak hangi yıl yayınlanmaya başladı?",
+      "options": [
+        "1999",
+        "2003",
+        "1995",
+        "1989"
+      ],
+      "answerIndex": 0,
+      "explanation": "Dizi 1999'da Nickelodeon'da yayın hayatına başladı."
+    },
+    {
+      "id": "nlol-sb-017",
+      "category": "spongebob",
+      "difficulty": "hard",
+      "text": "Mr. Krabs'ın evi neye benzer?",
+      "options": [
+        "Bir gemi dümenine",
+        "Bir deniz fenerine",
+        "Bir çapaya",
+        "Bir istiridyeye"
+      ],
+      "answerIndex": 2,
+      "explanation": "Mr. Krabs'ın evi dev bir çapa şeklindedir."
+    },
+    {
+      "id": "nlol-sb-018",
+      "category": "spongebob",
+      "difficulty": "hard",
+      "text": "Plankton'un bilgisayar eşinin adı nedir?",
+      "options": [
+        "Karen",
+        "Doris",
+        "Wanda",
+        "Vera"
+      ],
+      "answerIndex": 0,
+      "explanation": "Karen, Plankton'un konuşan bilgisayar karısıdır."
+    },
+    {
+      "id": "nlol-sb-019",
+      "category": "spongebob",
+      "difficulty": "easy",
+      "text": "SpongeBob'un soyadı nedir?",
+      "options": [
+        "RoundPants",
+        "FunnyPants",
+        "SquareShorts",
+        "SquarePants"
+      ],
+      "answerIndex": 3,
+      "explanation": "Tam adı SpongeBob SquarePants'tır; kısacık köşeli pantolonuyla tanınır."
+    },
+    {
+      "id": "nlol-sb-020",
+      "category": "spongebob",
+      "difficulty": "medium",
+      "text": "Mr. Krabs'ın kızı hangi tür bir canlıdır?",
+      "options": [
+        "Yengeç",
+        "Balık",
+        "Ahtapot",
+        "Balina"
+      ],
+      "answerIndex": 3,
+      "explanation": "Pearl, Mr. Krabs'ın kızıdır ve bir balinadır; bu ilişkinin biyolojik açıklaması dizide bilerek hiç yapılmaz, ünlü bir dizi şakasıdır."
+    },
+    {
+      "id": "nlol-tmnt-001",
+      "category": "tmnt",
+      "difficulty": "easy",
+      "text": "Mavi maskeli, kılıç kullanan ve grubun lideri olan kaplumbağa hangisidir?",
+      "options": [
+        "Raphael",
+        "Michelangelo",
+        "Leonardo",
+        "Donatello"
+      ],
+      "answerIndex": 2,
+      "explanation": "Leonardo mavi maske takar, iki katana kullanır ve takımın lideridir."
+    },
+    {
+      "id": "nlol-tmnt-002",
+      "category": "tmnt",
+      "difficulty": "easy",
+      "text": "Kırmızı maskeli, sert mizaçlı kaplumbağa hangisidir?",
+      "options": [
+        "Raphael",
+        "Michelangelo",
+        "Donatello",
+        "Leonardo"
+      ],
+      "answerIndex": 0,
+      "explanation": "Raphael kırmızı maske takar ve grubun en asi, öfkeli üyesidir."
+    },
+    {
+      "id": "nlol-tmnt-003",
+      "category": "tmnt",
+      "difficulty": "easy",
+      "text": "Mor maskeli, akıllı ve teknoloji meraklısı kaplumbağa hangisidir?",
+      "options": [
+        "Michelangelo",
+        "Leonardo",
+        "Raphael",
+        "Donatello"
+      ],
+      "answerIndex": 3,
+      "explanation": "Donatello mor maske takar, grubun mucidi ve teknoloji uzmanıdır."
+    },
+    {
+      "id": "nlol-tmnt-004",
+      "category": "tmnt",
+      "difficulty": "easy",
+      "text": "Turuncu maskeli, şakacı ve pizza aşığı kaplumbağa hangisidir?",
+      "options": [
+        "Raphael",
+        "Donatello",
+        "Michelangelo",
+        "Leonardo"
+      ],
+      "answerIndex": 2,
+      "explanation": "Michelangelo turuncu maske takar ve grubun en eğlenceli üyesidir."
+    },
+    {
+      "id": "nlol-tmnt-005",
+      "category": "tmnt",
+      "difficulty": "easy",
+      "text": "Kaplumbağaların ninjutsu öğretmeni (sensei) kimdir?",
+      "options": [
+        "Shredder",
+        "April",
+        "Splinter",
+        "Casey Jones"
+      ],
+      "answerIndex": 2,
+      "explanation": "Splinter, dört kaplumbağayı büyüten ve eğiten mutant bir sıçandır."
+    },
+    {
+      "id": "nlol-tmnt-006",
+      "category": "tmnt",
+      "difficulty": "easy",
+      "text": "Ninja Kaplumbağaların en sevdiği yiyecek nedir?",
+      "options": [
+        "Pizza",
+        "Suşi",
+        "Hamburger",
+        "Taco"
+      ],
+      "answerIndex": 0,
+      "explanation": "Pizza, dört kardeşin ortak tutkusudur."
+    },
+    {
+      "id": "nlol-tmnt-007",
+      "category": "tmnt",
+      "difficulty": "medium",
+      "text": "Ninja Kaplumbağaların baş düşmanı olan zırhlı savaşçının adı nedir?",
+      "options": [
+        "Bebop",
+        "Rocksteady",
+        "Shredder",
+        "Krang"
+      ],
+      "answerIndex": 2,
+      "explanation": "Shredder, keskin bıçaklı zırhıyla serinin klasik kötü karakteridir."
+    },
+    {
+      "id": "nlol-tmnt-008",
+      "category": "tmnt",
+      "difficulty": "medium",
+      "text": "1987 yapımı ilk TMNT çizgi filminde April O'Neil'in mesleği nedir?",
+      "options": [
+        "Lise öğrencisi",
+        "Gazeteci (TV muhabiri)",
+        "Arkeolog",
+        "Bilim insanı"
+      ],
+      "answerIndex": 1,
+      "explanation": "1987 çizgi filminde April O'Neil, Channel 6 için çalışan bir televizyon muhabiridir. Sonraki bazı uyarlamalarda mesleği değişir (ör. 2012 Nickelodeon dizisinde lise öğrencisidir)."
+    },
+    {
+      "id": "nlol-tmnt-009",
+      "category": "tmnt",
+      "difficulty": "medium",
+      "text": "Ninja Kaplumbağalar hangi şehrin kanalizasyonlarında yaşar?",
+      "options": [
+        "New York",
+        "Los Angeles",
+        "Chicago",
+        "Boston"
+      ],
+      "answerIndex": 0,
+      "explanation": "Dört kardeş New York'un kanalizasyon tünellerinde gizlice yaşar."
+    },
+    {
+      "id": "nlol-tmnt-010",
+      "category": "tmnt",
+      "difficulty": "medium",
+      "text": "Klasik/en bilinen TMNT versiyonunda Leonardo'nun kullandığı silah hangisidir?",
+      "options": [
+        "Bo (uzun sopa)",
+        "Nunchaku",
+        "İki katana (kılıç)",
+        "Sai"
+      ],
+      "answerIndex": 2,
+      "explanation": "Leonardo, çoğu çizgi film, film ve çizgi roman sürümünde iki katana kullanır (2018 yapımı Rise of the TMNT dizisinde bir dönem tek bir ōdachi kullanır)."
+    },
+    {
+      "id": "nlol-tmnt-011",
+      "category": "tmnt",
+      "difficulty": "medium",
+      "text": "Klasik/en bilinen TMNT versiyonunda Raphael'in kullandığı silah hangisidir?",
+      "options": [
+        "Katana",
+        "Bo",
+        "Nunchaku",
+        "Sai"
+      ],
+      "answerIndex": 3,
+      "explanation": "Raphael, çoğu sürümde iki dişli sai kullanır (2018 yapımı Rise of the TMNT dizisinde bir dönem tonfa kullanır)."
+    },
+    {
+      "id": "nlol-tmnt-012",
+      "category": "tmnt",
+      "difficulty": "medium",
+      "text": "Klasik/en bilinen TMNT versiyonunda Michelangelo'nun kullandığı silah hangisidir?",
+      "options": [
+        "Nunchaku",
+        "Sai",
+        "Bo",
+        "Katana"
+      ],
+      "answerIndex": 0,
+      "explanation": "Michelangelo, çoğu sürümde iki nunchaku (zincirli çift sopa) kullanır (2018 yapımı Rise of the TMNT dizisinde bir dönem zincirli bir silah kullanır)."
+    },
+    {
+      "id": "nlol-tmnt-013",
+      "category": "tmnt",
+      "difficulty": "medium",
+      "text": "Donatello'nun kullandığı silah hangisidir?",
+      "options": [
+        "Katana",
+        "Sai",
+        "Bo (uzun sopa)",
+        "Nunchaku"
+      ],
+      "answerIndex": 2,
+      "explanation": "Donatello uzun bir bo sopası kullanır."
+    },
+    {
+      "id": "nlol-tmnt-014",
+      "category": "tmnt",
+      "difficulty": "hard",
+      "text": "Ninja Kaplumbağaları 1984'te bir çizgi roman olarak kim(ler) yarattı?",
+      "options": [
+        "Stan Lee ve Jack Kirby",
+        "Jim Lee ve Todd McFarlane",
+        "Bob Kane ve Bill Finger",
+        "Kevin Eastman ve Peter Laird"
+      ],
+      "answerIndex": 3,
+      "explanation": "Kevin Eastman ve Peter Laird, karakterleri 1984'te bağımsız bir çizgi roman olarak yarattı."
+    },
+    {
+      "id": "nlol-tmnt-015",
+      "category": "tmnt",
+      "difficulty": "hard",
+      "text": "Dört kaplumbağanın adları hangi tarihi figür grubundan esinlenmiştir?",
+      "options": [
+        "Yunan filozofları",
+        "Rönesans ressamları",
+        "Ortaçağ şövalyeleri",
+        "Roma imparatorları"
+      ],
+      "answerIndex": 1,
+      "explanation": "Leonardo, Raphael, Donatello ve Michelangelo adları ünlü Rönesans sanatçılarından gelir."
+    },
+    {
+      "id": "nlol-tmnt-016",
+      "category": "tmnt",
+      "difficulty": "medium",
+      "text": "Kaplumbağaların ve Splinter'ın bu hâle gelmesinin sebebi genel olarak nedir?",
+      "options": [
+        "Genetik bir laboratuvar deneyine gönüllü katılım",
+        "Bir uzay gemisi kazası",
+        "Büyülü bir tılsım",
+        "Mutasyona uğratan gizemli bir sıvıyla temas"
+      ],
+      "answerIndex": 3,
+      "explanation": "Serinin ortak noktası, sıradan kaplumbağaların ve bir sıçanın mutasyona uğratan bir sıvıyla dev, zeki varlıklara dönüşmesidir."
+    },
+    {
+      "id": "nlol-tmnt-017",
+      "category": "tmnt",
+      "difficulty": "hard",
+      "text": "Shredder'ın bağlı olduğu kötü ninja örgütünün adı nedir?",
+      "options": [
+        "Foot Clan (Ayak Klanı)",
+        "Shadow Clan",
+        "Iron Clan",
+        "Hand Clan"
+      ],
+      "answerIndex": 0,
+      "explanation": "Foot Clan, Shredder'ın emrindeki ninja örgütüdür."
+    },
+    {
+      "id": "nlol-tmnt-018",
+      "category": "tmnt",
+      "difficulty": "hard",
+      "text": "Hokey maskesi takan, sopa kullanan insan müttefikleri kimdir?",
+      "options": [
+        "Vernon Fenwick",
+        "Casey Jones",
+        "Baxter Stockman",
+        "Burne Thompson"
+      ],
+      "answerIndex": 1,
+      "explanation": "Casey Jones, hokey maskesi ve spor ekipmanlarıyla savaşan sokak kahramanı bir müttefiktir."
+    },
+    {
+      "id": "nlol-trek-001",
+      "category": "star-trek-prodigy",
+      "difficulty": "medium",
+      "text": "Star Trek: Prodigy dizisindeki genç mürettebatın bulduğu terk edilmiş geminin adı nedir?",
+      "options": [
+        "USS Protostar",
+        "USS Enterprise",
+        "USS Voyager",
+        "USS Discovery"
+      ],
+      "answerIndex": 0,
+      "explanation": "Dal ve arkadaşları, bir maden kolonisinde terk edilmiş USS Protostar'ı bulup kaçarlar."
+    },
+    {
+      "id": "nlol-trek-002",
+      "category": "star-trek-prodigy",
+      "difficulty": "medium",
+      "text": "Gemide mürettebata eğitmenlik yapan hologram hangi ünlü Star Trek kaptanıdır?",
+      "options": [
+        "Christopher Pike",
+        "Kathryn Janeway",
+        "James T. Kirk",
+        "Jean-Luc Picard"
+      ],
+      "answerIndex": 1,
+      "explanation": "Gemideki eğitim hologramı, Star Trek: Voyager'dan tanıdığımız Kaptan Kathryn Janeway'dir."
+    },
+    {
+      "id": "nlol-trek-003",
+      "category": "star-trek-prodigy",
+      "difficulty": "hard",
+      "text": "Hologram Janeway'i dizide hangi oyuncu seslendirir?",
+      "options": [
+        "Gates McFadden",
+        "Kathryn Beaumont",
+        "Kate Mulgrew",
+        "Jeri Ryan"
+      ],
+      "answerIndex": 2,
+      "explanation": "Kate Mulgrew, Voyager'daki rolünü Prodigy'de de seslendirerek sürdürür."
+    },
+    {
+      "id": "nlol-trek-004",
+      "category": "star-trek-prodigy",
+      "difficulty": "medium",
+      "text": "Grubun genç lideri ve maden kolonisinden kaçışı başlatan karakter kimdir?",
+      "options": [
+        "Gwyn",
+        "Rok-Tahk",
+        "Jankom Pog",
+        "Dal"
+      ],
+      "answerIndex": 3,
+      "explanation": "Dal, gemiyi bulup arkadaşlarıyla kaçışı planlayan enerjik liderdir."
+    },
+    {
+      "id": "nlol-trek-005",
+      "category": "star-trek-prodigy",
+      "difficulty": "hard",
+      "text": "Kolonideki zalim yöneticinin kızı olan ve gemiye sonradan katılan karakter kimdir?",
+      "options": [
+        "Zero",
+        "Murf",
+        "Gwyn",
+        "Rok-Tahk"
+      ],
+      "answerIndex": 2,
+      "explanation": "Gwyn, koloniyi yöneten 'the Diviner' adlı karakterin kızıdır."
+    },
+    {
+      "id": "nlol-trek-006",
+      "category": "star-trek-prodigy",
+      "difficulty": "hard",
+      "text": "Mürettebattaki dev, güçlü ve çekingen genç bilim insanı hangi karakterdir?",
+      "options": [
+        "Zero",
+        "Jankom Pog",
+        "Dal",
+        "Rok-Tahk"
+      ],
+      "answerIndex": 3,
+      "explanation": "Rok-Tahk, Brikar türünden, çok güçlü ama utangaç bir karakterdir."
+    },
+    {
+      "id": "nlol-trek-007",
+      "category": "star-trek-prodigy",
+      "difficulty": "hard",
+      "text": "Kendini üçüncü şahıs olarak konuşan, mühendislikten sorumlu tartışmacı karakter kimdir?",
+      "options": [
+        "Dal",
+        "Jankom Pog",
+        "Murf",
+        "Zero"
+      ],
+      "answerIndex": 1,
+      "explanation": "Jankom Pog, geminin mühendisliğinden sorumlu, kendinden sık sık üçüncü şahıs olarak bahseden bir karakterdir."
+    },
+    {
+      "id": "nlol-trek-008",
+      "category": "star-trek-prodigy",
+      "difficulty": "hard",
+      "text": "Fiziksel bedeni olmayan, enerjiden oluşan ve özel bir kıyafet giyen telepatik mürettebat üyesi kimdir?",
+      "options": [
+        "Murf",
+        "Zero",
+        "Rok-Tahk",
+        "Gwyn"
+      ],
+      "answerIndex": 1,
+      "explanation": "Zero, bedensiz enerji varlığı olduğu için diğerleriyle etkileşim kurabilmek için özel bir kıyafet giyer."
+    },
+    {
+      "id": "nlol-trek-009",
+      "category": "star-trek-prodigy",
+      "difficulty": "medium",
+      "text": "Mürettebatın yanında taşıdığı, her şeyi yiyebilen ve neredeyse yok edilemeyen küçük yaratığın adı nedir?",
+      "options": [
+        "Murf",
+        "Gwyn",
+        "Zero",
+        "Dal"
+      ],
+      "answerIndex": 0,
+      "explanation": "Murf, jöle gibi bir yapıya sahip, komik ve dayanıklı bir yaratıktır."
+    },
+    {
+      "id": "nlol-trek-010",
+      "category": "star-trek-prodigy",
+      "difficulty": "hard",
+      "text": "Gwyn'in babası olan ve mürettebatın kaçtığı zalim yöneticinin unvanı nedir?",
+      "options": [
+        "The Diviner",
+        "The Architect",
+        "The Overseer",
+        "The Commander"
+      ],
+      "answerIndex": 0,
+      "explanation": "The Diviner, madencilik kolonisini acımasızca yöneten ve Gwyn'in babası olan karakterdir."
+    },
+    {
+      "id": "nlol-trek-011",
+      "category": "star-trek-prodigy",
+      "difficulty": "medium",
+      "text": "Star Trek: Prodigy ilk olarak hangi yayın platformunda yayınlanmaya başladı?",
+      "options": [
+        "Nickelodeon (TV kanalı)",
+        "Netflix",
+        "Paramount+",
+        "Disney+"
+      ],
+      "answerIndex": 2,
+      "explanation": "Dizi Ekim 2021'de Paramount+'ta yayına girdi; ilerleyen yıllarda Netflix'e taşındı."
+    },
+    {
+      "id": "nlol-trek-012",
+      "category": "star-trek-prodigy",
+      "difficulty": "medium",
+      "text": "Star Trek: Prodigy, Star Trek evreninde bir ilki temsil eder. Bu ilk nedir?",
+      "options": [
+        "Genç izleyicileri hedefleyen ilk animasyon Star Trek dizisi",
+        "Uzayda geçmeyen ilk Star Trek dizisi",
+        "İlk Türkçe dublajlı Star Trek dizisi",
+        "İlk canlı aksiyon Star Trek dizisi"
+      ],
+      "answerIndex": 0,
+      "explanation": "Prodigy, franchise'ın çocuk ve genç izleyicilere yönelik ilk animasyon dizisidir."
+    },
+    {
+      "id": "nlol-park-001",
+      "category": "land-of-legends",
+      "difficulty": "easy",
+      "text": "The Land of Legends tema parkı Türkiye'nin neresindedir?",
+      "options": [
+        "Bodrum, Muğla",
+        "Belek, Antalya",
+        "Alanya, Antalya",
+        "Marmaris, Muğla"
+      ],
+      "answerIndex": 1,
+      "explanation": "Park, Antalya'nın Belek bölgesindedir."
+    },
+    {
+      "id": "nlol-park-002",
+      "category": "land-of-legends",
+      "difficulty": "medium",
+      "text": "The Land of Legends hangi yıl açıldı?",
+      "options": [
+        "2012",
+        "2019",
+        "2010",
+        "2016"
+      ],
+      "answerIndex": 3,
+      "explanation": "Park 2016 yılında hizmete açıldı."
+    },
+    {
+      "id": "nlol-park-003",
+      "category": "land-of-legends",
+      "difficulty": "easy",
+      "text": "The Land of Legends, büyüklük olarak Türkiye'de ne durumdadır?",
+      "options": [
+        "Türkiye'nin ilk lunaparkı",
+        "Türkiye'nin en küçük tema parkı",
+        "Türkiye'nin en büyük tema parkı",
+        "Sadece yaz aylarında açılan bir park"
+      ],
+      "answerIndex": 2,
+      "explanation": "Park, Türkiye'nin en büyük tema parkı olarak tanıtılır."
+    },
+    {
+      "id": "nlol-park-004",
+      "category": "land-of-legends",
+      "difficulty": "medium",
+      "text": "The Land of Legends hangi otel grubu tarafından işletilir?",
+      "options": [
+        "Marriott",
+        "Hilton",
+        "Rixos",
+        "Titanic"
+      ],
+      "answerIndex": 2,
+      "explanation": "Park ve oteller Rixos World çatısı altında işletilir."
+    },
+    {
+      "id": "nlol-park-005",
+      "category": "land-of-legends",
+      "difficulty": "medium",
+      "text": "Nickelodeon Land ve Nickelodeon Otel, Türkiye açısından hangi ilke sahiptir?",
+      "options": [
+        "Türkiye'nin ilk hayvanat bahçesidir",
+        "Türkiye'nin ilk lunaparkıdır",
+        "Türkiye'nin ilk Nickelodeon Land ve otelidir",
+        "Türkiye'nin ilk su parkıdır"
+      ],
+      "answerIndex": 2,
+      "explanation": "Burası Türkiye'deki ilk ve tek Nickelodeon temalı alan ve oteldir."
+    },
+    {
+      "id": "nlol-park-006",
+      "category": "land-of-legends",
+      "difficulty": "medium",
+      "text": "Nickelodeon Land 2025'te açıldığında SpongeBob temalı bölgenin adı nedir?",
+      "options": [
+        "Krusty Krab Land",
+        "Jellyfish Fields",
+        "Bikini Bottom",
+        "Coral City"
+      ],
+      "answerIndex": 2,
+      "explanation": "SpongeBob'un dünyasını canlandıran bölümün adı, dizideki şehirle aynı: Bikini Bottom."
+    },
+    {
+      "id": "nlol-park-007",
+      "category": "land-of-legends",
+      "difficulty": "medium",
+      "text": "Nickelodeon Land'de Star Trek: Prodigy temalı bölgenin adı nedir?",
+      "options": [
+        "Galaxy Quest",
+        "Star Fields",
+        "Star Trek: Wild Galaxy",
+        "Deep Space"
+      ],
+      "answerIndex": 2,
+      "explanation": "Star Trek: Prodigy'den ilham alan bölümün resmî adı 'Star Trek: Wild Galaxy'dir."
+    },
+    {
+      "id": "nlol-park-008",
+      "category": "land-of-legends",
+      "difficulty": "medium",
+      "text": "Nickelodeon Land'de PAW Patrol temalı bölgenin adı nedir?",
+      "options": [
+        "Rescue City",
+        "Puppy Park",
+        "Patrol Bay",
+        "PAW Patrol: Adventure Bay"
+      ],
+      "answerIndex": 3,
+      "explanation": "PAW Patrol dizisindeki kurgusal kasabanın adıyla bu bölümün resmî adı 'PAW Patrol: Adventure Bay'dir."
+    },
+    {
+      "id": "nlol-park-009",
+      "category": "land-of-legends",
+      "difficulty": "hard",
+      "text": "SpongeBob temalı yeni dark ride'ın (karanlık tur) adı nedir?",
+      "options": [
+        "SpongeBob's Wild Ride",
+        "SpongeBob's Crazy Carnival Ride",
+        "Krusty Krab Adventure",
+        "Bikini Bottom Express"
+      ],
+      "answerIndex": 1,
+      "explanation": "Bu etkileşimli, raysız (trackless) dark ride, 2025'te Nickelodeon Land'in açılışıyla hizmete girdi."
+    },
+    {
+      "id": "nlol-park-010",
+      "category": "land-of-legends",
+      "difficulty": "medium",
+      "text": "Nickelodeon Otel kaç odadan oluşur?",
+      "options": [
+        "238",
+        "120",
+        "75",
+        "400"
+      ],
+      "answerIndex": 0,
+      "explanation": "Otel toplam 238 odaya sahiptir."
+    },
+    {
+      "id": "nlol-park-011",
+      "category": "land-of-legends",
+      "difficulty": "medium",
+      "text": "Nickelodeon Otel'de hangi Nickelodeon dizisine ait oda teması BULUNMAZ?",
+      "options": [
+        "Avatar: The Last Airbender",
+        "Dora",
+        "Ninja Kaplumbağalar",
+        "SpongeBob SquarePants"
+      ],
+      "answerIndex": 0,
+      "explanation": "Otelin oda temaları SpongeBob, PAW Patrol, Dora, Ninja Kaplumbağalar ve Star Trek'tir; Avatar: The Last Airbender bunların arasında değildir."
+    },
+    {
+      "id": "nlol-park-012",
+      "category": "land-of-legends",
+      "difficulty": "hard",
+      "text": "Nickelodeon Otel'in en büyük süit kategorisinin adı nedir?",
+      "options": [
+        "Royal Nick Suite",
+        "Ultimate Nick Suite",
+        "Presidential Suite",
+        "Legendary Nick Suite"
+      ],
+      "answerIndex": 3,
+      "explanation": "350 m² ile otelin en büyük odası 'Legendary Nick Suite'tir."
+    },
+    {
+      "id": "nlol-park-013",
+      "category": "land-of-legends",
+      "difficulty": "hard",
+      "text": "Star Trek temalı özel süitin adı nedir?",
+      "options": [
+        "Star Trek Iconic Suite",
+        "Federation Suite",
+        "Enterprise Suite",
+        "Protostar Suite"
+      ],
+      "answerIndex": 0,
+      "explanation": "245 m² büyüklüğündeki bu süit, Star Trek temasıyla tasarlanmıştır."
+    },
+    {
+      "id": "nlol-park-014",
+      "category": "land-of-legends",
+      "difficulty": "medium",
+      "text": "Park içindeki Kingdom Hotel, Türkiye açısından neyin ilki olarak tanıtılır?",
+      "options": [
+        "Türkiye'nin ilk deniz kenarı oteli",
+        "Türkiye'nin ilk spa oteli",
+        "Türkiye'nin ilk çocuk temalı oteli",
+        "Türkiye'nin ilk beş yıldızlı oteli"
+      ],
+      "answerIndex": 2,
+      "explanation": "Kingdom Hotel, Türkiye'nin ilk çocuk temalı oteli olarak tanıtılır."
+    },
+    {
+      "id": "nlol-park-015",
+      "category": "land-of-legends",
+      "difficulty": "hard",
+      "text": "Adventure Land bölgesindeki büyük hız trenin (Hyper Coaster) yüksekliği yaklaşık kaçtır?",
+      "options": [
+        "90 metre",
+        "30 metre",
+        "62 metre",
+        "45 metre"
+      ],
+      "answerIndex": 2,
+      "explanation": "Hyper Coaster yaklaşık 62 metre yüksekliğindedir."
+    },
+    {
+      "id": "nlol-park-016",
+      "category": "land-of-legends",
+      "difficulty": "hard",
+      "text": "Hyper Coaster'ın ulaşabildiği azami hız yaklaşık kaçtır?",
+      "options": [
+        "150 km/sa",
+        "95 km/sa",
+        "115 km/sa",
+        "70 km/sa"
+      ],
+      "answerIndex": 2,
+      "explanation": "Hyper Coaster yaklaşık 115 km/sa hıza ulaşabilir."
+    },
+    {
+      "id": "nlol-park-017",
+      "category": "land-of-legends",
+      "difficulty": "hard",
+      "text": "Tropic Lagoon bölgesindeki Turtle Coaster nasıl bir attraksiyondur?",
+      "options": [
+        "Bir sallanan gemi",
+        "Su ile çalışan bir 'su treni' (water coaster)",
+        "Kuru bir hız treni",
+        "Bir karanlık tur (dark ride)"
+      ],
+      "answerIndex": 1,
+      "explanation": "Turtle Coaster, teknelerin su gücüyle yukarı fırlatıldığı bir su treni (water coaster) attraksiyonudur."
+    },
+    {
+      "id": "nlol-park-018",
+      "category": "land-of-legends",
+      "difficulty": "medium",
+      "text": "Parkın yunuslarla etkileşim ve gösteri sunan bölümünün adı nedir?",
+      "options": [
+        "Sea Kingdom",
+        "Dolphin Land",
+        "Ocean World",
+        "Marine Land"
+      ],
+      "answerIndex": 1,
+      "explanation": "Dolphin Land bölümünde yunuslarla yüzme gibi etkinlikler sunulur."
+    },
+    {
+      "id": "nlol-park-019",
+      "category": "land-of-legends",
+      "difficulty": "medium",
+      "text": "Masha and the Bear temalı bölgenin adı nedir?",
+      "options": [
+        "Forest Fun",
+        "Masha Park",
+        "Bear Kingdom",
+        "Land of Laughter"
+      ],
+      "answerIndex": 3,
+      "explanation": "Rus çizgi filmi Masha and the Bear'a adanan bölge 'Land of Laughter' olarak adlandırılır."
+    },
+    {
+      "id": "nlol-park-020",
+      "category": "land-of-legends",
+      "difficulty": "medium",
+      "text": "Nickelodeon Otel'deki su/eğlence alanının adı nedir?",
+      "options": [
+        "Aqua Nick",
+        "Splash Zone",
+        "Nick Beach",
+        "Water Nick"
+      ],
+      "answerIndex": 0,
+      "explanation": "Otelin çocuklara yönelik su alanı 'Aqua Nick' olarak adlandırılır."
+    }
+  ],
+  "predictionTemplates": [
+    {
+      "id": "first-character-meet",
+      "type": "choice",
+      "text": "Otelde ilk karşılaşacağımız Nickelodeon karakteri hangisi olacak?",
+      "options": [
+        "SpongeBob",
+        "Bir Ninja Kaplumbağa",
+        "Dora",
+        "PAW Patrol'den bir köpek",
+        "Star Trek karakteri"
+      ]
+    },
+    {
+      "id": "rides-count-day1",
+      "type": "number",
+      "text": "İlk tam gün tema parkında kaç farklı attraksiyona bineceğiz?",
+      "unit": "adet",
+      "min": 0,
+      "max": 30,
+      "step": 1
+    },
+    {
+      "id": "pool-time",
+      "type": "number",
+      "text": "İlk gün havuzda/Aqua Nick'te toplam kaç dakika geçireceğiz?",
+      "unit": "dk",
+      "min": 0,
+      "max": 600,
+      "step": 5
+    },
+    {
+      "id": "hyper-coaster-rides",
+      "type": "number",
+      "text": "Hyper Coaster'a gezi boyunca toplam kaç kez bineceğiz?",
+      "unit": "kez",
+      "min": 0,
+      "max": 20,
+      "step": 1
+    },
+    {
+      "id": "ice-cream-count",
+      "type": "number",
+      "text": "Gezi boyunca toplam kaç dondurma yiyeceğiz?",
+      "unit": "adet",
+      "min": 0,
+      "max": 50,
+      "step": 1
+    },
+    {
+      "id": "dolphin-show-seat",
+      "type": "choice",
+      "text": "Yunus gösterisinde ön sıradan mı yoksa arka sıradan mı ıslanacağız?",
+      "options": [
+        "Ön sıradan ıslanacağız",
+        "Islanmayacağız"
+      ]
+    },
+    {
+      "id": "photo-with-character-count",
+      "type": "number",
+      "text": "Gezi boyunca toplam kaç karakterle fotoğraf çektireceğiz?",
+      "unit": "adet",
+      "min": 0,
+      "max": 20,
+      "step": 1
+    },
+    {
+      "id": "queue-wait-longest",
+      "type": "number",
+      "text": "En uzun kuyrukta kaç dakika bekleyeceğiz?",
+      "unit": "dk",
+      "min": 0,
+      "max": 180,
+      "step": 5
+    },
+    {
+      "id": "room-floor",
+      "type": "number",
+      "text": "Otel odamız kaçıncı katta olacak?",
+      "unit": "kat",
+      "step": 1,
+      "params": [
+        "minFloor",
+        "maxFloor"
+      ]
+    },
+    {
+      "id": "favorite-ride-vote",
+      "type": "choice",
+      "text": "Gezi sonunda oy birliğiyle 'favori attraksiyon' seçilecek olursa hangisi kazanır?",
+      "options": [
+        "Hyper Coaster",
+        "Turtle Coaster",
+        "SpongeBob's Crazy Carnival Ride",
+        "Wave pool / dalga havuzu"
+      ]
+    }
+  ]
+}
