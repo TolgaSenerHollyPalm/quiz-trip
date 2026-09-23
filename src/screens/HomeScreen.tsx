@@ -11,8 +11,7 @@ import styles from './HomeScreen.module.css'
 const buildTime = new Date(__BUILD_TIME__).toLocaleString('tr-TR', { dateStyle: 'short', timeStyle: 'short' })
 
 export default function HomeScreen() {
-  const { packs, trips, sync, startSync } = useAppData()
-  const online = useOnline()
+  const { packs, trips, sync } = useAppData()
 
   return (
     <Screen title="Trip Quiz" aside={<OnlineBadge />}>
@@ -39,13 +38,41 @@ export default function HomeScreen() {
         </ul>
       )}
 
-      <Button disabled={!online || sync.running} onClick={startSync}>
-        {!online ? 'İnternet yok' : sync.running ? 'Güncelleniyor…' : 'Paketleri güncelle'}
-      </Button>
+      <PackUpdates />
       {sync.result && <SyncReport result={sync.result} />}
 
       <p className={styles.version}>Sürüm: {buildTime}</p>
     </Screen>
+  )
+}
+
+/** Offers an update only when the server has one; offline it stays out of the way. */
+function PackUpdates() {
+  const { sync, startSync, checkPacks } = useAppData()
+  const online = useOnline()
+  if (!online) return null
+  if (sync.running) return <Button disabled>Güncelleniyor…</Button>
+  if (sync.checking) {
+    return (
+      <p className={styles.status} role="status">
+        Paketler kontrol ediliyor…
+      </p>
+    )
+  }
+  if (sync.pending === 0) {
+    return (
+      <p className={styles.status} role="status">
+        Paketler güncel.{' '}
+        <button type="button" className={styles.recheck} onClick={checkPacks}>
+          Yeniden kontrol et
+        </button>
+      </p>
+    )
+  }
+  return (
+    <Button onClick={startSync}>
+      {sync.pending === undefined ? 'Paketleri güncelle' : `Paketleri güncelle (${sync.pending})`}
+    </Button>
   )
 }
 

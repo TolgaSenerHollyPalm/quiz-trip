@@ -174,6 +174,27 @@ export async function syncPacks(options: SyncOptions): Promise<SyncResult> {
   return { ok: true, outcomes, saved }
 }
 
+/**
+ * Reads only index.json (a few hundred bytes, no pack files) and counts the packs the device is missing or
+ * has in an older version. undefined means the check itself did not work, e.g. there is no usable connection.
+ */
+export async function countUpdatablePacks(options: SyncOptions): Promise<number | undefined> {
+  const settings = { timeoutMs: 20_000, ...options }
+  const index = await download(settings.fetch, `${settings.baseUrl}packs/index.json`, settings.timeoutMs)
+  if (!index.ok) return undefined
+  const read = readIndex(index.data)
+  if ('reason' in read) return undefined
+  try {
+    const local = await settings.store.versions()
+    return read.entries.filter((entry) => {
+      const current = local.get(entry.id)
+      return current === undefined || current < entry.version
+    }).length
+  } catch {
+    return undefined
+  }
+}
+
 /** The in-memory pack list after a sync: saved packs replace their old copies, the list stays sorted by title. */
 export function mergePacks(current: readonly Pack[], saved: readonly Pack[]): Pack[] {
   const byId = new Map(current.map((pack) => [pack.id, pack]))

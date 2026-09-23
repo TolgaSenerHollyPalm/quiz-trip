@@ -35,6 +35,22 @@
   color: var(--color-muted);
 }
 
+.status {
+  color: var(--color-muted);
+  text-align: center;
+}
+
+.recheck {
+  min-height: var(--tap-size);
+  padding: 0 8px;
+  border: 0;
+  background: none;
+  color: var(--color-primary);
+  font-weight: 700;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 .report {
   display: flex;
   flex-direction: column;

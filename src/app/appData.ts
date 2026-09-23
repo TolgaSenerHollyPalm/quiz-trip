@@ -6,6 +6,8 @@ import type { Pack } from '../packs/types.ts'
 
 export interface PackSync {
   running: boolean
+  checking: boolean // reading the server's list to see whether anything is new
+  pending?: number // packs the server has that the device lacks; undefined while unknown
   result?: SyncResult // of the last sync since the app was opened
 }
 
@@ -17,6 +19,7 @@ export interface AppData {
   deletePack: (packId: string) => void
   sync: PackSync
   startSync: () => void
+  checkPacks: () => void
 }
 
 export const AppDataContext = createContext<AppData | null>(null)

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { mergePacks, syncPacks, type Fetcher, type PackStore } from './sync.ts'
+import { countUpdatablePacks, mergePacks, syncPacks, type Fetcher, type PackStore } from './sync.ts'
 import type { Pack } from './types.ts'
 
 const BASE = '/quiz-trip/'
@@ -272,6 +272,33 @@ describe('syncPacks', () => {
       ],
     })
     expect([...stored.keys()]).toEqual(['b'])
+  })
+})
+
+describe('countUpdatablePacks', () => {
+  const count = (fetch: Fetcher, store: PackStore) => countUpdatablePacks({ fetch, store, baseUrl: BASE, timeoutMs: 50 })
+
+  it('counts the packs that are new or newer, without downloading any of them', async () => {
+    const { fetch, requested } = server({
+      'index.json': index(entry(pack('a', 2)), entry(pack('b', 1)), entry(pack('c', 1))),
+    })
+    const { store } = device([pack('a', 1), pack('c', 1)])
+
+    expect(await count(fetch, store)).toBe(2) // a is newer, b is new, c is up to date
+    expect(requested()).toEqual(['index.json'])
+  })
+
+  it('counts nothing when every pack is up to date', async () => {
+    const { fetch } = server({ 'index.json': index(entry(pack('a', 2))) })
+    const { store } = device([pack('a', 2)])
+    expect(await count(fetch, store)).toBe(0)
+  })
+
+  it('answers "unknown" when the list cannot be read', async () => {
+    const offline: Fetcher = () => Promise.reject(new TypeError('Failed to fetch'))
+    expect(await count(offline, device().store)).toBeUndefined()
+    const { fetch } = server({ 'index.json': '<html>Giriş</html>' })
+    expect(await count(fetch, device().store)).toBeUndefined()
   })
 })
 
