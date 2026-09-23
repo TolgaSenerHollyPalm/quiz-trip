@@ -5,16 +5,18 @@
       "id": "eg-sharm-el-sheikh",
       "title": "Mısır — Sharm el-Şeyh",
       "country": "EG",
-      "version": 2,
+      "cityId": "sharm-el-sheikh",
+      "version": 3,
       "file": "eg-sharm-el-sheikh.json",
       "questionCount": 93,
-      "updatedAt": "2026-09-19"
+      "updatedAt": "2026-09-23"
     },
     {
       "id": "nick-land-of-legends",
       "title": "Land of Legends — Nickelodeon",
       "country": "TR",
-      "version": 1,
+      "cityId": "antalya",
+      "version": 2,
       "file": "nick-land-of-legends.json",
       "questionCount": 70,
       "updatedAt": "2026-09-23"

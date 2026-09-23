@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest'
+import { BUNDLED_DESTINATIONS, findCity } from '../trips/destinations.ts'
 import { bundledPackData } from './bundled.ts'
 import { validatePack } from './validate.ts'
 
@@ -11,6 +12,7 @@ interface IndexEntry {
   id: string
   title: string
   country: string
+  cityId: string
   version: number
   file: string
   questionCount: number
@@ -35,11 +37,23 @@ describe('packs in public/packs', () => {
         id: pack.id,
         title: pack.title,
         country: pack.country,
+        cityId: pack.cityId,
         version: pack.version,
         file: entry.file,
         questionCount: pack.questions.length,
         updatedAt: pack.updatedAt,
       })
+    }
+  })
+
+  // A published pack is always pinned to a city, so the app can pick the right packs for a trip.
+  it('are pinned to a city that destinations.json knows', () => {
+    for (const [path, data] of packFiles) {
+      const result = validatePack(data)
+      if (!result.ok) continue // reported by the test above
+      const { country, cityId } = result.pack
+      expect(cityId, `${fileName(path)}: cityId`).toBeDefined()
+      expect(findCity(BUNDLED_DESTINATIONS, country, cityId), `${fileName(path)}: ${country}/${cityId}`).toBeDefined()
     }
   })
 

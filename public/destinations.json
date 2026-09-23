@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "countries": [
+    {
+      "code": "TR",
+      "name": "Türkiye",
+      "cities": [
+        { "id": "antalya", "name": "Antalya" },
+        { "id": "istanbul", "name": "İstanbul" }
+      ]
+    },
+    {
+      "code": "EG",
+      "name": "Mısır",
+      "cities": [{ "id": "sharm-el-sheikh", "name": "Sharm el-Sheikh" }]
+    }
+  ]
+}

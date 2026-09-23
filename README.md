@@ -20,6 +20,15 @@ npm run preview    # serve dist/ with the service worker at http://localhost:417
 
 The service worker only runs in the production build, so test offline behaviour with `npm run build && npm run preview`.
 
+## Destinations
+
+`public/destinations.json` lists the countries and cities a trip can be created for; `src/trips/destinations.ts`
+imports it as the copy built into the app, which a first, offline launch uses. Adding a city there is enough —
+no code change — but the app only picks up the published file after a deploy.
+
+Packs are pinned to a destination: `country` plus `cityId`, both in the pack and in `index.json`. A trip that
+names only a country gets every pack of that country; a trip that also names a city gets that city's packs.
+
 ## Question packs
 
 Packs live in `public/packs/` and are listed in `public/packs/index.json`. The `eg-sharm-el-sheikh` pack is also built into the app, so a fresh install can play offline straight away.

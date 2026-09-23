@@ -34,6 +34,9 @@ export function validatePack(data: unknown): PackCheck {
     errors.push('country iki büyük harfli ülke kodu olmalı (ör. EG).')
   }
   if (!isText(data.city)) errors.push('city boş olamaz.')
+  if (data.cityId !== undefined && (typeof data.cityId !== 'string' || !CITY_ID.test(data.cityId))) {
+    errors.push('cityId yalnızca küçük harf, rakam ve tire içerebilir.')
+  }
   if (!isInteger(data.version) || data.version < 1) errors.push('version 1 veya daha büyük bir tam sayı olmalı.')
   if (!isDate(data.updatedAt)) errors.push('updatedAt YYYY-AA-GG biçiminde geçerli bir tarih olmalı.')
 
@@ -54,6 +57,7 @@ export function validatePack(data: unknown): PackCheck {
 }
 
 const CATEGORY_ID = /^[a-z0-9][a-z0-9-]*$/
+const CITY_ID = CATEGORY_ID
 
 /** A themed pack names its own categories; without them the built-in six apply. */
 function readCategories(data: JsonObject, errors: string[]): string[] {

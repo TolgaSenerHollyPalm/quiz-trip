@@ -53,7 +53,8 @@ export interface Pack {
   id: string
   title: string
   country: string // ISO 3166-1 alpha-2
-  city: string
+  city: string // shown to players
+  cityId?: string // the destination city this pack is pinned to; without it the pack counts for the whole country
   version: number // bumped on every content change
   updatedAt: string // YYYY-MM-DD
   categories?: PackCategory[] // a themed pack brings its own; otherwise the built-in ones are used

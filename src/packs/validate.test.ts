@@ -7,6 +7,7 @@ const validPack = () => ({
   title: 'Mısır — Test',
   country: 'EG',
   city: 'Test',
+  cityId: 'test-city',
   version: 1,
   updatedAt: '2026-09-19',
   questions: [
@@ -45,6 +46,7 @@ describe('validatePack', () => {
   it.each<[string, (pack: PackData) => void, string]>([
     ['an unknown schema version', (pack) => (pack.schemaVersion = 2), 'schemaVersion'],
     ['a lower-case country code', (pack) => (pack.country = 'eg'), 'country'],
+    ['a cityId with capitals', (pack) => (pack.cityId = 'Sharm El Sheikh'), 'cityId'],
     ['a version that is not a whole number', (pack) => (pack.version = 1.5), 'version'],
     ['a date that does not exist', (pack) => (pack.updatedAt = '2026-02-30'), 'updatedAt'],
     ['no questions', (pack) => (pack.questions = []), 'questions'],
