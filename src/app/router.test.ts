@@ -6,11 +6,11 @@ const TRIP = 'eg-sharm-el-sheikh'
 describe('routes', () => {
   it.each<Route>([
     { screen: 'home' },
-    { screen: 'packs' },
     { screen: 'trip-new' },
     { screen: 'trip', tripId: TRIP },
     { screen: 'trip-edit', tripId: TRIP },
     { screen: 'checklist', tripId: TRIP },
+    { screen: 'trip-packs', tripId: TRIP },
     { screen: 'players', tripId: TRIP },
     { screen: 'players', tripId: TRIP, next: 'quiz' },
     { screen: 'quiz', tripId: TRIP },

@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { useAppData } from '../app/appData.ts'
 import { navigate } from '../app/router.ts'
-import { newTrip } from '../game/trip.ts'
 import type { TripState } from '../game/types.ts'
 import { applySuggestions } from '../trips/checklist.ts'
+import { findCountry } from '../trips/destinations.ts'
 import { TRANSPORTS, TRIP_KINDS, type Transport, type TripKind } from '../trips/types.ts'
 import { Button } from '../ui/Button.tsx'
 import ChoiceGroup from '../ui/ChoiceGroup.tsx'
@@ -14,50 +14,48 @@ import text from '../ui/text.module.css'
 import TransportIcon from '../ui/TransportIcon.tsx'
 import styles from './TripFormScreen.module.css'
 
-/** Creates a trip, or edits the one whose id is given. */
-export default function TripFormScreen({ tripId }: { tripId?: string }) {
-  const { packs, trips, saveTrip } = useAppData()
-  const existing = tripId === undefined ? undefined : trips.find((trip) => trip.id === tripId)
+/** Editing a trip that already exists; creating one is the wizard's job. */
+export default function TripFormScreen({ tripId }: { tripId: string }) {
+  const { destinations, trips, saveTrip } = useAppData()
+  const existing = trips.find((trip) => trip.id === tripId)
   const [name, setName] = useState(existing?.name ?? '')
   const [startDate, setStartDate] = useState(existing?.startDate ?? '')
   const [endDate, setEndDate] = useState(existing?.endDate ?? '')
   const [transport, setTransport] = useState<Transport | undefined>(existing?.transport)
   const [kind, setKind] = useState<TripKind | undefined>(existing?.kind)
-  const [packIds, setPackIds] = useState<string[]>(existing?.packIds ?? [])
+  const [country, setCountry] = useState(existing?.country ?? '')
+  const [cityId, setCityId] = useState(existing?.cityId ?? '')
   const [problems, setProblems] = useState<string[]>([])
 
-  if (tripId !== undefined && !existing) {
-    return <Missing message="Bu gezi bulunamadı." back={{ screen: 'home' }} />
-  }
+  if (!existing) return <Missing message="Bu gezi bulunamadı." back={{ screen: 'home' }} />
 
   const save = () => {
     const found: string[] = []
     if (name.trim() === '') found.push('Geziye bir ad ver.')
+    if (country === '') found.push('Gezinin ülkesini seç.')
     if (startDate === '') found.push('Gidiş tarihini seç.')
     if (endDate !== '' && startDate !== '' && endDate < startDate) found.push('Dönüş, gidişten önce olamaz.')
     setProblems(found)
     if (found.length > 0) return
 
-    const base = existing ?? newTrip(crypto.randomUUID(), name.trim())
     const trip: TripState = {
-      ...base,
+      ...existing,
       name: name.trim(),
       startDate,
       endDate: endDate === '' ? undefined : endDate,
       transport,
       kind,
-      packIds,
+      country,
+      cityId: cityId === '' ? undefined : cityId,
     }
     // The suggestions follow the vehicle and the holiday type, so they are refreshed when those change.
-    const stale = base.transport !== transport || base.kind !== kind || base.checklist.length === 0
+    const stale = existing.transport !== transport || existing.kind !== kind || existing.checklist.length === 0
     saveTrip(stale ? { ...trip, checklist: applySuggestions(trip) } : trip)
     navigate({ screen: 'trip', tripId: trip.id }, { replace: true })
   }
 
-  const back = existing ? ({ screen: 'trip', tripId: existing.id } as const) : ({ screen: 'home' } as const)
-
   return (
-    <Screen title={existing ? 'Geziyi düzenle' : 'Yeni gezi'} back={back}>
+    <Screen title="Geziyi düzenle" back={{ screen: 'trip', tripId }}>
       <label className={styles.field}>
         <span className={styles.label}>Gezinin adı</span>
         <input
@@ -110,17 +108,27 @@ export default function TripFormScreen({ tripId }: { tripId?: string }) {
         onToggle={(value) => setKind(value === kind ? undefined : value)}
       />
 
-      {packs.length > 0 && (
-        <ChoiceGroup
-          label="Soru paketleri (isteğe bağlı)"
-          options={packs.map((pack) => ({ value: pack.id, label: pack.title }))}
-          selected={packIds}
-          onToggle={(id) => setPackIds(packIds.includes(id) ? packIds.filter((other) => other !== id) : [...packIds, id])}
-        />
-      )}
+      <ChoiceGroup
+        label="Ülke"
+        options={destinations.map((option) => ({ value: option.code, label: option.name }))}
+        selected={country === '' ? [] : [country]}
+        onToggle={(code) => {
+          setCountry(code)
+          setCityId('')
+        }}
+      />
+      <ChoiceGroup
+        label="Şehir (isteğe bağlı)"
+        options={[
+          { value: '', label: 'Farketmez' },
+          ...(findCountry(destinations, country)?.cities ?? []).map((city) => ({ value: city.id, label: city.name })),
+        ]}
+        selected={[cityId]}
+        onToggle={setCityId}
+      />
       <p className={text.hint}>
-        Paketler, gezide oynanacak bilgi yarışması ve tahmin sorularını getirir; birkaç paket seçersen sorular
-        tek havuzda birleşir. Araç ve tatil türünü seçtiğinde hazırlık listesi kendiliğinden hazırlanır.
+        Destinasyon, geziye hangi soru paketlerinin uyduğunu belirler; paketleri gezinin kendi “Soru paketleri”
+        ekranından yönetirsin. Araç ve tatil türünü değiştirdiğinde hazırlık listesi yenilenir.
       </p>
 
       {problems.length > 0 && (
@@ -134,7 +142,7 @@ export default function TripFormScreen({ tripId }: { tripId?: string }) {
       )}
 
       <Button variant="primary" big onClick={save}>
-        {existing ? 'Kaydet' : 'Geziyi oluştur'}
+        Kaydet
       </Button>
     </Screen>
   )

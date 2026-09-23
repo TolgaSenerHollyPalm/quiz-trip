@@ -3,6 +3,7 @@ import type { TripState } from '../game/types.ts'
 import { collectPacks, NO_PACKS } from '../packs/collection.ts'
 import type { SyncResult } from '../packs/sync.ts'
 import type { Pack } from '../packs/types.ts'
+import type { Country } from '../trips/destinations.ts'
 import { packsOfTrip } from '../trips/packMatch.ts'
 
 export interface PackSync {
@@ -15,6 +16,8 @@ export interface PackSync {
 export interface AppData {
   packs: Pack[]
   trips: TripState[]
+  /** Where trips can go: the published list when it could be read, the one built into the app otherwise. */
+  destinations: Country[]
   /** Stores a trip, adding it when it is new. */
   saveTrip: (trip: TripState) => void
   deleteTrip: (tripId: string) => void
@@ -22,6 +25,8 @@ export interface AppData {
   deletePack: (packId: string) => void
   sync: PackSync
   startSync: () => void
+  /** Downloads these packs and nothing else; what the wizard does once a destination is chosen. */
+  downloadPacks: (packIds: string[]) => Promise<SyncResult>
   checkPacks: () => void
 }
 

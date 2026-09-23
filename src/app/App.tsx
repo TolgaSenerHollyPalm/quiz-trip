@@ -3,7 +3,6 @@ import AddPredictionScreen from '../screens/AddPredictionScreen.tsx'
 import ChecklistScreen from '../screens/ChecklistScreen.tsx'
 import GuessScreen from '../screens/GuessScreen.tsx'
 import HomeScreen from '../screens/HomeScreen.tsx'
-import PacksScreen from '../screens/PacksScreen.tsx'
 import PlayersScreen from '../screens/PlayersScreen.tsx'
 import PlayScreen from '../screens/PlayScreen.tsx'
 import PredictionResultScreen from '../screens/PredictionResultScreen.tsx'
@@ -13,8 +12,10 @@ import QuizSettingsScreen from '../screens/QuizSettingsScreen.tsx'
 import RoundResultScreen from '../screens/RoundResultScreen.tsx'
 import ScoreboardScreen from '../screens/ScoreboardScreen.tsx'
 import TripFormScreen from '../screens/TripFormScreen.tsx'
+import TripPacksScreen from '../screens/TripPacksScreen.tsx'
 import TripScreen from '../screens/TripScreen.tsx'
 import TripSettingsScreen from '../screens/TripSettingsScreen.tsx'
+import TripWizardScreen from '../screens/TripWizardScreen.tsx'
 import AppDataProvider from './AppDataProvider.tsx'
 import { href, useRoute, type Route } from './router.ts'
 import UpdatePrompt from './UpdatePrompt.tsx'
@@ -42,16 +43,16 @@ function CurrentScreen({ route }: { route: Route }) {
   switch (route.screen) {
     case 'home':
       return <HomeScreen />
-    case 'packs':
-      return <PacksScreen />
     case 'trip-new':
-      return <TripFormScreen />
+      return <TripWizardScreen />
     case 'trip-edit':
       return <TripFormScreen tripId={route.tripId} />
     case 'trip':
       return <TripScreen tripId={route.tripId} />
     case 'checklist':
       return <ChecklistScreen tripId={route.tripId} />
+    case 'trip-packs':
+      return <TripPacksScreen tripId={route.tripId} />
     case 'players':
       return <PlayersScreen tripId={route.tripId} next={route.next} />
     case 'quiz':

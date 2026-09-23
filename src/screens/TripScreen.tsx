@@ -76,13 +76,19 @@ export default function TripScreen({ tripId }: { tripId: string }) {
           {collection.templates.some((template) => template.params) && (
             <LinkButton to={{ screen: 'settings', tripId }}>Gezi ayarları</LinkButton>
           )}
+          <LinkButton to={{ screen: 'trip-packs', tripId }}>Soru paketleri ({collection.packs.length})</LinkButton>
         </>
       ) : (
-        <p className={text.notice}>
-          {trip.packIds.length > 0
-            ? 'Bu gezinin soru paketi cihazda yok. Geziyi düzenleyip yeniden ekleyebilirsin.'
-            : 'Bu geziye soru paketi bağlı değil. Paket eklersen bilgi yarışması ve tahminler açılır.'}
-        </p>
+        <>
+          <p className={text.notice}>
+            {trip.packIds.length > 0
+              ? 'Bu gezinin soru paketi cihazda yok. Soru paketleri ekranından yeniden indirebilirsin.'
+              : 'Bu geziye soru paketi bağlı değil. Paket eklersen bilgi yarışması ve tahminler açılır.'}
+          </p>
+          <LinkButton to={{ screen: 'trip-packs', tripId }} variant="primary">
+            Soru paketleri
+          </LinkButton>
+        </>
       )}
 
       <LinkButton to={{ screen: 'trip-edit', tripId }}>Geziyi düzenle</LinkButton>

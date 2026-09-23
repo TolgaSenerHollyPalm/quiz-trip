@@ -1,0 +1,81 @@
+.progress {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.stepCount {
+  color: var(--color-muted);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.bar {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--color-border);
+  overflow: hidden;
+}
+
+.fill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-primary-bright));
+  transition: width 0.2s ease-out;
+}
+
+.question {
+  font-size: 1.5rem;
+  line-height: 1.25;
+}
+
+.field {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.label {
+  font-weight: 700;
+}
+
+.input {
+  width: 100%;
+  min-width: 0;
+  min-height: var(--tap-size);
+  padding: 8px 14px;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  font-size: 1.05rem;
+}
+
+.input:focus {
+  border-color: var(--color-primary);
+  outline: none;
+}
+
+.pair {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* The way forward sits at the bottom of the screen, whatever the step needs above it. */
+.nav {
+  display: flex;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: var(--space);
+}
+
+.nav > :first-child {
+  flex: 0 1 120px;
+}
+
+.nav > :last-child {
+  flex: 1;
+}

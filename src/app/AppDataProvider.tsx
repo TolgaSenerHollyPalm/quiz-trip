@@ -13,6 +13,8 @@ import {
   requestPersistentStorage,
   saveTrip as storeTrip,
 } from '../storage/db.ts'
+import { cachedDestinations, fetchDestinations } from '../trips/destinationSource.ts'
+import type { Country } from '../trips/destinations.ts'
 import { withTrip } from '../trips/list.ts'
 import { wantedByTrips } from '../trips/packMatch.ts'
 import { AppDataContext, type PackSync } from './appData.ts'
@@ -44,6 +46,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
   const [slowLoad, setSlowLoad] = useState(false)
   const [saveFailed, setSaveFailed] = useState(false)
   const [sync, setSync] = useState<PackSync>({ running: false, checking: false })
+  const [destinations, setDestinations] = useState<Country[]>(cachedDestinations)
 
   /** Asks the server what it has, so the home screen only offers an update when there is one. */
   const checkPacks = useCallback(() => {
@@ -80,6 +83,19 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
       active = false
     }
   }, [checkPacks])
+
+  // The published list may have grown since this version of the app was built.
+  useEffect(() => {
+    let active = true
+    fetchDestinations((url) => fetch(url, { cache: 'no-store' }), import.meta.env.BASE_URL)
+      .then((countries) => {
+        if (active && countries) setDestinations(countries)
+      })
+      .catch(() => undefined)
+    return () => {
+      active = false
+    }
+  }, [])
 
   // Opening takes a moment; if it takes this long, something is in the way and the player should know.
   useEffect(() => {
@@ -126,6 +142,20 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
     [report],
   )
 
+  /** The wizard's download: these packs only, whatever the trips currently want. */
+  const downloadPacks = useCallback(async (packIds: string[]): Promise<SyncResult> => {
+    const result = await syncPacks({ ...server(currentTrips), wanted: (pin) => packIds.includes(pin.id) }).catch(
+      (error: unknown): SyncResult => {
+        console.error(error)
+        return { ok: false, reason: 'Beklenmeyen bir hata oldu. Tekrar dene.' }
+      },
+    )
+    if (result.ok && result.saved.length > 0) {
+      setLoaded((current) => current && { ...current, packs: mergePacks(current.packs, result.saved) })
+    }
+    return result
+  }, [])
+
   // Lives here rather than on the home screen, so a sync carries on (and cannot start twice) while players move around.
   const startSync = useCallback(() => {
     if (syncing) return
@@ -148,8 +178,9 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
   }, [checkPacks])
 
   const value = useMemo(
-    () => loaded && { ...loaded, saveTrip, deleteTrip, deletePack, sync, startSync, checkPacks },
-    [loaded, saveTrip, deleteTrip, deletePack, sync, startSync, checkPacks],
+    () =>
+      loaded && { ...loaded, destinations, saveTrip, deleteTrip, deletePack, sync, startSync, downloadPacks, checkPacks },
+    [loaded, destinations, saveTrip, deleteTrip, deletePack, sync, startSync, downloadPacks, checkPacks],
   )
 
   if (loadFailed) {

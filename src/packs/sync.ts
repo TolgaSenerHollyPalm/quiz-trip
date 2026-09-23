@@ -27,13 +27,14 @@ interface SyncOptions {
   timeoutMs?: number
 }
 
-interface IndexEntry {
+export interface IndexEntry {
   id: string
   title: string
   version: number
   file: string
   country?: string
   cityId?: string // missing in an index written before packs were pinned
+  questionCount?: number // shown while choosing, before the pack is downloaded
 }
 
 // A plain file name inside packs/, so an entry can never point outside that folder.
@@ -105,11 +106,20 @@ function readIndex(data: unknown): { entries: IndexEntry[]; failures: PackOutcom
     const { version, file } = entry
     const country = typeof entry.country === 'string' ? entry.country : undefined
     const cityId = typeof entry.cityId === 'string' ? entry.cityId : undefined
+    const questionCount = typeof entry.questionCount === 'number' ? entry.questionCount : undefined
     if (!id || typeof version !== 'number' || !Number.isInteger(version) || version < 1 || typeof file !== 'string' || !SAFE_FILE.test(file) || file === 'index.json') {
       failures.push({ id: id ?? '?', title, status: 'failed', reason: 'Paket listesindeki bilgileri eksik ya da hatalı.' })
       continue
     }
-    candidates.push({ id, title, version, file, ...(country && { country }), ...(cityId && { cityId }) })
+    candidates.push({
+      id,
+      title,
+      version,
+      file,
+      ...(country && { country }),
+      ...(cityId && { cityId }),
+      ...(questionCount !== undefined && { questionCount }),
+    })
   }
   // An id listed twice is ambiguous: skip every copy rather than guess which one is meant.
   const counts = new Map<string, number>()
@@ -178,6 +188,21 @@ export async function syncPacks(options: SyncOptions): Promise<SyncResult> {
     if (pack) saved.push(pack)
   }
   return { ok: true, outcomes, saved }
+}
+
+export type PackList = { ok: true; entries: IndexEntry[] } | { ok: false; reason: string }
+
+/**
+ * The packs the server offers, without downloading any of them: what the wizard shows while a trip is
+ * being created. `wanted` narrows the list to the destination being asked about.
+ */
+export async function fetchPackList(options: SyncOptions): Promise<PackList> {
+  const settings = { timeoutMs: 20_000, ...options }
+  const index = await download(settings.fetch, `${settings.baseUrl}packs/index.json`, settings.timeoutMs)
+  if (!index.ok) return { ok: false, reason: explain(index.problem, 'liste') }
+  const read = readIndex(index.data)
+  if ('reason' in read) return { ok: false, reason: read.reason }
+  return { ok: true, entries: read.entries.filter(settings.wanted) }
 }
 
 /**

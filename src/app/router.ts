@@ -3,11 +3,11 @@ import { useSyncExternalStore } from 'react'
 // Routes live in the URL hash, so GitHub Pages only ever serves index.html from the app's folder.
 export type Route =
   | { screen: 'home' }
-  | { screen: 'packs' }
   | { screen: 'trip-new' }
   | { screen: 'trip'; tripId: string }
   | { screen: 'trip-edit'; tripId: string }
   | { screen: 'checklist'; tripId: string }
+  | { screen: 'trip-packs'; tripId: string }
   | { screen: 'players'; tripId: string; next?: 'quiz' }
   | { screen: 'quiz'; tripId: string }
   | { screen: 'play'; tripId: string }
@@ -27,7 +27,6 @@ const query = (params: Record<string, string | undefined>) => {
 
 export function href(route: Route): string {
   if (route.screen === 'home') return '#/'
-  if (route.screen === 'packs') return '#/packs'
   if (route.screen === 'trip-new') return '#/trips/new'
 
   const trip = `#/trip/${encodeURIComponent(route.tripId)}`
@@ -41,6 +40,8 @@ export function href(route: Route): string {
     case 'play':
     case 'scores':
       return `${trip}/${route.screen}`
+    case 'trip-packs':
+      return `${trip}/packs`
     case 'players':
       return `${trip}/players${query({ next: route.next })}`
     case 'result':
@@ -74,7 +75,6 @@ export function parseRoute(hash: string): Route {
     return { screen: 'home' }
   }
   const [section, tripId, page, id, action] = parts
-  if (section === 'packs') return { screen: 'packs' }
   if (section === 'trips') return tripId === 'new' ? { screen: 'trip-new' } : { screen: 'home' }
   if (section !== 'trip' || !tripId) return { screen: 'home' }
 
@@ -90,6 +90,8 @@ export function parseRoute(hash: string): Route {
     case 'play':
     case 'scores':
       return { screen: page, tripId }
+    case 'packs':
+      return { screen: 'trip-packs', tripId }
     case 'result':
       return id ? { screen: 'result', tripId, roundId: id } : { screen: 'trip', tripId }
     case 'settings': {

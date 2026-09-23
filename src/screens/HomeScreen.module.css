@@ -118,3 +118,45 @@
   color: var(--color-muted);
   text-align: center;
 }
+
+/* The first thing a new player sees: what this app is for, in three lines. */
+.welcome {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 20px var(--space);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: linear-gradient(135deg, var(--color-primary-soft), var(--color-surface) 70%);
+  box-shadow: var(--shadow-card);
+}
+
+.welcomeTitle {
+  font-size: 1.3rem;
+  line-height: 1.25;
+}
+
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.steps li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  gap: 12px;
+}
+
+.stepNumber {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  font-size: 0.95rem;
+  font-weight: 700;
+}

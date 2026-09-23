@@ -16,7 +16,7 @@ import styles from './HomeScreen.module.css'
 const buildTime = new Date(__BUILD_TIME__).toLocaleString('tr-TR', { dateStyle: 'short', timeStyle: 'short' })
 
 export default function HomeScreen() {
-  const { packs, trips } = useAppData()
+  const { trips } = useAppData()
   const today = todayIso()
   const sorted = sortTrips(trips, today)
 
@@ -31,15 +31,36 @@ export default function HomeScreen() {
   return (
     <Screen title="TripKit" aside={<OnlineBadge />} wide>
       <IosInstallHint />
+
+      {/* An empty app should say what it is for before it asks for anything. */}
+      {sorted.length === 0 && (
+        <section className={styles.welcome}>
+          <h2 className={styles.welcomeTitle}>Gezini kur, gerisini TripKit hatırlasın</h2>
+          <ol className={styles.steps}>
+            <li>
+              <span className={styles.stepNumber}>1</span>
+              Nereye ve ne zaman gittiğini gir; sayaç o gün için geri saymaya başlasın.
+            </li>
+            <li>
+              <span className={styles.stepNumber}>2</span>
+              Aracına ve tatil türüne göre alınacaklar ve yapılacaklar listesi kendiliğinden hazırlansın.
+            </li>
+            <li>
+              <span className={styles.stepNumber}>3</span>
+              Gideceğin yerin soru paketini indir, yolda bilgi yarışması ve tahmin oyunu oyna.
+            </li>
+          </ol>
+          <p className={text.hint}>Her şey telefonda kalır ve internet olmadan da çalışır.</p>
+        </section>
+      )}
+
       <div className={styles.action}>
         <LinkButton to={{ screen: 'trip-new' }} variant="primary" big>
           + Yeni gezi
         </LinkButton>
       </div>
 
-      {sorted.length === 0 ? (
-        <p className={text.hint}>Henüz gezi yok. Nereye ve ne zaman gideceğini gir, sayaç başlasın.</p>
-      ) : (
+      {sorted.length > 0 && (
         <ul className={styles.list}>
           {sorted.map((trip) => {
             const phase = tripPhase(trip, today)
@@ -64,9 +85,6 @@ export default function HomeScreen() {
         </ul>
       )}
 
-      <div className={styles.action}>
-        <LinkButton to={{ screen: 'packs' }}>Soru paketleri ({packs.length})</LinkButton>
-      </div>
       <p className={styles.version}>Sürüm: {buildTime}</p>
     </Screen>
   )

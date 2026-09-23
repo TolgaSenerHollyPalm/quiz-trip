@@ -35,7 +35,11 @@ Packs live in `public/packs/` and are listed in `public/packs/index.json`. The `
 
 `npm test` checks every pack against the schema and against `index.json` (question count, version, title…). The deploy workflow runs the tests first, so a broken pack is never published. Bump a pack's `version` (in the pack and in `index.json`) whenever its content changes.
 
-To publish a new pack or an update: put the file in `public/packs/`, list it in `index.json`, bump `version` if the pack already existed, and push to `main`. Once the deploy has finished, players press **Paketleri güncelle** on the home screen. New packs are downloaded, packs with a higher version replace the old copy, and a pack that fails to download or validate keeps its old copy; trips are never touched.
+To publish a new pack or an update: put the file in `public/packs/`, list it in `index.json` with its `country`
+and `cityId`, bump `version` if the pack already existed, and push to `main`. Once the deploy has finished,
+players press **Paketleri getir ve güncelle** on the trip's own **Soru paketleri** screen; a trip only ever
+downloads the packs of the place it goes to. Packs with a higher version replace the old copy, and a pack that
+fails to download or validate keeps its old copy; trips are never touched.
 
 GitHub Pages' CDN keeps serving the previous `index.json` and pack files for up to 10 minutes after a deploy (`cache-control: max-age=600`; it ignores query strings and `no-cache` request headers, so the app cannot bypass it). If the app says everything is up to date or that the server file is not updated yet, try again a few minutes later.
 
