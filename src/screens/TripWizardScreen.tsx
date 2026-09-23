@@ -135,6 +135,8 @@ export default function TripWizardScreen() {
             label="Ülke"
             options={destinations.map((option) => ({ value: option.code, label: option.name }))}
             selected={country ? [country] : []}
+            pickOne
+            placeholder="Ülke seç…"
             onToggle={(code) => {
               setCountry(code)
               setCityId(ANY_CITY)
@@ -154,6 +156,7 @@ export default function TripWizardScreen() {
             ]}
             selected={[cityId]}
             onToggle={setCityId}
+            pickOne
           />
           <p className={text.hint}>
             Şehir seçersen o şehrin paketi gelir. Seçmezsen ülkenin bütün paketleri bu geziye eklenebilir.

@@ -112,6 +112,8 @@ export default function TripFormScreen({ tripId }: { tripId: string }) {
         label="Ülke"
         options={destinations.map((option) => ({ value: option.code, label: option.name }))}
         selected={country === '' ? [] : [country]}
+        pickOne
+        placeholder="Ülke seç…"
         onToggle={(code) => {
           setCountry(code)
           setCityId('')
@@ -125,6 +127,7 @@ export default function TripFormScreen({ tripId }: { tripId: string }) {
         ]}
         selected={[cityId]}
         onToggle={setCityId}
+        pickOne
       />
       <p className={text.hint}>
         Destinasyon, geziye hangi soru paketlerinin uyduğunu belirler; paketleri gezinin kendi “Soru paketleri”
