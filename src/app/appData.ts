@@ -13,6 +13,8 @@ export interface AppData {
   packs: Pack[]
   trips: Record<string, TripState>
   saveTrip: (trip: TripState) => void
+  /** Removes the pack and everything played on it. */
+  deletePack: (packId: string) => void
   sync: PackSync
   startSync: () => void
 }
@@ -27,10 +29,11 @@ export function useAppData(): AppData {
 
 /** A trip is played with one pack; the trip starts empty until someone sets up players. */
 export function useTrip(packId: string) {
-  const { packs, trips, saveTrip } = useAppData()
+  const { packs, trips, saveTrip, deletePack } = useAppData()
   return {
     pack: packs.find((pack) => pack.id === packId),
     trip: trips[packId] ?? newTrip(packId),
     saveTrip,
+    deletePack,
   }
 }

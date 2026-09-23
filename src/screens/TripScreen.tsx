@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { useTrip } from '../app/appData.ts'
-import type { Route } from '../app/router.ts'
+import { navigate, type Route } from '../app/router.ts'
 import { cancelRound } from '../game/trip.ts'
+import { isBundledPack } from '../packs/bundled.ts'
 import { Button, LinkButton } from '../ui/Button.tsx'
 import ConfirmDialog from '../ui/ConfirmDialog.tsx'
 import Missing from '../ui/Missing.tsx'
@@ -9,8 +10,11 @@ import Screen from '../ui/Screen.tsx'
 import styles from './TripScreen.module.css'
 
 export default function TripScreen({ packId }: { packId: string }) {
-  const { pack, trip, saveTrip } = useTrip(packId)
+  const { pack, trip, saveTrip, deletePack } = useTrip(packId)
   const [confirmingCancel, setConfirmingCancel] = useState(false)
+  const [confirmingDelete, setConfirmingDelete] = useState(false)
+  const [deleted, setDeleted] = useState(false)
+  if (deleted) return null // leaving for the home screen
   if (!pack) return <Missing message="Bu gezi paketi cihazda yok." back={{ screen: 'home' }} />
 
   const round = trip.currentRound
@@ -58,6 +62,25 @@ export default function TripScreen({ packId }: { packId: string }) {
       {pack.predictionTemplates.some((template) => template.params) && (
         <LinkButton to={{ screen: 'settings', packId }}>Gezi ayarları</LinkButton>
       )}
+
+      <Button onClick={() => setConfirmingDelete(true)}>Paketi sil</Button>
+
+      <ConfirmDialog
+        open={confirmingDelete}
+        title="Paket silinsin mi?"
+        confirmLabel="Sil"
+        onConfirm={() => {
+          setDeleted(true)
+          deletePack(packId)
+          navigate({ screen: 'home' }, { replace: true })
+        }}
+        onCancel={() => setConfirmingDelete(false)}
+      >
+        <strong>{pack.title}</strong> paketi, bu gezideki oyuncular, puanlar ve tahminlerle birlikte silinecek.{' '}
+        {isBundledPack(packId)
+          ? 'Bu paket uygulamayla birlikte geldiği için uygulama yeniden açıldığında boş olarak geri gelir.'
+          : 'Paket sunucudaki listede duruyorsa “Paketleri güncelle” ile yeniden inebilir.'}
+      </ConfirmDialog>
 
       <ConfirmDialog
         open={confirmingCancel}

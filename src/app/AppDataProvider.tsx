@@ -3,7 +3,14 @@ import type { TripState } from '../game/types.ts'
 import { bundledPacks } from '../packs/bundled.ts'
 import { mergePacks, syncPacks, type SyncResult } from '../packs/sync.ts'
 import type { Pack } from '../packs/types.ts'
-import { installPacks, loadAll, packStore, requestPersistentStorage, saveTrip as storeTrip } from '../storage/db.ts'
+import {
+  installPacks,
+  loadAll,
+  packStore,
+  removePack,
+  requestPersistentStorage,
+  saveTrip as storeTrip,
+} from '../storage/db.ts'
 import { AppDataContext, type PackSync } from './appData.ts'
 import styles from './AppDataProvider.module.css'
 
@@ -51,6 +58,20 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
     })
   }, [])
 
+  const deletePack = useCallback((packId: string) => {
+    setLoaded(
+      (current) =>
+        current && {
+          packs: current.packs.filter((pack) => pack.id !== packId),
+          trips: Object.fromEntries(Object.entries(current.trips).filter(([id]) => id !== packId)),
+        },
+    )
+    removePack(packId).catch((error: unknown) => {
+      console.error(error)
+      setSaveFailed(true)
+    })
+  }, [])
+
   // Lives here rather than on the home screen, so a sync carries on (and cannot start twice) while players move around.
   const startSync = useCallback(() => {
     if (syncing) return
@@ -71,7 +92,10 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
       })
   }, [])
 
-  const value = useMemo(() => loaded && { ...loaded, saveTrip, sync, startSync }, [loaded, saveTrip, sync, startSync])
+  const value = useMemo(
+    () => loaded && { ...loaded, saveTrip, deletePack, sync, startSync },
+    [loaded, saveTrip, deletePack, sync, startSync],
+  )
 
   if (loadFailed) {
     return <p className={styles.message}>Kayıtlı veriler açılamadı. Uygulamayı kapatıp yeniden aç.</p>

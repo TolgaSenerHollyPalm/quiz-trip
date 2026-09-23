@@ -50,6 +50,13 @@ export async function installPacks(packs: Pack[]): Promise<void> {
   for (const pack of packs) await packStore.saveIfNewer(pack)
 }
 
+/** Removes a pack together with the trip played on it, in one transaction. */
+export async function removePack(packId: string): Promise<void> {
+  const db = await database()
+  const tx = db.transaction(['packs', 'trips'], 'readwrite')
+  await Promise.all([tx.objectStore('packs').delete(packId), tx.objectStore('trips').delete(packId), tx.done])
+}
+
 export async function saveTrip(trip: TripState): Promise<void> {
   const db = await database()
   await db.put('trips', trip)
