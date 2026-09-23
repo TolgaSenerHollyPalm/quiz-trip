@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useTrip } from '../app/appData.ts'
 import { navigate, type Route } from '../app/router.ts'
-import { cancelRound } from '../game/trip.ts'
+import { cancelRound, newTrip } from '../game/trip.ts'
 import { isBundledPack } from '../packs/bundled.ts'
 import { Button, LinkButton } from '../ui/Button.tsx'
 import ConfirmDialog from '../ui/ConfirmDialog.tsx'
@@ -12,6 +12,7 @@ import styles from './TripScreen.module.css'
 export default function TripScreen({ packId }: { packId: string }) {
   const { pack, trip, saveTrip, deletePack } = useTrip(packId)
   const [confirmingCancel, setConfirmingCancel] = useState(false)
+  const [confirmingReset, setConfirmingReset] = useState(false)
   const [confirmingDelete, setConfirmingDelete] = useState(false)
   const [deleted, setDeleted] = useState(false)
   if (deleted) return null // leaving for the home screen
@@ -20,6 +21,9 @@ export default function TripScreen({ packId }: { packId: string }) {
   const round = trip.currentRound
   // Predictions that still need guesses or a result.
   const waiting = trip.predictions.filter((prediction) => prediction.status !== 'resolved').length
+  // Nothing to reset on a pack nobody has played yet.
+  const played =
+    trip.players.length > 0 || trip.rounds.length > 0 || trip.predictions.length > 0 || Object.keys(trip.params).length > 0
   const quiz: Route =
     trip.players.length === 0 ? { screen: 'players', packId, next: 'quiz' } : { screen: 'quiz', packId }
 
@@ -63,7 +67,22 @@ export default function TripScreen({ packId }: { packId: string }) {
         <LinkButton to={{ screen: 'settings', packId }}>Gezi ayarları</LinkButton>
       )}
 
+      {played && <Button onClick={() => setConfirmingReset(true)}>Geziyi sıfırla</Button>}
       <Button onClick={() => setConfirmingDelete(true)}>Paketi sil</Button>
+
+      <ConfirmDialog
+        open={confirmingReset}
+        title="Gezi sıfırlansın mı?"
+        confirmLabel="Sıfırla"
+        onConfirm={() => {
+          saveTrip(newTrip(packId))
+          setConfirmingReset(false)
+        }}
+        onCancel={() => setConfirmingReset(false)}
+      >
+        Oyuncular, puanlar, tahminler ve gezi ayarları silinecek. Paket ve soruları telefonda kalacak, yeni bir
+        geziye sıfırdan başlayabilirsin.
+      </ConfirmDialog>
 
       <ConfirmDialog
         open={confirmingDelete}
