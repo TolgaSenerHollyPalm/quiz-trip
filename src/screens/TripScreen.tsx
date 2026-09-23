@@ -11,7 +11,7 @@ import text from '../ui/text.module.css'
 import styles from './TripScreen.module.css'
 
 export default function TripScreen({ tripId }: { tripId: string }) {
-  const { trip, pack, saveTrip, deleteTrip } = useTrip(tripId)
+  const { trip, collection, saveTrip, deleteTrip } = useTrip(tripId)
   const [confirmingCancel, setConfirmingCancel] = useState(false)
   const [confirmingReset, setConfirmingReset] = useState(false)
   const [confirmingDelete, setConfirmingDelete] = useState(false)
@@ -37,7 +37,7 @@ export default function TripScreen({ tripId }: { tripId: string }) {
         {trip.checklist.length > 0 ? `Hazırlık listesi (${packed}/${trip.checklist.length})` : 'Hazırlık listesi'}
       </LinkButton>
 
-      {pack ? (
+      {collection.packs.length > 0 ? (
         <>
           <h2 className={text.heading}>Gezide eğlence</h2>
           {round ? (
@@ -73,15 +73,15 @@ export default function TripScreen({ tripId }: { tripId: string }) {
             </LinkButton>
           )}
 
-          {pack.predictionTemplates.some((template) => template.params) && (
+          {collection.templates.some((template) => template.params) && (
             <LinkButton to={{ screen: 'settings', tripId }}>Gezi ayarları</LinkButton>
           )}
         </>
       ) : (
         <p className={text.notice}>
-          {trip.packId
-            ? 'Bu gezinin soru paketi cihazda yok. Soru paketleri ekranından yeniden indirebilirsin.'
-            : 'Bu geziye soru paketi bağlı değil. Paket seçersen bilgi yarışması ve tahminler açılır.'}
+          {trip.packIds.length > 0
+            ? 'Bu gezinin soru paketi cihazda yok. Geziyi düzenleyip yeniden ekleyebilirsin.'
+            : 'Bu geziye soru paketi bağlı değil. Paket eklersen bilgi yarışması ve tahminler açılır.'}
         </p>
       )}
 

@@ -28,7 +28,7 @@ function started(): TripState {
     ],
   }
   const settings = { categories: ['history' as const], difficulty: 'mixed' as const, questionsPerPlayer: 2, timeLimit: 0 as const }
-  return startRound(trip, pack, settings, { id: 'r1', startedAt: '2026-09-19T10:00:00Z' }, seededRng(7))
+  return startRound(trip, pack.questions, settings, { id: 'r1', startedAt: '2026-09-19T10:00:00Z' }, seededRng(7))
 }
 
 /** Answers the current turn right or wrong. */

@@ -23,7 +23,7 @@ interface GuessScreenProps {
  * always starts empty and a hand-over screen sits between players. The last guess locks the prediction.
  */
 export default function GuessScreen({ tripId, predictionId, playerId }: GuessScreenProps) {
-  const { pack, trip, saveTrip } = useTrip(tripId)
+  const { trip, saveTrip } = useTrip(tripId)
   const prediction = trip?.predictions.find((p) => p.id === predictionId)
   const [queue] = useState(() =>
     playerId ? [playerId] : (trip?.players ?? []).filter((player) => !(player.id in (prediction?.guesses ?? {}))).map((p) => p.id),
@@ -35,7 +35,7 @@ export default function GuessScreen({ tripId, predictionId, playerId }: GuessScr
 
   const detail = { screen: 'prediction', tripId, predictionId } as const
   if (!trip) return <Missing message="Bu gezi bulunamadı." back={{ screen: 'home' }} />
-  if (!pack || !prediction) return <Missing message="Bu tahmin bulunamadı." back={{ screen: 'predictions', tripId }} />
+  if (!prediction) return <Missing message="Bu tahmin bulunamadı." back={{ screen: 'predictions', tripId }} />
 
   if (phase === 'locked') {
     return (

@@ -61,7 +61,9 @@ export interface Prediction {
 export interface TripState {
   id: string
   name: string
-  packId?: string // the question pack played on this trip, if one is linked
+  country?: string // ISO 3166-1 alpha-2; trips created before the wizard may not name one
+  cityId?: string // a city of that country, when the trip is pinned to one
+  packIds: string[] // the question packs played on this trip
   startDate?: string // YYYY-MM-DD, the day the trip starts
   endDate?: string // YYYY-MM-DD, optional
   transport?: Transport

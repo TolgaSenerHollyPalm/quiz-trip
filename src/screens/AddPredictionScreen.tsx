@@ -22,9 +22,11 @@ import text from '../ui/text.module.css'
 import styles from './AddPredictionScreen.module.css'
 
 export default function AddPredictionScreen({ tripId }: { tripId: string }) {
-  const { pack, trip, saveTrip } = useTrip(tripId)
+  const { collection, trip, saveTrip } = useTrip(tripId)
   if (!trip) return <Missing message="Bu gezi bulunamadı." back={{ screen: 'home' }} />
-  if (!pack) return <Missing message="Bu gezinin soru paketi cihazda yok." back={{ screen: 'trip', tripId }} />
+  if (collection.packs.length === 0) {
+    return <Missing message="Bu gezinin soru paketi cihazda yok." back={{ screen: 'trip', tripId }} />
+  }
 
   const add = (prediction: Prediction) => {
     saveTrip(addPrediction(trip, prediction))
@@ -42,7 +44,7 @@ export default function AddPredictionScreen({ tripId }: { tripId: string }) {
     <Screen title="Tahmin ekle" back={{ screen: 'predictions', tripId }}>
       <h2 className={text.heading}>Paketteki sorular</h2>
       <ul className={styles.templates}>
-        {pack.predictionTemplates.map((template) => {
+        {collection.templates.map((template) => {
           const added = trip.predictions.some((prediction) => prediction.templateId === template.id)
           return (
             <li key={template.id} className={styles.template}>

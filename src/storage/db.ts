@@ -2,7 +2,7 @@ import { openDB, type DBSchema, type IDBPDatabase } from 'idb'
 import type { TripState } from '../game/types.ts'
 import type { PackStore } from '../packs/sync.ts'
 import type { Pack } from '../packs/types.ts'
-import { migrateTrip, type LegacyTrip } from './migrations.ts'
+import { migrateToMultiPack, migrateTrip, type LegacyTrip, type SinglePackTrip } from './migrations.ts'
 
 interface QuizTripDB extends DBSchema {
   packs: { key: string; value: Pack }
@@ -10,9 +10,13 @@ interface QuizTripDB extends DBSchema {
 }
 
 let connection: Promise<IDBPDatabase<QuizTripDB>> | undefined
+let waitingForAnotherTab = false
+
+/** True while an upgrade is stuck behind an older copy of the app open in another tab or window. */
+export const blockedByAnotherTab = () => waitingForAnotherTab
 
 function database() {
-  connection ??= openDB<QuizTripDB>('quiz-trip', 2, {
+  connection ??= openDB<QuizTripDB>('quiz-trip', 3, {
     async upgrade(db, oldVersion, _newVersion, tx) {
       // Packs and trips live in separate stores, so updating a pack can never touch a trip.
       if (oldVersion < 1) db.createObjectStore('packs', { keyPath: 'id' })
@@ -23,9 +27,32 @@ function database() {
         if (oldVersion >= 1) db.deleteObjectStore('trips')
         const trips = db.createObjectStore('trips', { keyPath: 'id' })
         for (const trip of legacy) {
-          trips.put(migrateTrip(trip, packs.find((pack) => pack.id === trip.packId)?.title))
+          const pack = packs.find((candidate) => candidate.id === trip.packId)
+          trips.put(migrateToMultiPack(migrateTrip(trip, pack?.title), pack))
         }
       }
+      if (oldVersion === 2) {
+        // A trip can be played with several packs now, so its ids are qualified with the pack they came from.
+        const store = tx.objectStore('trips')
+        const packs = await tx.objectStore('packs').getAll()
+        const stored = (await store.getAll()) as unknown as SinglePackTrip[]
+        for (const trip of stored) {
+          store.put(migrateToMultiPack(trip, packs.find((pack) => pack.id === trip.packId)))
+        }
+      }
+    },
+    // An upgrade cannot run while an older copy of the app still holds the database open.
+    blocked() {
+      waitingForAnotherTab = true
+    },
+    blocking() {
+      // Another tab wants to upgrade: let go of the database so it can, and reopen on the next call.
+      const open = connection
+      connection = undefined
+      open?.then((db) => db.close()).catch(() => undefined)
+    },
+    terminated() {
+      connection = undefined
     },
   })
   return connection

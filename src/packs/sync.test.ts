@@ -33,6 +33,7 @@ const entry = (p: Pack, file = `${p.id}.json`) => ({
   id: p.id,
   title: p.title,
   country: p.country,
+  ...(p.cityId && { cityId: p.cityId }),
   version: p.version,
   file,
   questionCount: p.questions.length,
@@ -76,7 +77,35 @@ function device(packs: Pack[] = [], { failOn }: { failOn?: string } = {}) {
   return { store, stored }
 }
 
-const run = (fetch: Fetcher, store: PackStore) => syncPacks({ fetch, store, baseUrl: BASE, timeoutMs: 50 })
+const run = (fetch: Fetcher, store: PackStore) => syncPacks({ fetch, store, baseUrl: BASE, wanted: () => true, timeoutMs: 50 })
+
+describe('the packs a device wants', () => {
+  const wanted = (ids: string[]) => (pin: { id: string }) => ids.includes(pin.id)
+
+  it('downloads only the packs the trips ask for', async () => {
+    const mine = pack('mine', 1)
+    const other = pack('other', 1)
+    const { fetch, requested } = server({ 'index.json': index(entry(mine), entry(other)), 'mine.json': mine, 'other.json': other })
+    const { store, stored } = device()
+
+    const result = await syncPacks({ fetch, store, baseUrl: BASE, wanted: wanted(['mine']), timeoutMs: 50 })
+
+    expect(result).toMatchObject({ ok: true, saved: [mine] })
+    expect(requested()).toEqual(['index.json', 'mine.json'])
+    expect([...stored.keys()]).toEqual(['mine'])
+  })
+
+  it('counts only those when it looks for updates', async () => {
+    const mine = pack('mine', 2)
+    const other = pack('other', 2)
+    const { fetch } = server({ 'index.json': index(entry(mine), entry(other)) })
+    const { store } = device([pack('mine', 1), pack('other', 1)])
+
+    const pending = await countUpdatablePacks({ fetch, store, baseUrl: BASE, wanted: wanted(['mine']), timeoutMs: 50 })
+
+    expect(pending).toBe(1)
+  })
+})
 
 describe('syncPacks', () => {
   it('downloads a pack that is new to the device', async () => {
@@ -276,7 +305,7 @@ describe('syncPacks', () => {
 })
 
 describe('countUpdatablePacks', () => {
-  const count = (fetch: Fetcher, store: PackStore) => countUpdatablePacks({ fetch, store, baseUrl: BASE, timeoutMs: 50 })
+  const count = (fetch: Fetcher, store: PackStore) => countUpdatablePacks({ fetch, store, baseUrl: BASE, wanted: () => true, timeoutMs: 50 })
 
   it('counts the packs that are new or newer, without downloading any of them', async () => {
     const { fetch, requested } = server({

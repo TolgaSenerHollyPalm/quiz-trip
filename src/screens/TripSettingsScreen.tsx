@@ -26,17 +26,19 @@ function settingGroups(templates: PredictionTemplate[]) {
 
 // Bounds entered here are copied into a prediction when it is added; changing them later leaves it alone.
 export default function TripSettingsScreen({ tripId, add }: { tripId: string; add?: string }) {
-  const { pack, trip, saveTrip } = useTrip(tripId)
+  const { collection, trip, saveTrip } = useTrip(tripId)
   // Plain digits with a decimal comma: a grouped "12.300" would read back as 12,3.
   const [texts, setTexts] = useState<Record<string, string>>(() =>
     Object.fromEntries(Object.entries(trip?.params ?? {}).map(([key, value]) => [key, String(value).replace('.', ',')])),
   )
   const [problems, setProblems] = useState<string[]>([])
   if (!trip) return <Missing message="Bu gezi bulunamadı." back={{ screen: 'home' }} />
-  if (!pack) return <Missing message="Bu gezinin soru paketi cihazda yok." back={{ screen: 'trip', tripId }} />
+  if (collection.packs.length === 0) {
+    return <Missing message="Bu gezinin soru paketi cihazda yok." back={{ screen: 'trip', tripId }} />
+  }
 
-  const groups = settingGroups(pack.predictionTemplates)
-  const target = add ? pack.predictionTemplates.find((template) => template.id === add) : undefined
+  const groups = settingGroups(collection.templates)
+  const target = add ? collection.templates.find((template) => template.id === add) : undefined
   const back = target ? ({ screen: 'prediction-new', tripId } as const) : ({ screen: 'trip', tripId } as const)
 
   const save = () => {
@@ -49,7 +51,7 @@ export default function TripSettingsScreen({ tripId, add }: { tripId: string; ad
       if (value === undefined) found.push(`${param.label}: bir sayı gir.`)
       else params[param.key] = value
     }
-    for (const template of pack.predictionTemplates) {
+    for (const template of collection.templates) {
       const low = template.params?.min ? params[template.params.min.key] : template.min
       const high = template.params?.max ? params[template.params.max.key] : template.max
       if (low !== undefined && high !== undefined && low >= high) {

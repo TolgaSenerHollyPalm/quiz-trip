@@ -12,14 +12,14 @@ import text from '../ui/text.module.css'
 import styles from './PredictionScreen.module.css'
 
 export default function PredictionScreen({ tripId, predictionId }: { tripId: string; predictionId: string }) {
-  const { pack, trip, saveTrip } = useTrip(tripId)
+  const { trip, saveTrip } = useTrip(tripId)
   const [confirmingDelete, setConfirmingDelete] = useState(false)
   const [deleted, setDeleted] = useState(false)
   const back = { screen: 'predictions', tripId } as const
   const prediction = trip?.predictions.find((p) => p.id === predictionId)
   if (deleted) return null // leaving for the list
   if (!trip) return <Missing message="Bu gezi bulunamadı." back={{ screen: 'home' }} />
-  if (!pack || !prediction) return <Missing message="Bu tahmin bulunamadı." back={back} />
+  if (!prediction) return <Missing message="Bu tahmin bulunamadı." back={back} />
 
   const guess = { screen: 'guess', tripId, predictionId } as const
   const resultEntry = { screen: 'prediction-result', tripId, predictionId } as const

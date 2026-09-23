@@ -1,7 +1,9 @@
-import { createContext, useContext } from 'react'
+import { createContext, useContext, useMemo } from 'react'
 import type { TripState } from '../game/types.ts'
+import { collectPacks, NO_PACKS } from '../packs/collection.ts'
 import type { SyncResult } from '../packs/sync.ts'
 import type { Pack } from '../packs/types.ts'
+import { packsOfTrip } from '../trips/packMatch.ts'
 
 export interface PackSync {
   running: boolean
@@ -31,14 +33,15 @@ export function useAppData(): AppData {
   return data
 }
 
-/** A trip and the pack it is played with, if that pack is on the device. */
+/** A trip and the packs it is played with, merged into one pool of questions and prediction templates. */
 export function useTrip(tripId: string) {
   const { packs, trips, saveTrip, deleteTrip } = useAppData()
   const trip = trips.find((candidate) => candidate.id === tripId)
-  return {
-    trip,
-    pack: packs.find((pack) => pack.id === trip?.packId),
-    saveTrip,
-    deleteTrip,
-  }
+  const packIds = trip?.packIds
+  // packIds keeps its identity while the trip is saved during a round, so the pool is built once.
+  const collection = useMemo(
+    () => (packIds ? collectPacks(packsOfTrip(packs, { packIds })) : NO_PACKS),
+    [packs, packIds],
+  )
+  return { trip, collection, saveTrip, deleteTrip }
 }

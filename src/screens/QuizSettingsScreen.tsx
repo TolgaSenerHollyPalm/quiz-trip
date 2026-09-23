@@ -4,7 +4,6 @@ import { navigate } from '../app/router.ts'
 import { MAX_QUESTIONS_PER_PLAYER, questionPool } from '../game/quiz.ts'
 import { startRound } from '../game/trip.ts'
 import type { DifficultyChoice, QuizSettings } from '../game/types.ts'
-import { categoriesOf } from '../packs/types.ts'
 import { Button, LinkButton } from '../ui/Button.tsx'
 import ChoiceGroup from '../ui/ChoiceGroup.tsx'
 import { DIFFICULTY_LABELS } from '../ui/labels.ts'
@@ -25,26 +24,27 @@ function summary(poolSize: number, needed: number, neverAsked: number): string {
 }
 
 export default function QuizSettingsScreen({ tripId }: { tripId: string }) {
-  const { pack, trip, saveTrip } = useTrip(tripId)
-  // The categories this pack actually has questions in; a themed pack brings its own names.
-  const inPack = categoriesOf({ categories: pack?.categories }).filter((category) =>
-    pack?.questions.some((question) => question.category === category.id),
-  )
+  const { collection, trip, saveTrip } = useTrip(tripId)
+  // One group per pack, with only the categories that pack has questions in.
+  const groups = collection.categoryGroups.filter((group) => group.categories.length > 0)
+  const available = groups.flatMap((group) => group.categories)
   const [settings, setSettings] = useState<QuizSettings>(() => {
     const last = trip?.quizSettings
-    // Categories chosen last time that this pack no longer has are dropped.
-    const categories = last?.categories.filter((id) => inPack.some((category) => category.id === id)) ?? []
+    // Categories chosen last time that the trip's packs no longer offer are dropped.
+    const categories = last?.categories.filter((id) => available.some((category) => category.id === id)) ?? []
     return {
       difficulty: last?.difficulty ?? 'mixed',
       questionsPerPlayer: last?.questionsPerPlayer ?? 3,
       timeLimit: last?.timeLimit ?? 0,
-      categories: categories.length > 0 ? categories : inPack.map((category) => category.id),
+      categories: categories.length > 0 ? categories : available.map((category) => category.id),
     }
   })
 
   const back = { screen: 'trip', tripId } as const
   if (!trip) return <Missing message="Bu gezi bulunamadı." back={{ screen: 'home' }} />
-  if (!pack) return <Missing message="Bu gezinin soru paketi cihazda yok." back={{ screen: 'trip', tripId }} />
+  if (collection.packs.length === 0) {
+    return <Missing message="Bu gezinin soru paketi cihazda yok." back={{ screen: 'trip', tripId }} />
+  }
   if (trip.players.length === 0) {
     return (
       <Screen title="Quiz ayarları" back={back}>
@@ -68,7 +68,7 @@ export default function QuizSettingsScreen({ tripId }: { tripId: string }) {
 
   const matchesDifficulty = (difficulty: string) =>
     settings.difficulty === 'mixed' || difficulty === settings.difficulty
-  const pool = questionPool(pack.questions, settings)
+  const pool = questionPool(collection.questions, settings)
   const needed = trip.players.length * settings.questionsPerPlayer
   const neverAsked = pool.filter((question) => !trip.askedQuestionIds.includes(question.id)).length
 
@@ -80,30 +80,36 @@ export default function QuizSettingsScreen({ tripId }: { tripId: string }) {
     if (chosen.length > 0) {
       setSettings({
         ...settings,
-        categories: inPack.filter((category) => chosen.includes(category.id)).map((category) => category.id),
+        categories: available.filter((category) => chosen.includes(category.id)).map((category) => category.id),
       })
     }
   }
 
   const start = () => {
     const round = { id: crypto.randomUUID(), startedAt: new Date().toISOString() }
-    saveTrip(startRound(trip, pack, settings, round, Math.random))
+    saveTrip(startRound(trip, collection.questions, settings, round, Math.random))
     navigate({ screen: 'play', tripId }, { replace: true })
   }
 
   return (
     <Screen title="Quiz ayarları" back={back}>
-      <ChoiceGroup
-        label="Kategoriler"
-        options={inPack.map((category) => ({
-          value: category.id,
-          label: `${category.label} (${
-            pack.questions.filter((q) => q.category === category.id && matchesDifficulty(q.difficulty)).length
-          })`,
-        }))}
-        selected={settings.categories}
-        onToggle={toggleCategory}
-      />
+      {/* With several packs each one gets its own row, titled with the pack it came from. */}
+      {groups.map((group) => (
+        <ChoiceGroup
+          key={group.packId}
+          label={groups.length > 1 ? group.packTitle : 'Kategoriler'}
+          options={group.categories.map((category) => ({
+            value: category.id,
+            label: `${category.label} (${
+              collection.questions.filter(
+                (question) => question.category === category.id && matchesDifficulty(question.difficulty),
+              ).length
+            })`,
+          }))}
+          selected={settings.categories}
+          onToggle={toggleCategory}
+        />
+      ))}
       <ChoiceGroup
         label="Zorluk"
         options={DIFFICULTY_CHOICES.map((difficulty) => ({ value: difficulty, label: DIFFICULTY_LABELS[difficulty] }))}

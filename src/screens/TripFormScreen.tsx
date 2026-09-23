@@ -14,8 +14,6 @@ import text from '../ui/text.module.css'
 import TransportIcon from '../ui/TransportIcon.tsx'
 import styles from './TripFormScreen.module.css'
 
-const NO_PACK = ''
-
 /** Creates a trip, or edits the one whose id is given. */
 export default function TripFormScreen({ tripId }: { tripId?: string }) {
   const { packs, trips, saveTrip } = useAppData()
@@ -25,7 +23,7 @@ export default function TripFormScreen({ tripId }: { tripId?: string }) {
   const [endDate, setEndDate] = useState(existing?.endDate ?? '')
   const [transport, setTransport] = useState<Transport | undefined>(existing?.transport)
   const [kind, setKind] = useState<TripKind | undefined>(existing?.kind)
-  const [packId, setPackId] = useState(existing?.packId ?? NO_PACK)
+  const [packIds, setPackIds] = useState<string[]>(existing?.packIds ?? [])
   const [problems, setProblems] = useState<string[]>([])
 
   if (tripId !== undefined && !existing) {
@@ -48,7 +46,7 @@ export default function TripFormScreen({ tripId }: { tripId?: string }) {
       endDate: endDate === '' ? undefined : endDate,
       transport,
       kind,
-      packId: packId === NO_PACK ? undefined : packId,
+      packIds,
     }
     // The suggestions follow the vehicle and the holiday type, so they are refreshed when those change.
     const stale = base.transport !== transport || base.kind !== kind || base.checklist.length === 0
@@ -112,18 +110,17 @@ export default function TripFormScreen({ tripId }: { tripId?: string }) {
         onToggle={(value) => setKind(value === kind ? undefined : value)}
       />
 
-      <ChoiceGroup
-        label="Soru paketi (isteğe bağlı)"
-        options={[
-          { value: NO_PACK, label: 'Paket yok' },
-          ...packs.map((pack) => ({ value: pack.id, label: pack.title })),
-        ]}
-        selected={[packId]}
-        onToggle={setPackId}
-      />
+      {packs.length > 0 && (
+        <ChoiceGroup
+          label="Soru paketleri (isteğe bağlı)"
+          options={packs.map((pack) => ({ value: pack.id, label: pack.title }))}
+          selected={packIds}
+          onToggle={(id) => setPackIds(packIds.includes(id) ? packIds.filter((other) => other !== id) : [...packIds, id])}
+        />
+      )}
       <p className={text.hint}>
-        Paket, gezide oynanacak bilgi yarışması ve tahmin sorularını getirir. Sonradan da seçebilirsin. Araç ve
-        tatil türünü seçtiğinde hazırlık listesi kendiliğinden hazırlanır.
+        Paketler, gezide oynanacak bilgi yarışması ve tahmin sorularını getirir; birkaç paket seçersen sorular
+        tek havuzda birleşir. Araç ve tatil türünü seçtiğinde hazırlık listesi kendiliğinden hazırlanır.
       </p>
 
       {problems.length > 0 && (

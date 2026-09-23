@@ -59,7 +59,7 @@ describe('applySuggestions', () => {
   })
 
   it('has a list for every vehicle and holiday type it claims to know', () => {
-    for (const kind of ['beach', 'hotel', 'winter', 'city', 'nature', 'business'] as const) {
+    for (const kind of ['beach', 'fun', 'winter', 'city', 'nature', 'business'] as const) {
       const items = applySuggestions({ checklist: [], transport: undefined, kind })
       expect(items.some((item) => item.source === kind)).toBe(true)
     }
@@ -70,7 +70,7 @@ describe('applySuggestions', () => {
   })
 
   it('gives every suggestion its own id', () => {
-    const items = applySuggestions({ checklist: [], transport: 'plane', kind: 'hotel' })
+    const items = applySuggestions({ checklist: [], transport: 'plane', kind: 'fun' })
     expect(new Set(ids(items)).size).toBe(items.length)
   })
 })

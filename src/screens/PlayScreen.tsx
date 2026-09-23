@@ -3,7 +3,7 @@ import { useTrip } from '../app/appData.ts'
 import { navigate } from '../app/router.ts'
 import { DIFFICULTY_POINTS, isCorrectChoice, turnPoints } from '../game/scoring.ts'
 import { answerTurn } from '../game/trip.ts'
-import { categoryLabel } from '../packs/types.ts'
+import { categoryLabel } from '../packs/collection.ts'
 import type { RoundTurn, TurnAnswer } from '../game/types.ts'
 import { Button } from '../ui/Button.tsx'
 import Countdown from '../ui/Countdown.tsx'
@@ -23,13 +23,15 @@ type Phase = { name: 'ready' } | { name: 'question' } | { name: 'feedback'; feed
 
 // Every step of a round is saved as it happens; leaving and coming back resumes at the current player's turn.
 export default function PlayScreen({ tripId }: { tripId: string }) {
-  const { pack, trip, saveTrip } = useTrip(tripId)
+  const { collection, trip, saveTrip } = useTrip(tripId)
   const [phase, setPhase] = useState<Phase>({ name: 'ready' })
   const back = { screen: 'trip', tripId } as const
   const nameOf = (playerId: string) => trip?.players.find((player) => player.id === playerId)?.nickname ?? '?'
 
   if (!trip) return <Missing message="Bu gezi bulunamadı." back={{ screen: 'home' }} />
-  if (!pack) return <Missing message="Bu gezinin soru paketi cihazda yok." back={{ screen: 'trip', tripId }} />
+  if (collection.packs.length === 0) {
+    return <Missing message="Bu gezinin soru paketi cihazda yok." back={{ screen: 'trip', tripId }} />
+  }
 
   if (phase.name === 'feedback') {
     const { feedback } = phase
@@ -92,7 +94,7 @@ export default function PlayScreen({ tripId }: { tripId: string }) {
       <QuestionView
         turn={turn}
         playerName={nameOf(turn.playerId)}
-        categoryName={categoryLabel(pack, turn.question.category)}
+        categoryName={categoryLabel(collection, turn.question.category)}
         timeLimit={round.settings.timeLimit}
         onAnswer={answer}
       />

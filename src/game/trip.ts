@@ -1,15 +1,15 @@
-import type { Pack } from '../packs/types.ts'
+import type { Question } from '../packs/types.ts'
 import { settlePredictions } from './predictions.ts'
 import { buildRound } from './quiz.ts'
 import type { Rng } from './random.ts'
 import { turnPoints } from './scoring.ts'
 import type { Player, QuizSettings, TripState } from './types.ts'
 
-export function newTrip(id: string, name: string, packId?: string): TripState {
+export function newTrip(id: string, name: string): TripState {
   return {
     id,
     name,
-    ...(packId && { packId }),
+    packIds: [],
     checklist: [],
     players: [],
     params: {},
@@ -21,13 +21,13 @@ export function newTrip(id: string, name: string, packId?: string): TripState {
 
 export function startRound(
   trip: TripState,
-  pack: Pack,
+  questions: readonly Question[],
   settings: QuizSettings,
   round: { id: string; startedAt: string },
   rng: Rng,
 ): TripState {
   const turns = buildRound({
-    questions: pack.questions,
+    questions,
     settings,
     playerIds: trip.players.map((player) => player.id),
     askedQuestionIds: trip.askedQuestionIds,

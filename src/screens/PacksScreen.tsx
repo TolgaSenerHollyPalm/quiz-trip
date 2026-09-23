@@ -13,7 +13,7 @@ export default function PacksScreen() {
   const { packs, trips, sync, deletePack } = useAppData()
   const [deleting, setDeleting] = useState<Pack>()
 
-  const usedBy = (packId: string) => trips.filter((trip) => trip.packId === packId).length
+  const usedBy = (packId: string) => trips.filter((trip) => trip.packIds.includes(packId)).length
 
   return (
     <Screen title="Soru paketleri" back={{ screen: 'home' }} wide>

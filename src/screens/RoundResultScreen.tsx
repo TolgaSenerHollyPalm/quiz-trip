@@ -7,11 +7,11 @@ import StandingsList from '../ui/StandingsList.tsx'
 import styles from './RoundResultScreen.module.css'
 
 export default function RoundResultScreen({ tripId, roundId }: { tripId: string; roundId: string }) {
-  const { pack, trip } = useTrip(tripId)
+  const { trip } = useTrip(tripId)
   const back = { screen: 'trip', tripId } as const
   const round = trip?.rounds.find((r) => r.id === roundId)
   if (!trip) return <Missing message="Bu gezi bulunamadı." back={{ screen: 'home' }} />
-  if (!pack || !round) return <Missing message="Bu tur bulunamadı." back={back} />
+  if (!round) return <Missing message="Bu tur bulunamadı." back={back} />
 
   const names = new Map(trip.players.map((player) => [player.id, player.nickname]))
   const seating = trip.players.map((player) => player.id)

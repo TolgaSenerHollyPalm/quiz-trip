@@ -22,14 +22,13 @@ function nicknameProblem(players: Player[], index: number): string | undefined {
 }
 
 export default function PlayersScreen({ tripId, next }: { tripId: string; next?: 'quiz' }) {
-  const { pack, trip, saveTrip } = useTrip(tripId)
+  const { trip, saveTrip } = useTrip(tripId)
   const [players, setPlayers] = useState(() => (trip && trip.players.length > 0 ? trip.players : [newPlayer(), newPlayer()]))
   const [showProblems, setShowProblems] = useState(false)
   const [losing, setLosing] = useState<Player[]>([]) // removed players whose points would be deleted
 
   const back = { screen: 'trip', tripId } as const
   if (!trip) return <Missing message="Bu gezi bulunamadı." back={{ screen: 'home' }} />
-  if (!pack) return <Missing message="Bu gezinin soru paketi cihazda yok." back={{ screen: 'trip', tripId }} />
   if (trip.currentRound) {
     return <Missing message="Tur bitene ya da iptal edilene kadar oyuncular değiştirilemez." back={back} />
   }

@@ -20,7 +20,7 @@ export const TRANSPORT_LABELS: Record<Transport, string> = {
 
 export const TRIP_KIND_LABELS: Record<TripKind, string> = {
   beach: 'Deniz',
-  hotel: 'Otel tatili',
+  fun: 'Eğlence',
   winter: 'Kış',
   city: 'Şehir',
   nature: 'Doğa',

@@ -4,6 +4,7 @@ import { bundledPacks } from '../packs/bundled.ts'
 import { countUpdatablePacks, mergePacks, syncPacks, type Fetcher, type SyncResult } from '../packs/sync.ts'
 import type { Pack } from '../packs/types.ts'
 import {
+  blockedByAnotherTab,
   deleteTrip as removeTrip,
   installPacks,
   loadAll,
@@ -13,6 +14,7 @@ import {
   saveTrip as storeTrip,
 } from '../storage/db.ts'
 import { withTrip } from '../trips/list.ts'
+import { wantedByTrips } from '../trips/packMatch.ts'
 import { AppDataContext, type PackSync } from './appData.ts'
 import styles from './AppDataProvider.module.css'
 
@@ -21,17 +23,25 @@ interface Loaded {
   trips: TripState[]
 }
 
-// The provider is mounted once, so module-level flags are enough to keep a second run from starting.
+// The provider is mounted once, so module-level state is enough: flags that keep a second run from
+// starting, and the trips as they are right now, which is what decides the packs to sync.
 let syncing = false
 let checking = false
+let currentTrips: TripState[] = []
 
 const browserFetch: Fetcher = (url, init) => fetch(url, init)
-const server = () => ({ fetch: browserFetch, store: packStore, baseUrl: import.meta.env.BASE_URL })
+const server = (trips: readonly TripState[]) => ({
+  fetch: browserFetch,
+  store: packStore,
+  baseUrl: import.meta.env.BASE_URL,
+  wanted: (pin: { id: string; country?: string; cityId?: string }) => wantedByTrips(pin, trips),
+})
 
 /** Loads packs and trips from IndexedDB once, then keeps them in memory and writes every change back. */
 export default function AppDataProvider({ children }: { children: ReactNode }) {
   const [loaded, setLoaded] = useState<Loaded>()
   const [loadFailed, setLoadFailed] = useState(false)
+  const [slowLoad, setSlowLoad] = useState(false)
   const [saveFailed, setSaveFailed] = useState(false)
   const [sync, setSync] = useState<PackSync>({ running: false, checking: false })
 
@@ -40,7 +50,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
     if (checking || syncing || !navigator.onLine) return
     checking = true
     setSync((current) => ({ ...current, checking: true }))
-    countUpdatablePacks(server())
+    countUpdatablePacks(server(currentTrips))
       .catch((error: unknown): undefined => {
         console.error(error)
         return undefined
@@ -58,6 +68,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
       .then(loadAll)
       .then(({ packs, trips }) => {
         if (!active) return
+        currentTrips = trips
         setLoaded({ packs: mergePacks([], packs), trips })
         checkPacks()
       })
@@ -69,6 +80,13 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
       active = false
     }
   }, [checkPacks])
+
+  // Opening takes a moment; if it takes this long, something is in the way and the player should know.
+  useEffect(() => {
+    if (loaded) return undefined
+    const timer = setTimeout(() => setSlowLoad(true), 5000)
+    return () => clearTimeout(timer)
+  }, [loaded])
 
   // Back on a network: look again, so the button can appear without restarting the app.
   useEffect(() => {
@@ -84,6 +102,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
 
   const saveTrip = useCallback(
     (trip: TripState) => {
+      currentTrips = withTrip(currentTrips, trip)
       setLoaded((current) => current && { ...current, trips: withTrip(current.trips, trip) })
       storeTrip(trip).catch(report)
     },
@@ -92,6 +111,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
 
   const deleteTrip = useCallback(
     (tripId: string) => {
+      currentTrips = currentTrips.filter((trip) => trip.id !== tripId)
       setLoaded((current) => current && { ...current, trips: current.trips.filter((trip) => trip.id !== tripId) })
       removeTrip(tripId).catch(report)
     },
@@ -111,7 +131,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
     if (syncing) return
     syncing = true
     setSync((current) => ({ ...current, running: true }))
-    syncPacks(server())
+    syncPacks(server(currentTrips))
       .catch((error: unknown): SyncResult => {
         console.error(error)
         return { ok: false, reason: 'Beklenmeyen bir hata oldu. Tekrar dene.' }
@@ -135,7 +155,17 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
   if (loadFailed) {
     return <p className={styles.message}>Kayıtlı veriler açılamadı. Uygulamayı kapatıp yeniden aç.</p>
   }
-  if (!value) return null
+  if (!value) {
+    if (slowLoad && blockedByAnotherTab()) {
+      return (
+        <p className={styles.message}>
+          Uygulama başka bir sekmede ya da pencerede daha eski bir sürümle açık. Oradaki sekmeyi kapatıp bu
+          sayfayı yenile.
+        </p>
+      )
+    }
+    return null
+  }
 
   return (
     <AppDataContext value={value}>

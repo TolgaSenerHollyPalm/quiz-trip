@@ -22,6 +22,8 @@ interface SyncOptions {
   fetch: Fetcher
   store: PackStore
   baseUrl: string // Vite's BASE_URL, e.g. "/quiz-trip/"
+  /** Which packs this device has a use for; the trips decide, by where they go. */
+  wanted: (pin: { id: string; country?: string; cityId?: string }) => boolean
   timeoutMs?: number
 }
 
@@ -30,6 +32,8 @@ interface IndexEntry {
   title: string
   version: number
   file: string
+  country?: string
+  cityId?: string // missing in an index written before packs were pinned
 }
 
 // A plain file name inside packs/, so an entry can never point outside that folder.
@@ -99,11 +103,13 @@ function readIndex(data: unknown): { entries: IndexEntry[]; failures: PackOutcom
     const id = typeof entry.id === 'string' && entry.id.trim() !== '' ? entry.id : undefined
     const title = typeof entry.title === 'string' && entry.title.trim() !== '' ? entry.title : (id ?? '?')
     const { version, file } = entry
+    const country = typeof entry.country === 'string' ? entry.country : undefined
+    const cityId = typeof entry.cityId === 'string' ? entry.cityId : undefined
     if (!id || typeof version !== 'number' || !Number.isInteger(version) || version < 1 || typeof file !== 'string' || !SAFE_FILE.test(file) || file === 'index.json') {
       failures.push({ id: id ?? '?', title, status: 'failed', reason: 'Paket listesindeki bilgileri eksik ya da hatalı.' })
       continue
     }
-    candidates.push({ id, title, version, file })
+    candidates.push({ id, title, version, file, ...(country && { country }), ...(cityId && { cityId }) })
   }
   // An id listed twice is ambiguous: skip every copy rather than guess which one is meant.
   const counts = new Map<string, number>()
@@ -144,7 +150,7 @@ async function syncOne(entry: IndexEntry, isNew: boolean, options: Required<Sync
 }
 
 /**
- * Brings the device's packs up to date with packs/index.json. Every pack is handled on its own: one that fails
+ * Brings the device's wanted packs up to date with packs/index.json. Every pack is handled on its own: one that fails
  * to download, is broken or cannot be saved keeps its old copy while the others still update. Packs missing
  * from the index stay on the device, and a pack is never replaced by an older version.
  */
@@ -164,7 +170,7 @@ export async function syncPacks(options: SyncOptions): Promise<SyncResult> {
 
   const outcomes = [...read.failures]
   const saved: Pack[] = []
-  for (const entry of read.entries) {
+  for (const entry of read.entries.filter(settings.wanted)) {
     const current = local.get(entry.id)
     if (current !== undefined && current >= entry.version) continue
     const { outcome, pack } = await syncOne(entry, current === undefined, settings)
@@ -175,8 +181,8 @@ export async function syncPacks(options: SyncOptions): Promise<SyncResult> {
 }
 
 /**
- * Reads only index.json (a few hundred bytes, no pack files) and counts the packs the device is missing or
- * has in an older version. undefined means the check itself did not work, e.g. there is no usable connection.
+ * Reads only index.json (a few hundred bytes, no pack files) and counts the wanted packs the device is
+ * missing or has in an older version. undefined means the check itself did not work, e.g. there is no usable connection.
  */
 export async function countUpdatablePacks(options: SyncOptions): Promise<number | undefined> {
   const settings = { timeoutMs: 20_000, ...options }
@@ -186,7 +192,7 @@ export async function countUpdatablePacks(options: SyncOptions): Promise<number 
   if ('reason' in read) return undefined
   try {
     const local = await settings.store.versions()
-    return read.entries.filter((entry) => {
+    return read.entries.filter(settings.wanted).filter((entry) => {
       const current = local.get(entry.id)
       return current === undefined || current < entry.version
     }).length
