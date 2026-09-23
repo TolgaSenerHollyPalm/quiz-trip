@@ -2,10 +2,9 @@ import { useState } from 'react'
 import { useTrip } from '../app/appData.ts'
 import { navigate, type Route } from '../app/router.ts'
 import { cancelRound } from '../game/trip.ts'
-import { formatDateRange } from '../trips/dates.ts'
 import { Button, LinkButton } from '../ui/Button.tsx'
 import ConfirmDialog from '../ui/ConfirmDialog.tsx'
-import { TRANSPORT_LABELS, TRIP_KIND_LABELS } from '../ui/labels.ts'
+import CountdownCard from '../ui/CountdownCard.tsx'
 import Missing from '../ui/Missing.tsx'
 import Screen from '../ui/Screen.tsx'
 import text from '../ui/text.module.css'
@@ -28,18 +27,19 @@ export default function TripScreen({ tripId }: { tripId: string }) {
     trip.players.length > 0 || trip.rounds.length > 0 || trip.predictions.length > 0 || Object.keys(trip.params).length > 0
   const quiz: Route =
     trip.players.length === 0 ? { screen: 'players', tripId, next: 'quiz' } : { screen: 'quiz', tripId }
-  const details = [
-    trip.startDate && formatDateRange(trip.startDate, trip.endDate),
-    trip.transport && TRANSPORT_LABELS[trip.transport],
-    trip.kind && TRIP_KIND_LABELS[trip.kind],
-  ].filter(Boolean)
+  const packed = trip.checklist.filter((item) => item.done).length
 
   return (
     <Screen title={trip.name} back={{ screen: 'home' }}>
-      {details.length > 0 && <p className={text.meta}>{details.join(' · ')}</p>}
+      <CountdownCard trip={trip} />
+
+      <LinkButton to={{ screen: 'checklist', tripId }} variant="primary" big>
+        {trip.checklist.length > 0 ? `Hazırlık listesi (${packed}/${trip.checklist.length})` : 'Hazırlık listesi'}
+      </LinkButton>
 
       {pack ? (
         <>
+          <h2 className={text.heading}>Gezide eğlence</h2>
           {round ? (
             <section className={styles.resume}>
               <p>

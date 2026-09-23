@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import AddPredictionScreen from '../screens/AddPredictionScreen.tsx'
+import ChecklistScreen from '../screens/ChecklistScreen.tsx'
 import GuessScreen from '../screens/GuessScreen.tsx'
 import HomeScreen from '../screens/HomeScreen.tsx'
 import PacksScreen from '../screens/PacksScreen.tsx'
@@ -49,6 +50,8 @@ function CurrentScreen({ route }: { route: Route }) {
       return <TripFormScreen tripId={route.tripId} />
     case 'trip':
       return <TripScreen tripId={route.tripId} />
+    case 'checklist':
+      return <ChecklistScreen tripId={route.tripId} />
     case 'players':
       return <PlayersScreen tripId={route.tripId} next={route.next} />
     case 'quiz':

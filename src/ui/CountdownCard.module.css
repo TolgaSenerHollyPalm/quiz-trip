@@ -1,0 +1,37 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: var(--space);
+  border: 1px solid var(--color-border);
+  border-left: 6px solid var(--color-primary);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+}
+
+.today,
+.during {
+  border-left-color: var(--color-success);
+}
+
+.after,
+.undated {
+  border-left-color: var(--color-border);
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.title {
+  font-size: 1.5rem;
+  line-height: 1.2;
+}
+
+.meta {
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}

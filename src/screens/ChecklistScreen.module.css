@@ -1,0 +1,95 @@
+.progress {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.count {
+  font-weight: 700;
+}
+
+.bar {
+  height: 10px;
+  border-radius: 999px;
+  background: var(--color-border);
+  overflow: hidden;
+}
+
+.fill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--color-primary);
+  transition: width 0.2s ease-out;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.items {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+}
+
+.check {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 12px;
+  min-height: var(--tap-size);
+  padding: 8px 0 8px var(--space);
+  cursor: pointer;
+}
+
+.box {
+  flex: none;
+  width: 26px;
+  height: 26px;
+  accent-color: var(--color-primary);
+}
+
+.doneText {
+  color: var(--color-muted);
+  text-decoration: line-through;
+}
+
+.remove {
+  flex: none;
+  width: var(--tap-size);
+  min-height: var(--tap-size);
+  border: 0;
+  border-radius: var(--radius);
+  background: none;
+  color: var(--color-muted);
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.add {
+  display: flex;
+  gap: 8px;
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  min-height: var(--tap-size);
+  padding: 0 14px;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+}

@@ -26,6 +26,11 @@ To publish a new pack or an update: put the file in `public/packs/`, list it in 
 
 GitHub Pages' CDN keeps serving the previous `index.json` and pack files for up to 10 minutes after a deploy (`cache-control: max-age=600`; it ignores query strings and `no-cache` request headers, so the app cannot bypass it). If the app says everything is up to date or that the server file is not updated yet, try again a few minutes later.
 
+A pack can bring its own question categories, which is what a themed pack (a hotel, a series, a park) needs:
+`"categories": [{ "id": "spongebob", "label": "SpongeBob" }, …]`. Every question's `category` must be one of the
+pack's ids. A pack without a `categories` list uses the built-in six (`history`, `mythology`, `geography`, `food`,
+`language`, `culture`).
+
 Prediction templates are `number` or `choice`. A number template can have:
 
 - `format: "duration"`: the value is a number of minutes, entered and shown as HH:MM.

@@ -1,8 +1,9 @@
+import type { ReactNode } from 'react'
 import styles from './ChoiceGroup.module.css'
 
 interface ChoiceGroupProps<T extends string | number> {
   label: string
-  options: { value: T; label: string }[]
+  options: { value: T; label: string; icon?: ReactNode }[]
   selected: readonly T[]
   onToggle: (value: T) => void
 }
@@ -21,6 +22,7 @@ export default function ChoiceGroup<T extends string | number>({ label, options,
             aria-pressed={selected.includes(option.value)}
             onClick={() => onToggle(option.value)}
           >
+            {option.icon}
             {option.label}
           </button>
         ))}

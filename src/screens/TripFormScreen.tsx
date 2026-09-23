@@ -3,6 +3,7 @@ import { useAppData } from '../app/appData.ts'
 import { navigate } from '../app/router.ts'
 import { newTrip } from '../game/trip.ts'
 import type { TripState } from '../game/types.ts'
+import { applySuggestions } from '../trips/checklist.ts'
 import { TRANSPORTS, TRIP_KINDS, type Transport, type TripKind } from '../trips/types.ts'
 import { Button } from '../ui/Button.tsx'
 import ChoiceGroup from '../ui/ChoiceGroup.tsx'
@@ -10,6 +11,7 @@ import { TRANSPORT_LABELS, TRIP_KIND_LABELS } from '../ui/labels.ts'
 import Missing from '../ui/Missing.tsx'
 import Screen from '../ui/Screen.tsx'
 import text from '../ui/text.module.css'
+import TransportIcon from '../ui/TransportIcon.tsx'
 import styles from './TripFormScreen.module.css'
 
 const NO_PACK = ''
@@ -38,8 +40,9 @@ export default function TripFormScreen({ tripId }: { tripId?: string }) {
     setProblems(found)
     if (found.length > 0) return
 
+    const base = existing ?? newTrip(crypto.randomUUID(), name.trim())
     const trip: TripState = {
-      ...(existing ?? newTrip(crypto.randomUUID(), name.trim())),
+      ...base,
       name: name.trim(),
       startDate,
       endDate: endDate === '' ? undefined : endDate,
@@ -47,7 +50,9 @@ export default function TripFormScreen({ tripId }: { tripId?: string }) {
       kind,
       packId: packId === NO_PACK ? undefined : packId,
     }
-    saveTrip(trip)
+    // The suggestions follow the vehicle and the holiday type, so they are refreshed when those change.
+    const stale = base.transport !== transport || base.kind !== kind || base.checklist.length === 0
+    saveTrip(stale ? { ...trip, checklist: applySuggestions(trip) } : trip)
     navigate({ screen: 'trip', tripId: trip.id }, { replace: true })
   }
 
@@ -88,9 +93,15 @@ export default function TripFormScreen({ tripId }: { tripId?: string }) {
         </label>
       </div>
 
+      <p className={text.hint}>Dönüş tarihini girersen sayaç gezi boyunca devam eder.</p>
+
       <ChoiceGroup
         label="Nasıl gidiyorsun?"
-        options={TRANSPORTS.map((value) => ({ value, label: TRANSPORT_LABELS[value] }))}
+        options={TRANSPORTS.map((value) => ({
+          value,
+          label: TRANSPORT_LABELS[value],
+          icon: <TransportIcon transport={value} size={22} decorative />,
+        }))}
         selected={transport ? [transport] : []}
         onToggle={(value) => setTransport(value === transport ? undefined : value)}
       />
@@ -111,7 +122,8 @@ export default function TripFormScreen({ tripId }: { tripId?: string }) {
         onToggle={setPackId}
       />
       <p className={text.hint}>
-        Paket, gezide oynanacak bilgi yarışması ve tahmin sorularını getirir. Sonradan da seçebilirsin.
+        Paket, gezide oynanacak bilgi yarışması ve tahmin sorularını getirir. Sonradan da seçebilirsin. Araç ve
+        tatil türünü seçtiğinde hazırlık listesi kendiliğinden hazırlanır.
       </p>
 
       {problems.length > 0 && (

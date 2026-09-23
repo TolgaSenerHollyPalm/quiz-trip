@@ -10,6 +10,7 @@ describe('routes', () => {
     { screen: 'trip-new' },
     { screen: 'trip', tripId: TRIP },
     { screen: 'trip-edit', tripId: TRIP },
+    { screen: 'checklist', tripId: TRIP },
     { screen: 'players', tripId: TRIP },
     { screen: 'players', tripId: TRIP, next: 'quiz' },
     { screen: 'quiz', tripId: TRIP },
