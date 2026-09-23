@@ -20,8 +20,8 @@
   min-height: 64px;
   /* Lines the title up with the content column on a wide screen. */
   padding: 8px max(var(--space), calc((100% - var(--width)) / 2));
-  background: var(--header-bg);
-  color: var(--header-text);
+  background: var(--trip-header-bg, var(--header-bg));
+  color: var(--trip-header-ink, var(--header-text));
   box-shadow: var(--shadow-card);
 }
 
