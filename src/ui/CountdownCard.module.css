@@ -31,7 +31,7 @@
 
 .head svg {
   flex: none;
-  color: var(--trip-edge);
+  color: var(--trip-icon, var(--trip-edge));
 }
 
 .after .head svg,

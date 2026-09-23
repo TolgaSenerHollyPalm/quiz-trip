@@ -8,6 +8,7 @@ import { Button } from '../ui/Button.tsx'
 import ConfirmDialog from '../ui/ConfirmDialog.tsx'
 import Missing from '../ui/Missing.tsx'
 import Screen from '../ui/Screen.tsx'
+import { tripTheme } from '../ui/tripTheme.ts'
 import text from '../ui/text.module.css'
 import { useOnline } from '../ui/useOnline.ts'
 import styles from './TripPacksScreen.module.css'
@@ -58,7 +59,7 @@ export default function TripPacksScreen({ tripId }: { tripId: string }) {
   }
 
   return (
-    <Screen title="Soru paketleri" back={{ screen: 'trip', tripId }} wide>
+    <Screen title="Soru paketleri" back={{ screen: 'trip', tripId }} wide theme={tripTheme(trip.kind)}>
       <p className={text.meta}>{where === '' ? 'Bu gezinin ülkesi seçilmemiş.' : `${where} paketleri`}</p>
 
       {collection.packs.length === 0 ? (

@@ -7,6 +7,7 @@ import ConfirmDialog from '../ui/ConfirmDialog.tsx'
 import CountdownCard from '../ui/CountdownCard.tsx'
 import Missing from '../ui/Missing.tsx'
 import Screen from '../ui/Screen.tsx'
+import { tripTheme } from '../ui/tripTheme.ts'
 import text from '../ui/text.module.css'
 import styles from './TripScreen.module.css'
 
@@ -30,7 +31,7 @@ export default function TripScreen({ tripId }: { tripId: string }) {
   const packed = trip.checklist.filter((item) => item.done).length
 
   return (
-    <Screen title={trip.name} back={{ screen: 'home' }}>
+    <Screen title={trip.name} back={{ screen: 'home' }} theme={tripTheme(trip.kind)}>
       <CountdownCard trip={trip} />
 
       <LinkButton to={{ screen: 'checklist', tripId }} variant="primary" big>

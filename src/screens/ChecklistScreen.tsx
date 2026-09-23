@@ -5,6 +5,7 @@ import type { ChecklistItem } from '../trips/types.ts'
 import { Button } from '../ui/Button.tsx'
 import Missing from '../ui/Missing.tsx'
 import Screen from '../ui/Screen.tsx'
+import { tripTheme } from '../ui/tripTheme.ts'
 import text from '../ui/text.module.css'
 import styles from './ChecklistScreen.module.css'
 
@@ -28,7 +29,7 @@ export default function ChecklistScreen({ tripId }: { tripId: string }) {
   const total = trip.checklist.length
 
   return (
-    <Screen title="Hazırlık listesi" back={{ screen: 'trip', tripId }} wide>
+    <Screen title="Hazırlık listesi" back={{ screen: 'trip', tripId }} wide theme={tripTheme(trip.kind)}>
       {total > 0 && (
         <p className={styles.progress}>
           <span className={styles.count}>

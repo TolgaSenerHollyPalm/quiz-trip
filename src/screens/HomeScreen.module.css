@@ -54,6 +54,11 @@
   gap: 10px;
 }
 
+.head svg {
+  flex: none;
+  color: var(--trip-icon, var(--color-primary));
+}
+
 .title {
   flex: 1;
   font-size: 1.2rem;

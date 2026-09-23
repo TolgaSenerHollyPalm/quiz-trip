@@ -7,12 +7,14 @@ interface ScreenProps {
   back?: Route
   aside?: ReactNode // right side of the header
   wide?: boolean // a list screen, which may spread out on a desktop window
+  theme?: string // a trip's colour set, from tripTheme()
   children: ReactNode
 }
 
-export default function Screen({ title, back, aside, wide, children }: ScreenProps) {
+export default function Screen({ title, back, aside, wide, theme, children }: ScreenProps) {
+  const classes = [styles.screen, wide && styles.wide, theme].filter(Boolean).join(' ')
   return (
-    <div className={wide ? `${styles.screen} ${styles.wide}` : styles.screen}>
+    <div className={classes}>
       <header className={styles.header}>
         {back && (
           <a className={styles.back} href={href(back)} aria-label="Geri">

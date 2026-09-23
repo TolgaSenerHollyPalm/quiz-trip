@@ -19,8 +19,12 @@
   display: block;
   height: 100%;
   border-radius: 999px;
-  /* The app's own two colours, the ones in the icon. */
-  background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+  /* The trip's own colours where there are any, otherwise the two in the app icon. */
+  background: linear-gradient(
+    90deg,
+    var(--trip-button-edge, var(--color-primary)),
+    var(--trip-button-from, var(--color-accent))
+  );
   transition: width 0.2s ease-out;
 }
 
@@ -61,7 +65,7 @@
 
 @media (hover: hover) {
   .item:hover {
-    border-color: var(--color-primary);
+    border-color: var(--trip-edge, var(--color-primary));
   }
 }
 
@@ -79,7 +83,7 @@
   flex: none;
   width: 26px;
   height: 26px;
-  accent-color: var(--color-primary);
+  accent-color: var(--trip-icon, var(--color-primary));
 }
 
 .doneText {
@@ -117,7 +121,7 @@
 }
 
 .input:focus {
-  border-color: var(--color-primary);
+  border-color: var(--trip-edge, var(--color-primary));
   outline: none;
 }
 
@@ -128,10 +132,14 @@
   flex: none;
   width: var(--tap-size);
   height: var(--tap-size);
-  border: 2px solid var(--color-primary);
+  border: 2px solid var(--trip-button-edge, var(--color-primary-dark));
   border-radius: var(--radius);
-  background: var(--color-primary);
-  color: var(--color-on-primary);
+  background: linear-gradient(
+    140deg,
+    var(--trip-button-from, var(--color-primary-bright)),
+    var(--trip-button-to, var(--color-primary))
+  );
+  color: var(--trip-button-ink, var(--color-on-primary));
   cursor: pointer;
   touch-action: manipulation;
 }
