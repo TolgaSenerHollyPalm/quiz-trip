@@ -1,6 +1,7 @@
 .toast {
   position: fixed;
-  inset: auto var(--space) var(--space);
+  /* Clear of the iPhone's home indicator when the app runs from the home screen. */
+  inset: auto var(--space) calc(var(--space) + env(safe-area-inset-bottom, 0px));
   z-index: 10;
   max-width: 480px;
   margin-inline: auto;

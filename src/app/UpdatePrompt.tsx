@@ -5,6 +5,8 @@ import styles from './UpdatePrompt.module.css'
 
 // The app can stay open for days during a trip, so look for a new version every hour while online.
 const UPDATE_CHECK_INTERVAL_MS = 60 * 60 * 1000
+// Coming back to the app checks too; this keeps app switching from asking the server every few seconds.
+const MIN_TIME_BETWEEN_CHECKS_MS = 5 * 60 * 1000
 
 export default function UpdatePrompt() {
   const registration = useRef<ServiceWorkerRegistration | undefined>(undefined)
@@ -16,12 +18,21 @@ export default function UpdatePrompt() {
     onRegisteredSW(_swUrl, registered) {
       if (!registered) return
       registration.current = registered
-      setInterval(() => {
-        if (!navigator.onLine) return
+
+      let lastCheck = Date.now()
+      const check = () => {
+        if (!navigator.onLine || document.hidden || Date.now() - lastCheck < MIN_TIME_BETWEEN_CHECKS_MS) return
+        lastCheck = Date.now()
         registered.update().catch(() => {
           // Server unreachable; the next check will try again.
         })
-      }, UPDATE_CHECK_INTERVAL_MS)
+      }
+
+      setInterval(check, UPDATE_CHECK_INTERVAL_MS)
+      // An iPhone keeps a home screen app suspended instead of reloading it, and timers stop while it is away.
+      // The moment it comes back is therefore the only dependable time to look for a new version.
+      document.addEventListener('visibilitychange', check)
+      window.addEventListener('online', check)
     },
   })
 
