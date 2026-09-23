@@ -4,6 +4,7 @@ import { bundledPacks } from '../packs/bundled.ts'
 import { countUpdatablePacks, mergePacks, syncPacks, type Fetcher, type SyncResult } from '../packs/sync.ts'
 import type { Pack } from '../packs/types.ts'
 import {
+  deleteTrip as removeTrip,
   installPacks,
   loadAll,
   packStore,
@@ -11,12 +12,13 @@ import {
   requestPersistentStorage,
   saveTrip as storeTrip,
 } from '../storage/db.ts'
+import { withTrip } from '../trips/list.ts'
 import { AppDataContext, type PackSync } from './appData.ts'
 import styles from './AppDataProvider.module.css'
 
 interface Loaded {
   packs: Pack[]
-  trips: Record<string, TripState>
+  trips: TripState[]
 }
 
 // The provider is mounted once, so module-level flags are enough to keep a second run from starting.
@@ -56,10 +58,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
       .then(loadAll)
       .then(({ packs, trips }) => {
         if (!active) return
-        setLoaded({
-          packs: mergePacks([], packs),
-          trips: Object.fromEntries(trips.map((trip) => [trip.packId, trip])),
-        })
+        setLoaded({ packs: mergePacks([], packs), trips })
         checkPacks()
       })
       .catch((error: unknown) => {
@@ -78,27 +77,34 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
     return () => window.removeEventListener('online', check)
   }, [checkPacks])
 
-  const saveTrip = useCallback((trip: TripState) => {
-    setLoaded((current) => current && { ...current, trips: { ...current.trips, [trip.packId]: trip } })
-    storeTrip(trip).catch((error: unknown) => {
-      console.error(error)
-      setSaveFailed(true)
-    })
+  const report = useCallback((error: unknown) => {
+    console.error(error)
+    setSaveFailed(true)
   }, [])
 
-  const deletePack = useCallback((packId: string) => {
-    setLoaded(
-      (current) =>
-        current && {
-          packs: current.packs.filter((pack) => pack.id !== packId),
-          trips: Object.fromEntries(Object.entries(current.trips).filter(([id]) => id !== packId)),
-        },
-    )
-    removePack(packId).catch((error: unknown) => {
-      console.error(error)
-      setSaveFailed(true)
-    })
-  }, [])
+  const saveTrip = useCallback(
+    (trip: TripState) => {
+      setLoaded((current) => current && { ...current, trips: withTrip(current.trips, trip) })
+      storeTrip(trip).catch(report)
+    },
+    [report],
+  )
+
+  const deleteTrip = useCallback(
+    (tripId: string) => {
+      setLoaded((current) => current && { ...current, trips: current.trips.filter((trip) => trip.id !== tripId) })
+      removeTrip(tripId).catch(report)
+    },
+    [report],
+  )
+
+  const deletePack = useCallback(
+    (packId: string) => {
+      setLoaded((current) => current && { ...current, packs: current.packs.filter((pack) => pack.id !== packId) })
+      removePack(packId).catch(report)
+    },
+    [report],
+  )
 
   // Lives here rather than on the home screen, so a sync carries on (and cannot start twice) while players move around.
   const startSync = useCallback(() => {
@@ -122,8 +128,8 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
   }, [checkPacks])
 
   const value = useMemo(
-    () => loaded && { ...loaded, saveTrip, deletePack, sync, startSync, checkPacks },
-    [loaded, saveTrip, deletePack, sync, startSync, checkPacks],
+    () => loaded && { ...loaded, saveTrip, deleteTrip, deletePack, sync, startSync, checkPacks },
+    [loaded, saveTrip, deleteTrip, deletePack, sync, startSync, checkPacks],
   )
 
   if (loadFailed) {

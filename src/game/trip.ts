@@ -5,8 +5,18 @@ import type { Rng } from './random.ts'
 import { turnPoints } from './scoring.ts'
 import type { Player, QuizSettings, TripState } from './types.ts'
 
-export function newTrip(packId: string): TripState {
-  return { packId, players: [], params: {}, askedQuestionIds: [], rounds: [], predictions: [] }
+export function newTrip(id: string, name: string, packId?: string): TripState {
+  return {
+    id,
+    name,
+    ...(packId && { packId }),
+    checklist: [],
+    players: [],
+    params: {},
+    askedQuestionIds: [],
+    rounds: [],
+    predictions: [],
+  }
 }
 
 export function startRound(

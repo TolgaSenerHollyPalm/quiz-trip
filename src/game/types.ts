@@ -1,4 +1,5 @@
 import type { Category, Difficulty, Question } from '../packs/types.ts'
+import type { ChecklistItem, Transport, TripKind } from '../trips/types.ts'
 
 export interface Player {
   id: string
@@ -58,7 +59,14 @@ export interface Prediction {
 }
 
 export interface TripState {
-  packId: string
+  id: string
+  name: string
+  packId?: string // the question pack played on this trip, if one is linked
+  startDate?: string // YYYY-MM-DD, the day the trip starts
+  endDate?: string // YYYY-MM-DD, optional
+  transport?: Transport
+  kind?: TripKind
+  checklist: ChecklistItem[]
   players: Player[]
   params: Record<string, number> // values for parameterised prediction templates
   askedQuestionIds: string[] // oldest first

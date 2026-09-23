@@ -1,20 +1,23 @@
 import { useSyncExternalStore } from 'react'
 
-// Routes live in the URL hash, so GitHub Pages only ever serves index.html from the /quiz-trip/ folder.
+// Routes live in the URL hash, so GitHub Pages only ever serves index.html from the app's folder.
 export type Route =
   | { screen: 'home' }
-  | { screen: 'trip'; packId: string }
-  | { screen: 'players'; packId: string; next?: 'quiz' }
-  | { screen: 'quiz'; packId: string }
-  | { screen: 'play'; packId: string }
-  | { screen: 'result'; packId: string; roundId: string }
-  | { screen: 'scores'; packId: string }
-  | { screen: 'settings'; packId: string; add?: string } // add: template to add once its settings are saved
-  | { screen: 'predictions'; packId: string }
-  | { screen: 'prediction-new'; packId: string }
-  | { screen: 'prediction'; packId: string; predictionId: string }
-  | { screen: 'guess'; packId: string; predictionId: string; playerId?: string } // playerId: change one guess
-  | { screen: 'prediction-result'; packId: string; predictionId: string }
+  | { screen: 'packs' }
+  | { screen: 'trip-new' }
+  | { screen: 'trip'; tripId: string }
+  | { screen: 'trip-edit'; tripId: string }
+  | { screen: 'players'; tripId: string; next?: 'quiz' }
+  | { screen: 'quiz'; tripId: string }
+  | { screen: 'play'; tripId: string }
+  | { screen: 'result'; tripId: string; roundId: string }
+  | { screen: 'scores'; tripId: string }
+  | { screen: 'settings'; tripId: string; add?: string } // add: template to add once its settings are saved
+  | { screen: 'predictions'; tripId: string }
+  | { screen: 'prediction-new'; tripId: string }
+  | { screen: 'prediction'; tripId: string; predictionId: string }
+  | { screen: 'guess'; tripId: string; predictionId: string; playerId?: string } // playerId: change one guess
+  | { screen: 'prediction-result'; tripId: string; predictionId: string }
 
 const query = (params: Record<string, string | undefined>) => {
   const entries = Object.entries(params).filter((entry): entry is [string, string] => entry[1] !== undefined)
@@ -23,16 +26,21 @@ const query = (params: Record<string, string | undefined>) => {
 
 export function href(route: Route): string {
   if (route.screen === 'home') return '#/'
-  const trip = `#/trip/${encodeURIComponent(route.packId)}`
+  if (route.screen === 'packs') return '#/packs'
+  if (route.screen === 'trip-new') return '#/trips/new'
+
+  const trip = `#/trip/${encodeURIComponent(route.tripId)}`
   switch (route.screen) {
     case 'trip':
       return trip
-    case 'players':
-      return `${trip}/players${query({ next: route.next })}`
+    case 'trip-edit':
+      return `${trip}/edit`
     case 'quiz':
     case 'play':
     case 'scores':
       return `${trip}/${route.screen}`
+    case 'players':
+      return `${trip}/players${query({ next: route.next })}`
     case 'result':
       return `${trip}/result/${encodeURIComponent(route.roundId)}`
     case 'settings':
@@ -42,6 +50,7 @@ export function href(route: Route): string {
     case 'prediction-new':
       return `${trip}/predictions/new`
   }
+
   const prediction = `${trip}/predictions/${encodeURIComponent(route.predictionId)}`
   switch (route.screen) {
     case 'prediction':
@@ -62,43 +71,49 @@ export function parseRoute(hash: string): Route {
   } catch {
     return { screen: 'home' }
   }
-  const [section, packId, page, id, action] = parts
-  if (section !== 'trip' || !packId) return { screen: 'home' }
+  const [section, tripId, page, id, action] = parts
+  if (section === 'packs') return { screen: 'packs' }
+  if (section === 'trips') return tripId === 'new' ? { screen: 'trip-new' } : { screen: 'home' }
+  if (section !== 'trip' || !tripId) return { screen: 'home' }
 
   switch (page) {
     case 'players':
-      return params.get('next') === 'quiz' ? { screen: 'players', packId, next: 'quiz' } : { screen: 'players', packId }
+      return params.get('next') === 'quiz'
+        ? { screen: 'players', tripId, next: 'quiz' }
+        : { screen: 'players', tripId }
+    case 'edit':
+      return { screen: 'trip-edit', tripId }
     case 'quiz':
     case 'play':
     case 'scores':
-      return { screen: page, packId }
+      return { screen: page, tripId }
     case 'result':
-      return id ? { screen: 'result', packId, roundId: id } : { screen: 'trip', packId }
+      return id ? { screen: 'result', tripId, roundId: id } : { screen: 'trip', tripId }
     case 'settings': {
       const add = params.get('add')
-      return add ? { screen: 'settings', packId, add } : { screen: 'settings', packId }
+      return add ? { screen: 'settings', tripId, add } : { screen: 'settings', tripId }
     }
     case 'predictions':
-      return parsePredictionRoute(packId, id, action, params.get('player'))
+      return parsePredictionRoute(tripId, id, action, params.get('player'))
     default:
-      return { screen: 'trip', packId }
+      return { screen: 'trip', tripId }
   }
 }
 
-function parsePredictionRoute(packId: string, id?: string, action?: string, playerId?: string | null): Route {
-  if (!id) return { screen: 'predictions', packId }
-  if (id === 'new') return { screen: 'prediction-new', packId }
+function parsePredictionRoute(tripId: string, id?: string, action?: string, playerId?: string | null): Route {
+  if (!id) return { screen: 'predictions', tripId }
+  if (id === 'new') return { screen: 'prediction-new', tripId }
   switch (action) {
     case undefined:
-      return { screen: 'prediction', packId, predictionId: id }
+      return { screen: 'prediction', tripId, predictionId: id }
     case 'guess':
       return playerId
-        ? { screen: 'guess', packId, predictionId: id, playerId }
-        : { screen: 'guess', packId, predictionId: id }
+        ? { screen: 'guess', tripId, predictionId: id, playerId }
+        : { screen: 'guess', tripId, predictionId: id }
     case 'result':
-      return { screen: 'prediction-result', packId, predictionId: id }
+      return { screen: 'prediction-result', tripId, predictionId: id }
     default:
-      return { screen: 'predictions', packId }
+      return { screen: 'predictions', tripId }
   }
 }
 

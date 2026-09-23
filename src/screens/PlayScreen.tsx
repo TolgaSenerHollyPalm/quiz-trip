@@ -21,13 +21,14 @@ interface Feedback {
 type Phase = { name: 'ready' } | { name: 'question' } | { name: 'feedback'; feedback: Feedback }
 
 // Every step of a round is saved as it happens; leaving and coming back resumes at the current player's turn.
-export default function PlayScreen({ packId }: { packId: string }) {
-  const { pack, trip, saveTrip } = useTrip(packId)
+export default function PlayScreen({ tripId }: { tripId: string }) {
+  const { pack, trip, saveTrip } = useTrip(tripId)
   const [phase, setPhase] = useState<Phase>({ name: 'ready' })
-  const back = { screen: 'trip', packId } as const
-  const nameOf = (playerId: string) => trip.players.find((player) => player.id === playerId)?.nickname ?? '?'
+  const back = { screen: 'trip', tripId } as const
+  const nameOf = (playerId: string) => trip?.players.find((player) => player.id === playerId)?.nickname ?? '?'
 
-  if (!pack) return <Missing message="Bu gezi paketi cihazda yok." back={{ screen: 'home' }} />
+  if (!trip) return <Missing message="Bu gezi bulunamadı." back={{ screen: 'home' }} />
+  if (!pack) return <Missing message="Bu gezinin soru paketi cihazda yok." back={{ screen: 'trip', tripId }} />
 
   if (phase.name === 'feedback') {
     const { feedback } = phase
@@ -39,7 +40,7 @@ export default function PlayScreen({ packId }: { packId: string }) {
           <Button
             variant="primary"
             big
-            onClick={() => navigate({ screen: 'result', packId, roundId: feedback.finishedRoundId! }, { replace: true })}
+            onClick={() => navigate({ screen: 'result', tripId, roundId: feedback.finishedRoundId! }, { replace: true })}
           >
             Sonuçları gör
           </Button>

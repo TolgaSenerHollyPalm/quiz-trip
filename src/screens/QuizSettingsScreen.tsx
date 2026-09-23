@@ -24,11 +24,11 @@ function summary(poolSize: number, needed: number, neverAsked: number): string {
   return plan
 }
 
-export default function QuizSettingsScreen({ packId }: { packId: string }) {
-  const { pack, trip, saveTrip } = useTrip(packId)
+export default function QuizSettingsScreen({ tripId }: { tripId: string }) {
+  const { pack, trip, saveTrip } = useTrip(tripId)
   const inPack = CATEGORIES.filter((category) => pack?.questions.some((q) => q.category === category))
   const [settings, setSettings] = useState<QuizSettings>(() => {
-    const last = trip.quizSettings
+    const last = trip?.quizSettings
     // Categories chosen last time that this pack no longer has are dropped.
     const categories = last?.categories.filter((category) => inPack.includes(category)) ?? []
     return {
@@ -39,13 +39,14 @@ export default function QuizSettingsScreen({ packId }: { packId: string }) {
     }
   })
 
-  const back = { screen: 'trip', packId } as const
-  if (!pack) return <Missing message="Bu gezi paketi cihazda yok." back={{ screen: 'home' }} />
+  const back = { screen: 'trip', tripId } as const
+  if (!trip) return <Missing message="Bu gezi bulunamadı." back={{ screen: 'home' }} />
+  if (!pack) return <Missing message="Bu gezinin soru paketi cihazda yok." back={{ screen: 'trip', tripId }} />
   if (trip.players.length === 0) {
     return (
       <Screen title="Quiz ayarları" back={back}>
         <p>Önce oyuncuları ekle.</p>
-        <LinkButton to={{ screen: 'players', packId, next: 'quiz' }} variant="primary" big>
+        <LinkButton to={{ screen: 'players', tripId, next: 'quiz' }} variant="primary" big>
           Oyuncuları ekle
         </LinkButton>
       </Screen>
@@ -55,7 +56,7 @@ export default function QuizSettingsScreen({ packId }: { packId: string }) {
     return (
       <Screen title="Quiz ayarları" back={back}>
         <p>Yarım kalan bir tur var. Yeni tur için önce onu bitir ya da iptal et.</p>
-        <LinkButton to={{ screen: 'play', packId }} variant="primary" big>
+        <LinkButton to={{ screen: 'play', tripId }} variant="primary" big>
           Tura devam et
         </LinkButton>
       </Screen>
@@ -79,7 +80,7 @@ export default function QuizSettingsScreen({ packId }: { packId: string }) {
   const start = () => {
     const round = { id: crypto.randomUUID(), startedAt: new Date().toISOString() }
     saveTrip(startRound(trip, pack, settings, round, Math.random))
-    navigate({ screen: 'play', packId }, { replace: true })
+    navigate({ screen: 'play', tripId }, { replace: true })
   }
 
   return (

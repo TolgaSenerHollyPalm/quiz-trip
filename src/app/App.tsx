@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import AddPredictionScreen from '../screens/AddPredictionScreen.tsx'
 import GuessScreen from '../screens/GuessScreen.tsx'
 import HomeScreen from '../screens/HomeScreen.tsx'
+import PacksScreen from '../screens/PacksScreen.tsx'
 import PlayersScreen from '../screens/PlayersScreen.tsx'
 import PlayScreen from '../screens/PlayScreen.tsx'
 import PredictionResultScreen from '../screens/PredictionResultScreen.tsx'
@@ -10,6 +11,7 @@ import PredictionsScreen from '../screens/PredictionsScreen.tsx'
 import QuizSettingsScreen from '../screens/QuizSettingsScreen.tsx'
 import RoundResultScreen from '../screens/RoundResultScreen.tsx'
 import ScoreboardScreen from '../screens/ScoreboardScreen.tsx'
+import TripFormScreen from '../screens/TripFormScreen.tsx'
 import TripScreen from '../screens/TripScreen.tsx'
 import TripSettingsScreen from '../screens/TripSettingsScreen.tsx'
 import AppDataProvider from './AppDataProvider.tsx'
@@ -39,29 +41,35 @@ function CurrentScreen({ route }: { route: Route }) {
   switch (route.screen) {
     case 'home':
       return <HomeScreen />
+    case 'packs':
+      return <PacksScreen />
+    case 'trip-new':
+      return <TripFormScreen />
+    case 'trip-edit':
+      return <TripFormScreen tripId={route.tripId} />
     case 'trip':
-      return <TripScreen packId={route.packId} />
+      return <TripScreen tripId={route.tripId} />
     case 'players':
-      return <PlayersScreen packId={route.packId} next={route.next} />
+      return <PlayersScreen tripId={route.tripId} next={route.next} />
     case 'quiz':
-      return <QuizSettingsScreen packId={route.packId} />
+      return <QuizSettingsScreen tripId={route.tripId} />
     case 'play':
-      return <PlayScreen packId={route.packId} />
+      return <PlayScreen tripId={route.tripId} />
     case 'result':
-      return <RoundResultScreen packId={route.packId} roundId={route.roundId} />
+      return <RoundResultScreen tripId={route.tripId} roundId={route.roundId} />
     case 'scores':
-      return <ScoreboardScreen packId={route.packId} />
+      return <ScoreboardScreen tripId={route.tripId} />
     case 'settings':
-      return <TripSettingsScreen packId={route.packId} add={route.add} />
+      return <TripSettingsScreen tripId={route.tripId} add={route.add} />
     case 'predictions':
-      return <PredictionsScreen packId={route.packId} />
+      return <PredictionsScreen tripId={route.tripId} />
     case 'prediction-new':
-      return <AddPredictionScreen packId={route.packId} />
+      return <AddPredictionScreen tripId={route.tripId} />
     case 'prediction':
-      return <PredictionScreen packId={route.packId} predictionId={route.predictionId} />
+      return <PredictionScreen tripId={route.tripId} predictionId={route.predictionId} />
     case 'guess':
-      return <GuessScreen packId={route.packId} predictionId={route.predictionId} playerId={route.playerId} />
+      return <GuessScreen tripId={route.tripId} predictionId={route.predictionId} playerId={route.playerId} />
     case 'prediction-result':
-      return <PredictionResultScreen packId={route.packId} predictionId={route.predictionId} />
+      return <PredictionResultScreen tripId={route.tripId} predictionId={route.predictionId} />
   }
 }

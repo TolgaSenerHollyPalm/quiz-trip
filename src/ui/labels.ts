@@ -1,5 +1,6 @@
 import type { DifficultyChoice } from '../game/types.ts'
 import type { Category } from '../packs/types.ts'
+import type { Transport, TripKind } from '../trips/types.ts'
 
 export const CATEGORY_LABELS: Record<Category, string> = {
   history: 'Tarih',
@@ -18,3 +19,20 @@ export const DIFFICULTY_LABELS: Record<DifficultyChoice, string> = {
 }
 
 export const OPTION_LETTERS = ['A', 'B', 'C', 'D']
+
+export const TRANSPORT_LABELS: Record<Transport, string> = {
+  plane: 'Uçak',
+  car: 'Araba',
+  bus: 'Otobüs',
+  ferry: 'Vapur',
+  other: 'Diğer',
+}
+
+export const TRIP_KIND_LABELS: Record<TripKind, string> = {
+  beach: 'Deniz',
+  winter: 'Kış',
+  city: 'Şehir',
+  nature: 'Doğa',
+  business: 'İş',
+  other: 'Diğer',
+}

@@ -1,5 +1,4 @@
 import { createContext, useContext } from 'react'
-import { newTrip } from '../game/trip.ts'
 import type { TripState } from '../game/types.ts'
 import type { SyncResult } from '../packs/sync.ts'
 import type { Pack } from '../packs/types.ts'
@@ -13,9 +12,11 @@ export interface PackSync {
 
 export interface AppData {
   packs: Pack[]
-  trips: Record<string, TripState>
+  trips: TripState[]
+  /** Stores a trip, adding it when it is new. */
   saveTrip: (trip: TripState) => void
-  /** Removes the pack and everything played on it. */
+  deleteTrip: (tripId: string) => void
+  /** Removes a pack's questions; trips that used it keep their plan and scores. */
   deletePack: (packId: string) => void
   sync: PackSync
   startSync: () => void
@@ -30,13 +31,14 @@ export function useAppData(): AppData {
   return data
 }
 
-/** A trip is played with one pack; the trip starts empty until someone sets up players. */
-export function useTrip(packId: string) {
-  const { packs, trips, saveTrip, deletePack } = useAppData()
+/** A trip and the pack it is played with, if that pack is on the device. */
+export function useTrip(tripId: string) {
+  const { packs, trips, saveTrip, deleteTrip } = useAppData()
+  const trip = trips.find((candidate) => candidate.id === tripId)
   return {
-    pack: packs.find((pack) => pack.id === packId),
-    trip: trips[packId] ?? newTrip(packId),
+    trip,
+    pack: packs.find((pack) => pack.id === trip?.packId),
     saveTrip,
-    deletePack,
+    deleteTrip,
   }
 }

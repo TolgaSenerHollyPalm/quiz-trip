@@ -21,14 +21,15 @@ function nicknameProblem(players: Player[], index: number): string | undefined {
   return taken ? 'Bu isim zaten var.' : undefined
 }
 
-export default function PlayersScreen({ packId, next }: { packId: string; next?: 'quiz' }) {
-  const { pack, trip, saveTrip } = useTrip(packId)
-  const [players, setPlayers] = useState(() => (trip.players.length > 0 ? trip.players : [newPlayer(), newPlayer()]))
+export default function PlayersScreen({ tripId, next }: { tripId: string; next?: 'quiz' }) {
+  const { pack, trip, saveTrip } = useTrip(tripId)
+  const [players, setPlayers] = useState(() => (trip && trip.players.length > 0 ? trip.players : [newPlayer(), newPlayer()]))
   const [showProblems, setShowProblems] = useState(false)
   const [losing, setLosing] = useState<Player[]>([]) // removed players whose points would be deleted
 
-  const back = { screen: 'trip', packId } as const
-  if (!pack) return <Missing message="Bu gezi paketi cihazda yok." back={{ screen: 'home' }} />
+  const back = { screen: 'trip', tripId } as const
+  if (!trip) return <Missing message="Bu gezi bulunamadı." back={{ screen: 'home' }} />
+  if (!pack) return <Missing message="Bu gezinin soru paketi cihazda yok." back={{ screen: 'trip', tripId }} />
   if (trip.currentRound) {
     return <Missing message="Tur bitene ya da iptal edilene kadar oyuncular değiştirilemez." back={back} />
   }
@@ -37,7 +38,7 @@ export default function PlayersScreen({ packId, next }: { packId: string; next?:
 
   const commit = () => {
     saveTrip(updatePlayers(trip, players.map((player) => ({ ...player, nickname: player.nickname.trim() }))))
-    navigate(next === 'quiz' ? { screen: 'quiz', packId } : back, { replace: true })
+    navigate(next === 'quiz' ? { screen: 'quiz', tripId } : back, { replace: true })
   }
 
   const save = () => {

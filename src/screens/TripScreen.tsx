@@ -1,105 +1,93 @@
 import { useState } from 'react'
 import { useTrip } from '../app/appData.ts'
 import { navigate, type Route } from '../app/router.ts'
-import { cancelRound, newTrip } from '../game/trip.ts'
-import { isBundledPack } from '../packs/bundled.ts'
+import { cancelRound } from '../game/trip.ts'
+import { formatDateRange } from '../trips/dates.ts'
 import { Button, LinkButton } from '../ui/Button.tsx'
 import ConfirmDialog from '../ui/ConfirmDialog.tsx'
+import { TRANSPORT_LABELS, TRIP_KIND_LABELS } from '../ui/labels.ts'
 import Missing from '../ui/Missing.tsx'
 import Screen from '../ui/Screen.tsx'
+import text from '../ui/text.module.css'
 import styles from './TripScreen.module.css'
 
-export default function TripScreen({ packId }: { packId: string }) {
-  const { pack, trip, saveTrip, deletePack } = useTrip(packId)
+export default function TripScreen({ tripId }: { tripId: string }) {
+  const { trip, pack, saveTrip, deleteTrip } = useTrip(tripId)
   const [confirmingCancel, setConfirmingCancel] = useState(false)
   const [confirmingReset, setConfirmingReset] = useState(false)
   const [confirmingDelete, setConfirmingDelete] = useState(false)
   const [deleted, setDeleted] = useState(false)
   if (deleted) return null // leaving for the home screen
-  if (!pack) return <Missing message="Bu gezi paketi cihazda yok." back={{ screen: 'home' }} />
+  if (!trip) return <Missing message="Bu gezi bulunamadı." back={{ screen: 'home' }} />
 
   const round = trip.currentRound
   // Predictions that still need guesses or a result.
   const waiting = trip.predictions.filter((prediction) => prediction.status !== 'resolved').length
-  // Nothing to reset on a pack nobody has played yet.
+  // Nothing to reset before anyone has played.
   const played =
     trip.players.length > 0 || trip.rounds.length > 0 || trip.predictions.length > 0 || Object.keys(trip.params).length > 0
   const quiz: Route =
-    trip.players.length === 0 ? { screen: 'players', packId, next: 'quiz' } : { screen: 'quiz', packId }
+    trip.players.length === 0 ? { screen: 'players', tripId, next: 'quiz' } : { screen: 'quiz', tripId }
+  const details = [
+    trip.startDate && formatDateRange(trip.startDate, trip.endDate),
+    trip.transport && TRANSPORT_LABELS[trip.transport],
+    trip.kind && TRIP_KIND_LABELS[trip.kind],
+  ].filter(Boolean)
 
   return (
-    <Screen title={pack.title} back={{ screen: 'home' }}>
-      {round ? (
-        <section className={styles.resume}>
-          <p>
-            <strong>Yarım kalan bir tur var.</strong> Sıradaki soru: {round.answers.length + 1} /{' '}
-            {round.turns.length}
-          </p>
-          <LinkButton to={{ screen: 'play', packId }} variant="primary" big>
-            Tura devam et
-          </LinkButton>
-          <Button onClick={() => setConfirmingCancel(true)}>Turu iptal et</Button>
-        </section>
-      ) : (
-        <LinkButton to={quiz} variant="primary" big>
-          Bilgi yarışması
-        </LinkButton>
-      )}
+    <Screen title={trip.name} back={{ screen: 'home' }}>
+      {details.length > 0 && <p className={text.meta}>{details.join(' · ')}</p>}
 
-      <LinkButton to={{ screen: 'predictions', packId }} variant="primary" big>
-        {waiting > 0 ? `Tahminler (${waiting} bekliyor)` : 'Tahminler'}
-      </LinkButton>
-
-      <LinkButton to={{ screen: 'scores', packId }}>Skor tablosu</LinkButton>
-
-      {round ? (
+      {pack ? (
         <>
-          <Button disabled>Oyuncular ({trip.players.length})</Button>
-          <p className={styles.hint}>Tur bitene ya da iptal edilene kadar oyuncular değiştirilemez.</p>
+          {round ? (
+            <section className={styles.resume}>
+              <p>
+                <strong>Yarım kalan bir tur var.</strong> Sıradaki soru: {round.answers.length + 1} /{' '}
+                {round.turns.length}
+              </p>
+              <LinkButton to={{ screen: 'play', tripId }} variant="primary" big>
+                Tura devam et
+              </LinkButton>
+              <Button onClick={() => setConfirmingCancel(true)}>Turu iptal et</Button>
+            </section>
+          ) : (
+            <LinkButton to={quiz} variant="primary" big>
+              Bilgi yarışması
+            </LinkButton>
+          )}
+
+          <LinkButton to={{ screen: 'predictions', tripId }} variant="primary" big>
+            {waiting > 0 ? `Tahminler (${waiting} bekliyor)` : 'Tahminler'}
+          </LinkButton>
+          <LinkButton to={{ screen: 'scores', tripId }}>Skor tablosu</LinkButton>
+
+          {round ? (
+            <>
+              <Button disabled>Oyuncular ({trip.players.length})</Button>
+              <p className={styles.hint}>Tur bitene ya da iptal edilene kadar oyuncular değiştirilemez.</p>
+            </>
+          ) : (
+            <LinkButton to={{ screen: 'players', tripId }}>
+              {trip.players.length > 0 ? `Oyuncular (${trip.players.length})` : 'Oyuncuları ekle'}
+            </LinkButton>
+          )}
+
+          {pack.predictionTemplates.some((template) => template.params) && (
+            <LinkButton to={{ screen: 'settings', tripId }}>Gezi ayarları</LinkButton>
+          )}
         </>
       ) : (
-        <LinkButton to={{ screen: 'players', packId }}>
-          {trip.players.length > 0 ? `Oyuncular (${trip.players.length})` : 'Oyuncuları ekle'}
-        </LinkButton>
+        <p className={text.notice}>
+          {trip.packId
+            ? 'Bu gezinin soru paketi cihazda yok. Soru paketleri ekranından yeniden indirebilirsin.'
+            : 'Bu geziye soru paketi bağlı değil. Paket seçersen bilgi yarışması ve tahminler açılır.'}
+        </p>
       )}
 
-      {pack.predictionTemplates.some((template) => template.params) && (
-        <LinkButton to={{ screen: 'settings', packId }}>Gezi ayarları</LinkButton>
-      )}
-
-      {played && <Button onClick={() => setConfirmingReset(true)}>Geziyi sıfırla</Button>}
-      <Button onClick={() => setConfirmingDelete(true)}>Paketi sil</Button>
-
-      <ConfirmDialog
-        open={confirmingReset}
-        title="Gezi sıfırlansın mı?"
-        confirmLabel="Sıfırla"
-        onConfirm={() => {
-          saveTrip(newTrip(packId))
-          setConfirmingReset(false)
-        }}
-        onCancel={() => setConfirmingReset(false)}
-      >
-        Oyuncular, puanlar, tahminler ve gezi ayarları silinecek. Paket ve soruları telefonda kalacak, yeni bir
-        geziye sıfırdan başlayabilirsin.
-      </ConfirmDialog>
-
-      <ConfirmDialog
-        open={confirmingDelete}
-        title="Paket silinsin mi?"
-        confirmLabel="Sil"
-        onConfirm={() => {
-          setDeleted(true)
-          deletePack(packId)
-          navigate({ screen: 'home' }, { replace: true })
-        }}
-        onCancel={() => setConfirmingDelete(false)}
-      >
-        <strong>{pack.title}</strong> paketi, bu gezideki oyuncular, puanlar ve tahminlerle birlikte silinecek.{' '}
-        {isBundledPack(packId)
-          ? 'Bu paket uygulamayla birlikte geldiği için uygulama yeniden açıldığında boş olarak geri gelir.'
-          : 'Paket sunucudaki listede duruyorsa “Paketleri güncelle” ile yeniden inebilir.'}
-      </ConfirmDialog>
+      <LinkButton to={{ screen: 'trip-edit', tripId }}>Geziyi düzenle</LinkButton>
+      {played && <Button onClick={() => setConfirmingReset(true)}>Oyun verilerini sıfırla</Button>}
+      <Button onClick={() => setConfirmingDelete(true)}>Geziyi sil</Button>
 
       <ConfirmDialog
         open={confirmingCancel}
@@ -112,6 +100,43 @@ export default function TripScreen({ packId }: { packId: string }) {
         onCancel={() => setConfirmingCancel(false)}
       >
         Bu turda şimdiye kadar alınan puanlar silinir.
+      </ConfirmDialog>
+
+      <ConfirmDialog
+        open={confirmingReset}
+        title="Oyun verileri sıfırlansın mı?"
+        confirmLabel="Sıfırla"
+        onConfirm={() => {
+          saveTrip({
+            ...trip,
+            players: [],
+            params: {},
+            askedQuestionIds: [],
+            rounds: [],
+            predictions: [],
+            quizSettings: undefined,
+            currentRound: undefined,
+          })
+          setConfirmingReset(false)
+        }}
+        onCancel={() => setConfirmingReset(false)}
+      >
+        Oyuncular, puanlar, tahminler ve gezi ayarları silinecek. Gezinin adı, tarihleri ve hazırlık listesi kalır.
+      </ConfirmDialog>
+
+      <ConfirmDialog
+        open={confirmingDelete}
+        title="Gezi silinsin mi?"
+        confirmLabel="Sil"
+        onConfirm={() => {
+          setDeleted(true)
+          deleteTrip(tripId)
+          navigate({ screen: 'home' }, { replace: true })
+        }}
+        onCancel={() => setConfirmingDelete(false)}
+      >
+        <strong>{trip.name}</strong> gezisi, oyuncuları, puanları ve tahminleriyle birlikte silinecek. Soru paketi
+        telefonda kalır.
       </ConfirmDialog>
     </Screen>
   )

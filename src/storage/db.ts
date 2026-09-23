@@ -2,6 +2,7 @@ import { openDB, type DBSchema, type IDBPDatabase } from 'idb'
 import type { TripState } from '../game/types.ts'
 import type { PackStore } from '../packs/sync.ts'
 import type { Pack } from '../packs/types.ts'
+import { migrateTrip, type LegacyTrip } from './migrations.ts'
 
 interface QuizTripDB extends DBSchema {
   packs: { key: string; value: Pack }
@@ -11,11 +12,20 @@ interface QuizTripDB extends DBSchema {
 let connection: Promise<IDBPDatabase<QuizTripDB>> | undefined
 
 function database() {
-  connection ??= openDB<QuizTripDB>('quiz-trip', 1, {
-    upgrade(db) {
+  connection ??= openDB<QuizTripDB>('quiz-trip', 2, {
+    async upgrade(db, oldVersion, _newVersion, tx) {
       // Packs and trips live in separate stores, so updating a pack can never touch a trip.
-      db.createObjectStore('packs', { keyPath: 'id' })
-      db.createObjectStore('trips', { keyPath: 'packId' })
+      if (oldVersion < 1) db.createObjectStore('packs', { keyPath: 'id' })
+      if (oldVersion < 2) {
+        // Trips used to be keyed by the pack they were played with; a trip is its own record now.
+        const legacy = oldVersion < 1 ? [] : ((await tx.objectStore('trips').getAll()) as unknown as LegacyTrip[])
+        const packs = oldVersion < 1 ? [] : await tx.objectStore('packs').getAll()
+        if (oldVersion >= 1) db.deleteObjectStore('trips')
+        const trips = db.createObjectStore('trips', { keyPath: 'id' })
+        for (const trip of legacy) {
+          trips.put(migrateTrip(trip, packs.find((pack) => pack.id === trip.packId)?.title))
+        }
+      }
     },
   })
   return connection
@@ -50,11 +60,15 @@ export async function installPacks(packs: Pack[]): Promise<void> {
   for (const pack of packs) await packStore.saveIfNewer(pack)
 }
 
-/** Removes a pack together with the trip played on it, in one transaction. */
+/** Removes the pack's questions. Trips that used it keep their plan and their scores. */
 export async function removePack(packId: string): Promise<void> {
   const db = await database()
-  const tx = db.transaction(['packs', 'trips'], 'readwrite')
-  await Promise.all([tx.objectStore('packs').delete(packId), tx.objectStore('trips').delete(packId), tx.done])
+  await db.delete('packs', packId)
+}
+
+export async function deleteTrip(tripId: string): Promise<void> {
+  const db = await database()
+  await db.delete('trips', tripId)
 }
 
 export async function saveTrip(trip: TripState): Promise<void> {

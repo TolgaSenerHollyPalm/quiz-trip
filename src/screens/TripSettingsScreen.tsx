@@ -25,18 +25,19 @@ function settingGroups(templates: PredictionTemplate[]) {
 }
 
 // Bounds entered here are copied into a prediction when it is added; changing them later leaves it alone.
-export default function TripSettingsScreen({ packId, add }: { packId: string; add?: string }) {
-  const { pack, trip, saveTrip } = useTrip(packId)
+export default function TripSettingsScreen({ tripId, add }: { tripId: string; add?: string }) {
+  const { pack, trip, saveTrip } = useTrip(tripId)
   // Plain digits with a decimal comma: a grouped "12.300" would read back as 12,3.
   const [texts, setTexts] = useState<Record<string, string>>(() =>
-    Object.fromEntries(Object.entries(trip.params).map(([key, value]) => [key, String(value).replace('.', ',')])),
+    Object.fromEntries(Object.entries(trip?.params ?? {}).map(([key, value]) => [key, String(value).replace('.', ',')])),
   )
   const [problems, setProblems] = useState<string[]>([])
-  if (!pack) return <Missing message="Bu gezi paketi cihazda yok." back={{ screen: 'home' }} />
+  if (!trip) return <Missing message="Bu gezi bulunamadı." back={{ screen: 'home' }} />
+  if (!pack) return <Missing message="Bu gezinin soru paketi cihazda yok." back={{ screen: 'trip', tripId }} />
 
   const groups = settingGroups(pack.predictionTemplates)
   const target = add ? pack.predictionTemplates.find((template) => template.id === add) : undefined
-  const back = target ? ({ screen: 'prediction-new', packId } as const) : ({ screen: 'trip', packId } as const)
+  const back = target ? ({ screen: 'prediction-new', tripId } as const) : ({ screen: 'trip', tripId } as const)
 
   const save = () => {
     const params: Record<string, number> = {}
@@ -64,7 +65,7 @@ export default function TripSettingsScreen({ packId, add }: { packId: string; ad
     if (target && !trip.predictions.some((prediction) => prediction.templateId === target.id)) {
       const prediction = predictionFromTemplate(target, params, crypto.randomUUID())
       saveTrip(addPrediction(updated, prediction))
-      navigate({ screen: 'prediction', packId, predictionId: prediction.id }, { replace: true })
+      navigate({ screen: 'prediction', tripId, predictionId: prediction.id }, { replace: true })
     } else {
       saveTrip(updated)
       navigate(back, { replace: true })

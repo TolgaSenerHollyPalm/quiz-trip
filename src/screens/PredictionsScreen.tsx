@@ -15,9 +15,10 @@ const SECTIONS: { status: Prediction['status']; title: string }[] = [
   { status: 'resolved', title: 'Sonuçlananlar' },
 ]
 
-export default function PredictionsScreen({ packId }: { packId: string }) {
-  const { pack, trip } = useTrip(packId)
-  if (!pack) return <Missing message="Bu gezi paketi cihazda yok." back={{ screen: 'home' }} />
+export default function PredictionsScreen({ tripId }: { tripId: string }) {
+  const { pack, trip } = useTrip(tripId)
+  if (!trip) return <Missing message="Bu gezi bulunamadı." back={{ screen: 'home' }} />
+  if (!pack) return <Missing message="Bu gezinin soru paketi cihazda yok." back={{ screen: 'trip', tripId }} />
 
   const detail = (prediction: Prediction) => {
     if (prediction.status === 'resolved') return `Sonuç: ${formatAnswer(prediction, prediction.result!)}`
@@ -27,13 +28,13 @@ export default function PredictionsScreen({ packId }: { packId: string }) {
   }
 
   return (
-    <Screen title="Tahminler" back={{ screen: 'trip', packId }}>
+    <Screen title="Tahminler" back={{ screen: 'trip', tripId }}>
       {trip.players.length === 0 && (
         <p className={text.notice}>
-          Tahmin girmek için önce <a href={href({ screen: 'players', packId })}>oyuncuları ekle</a>.
+          Tahmin girmek için önce <a href={href({ screen: 'players', tripId })}>oyuncuları ekle</a>.
         </p>
       )}
-      <LinkButton to={{ screen: 'prediction-new', packId }} variant="primary">
+      <LinkButton to={{ screen: 'prediction-new', tripId }} variant="primary">
         + Tahmin ekle
       </LinkButton>
       {trip.predictions.length === 0 && (
@@ -48,7 +49,7 @@ export default function PredictionsScreen({ packId }: { packId: string }) {
             <ul className={styles.list}>
               {items.map((prediction) => (
                 <li key={prediction.id}>
-                  <a className={styles.item} href={href({ screen: 'prediction', packId, predictionId: prediction.id })}>
+                  <a className={styles.item} href={href({ screen: 'prediction', tripId, predictionId: prediction.id })}>
                     <span className={styles.text}>{prediction.text}</span>
                     <span className={styles.meta}>
                       <StatusBadge status={prediction.status} />

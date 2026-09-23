@@ -21,7 +21,7 @@ const PLAYED_AT = '2026-09-19T10:05:00Z'
 
 function started(): TripState {
   const trip = {
-    ...newTrip('test'),
+    ...newTrip('test', 'Test gezisi'),
     players: [
       { id: 'a', nickname: 'Ali' },
       { id: 'b', nickname: 'Can' },
@@ -85,7 +85,7 @@ describe('a quiz round', () => {
 
 describe('updatePlayers', () => {
   const trip: TripState = {
-    ...newTrip('test'),
+    ...newTrip('test', 'Test gezisi'),
     players: [
       { id: 'a', nickname: 'Ali' },
       { id: 'b', nickname: 'Can' },
@@ -128,7 +128,7 @@ describe('updatePlayers', () => {
 
   it('knows which players have points or predictions to lose', () => {
     expect(playersWithData(trip)).toEqual(new Set(['a', 'b']))
-    expect(playersWithData(newTrip('test'))).toEqual(new Set())
+    expect(playersWithData(newTrip('test', 'Test gezisi'))).toEqual(new Set())
   })
 
   it('cancels a round in progress only when one of its players is removed', () => {

@@ -21,13 +21,14 @@ import Screen from '../ui/Screen.tsx'
 import text from '../ui/text.module.css'
 import styles from './AddPredictionScreen.module.css'
 
-export default function AddPredictionScreen({ packId }: { packId: string }) {
-  const { pack, trip, saveTrip } = useTrip(packId)
-  if (!pack) return <Missing message="Bu gezi paketi cihazda yok." back={{ screen: 'home' }} />
+export default function AddPredictionScreen({ tripId }: { tripId: string }) {
+  const { pack, trip, saveTrip } = useTrip(tripId)
+  if (!trip) return <Missing message="Bu gezi bulunamadı." back={{ screen: 'home' }} />
+  if (!pack) return <Missing message="Bu gezinin soru paketi cihazda yok." back={{ screen: 'trip', tripId }} />
 
   const add = (prediction: Prediction) => {
     saveTrip(addPrediction(trip, prediction))
-    navigate({ screen: 'prediction', packId, predictionId: prediction.id }, { replace: true })
+    navigate({ screen: 'prediction', tripId, predictionId: prediction.id }, { replace: true })
   }
 
   const summary = (template: PredictionTemplate) => {
@@ -38,7 +39,7 @@ export default function AddPredictionScreen({ packId }: { packId: string }) {
   }
 
   return (
-    <Screen title="Tahmin ekle" back={{ screen: 'predictions', packId }}>
+    <Screen title="Tahmin ekle" back={{ screen: 'predictions', tripId }}>
       <h2 className={text.heading}>Paketteki sorular</h2>
       <ul className={styles.templates}>
         {pack.predictionTemplates.map((template) => {
@@ -54,7 +55,7 @@ export default function AddPredictionScreen({ packId }: { packId: string }) {
                   disabled={added}
                   onClick={() =>
                     missingParams(template, trip.params).length > 0
-                      ? navigate({ screen: 'settings', packId, add: template.id })
+                      ? navigate({ screen: 'settings', tripId, add: template.id })
                       : add(predictionFromTemplate(template, trip.params, crypto.randomUUID()))
                   }
                 >

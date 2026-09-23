@@ -8,13 +8,14 @@ import Screen from '../ui/Screen.tsx'
 import text from '../ui/text.module.css'
 import ValueField from '../ui/ValueField.tsx'
 
-export default function PredictionResultScreen({ packId, predictionId }: { packId: string; predictionId: string }) {
-  const { pack, trip, saveTrip } = useTrip(packId)
+export default function PredictionResultScreen({ tripId, predictionId }: { tripId: string; predictionId: string }) {
+  const { pack, trip, saveTrip } = useTrip(tripId)
   const [value, setValue] = useState<number>()
   const [problem, setProblem] = useState<string>()
-  const detail = { screen: 'prediction', packId, predictionId } as const
-  const prediction = trip.predictions.find((p) => p.id === predictionId)
-  if (!pack || !prediction) return <Missing message="Bu tahmin bulunamadı." back={{ screen: 'predictions', packId }} />
+  const detail = { screen: 'prediction', tripId, predictionId } as const
+  const prediction = trip?.predictions.find((p) => p.id === predictionId)
+  if (!trip) return <Missing message="Bu gezi bulunamadı." back={{ screen: 'home' }} />
+  if (!pack || !prediction) return <Missing message="Bu tahmin bulunamadı." back={{ screen: 'predictions', tripId }} />
   if (prediction.status === 'open') {
     return <Missing message="Sonuç, herkes tahminini girdikten sonra girilebilir." back={detail} />
   }

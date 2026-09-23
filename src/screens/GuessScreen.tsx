@@ -13,7 +13,7 @@ import styles from './GuessScreen.module.css'
 type Phase = 'handoff' | 'input' | 'locked'
 
 interface GuessScreenProps {
-  packId: string
+  tripId: string
   predictionId: string
   playerId?: string // only this player changes their guess
 }
@@ -22,19 +22,20 @@ interface GuessScreenProps {
  * Players enter their guesses one after another on the same phone. Nobody sees an earlier guess: the field
  * always starts empty and a hand-over screen sits between players. The last guess locks the prediction.
  */
-export default function GuessScreen({ packId, predictionId, playerId }: GuessScreenProps) {
-  const { pack, trip, saveTrip } = useTrip(packId)
-  const prediction = trip.predictions.find((p) => p.id === predictionId)
+export default function GuessScreen({ tripId, predictionId, playerId }: GuessScreenProps) {
+  const { pack, trip, saveTrip } = useTrip(tripId)
+  const prediction = trip?.predictions.find((p) => p.id === predictionId)
   const [queue] = useState(() =>
-    playerId ? [playerId] : trip.players.filter((player) => !(player.id in (prediction?.guesses ?? {}))).map((p) => p.id),
+    playerId ? [playerId] : (trip?.players ?? []).filter((player) => !(player.id in (prediction?.guesses ?? {}))).map((p) => p.id),
   )
   const [position, setPosition] = useState(0)
   const [phase, setPhase] = useState<Phase>(playerId ? 'input' : 'handoff')
   const [value, setValue] = useState<number>()
   const [problem, setProblem] = useState<string>()
 
-  const detail = { screen: 'prediction', packId, predictionId } as const
-  if (!pack || !prediction) return <Missing message="Bu tahmin bulunamadı." back={{ screen: 'predictions', packId }} />
+  const detail = { screen: 'prediction', tripId, predictionId } as const
+  if (!trip) return <Missing message="Bu gezi bulunamadı." back={{ screen: 'home' }} />
+  if (!pack || !prediction) return <Missing message="Bu tahmin bulunamadı." back={{ screen: 'predictions', tripId }} />
 
   if (phase === 'locked') {
     return (

@@ -36,7 +36,7 @@ const players = [
   { id: 'c', nickname: 'Zeynep' },
 ]
 
-const tripWith = (prediction: Prediction): TripState => ({ ...newTrip('test'), players, predictions: [prediction] })
+const tripWith = (prediction: Prediction): TripState => ({ ...newTrip('test', 'Test gezisi'), players, predictions: [prediction] })
 
 describe('scorePrediction', () => {
   it('gives the closest guess 1 point', () => {
