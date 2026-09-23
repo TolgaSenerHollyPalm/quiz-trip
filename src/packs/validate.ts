@@ -1,4 +1,4 @@
-import { CATEGORIES, DIFFICULTIES, type Pack } from './types.ts'
+import { BUILT_IN_CATEGORIES, DIFFICULTIES, type Pack } from './types.ts'
 
 export type PackCheck = { ok: true; pack: Pack } | { ok: false; errors: string[] }
 
@@ -37,10 +37,11 @@ export function validatePack(data: unknown): PackCheck {
   if (!isInteger(data.version) || data.version < 1) errors.push('version 1 veya daha büyük bir tam sayı olmalı.')
   if (!isDate(data.updatedAt)) errors.push('updatedAt YYYY-AA-GG biçiminde geçerli bir tarih olmalı.')
 
+  const categories = readCategories(data, errors)
   if (!Array.isArray(data.questions) || data.questions.length === 0) {
     errors.push('questions en az bir soru içermeli.')
   } else {
-    checkQuestions(data.questions, errors)
+    checkQuestions(data.questions, categories, errors)
   }
 
   if (!Array.isArray(data.predictionTemplates)) {
@@ -52,7 +53,30 @@ export function validatePack(data: unknown): PackCheck {
   return errors.length > 0 ? { ok: false, errors } : { ok: true, pack: data as unknown as Pack }
 }
 
-function checkQuestions(questions: unknown[], errors: string[]) {
+const CATEGORY_ID = /^[a-z0-9][a-z0-9-]*$/
+
+/** A themed pack names its own categories; without them the built-in six apply. */
+function readCategories(data: JsonObject, errors: string[]): string[] {
+  if (data.categories === undefined) return BUILT_IN_CATEGORIES.map((category) => category.id)
+  if (!Array.isArray(data.categories) || data.categories.length === 0) {
+    errors.push('categories en az bir kategori içermeli.')
+    return []
+  }
+  const ids: string[] = []
+  data.categories.forEach((entry: unknown, index: number) => {
+    const label = `Kategori #${index + 1}`
+    if (!isObject(entry) || !isText(entry.id) || !isText(entry.label)) {
+      errors.push(`${label}: id ve label gerekli.`)
+      return
+    }
+    if (!CATEGORY_ID.test(entry.id)) errors.push(`${label}: id yalnızca küçük harf, rakam ve tire içerebilir.`)
+    else if (ids.includes(entry.id)) errors.push(`${label}: "${entry.id}" iki kez tanımlanmış.`)
+    else ids.push(entry.id)
+  })
+  return ids
+}
+
+function checkQuestions(questions: unknown[], categories: string[], errors: string[]) {
   const ids = new Set<string>()
   questions.forEach((question, index) => {
     const label = isObject(question) && isText(question.id) ? `Soru ${question.id}` : `Soru #${index + 1}`
@@ -65,8 +89,8 @@ function checkQuestions(questions: unknown[], errors: string[]) {
     else if (ids.has(question.id)) errors.push(`${label}: bu id başka bir soruda da kullanılmış.`)
     else ids.add(question.id)
 
-    if (!CATEGORIES.some((category) => category === question.category)) {
-      errors.push(`${label}: category şunlardan biri olmalı: ${CATEGORIES.join(', ')}.`)
+    if (typeof question.category !== 'string' || !categories.includes(question.category)) {
+      errors.push(`${label}: category şunlardan biri olmalı: ${categories.join(', ')}.`)
     }
     if (!DIFFICULTIES.some((difficulty) => difficulty === question.difficulty)) {
       errors.push(`${label}: difficulty şunlardan biri olmalı: ${DIFFICULTIES.join(', ')}.`)

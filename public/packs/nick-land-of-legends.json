@@ -6,6 +6,12 @@
   "city": "Belek, Antalya",
   "version": 1,
   "updatedAt": "2026-09-23",
+  "categories": [
+    { "id": "spongebob", "label": "SpongeBob" },
+    { "id": "tmnt", "label": "Ninja Kaplumbağalar" },
+    { "id": "star-trek-prodigy", "label": "Star Trek Prodigy" },
+    { "id": "land-of-legends", "label": "Land of Legends" }
+  ],
   "questions": [
     {
       "id": "nlol-sb-001",
@@ -1070,10 +1076,10 @@
       "text": "Otel odamız kaçıncı katta olacak?",
       "unit": "kat",
       "step": 1,
-      "params": [
-        "minFloor",
-        "maxFloor"
-      ]
+      "params": {
+        "min": { "key": "minFloor", "label": "En alt kat" },
+        "max": { "key": "maxFloor", "label": "En üst kat" }
+      }
     },
     {
       "id": "favorite-ride-vote",

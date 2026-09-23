@@ -3,10 +3,11 @@ import { useTrip } from '../app/appData.ts'
 import { navigate } from '../app/router.ts'
 import { DIFFICULTY_POINTS, isCorrectChoice, turnPoints } from '../game/scoring.ts'
 import { answerTurn } from '../game/trip.ts'
+import { categoryLabel } from '../packs/types.ts'
 import type { RoundTurn, TurnAnswer } from '../game/types.ts'
 import { Button } from '../ui/Button.tsx'
 import Countdown from '../ui/Countdown.tsx'
-import { CATEGORY_LABELS, DIFFICULTY_LABELS, OPTION_LETTERS } from '../ui/labels.ts'
+import { DIFFICULTY_LABELS, OPTION_LETTERS } from '../ui/labels.ts'
 import Missing from '../ui/Missing.tsx'
 import Screen from '../ui/Screen.tsx'
 import styles from './PlayScreen.module.css'
@@ -91,6 +92,7 @@ export default function PlayScreen({ tripId }: { tripId: string }) {
       <QuestionView
         turn={turn}
         playerName={nameOf(turn.playerId)}
+        categoryName={categoryLabel(pack, turn.question.category)}
         timeLimit={round.settings.timeLimit}
         onAnswer={answer}
       />
@@ -101,11 +103,12 @@ export default function PlayScreen({ tripId }: { tripId: string }) {
 interface QuestionViewProps {
   turn: RoundTurn
   playerName: string
+  categoryName: string
   timeLimit: number
   onAnswer: (choice: number | null) => void
 }
 
-function QuestionView({ turn, playerName, timeLimit, onAnswer }: QuestionViewProps) {
+function QuestionView({ turn, playerName, categoryName, timeLimit, onAnswer }: QuestionViewProps) {
   // A tap and the timer running out can land together; only the first one counts.
   const answered = useRef(false)
   const choose = (choice: number | null) => {
@@ -120,7 +123,7 @@ function QuestionView({ turn, playerName, timeLimit, onAnswer }: QuestionViewPro
       <div className={styles.meta}>
         <span className={styles.metaPlayer}>{playerName}</span>
         <span>
-          {CATEGORY_LABELS[question.category]} · {DIFFICULTY_LABELS[question.difficulty]} ·{' '}
+          {categoryName} · {DIFFICULTY_LABELS[question.difficulty]} ·{' '}
           {DIFFICULTY_POINTS[question.difficulty]} puan
         </span>
       </div>

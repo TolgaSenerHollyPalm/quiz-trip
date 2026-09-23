@@ -1,15 +1,5 @@
 import type { DifficultyChoice } from '../game/types.ts'
-import type { Category } from '../packs/types.ts'
 import type { Transport, TripKind } from '../trips/types.ts'
-
-export const CATEGORY_LABELS: Record<Category, string> = {
-  history: 'Tarih',
-  mythology: 'Mitoloji',
-  geography: 'Coğrafya',
-  food: 'Yemek',
-  language: 'Dil',
-  culture: 'Kültür',
-}
 
 export const DIFFICULTY_LABELS: Record<DifficultyChoice, string> = {
   mixed: 'Karışık',
@@ -30,6 +20,7 @@ export const TRANSPORT_LABELS: Record<Transport, string> = {
 
 export const TRIP_KIND_LABELS: Record<TripKind, string> = {
   beach: 'Deniz',
+  hotel: 'Otel tatili',
   winter: 'Kış',
   city: 'Şehir',
   nature: 'Doğa',

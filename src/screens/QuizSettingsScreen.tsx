@@ -4,10 +4,10 @@ import { navigate } from '../app/router.ts'
 import { MAX_QUESTIONS_PER_PLAYER, questionPool } from '../game/quiz.ts'
 import { startRound } from '../game/trip.ts'
 import type { DifficultyChoice, QuizSettings } from '../game/types.ts'
-import { CATEGORIES, type Category } from '../packs/types.ts'
+import { categoriesOf } from '../packs/types.ts'
 import { Button, LinkButton } from '../ui/Button.tsx'
 import ChoiceGroup from '../ui/ChoiceGroup.tsx'
-import { CATEGORY_LABELS, DIFFICULTY_LABELS } from '../ui/labels.ts'
+import { DIFFICULTY_LABELS } from '../ui/labels.ts'
 import Missing from '../ui/Missing.tsx'
 import Screen from '../ui/Screen.tsx'
 import Stepper from '../ui/Stepper.tsx'
@@ -26,16 +26,19 @@ function summary(poolSize: number, needed: number, neverAsked: number): string {
 
 export default function QuizSettingsScreen({ tripId }: { tripId: string }) {
   const { pack, trip, saveTrip } = useTrip(tripId)
-  const inPack = CATEGORIES.filter((category) => pack?.questions.some((q) => q.category === category))
+  // The categories this pack actually has questions in; a themed pack brings its own names.
+  const inPack = categoriesOf({ categories: pack?.categories }).filter((category) =>
+    pack?.questions.some((question) => question.category === category.id),
+  )
   const [settings, setSettings] = useState<QuizSettings>(() => {
     const last = trip?.quizSettings
     // Categories chosen last time that this pack no longer has are dropped.
-    const categories = last?.categories.filter((category) => inPack.includes(category)) ?? []
+    const categories = last?.categories.filter((id) => inPack.some((category) => category.id === id)) ?? []
     return {
       difficulty: last?.difficulty ?? 'mixed',
       questionsPerPlayer: last?.questionsPerPlayer ?? 3,
       timeLimit: last?.timeLimit ?? 0,
-      categories: categories.length > 0 ? categories : inPack,
+      categories: categories.length > 0 ? categories : inPack.map((category) => category.id),
     }
   })
 
@@ -69,12 +72,17 @@ export default function QuizSettingsScreen({ tripId }: { tripId: string }) {
   const needed = trip.players.length * settings.questionsPerPlayer
   const neverAsked = pool.filter((question) => !trip.askedQuestionIds.includes(question.id)).length
 
-  const toggleCategory = (category: Category) => {
-    const chosen = settings.categories.includes(category)
-      ? settings.categories.filter((c) => c !== category)
-      : [...settings.categories, category]
+  const toggleCategory = (id: string) => {
+    const chosen = settings.categories.includes(id)
+      ? settings.categories.filter((category) => category !== id)
+      : [...settings.categories, id]
     // At least one category stays selected.
-    if (chosen.length > 0) setSettings({ ...settings, categories: inPack.filter((c) => chosen.includes(c)) })
+    if (chosen.length > 0) {
+      setSettings({
+        ...settings,
+        categories: inPack.filter((category) => chosen.includes(category.id)).map((category) => category.id),
+      })
+    }
   }
 
   const start = () => {
@@ -88,9 +96,9 @@ export default function QuizSettingsScreen({ tripId }: { tripId: string }) {
       <ChoiceGroup
         label="Kategoriler"
         options={inPack.map((category) => ({
-          value: category,
-          label: `${CATEGORY_LABELS[category]} (${
-            pack.questions.filter((q) => q.category === category && matchesDifficulty(q.difficulty)).length
+          value: category.id,
+          label: `${category.label} (${
+            pack.questions.filter((q) => q.category === category.id && matchesDifficulty(q.difficulty)).length
           })`,
         }))}
         selected={settings.categories}

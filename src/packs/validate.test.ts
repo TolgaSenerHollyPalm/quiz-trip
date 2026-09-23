@@ -70,6 +70,47 @@ describe('validatePack', () => {
   })
 })
 
+describe('pack categories', () => {
+  const spongebob = { id: 'spongebob', label: 'SpongeBob' }
+
+  /** A themed pack: its own category list, with the one question put in `category`. */
+  function themedErrors(categories: unknown[], category = 'spongebob'): string[] {
+    const pack = validPack()
+    pack.questions[0].category = category
+    const result = validatePack({ ...pack, categories })
+    return result.ok ? [] : result.errors
+  }
+
+  it('accepts a pack that brings its own categories', () => {
+    expect(themedErrors([spongebob, { id: 'tmnt', label: 'Ninja Kaplumbağalar' }])).toEqual([])
+  })
+
+  it('rejects a question from a category the pack never declared', () => {
+    expect(themedErrors([spongebob], 'history')).toEqual([
+      expect.stringContaining('Soru q1: category şunlardan biri olmalı: spongebob.'),
+    ])
+  })
+
+  it.each<[string, unknown[], string]>([
+    ['a category without a label', [spongebob, { id: 'tmnt' }], 'Kategori #2: id ve label gerekli.'],
+    ['an id with spaces and capitals', [spongebob, { id: 'Star Trek', label: 'Star Trek' }], 'Kategori #2: id yalnızca'],
+    ['the same id twice', [spongebob, { ...spongebob, label: 'Sünger Bob' }], 'Kategori #2: "spongebob" iki kez'],
+  ])('rejects %s', (_case, categories, message) => {
+    expect(themedErrors(categories)).toEqual([expect.stringContaining(message)])
+  })
+
+  it('rejects an empty category list, leaving its questions without a category', () => {
+    expect(themedErrors([])).toEqual([
+      expect.stringContaining('categories en az bir kategori içermeli.'),
+      expect.stringContaining('Soru q1: category'),
+    ])
+  })
+
+  it('falls back to the built-in categories when the pack does not list any', () => {
+    expect(validatePack(validPack())).toMatchObject({ ok: true }) // its question is in 'history'
+  })
+})
+
 function templateErrors(...templates: Record<string, unknown>[]): string[] {
   const result = validatePack({ ...validPack(), predictionTemplates: templates })
   return result.ok ? [] : result.errors

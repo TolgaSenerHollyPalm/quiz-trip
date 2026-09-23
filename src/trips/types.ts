@@ -1,7 +1,7 @@
 export const TRANSPORTS = ['plane', 'car', 'bus', 'ferry', 'other'] as const
 export type Transport = (typeof TRANSPORTS)[number]
 
-export const TRIP_KINDS = ['beach', 'winter', 'city', 'nature', 'business', 'other'] as const
+export const TRIP_KINDS = ['beach', 'hotel', 'winter', 'city', 'nature', 'business', 'other'] as const
 export type TripKind = (typeof TRIP_KINDS)[number]
 
 export interface ChecklistItem {
