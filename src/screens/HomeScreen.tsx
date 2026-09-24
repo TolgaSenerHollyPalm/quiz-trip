@@ -5,7 +5,7 @@ import { countdownBadge, tripPhase } from '../trips/countdown.ts'
 import { formatDateRange, todayIso } from '../trips/dates.ts'
 import { sortTrips } from '../trips/list.ts'
 import { LinkButton } from '../ui/Button.tsx'
-import { AppMark } from '../ui/icons.tsx'
+import { AppMark, GearIcon } from '../ui/icons.tsx'
 import IosInstallHint from '../ui/IosInstallHint.tsx'
 import { TRIP_KIND_LABELS } from '../ui/labels.ts'
 import OnlineBadge from '../ui/OnlineBadge.tsx'
@@ -31,7 +31,19 @@ export default function HomeScreen() {
   }
 
   return (
-    <Screen title="TripKit" icon={<AppMark />} aside={<OnlineBadge />} wide>
+    <Screen
+      title="TripKit"
+      icon={<AppMark />}
+      aside={
+        <span className={styles.headerActions}>
+          <OnlineBadge />
+          <a className={styles.settings} href={href({ screen: 'app-settings' })} aria-label="Ayarlar">
+            <GearIcon />
+          </a>
+        </span>
+      }
+      wide
+    >
       <IosInstallHint />
 
       {/* An empty app should say what it is for before it asks for anything. */}

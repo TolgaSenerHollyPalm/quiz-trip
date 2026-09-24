@@ -7,6 +7,7 @@ describe('routes', () => {
   it.each<Route>([
     { screen: 'home' },
     { screen: 'trip-new' },
+    { screen: 'app-settings' },
     { screen: 'trip', tripId: TRIP },
     { screen: 'trip-edit', tripId: TRIP },
     { screen: 'checklist', tripId: TRIP },

@@ -9,6 +9,8 @@ interface QuizTripDB extends DBSchema {
   trips: { key: string; value: TripState }
 }
 
+export const DATABASE_NAME = 'quiz-trip'
+
 let connection: Promise<IDBPDatabase<QuizTripDB>> | undefined
 let waitingForAnotherTab = false
 
@@ -16,7 +18,7 @@ let waitingForAnotherTab = false
 export const blockedByAnotherTab = () => waitingForAnotherTab
 
 function database() {
-  connection ??= openDB<QuizTripDB>('quiz-trip', 3, {
+  connection ??= openDB<QuizTripDB>(DATABASE_NAME, 3, {
     async upgrade(db, oldVersion, _newVersion, tx) {
       // Packs and trips live in separate stores, so updating a pack can never touch a trip.
       if (oldVersion < 1) db.createObjectStore('packs', { keyPath: 'id' })
@@ -56,6 +58,13 @@ function database() {
     },
   })
   return connection
+}
+
+/** Lets go of the database, so deleting it is not blocked by our own connection. */
+export async function closeDatabase(): Promise<void> {
+  const open = connection
+  connection = undefined
+  await open?.then((db) => db.close()).catch(() => undefined)
 }
 
 export async function loadAll(): Promise<{ packs: Pack[]; trips: TripState[] }> {

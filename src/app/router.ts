@@ -4,6 +4,7 @@ import { useSyncExternalStore } from 'react'
 export type Route =
   | { screen: 'home' }
   | { screen: 'trip-new' }
+  | { screen: 'app-settings' }
   | { screen: 'trip'; tripId: string }
   | { screen: 'trip-edit'; tripId: string }
   | { screen: 'checklist'; tripId: string }
@@ -28,6 +29,7 @@ const query = (params: Record<string, string | undefined>) => {
 export function href(route: Route): string {
   if (route.screen === 'home') return '#/'
   if (route.screen === 'trip-new') return '#/trips/new'
+  if (route.screen === 'app-settings') return '#/settings'
 
   const trip = `#/trip/${encodeURIComponent(route.tripId)}`
   switch (route.screen) {
@@ -75,6 +77,7 @@ export function parseRoute(hash: string): Route {
     return { screen: 'home' }
   }
   const [section, tripId, page, id, action] = parts
+  if (section === 'settings') return { screen: 'app-settings' }
   if (section === 'trips') return tripId === 'new' ? { screen: 'trip-new' } : { screen: 'home' }
   if (section !== 'trip' || !tripId) return { screen: 'home' }
 

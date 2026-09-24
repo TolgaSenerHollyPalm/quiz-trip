@@ -209,3 +209,29 @@
   font-size: 0.95rem;
   font-weight: 700;
 }
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.settings {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin-right: -10px;
+  border-radius: 50%;
+  color: inherit;
+}
+
+.settings:active {
+  background: rgb(255 255 255 / 0.15);
+}
+
+@media (hover: hover) {
+  .settings:hover {
+    background: rgb(255 255 255 / 0.15);
+  }
+}

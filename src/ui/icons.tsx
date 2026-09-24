@@ -25,6 +25,15 @@ export function CheckIcon({ size = 22 }: { size?: number }) {
   )
 }
 
+export function GearIcon({ size = 24 }: { size?: number }) {
+  return (
+    <svg {...box} strokeWidth={1.9} width={size} height={size}>
+      <circle cx="12" cy="12" r="3.2" />
+      <path d="M12 2.8v2.4M12 18.8v2.4M4.5 4.5l1.7 1.7M17.8 17.8l1.7 1.7M2.8 12h2.4M18.8 12h2.4M4.5 19.5l1.7-1.7M17.8 6.2l1.7-1.7" />
+    </svg>
+  )
+}
+
 /** The app's own mark: the suitcase from the icon, in the logo's two colours. */
 export function AppMark({ size = 28 }: { size?: number }) {
   return (
