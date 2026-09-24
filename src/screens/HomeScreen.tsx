@@ -41,18 +41,19 @@ export default function HomeScreen() {
           <ol className={styles.steps}>
             <li>
               <span className={styles.stepNumber}>1</span>
-              Nereye ve ne zaman gittiğini gir; sayaç o gün için geri saymaya başlasın.
+              Nereye ve ne zaman gideceğini gir; geri sayım o gün için başlasın.
             </li>
             <li>
               <span className={styles.stepNumber}>2</span>
-              Aracına ve tatil türüne göre alınacaklar ve yapılacaklar listesi kendiliğinden hazırlansın.
+              Ulaşım türüne ve tatil tarzına göre valiz ve yapılacaklar listen kendiliğinden hazırlansın.
             </li>
             <li>
               <span className={styles.stepNumber}>3</span>
-              Gideceğin yerin soru paketini indir, yolda bilgi yarışması ve tahmin oyunu oyna.
+              Gideceğin yerin soru paketini indir, bilgi yarışması ve tahmin oyunuyla yolculuğu eğlenceye
+              çevir.
             </li>
           </ol>
-          <p className={text.hint}>Her şey telefonda kalır ve internet olmadan da çalışır.</p>
+          <p className={text.hint}>Her şey cihazında kalır ve internet olmadan da çalışır.</p>
         </section>
       )}
 
