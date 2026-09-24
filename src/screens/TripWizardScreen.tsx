@@ -3,6 +3,7 @@ import { useAppData } from '../app/appData.ts'
 import { navigate } from '../app/router.ts'
 import { newTrip } from '../game/trip.ts'
 import type { TripState } from '../game/types.ts'
+import { bundledPacks } from '../packs/bundled.ts'
 import { fetchPackList, type IndexEntry } from '../packs/sync.ts'
 import { applySuggestions } from '../trips/checklist.ts'
 import { destinationName, findCountry } from '../trips/destinations.ts'
@@ -43,13 +44,17 @@ export default function TripWizardScreen() {
   const suggestedName = destinationName(destinations, country, cityId === ANY_CITY ? undefined : cityId)
   const name = typedName ?? suggestedName // the destination names the trip until the player does
   const cities = findCountry(destinations, country)?.cities ?? []
-  // Packs already on the device count as offered, whether or not the list could be read.
+  // What the device already has, then what the app itself carries, then what the server offers.
   const installed = packs.filter((pack) => matchesDestination(pack, destination))
+  const inApp = bundledPacks().filter(
+    (pack) => matchesDestination(pack, destination) && !installed.some((other) => other.id === pack.id),
+  )
+  const atHand = [...installed, ...inApp]
   const choices = [
-    ...installed.map((pack) => ({ id: pack.id, title: pack.title, questionCount: pack.questions.length, here: true })),
+    ...atHand.map((pack) => ({ id: pack.id, title: pack.title, questionCount: pack.questions.length })),
     ...(offered ?? [])
-      .filter((entry) => !installed.some((pack) => pack.id === entry.id))
-      .map((entry) => ({ id: entry.id, title: entry.title, questionCount: entry.questionCount, here: false })),
+      .filter((entry) => !atHand.some((pack) => pack.id === entry.id))
+      .map((entry) => ({ id: entry.id, title: entry.title, questionCount: entry.questionCount })),
   ]
 
   const steps = [

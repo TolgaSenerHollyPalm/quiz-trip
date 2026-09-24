@@ -1,7 +1,14 @@
 import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react'
 import type { TripState } from '../game/types.ts'
 import { bundledPacks } from '../packs/bundled.ts'
-import { countUpdatablePacks, mergePacks, syncPacks, type Fetcher, type SyncResult } from '../packs/sync.ts'
+import {
+  countUpdatablePacks,
+  mergePacks,
+  syncPacks,
+  type Fetcher,
+  type PackOutcome,
+  type SyncResult,
+} from '../packs/sync.ts'
 import type { Pack } from '../packs/types.ts'
 import {
   blockedByAnotherTab,
@@ -67,8 +74,8 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     let active = true
     requestPersistentStorage()
-    installPacks(bundledPacks())
-      .then(loadAll)
+    // Nothing is installed on start: a pack reaches the device only when a trip asks for it.
+    loadAll()
       .then(({ packs, trips }) => {
         if (!active) return
         currentTrips = trips
@@ -142,19 +149,38 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
     [report],
   )
 
-  /** The wizard's download: these packs only, whatever the trips currently want. */
+  /**
+   * Installs exactly these packs: the ones that ship inside the app come straight from there (no network,
+   * works offline), the rest are downloaded.
+   */
   const downloadPacks = useCallback(async (packIds: string[]): Promise<SyncResult> => {
-    const result = await syncPacks({ ...server(currentTrips), wanted: (pin) => packIds.includes(pin.id) }).catch(
+    const fromApp = bundledPacks().filter((pack) => packIds.includes(pack.id))
+    if (fromApp.length > 0) {
+      await installPacks(fromApp).catch(report)
+      setLoaded((current) => current && { ...current, packs: mergePacks(current.packs, fromApp) })
+    }
+    const installed: PackOutcome[] = fromApp.map((pack) => ({
+      id: pack.id,
+      title: pack.title,
+      status: 'added',
+      version: pack.version,
+    }))
+
+    const missing = packIds.filter((id) => !fromApp.some((pack) => pack.id === id))
+    if (missing.length === 0) return { ok: true, outcomes: installed, saved: fromApp }
+
+    const result = await syncPacks({ ...server(currentTrips), wanted: (pin) => missing.includes(pin.id) }).catch(
       (error: unknown): SyncResult => {
         console.error(error)
         return { ok: false, reason: 'Beklenmeyen bir hata oldu. Tekrar dene.' }
       },
     )
-    if (result.ok && result.saved.length > 0) {
+    if (!result.ok) return fromApp.length > 0 ? { ok: true, outcomes: installed, saved: fromApp } : result
+    if (result.saved.length > 0) {
       setLoaded((current) => current && { ...current, packs: mergePacks(current.packs, result.saved) })
     }
-    return result
-  }, [])
+    return { ok: true, outcomes: [...installed, ...result.outcomes], saved: [...fromApp, ...result.saved] }
+  }, [report])
 
   // Lives here rather than on the home screen, so a sync carries on (and cannot start twice) while players move around.
   const startSync = useCallback(() => {

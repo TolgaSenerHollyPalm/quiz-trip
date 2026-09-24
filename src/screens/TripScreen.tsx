@@ -1,17 +1,19 @@
 import { useState } from 'react'
-import { useTrip } from '../app/appData.ts'
+import { useAppData, useTrip } from '../app/appData.ts'
 import { navigate, type Route } from '../app/router.ts'
 import { cancelRound } from '../game/trip.ts'
 import { Button, LinkButton } from '../ui/Button.tsx'
 import ConfirmDialog from '../ui/ConfirmDialog.tsx'
 import CountdownCard from '../ui/CountdownCard.tsx'
 import Missing from '../ui/Missing.tsx'
+import { orphanPacks } from '../trips/packMatch.ts'
 import Screen from '../ui/Screen.tsx'
 import { tripTheme } from '../ui/tripTheme.ts'
 import text from '../ui/text.module.css'
 import styles from './TripScreen.module.css'
 
 export default function TripScreen({ tripId }: { tripId: string }) {
+  const { trips, deletePack } = useAppData()
   const { trip, collection, saveTrip, deleteTrip } = useTrip(tripId)
   const [confirmingCancel, setConfirmingCancel] = useState(false)
   const [confirmingReset, setConfirmingReset] = useState(false)
@@ -29,6 +31,8 @@ export default function TripScreen({ tripId }: { tripId: string }) {
   const quiz: Route =
     trip.players.length === 0 ? { screen: 'players', tripId, next: 'quiz' } : { screen: 'quiz', tripId }
   const packed = trip.checklist.filter((item) => item.done).length
+  // Packs this trip alone plays with; they are deleted with it rather than left behind.
+  const orphans = orphanPacks(trip, trips)
 
   return (
     <Screen title={trip.name} back={{ screen: 'home' }} theme={tripTheme(trip.kind)}>
@@ -137,13 +141,16 @@ export default function TripScreen({ tripId }: { tripId: string }) {
         confirmLabel="Sil"
         onConfirm={() => {
           setDeleted(true)
+          for (const packId of orphans) deletePack(packId)
           deleteTrip(tripId)
           navigate({ screen: 'home' }, { replace: true })
         }}
         onCancel={() => setConfirmingDelete(false)}
       >
-        <strong>{trip.name}</strong> gezisi, oyuncuları, puanları ve tahminleriyle birlikte silinecek. Soru paketi
-        telefonda kalır.
+        <strong>{trip.name}</strong> gezisi, oyuncuları, puanları ve tahminleriyle birlikte silinecek.
+        {orphans.length > 0
+          ? ` Yalnızca bu gezide kullanılan ${orphans.length === 1 ? 'soru paketi' : `${orphans.length} soru paketi`} de telefondan silinecek; internet varken yeniden indirebilirsin.`
+          : ' Soru paketleri başka gezilerde kullanıldığı için telefonda kalır.'}
       </ConfirmDialog>
     </Screen>
   )

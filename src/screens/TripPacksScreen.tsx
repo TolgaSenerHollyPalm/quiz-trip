@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useAppData, useTrip } from '../app/appData.ts'
+import { bundledPacks } from '../packs/bundled.ts'
 import { fetchPackList, type SyncResult } from '../packs/sync.ts'
 import type { Pack } from '../packs/types.ts'
 import { destinationName } from '../trips/destinations.ts'
@@ -26,11 +27,23 @@ export default function TripPacksScreen({ tripId }: { tripId: string }) {
 
   const destination = { country: trip.country, cityId: trip.cityId }
   const where = destinationName(destinations, trip.country, trip.cityId)
-  const nearby = packs.filter((pack) => matchesDestination(pack, destination) && !trip.packIds.includes(pack.id))
+  const onDevice = packs.filter((pack) => matchesDestination(pack, destination) && !trip.packIds.includes(pack.id))
+  // Packs that ship inside the app can be added without a network at all.
+  const inApp = bundledPacks().filter(
+    (pack) =>
+      matchesDestination(pack, destination) &&
+      !trip.packIds.includes(pack.id) &&
+      !onDevice.some((other) => other.id === pack.id),
+  )
+  const nearby = [...onDevice, ...inApp]
   const usedElsewhere = (packId: string) =>
     trips.some((other) => other.id !== trip.id && other.packIds.includes(packId))
 
-  const link = (packId: string) => saveTrip({ ...trip, packIds: [...trip.packIds, packId] })
+  const link = async (packId: string) => {
+    // A pack that is only inside the app has to be installed before the trip can play with it.
+    if (!packs.some((pack) => pack.id === packId)) await downloadPacks([packId])
+    saveTrip({ ...trip, packIds: [...trip.packIds, packId] })
+  }
 
   /** Asks the server what this destination has, downloads what is missing and links it to the trip. */
   const search = async () => {
@@ -102,7 +115,7 @@ export default function TripPacksScreen({ tripId }: { tripId: string }) {
                   <p className={text.hint}>{pack.questions.length} soru</p>
                 </div>
                 <div className={styles.action}>
-                  <Button onClick={() => link(pack.id)}>Ekle</Button>
+                  <Button onClick={() => void link(pack.id)}>Ekle</Button>
                 </div>
               </li>
             ))}

@@ -32,3 +32,10 @@ export function wantedByTrips(pin: PackPin, trips: readonly TripState[]): boolea
 export function packsOfTrip<T extends { id: string }>(packs: readonly T[], trip: Pick<TripState, 'packIds'>): T[] {
   return trip.packIds.flatMap((packId) => packs.filter((pack) => pack.id === packId))
 }
+
+/** The trip's packs that no other trip plays with: when the trip goes, these have nothing left to serve. */
+export function orphanPacks(trip: Pick<TripState, 'id' | 'packIds'>, trips: readonly TripState[]): string[] {
+  return trip.packIds.filter(
+    (packId) => !trips.some((other) => other.id !== trip.id && other.packIds.includes(packId)),
+  )
+}

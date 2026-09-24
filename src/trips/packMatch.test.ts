@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { newTrip } from '../game/trip.ts'
 import type { TripState } from '../game/types.ts'
-import { matchesDestination, packsOfTrip, wantedByTrips } from './packMatch.ts'
+import { matchesDestination, orphanPacks, packsOfTrip, wantedByTrips } from './packMatch.ts'
 
 const trip = (destination: Partial<TripState>): TripState => ({ ...newTrip('t', 'Gezi'), ...destination })
 
@@ -59,5 +59,24 @@ describe('packsOfTrip', () => {
 
   it('skips a pack that is not on the device', () => {
     expect(packsOfTrip([{ id: 'a' }], { packIds: ['a', 'gone'] })).toEqual([{ id: 'a' }])
+  })
+})
+
+describe('orphanPacks', () => {
+  const withPacks = (id: string, packIds: string[]): TripState => ({ ...newTrip(id, id), packIds })
+
+  it('names the packs only this trip plays with', () => {
+    const mine = withPacks('a', ['eg', 'nick'])
+    const other = withPacks('b', ['nick'])
+    expect(orphanPacks(mine, [mine, other])).toEqual(['eg'])
+  })
+
+  it('keeps nothing back when the trip is the only one left', () => {
+    const only = withPacks('a', ['eg', 'nick'])
+    expect(orphanPacks(only, [only])).toEqual(['eg', 'nick'])
+  })
+
+  it('has nothing to clean up for a trip without packs', () => {
+    expect(orphanPacks(withPacks('a', []), [])).toEqual([])
   })
 })
