@@ -7,6 +7,7 @@ import type { PredictionTemplate, TemplateParam } from '../packs/types.ts'
 import { Button } from '../ui/Button.tsx'
 import Missing from '../ui/Missing.tsx'
 import Screen from '../ui/Screen.tsx'
+import { tripTheme } from '../ui/tripTheme.ts'
 import text from '../ui/text.module.css'
 import styles from './TripSettingsScreen.module.css'
 
@@ -75,7 +76,7 @@ export default function TripSettingsScreen({ tripId, add }: { tripId: string; ad
   }
 
   return (
-    <Screen title="Gezi ayarları" back={back}>
+    <Screen title="Gezi ayarları" back={back} theme={tripTheme(trip.kind)}>
       {target && (
         <p className={text.notice}>
           “{target.text}” tahmini için aşağıdaki değerleri gir; kaydedince tahmin eklenecek.

@@ -10,6 +10,7 @@ import ChoiceGroup from '../ui/ChoiceGroup.tsx'
 import { TRANSPORT_LABELS, TRIP_KIND_LABELS } from '../ui/labels.ts'
 import Missing from '../ui/Missing.tsx'
 import Screen from '../ui/Screen.tsx'
+import { tripTheme } from '../ui/tripTheme.ts'
 import text from '../ui/text.module.css'
 import TransportIcon from '../ui/TransportIcon.tsx'
 import styles from './TripFormScreen.module.css'
@@ -55,7 +56,7 @@ export default function TripFormScreen({ tripId }: { tripId: string }) {
   }
 
   return (
-    <Screen title="Geziyi düzenle" back={{ screen: 'trip', tripId }}>
+    <Screen title="Geziyi düzenle" back={{ screen: 'trip', tripId }} theme={tripTheme(existing.kind)}>
       <label className={styles.field}>
         <span className={styles.label}>Gezinin adı</span>
         <input

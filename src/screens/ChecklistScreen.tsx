@@ -3,6 +3,7 @@ import { useTrip } from '../app/appData.ts'
 import { applySuggestions } from '../trips/checklist.ts'
 import type { ChecklistItem } from '../trips/types.ts'
 import { Button } from '../ui/Button.tsx'
+import { PlusIcon } from '../ui/icons.tsx'
 import Missing from '../ui/Missing.tsx'
 import Screen from '../ui/Screen.tsx'
 import { tripTheme } from '../ui/tripTheme.ts'
@@ -135,9 +136,7 @@ function AddRow({ title, placeholder, onAdd }: AddRowProps) {
         disabled={draft.trim() === ''}
         aria-label={`${title} listesine ekle`}
       >
-        <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true">
-          <path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" />
-        </svg>
+        <PlusIcon size={26} />
       </button>
     </form>
   )

@@ -5,6 +5,7 @@ import { formatAnswer, resultProblem, setResult } from '../game/predictions.ts'
 import { Button } from '../ui/Button.tsx'
 import Missing from '../ui/Missing.tsx'
 import Screen from '../ui/Screen.tsx'
+import { tripTheme } from '../ui/tripTheme.ts'
 import text from '../ui/text.module.css'
 import ValueField from '../ui/ValueField.tsx'
 
@@ -32,7 +33,7 @@ export default function PredictionResultScreen({ tripId, predictionId }: { tripI
   }
 
   return (
-    <Screen title={correcting ? 'Sonucu düzelt' : 'Sonucu gir'} back={detail}>
+    <Screen title={correcting ? 'Sonucu düzelt' : 'Sonucu gir'} back={detail} theme={tripTheme(trip.kind)}>
       <p className={text.question}>{prediction.text}</p>
       {correcting && <p className={text.meta}>Şu anki sonuç: {formatAnswer(prediction, prediction.result!)}</p>}
       <ValueField

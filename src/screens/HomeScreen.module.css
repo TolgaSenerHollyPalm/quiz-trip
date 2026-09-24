@@ -8,17 +8,27 @@
   gap: 12px;
 }
 
-/* Wide windows show the trips side by side instead of one long column. */
+/*
+ * Wide windows show the trips side by side, centred: auto-fit keeps a single trip in the middle of the
+ * column instead of stranding it on the left, and the track never grows into one enormous card.
+ */
 @media (min-width: 720px) {
   .list {
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 360px));
+    justify-content: center;
   }
 }
 
-/* The main actions stay button-sized rather than stretching across a desktop window. */
+/* The main actions stay button-sized, under the middle of the list rather than off to one side. */
 @media (min-width: 720px) {
   .action {
     max-width: 420px;
+    margin-inline: auto;
+  }
+
+  .welcome {
+    max-width: 640px;
+    margin-inline: auto;
   }
 }
 

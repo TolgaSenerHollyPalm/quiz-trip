@@ -9,6 +9,7 @@ import ChoiceGroup from '../ui/ChoiceGroup.tsx'
 import { DIFFICULTY_LABELS } from '../ui/labels.ts'
 import Missing from '../ui/Missing.tsx'
 import Screen from '../ui/Screen.tsx'
+import { tripTheme } from '../ui/tripTheme.ts'
 import Stepper from '../ui/Stepper.tsx'
 import styles from './QuizSettingsScreen.module.css'
 
@@ -47,7 +48,7 @@ export default function QuizSettingsScreen({ tripId }: { tripId: string }) {
   }
   if (trip.players.length === 0) {
     return (
-      <Screen title="Quiz ayarları" back={back}>
+      <Screen title="Quiz ayarları" back={back} theme={tripTheme(trip.kind)}>
         <p>Önce oyuncuları ekle.</p>
         <LinkButton to={{ screen: 'players', tripId, next: 'quiz' }} variant="primary" big>
           Oyuncuları ekle
@@ -57,7 +58,7 @@ export default function QuizSettingsScreen({ tripId }: { tripId: string }) {
   }
   if (trip.currentRound) {
     return (
-      <Screen title="Quiz ayarları" back={back}>
+      <Screen title="Quiz ayarları" back={back} theme={tripTheme(trip.kind)}>
         <p>Yarım kalan bir tur var. Yeni tur için önce onu bitir ya da iptal et.</p>
         <LinkButton to={{ screen: 'play', tripId }} variant="primary" big>
           Tura devam et
@@ -92,7 +93,7 @@ export default function QuizSettingsScreen({ tripId }: { tripId: string }) {
   }
 
   return (
-    <Screen title="Quiz ayarları" back={back}>
+    <Screen title="Quiz ayarları" back={back} theme={tripTheme(trip.kind)}>
       {/* With several packs each one gets its own row, titled with the pack it came from. */}
       {groups.map((group) => (
         <ChoiceGroup

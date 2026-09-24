@@ -4,6 +4,7 @@ import styles from './Screen.module.css'
 
 interface ScreenProps {
   title: string
+  icon?: ReactNode // shown before the title, e.g. the app's own mark on the home screen
   back?: Route
   aside?: ReactNode // right side of the header
   wide?: boolean // a list screen, which may spread out on a desktop window
@@ -11,7 +12,7 @@ interface ScreenProps {
   children: ReactNode
 }
 
-export default function Screen({ title, back, aside, wide, theme, children }: ScreenProps) {
+export default function Screen({ title, icon, back, aside, wide, theme, children }: ScreenProps) {
   // The page behind the screen is painted by <html>, so the trip's colour has to reach that far up.
   useEffect(() => {
     if (!theme) return undefined
@@ -30,6 +31,7 @@ export default function Screen({ title, back, aside, wide, theme, children }: Sc
             </svg>
           </a>
         )}
+        {icon}
         <h1 className={styles.title}>{title}</h1>
         {aside}
       </header>

@@ -10,6 +10,7 @@ import Countdown from '../ui/Countdown.tsx'
 import { DIFFICULTY_LABELS, OPTION_LETTERS } from '../ui/labels.ts'
 import Missing from '../ui/Missing.tsx'
 import Screen from '../ui/Screen.tsx'
+import { tripTheme } from '../ui/tripTheme.ts'
 import styles from './PlayScreen.module.css'
 
 interface Feedback {
@@ -37,7 +38,7 @@ export default function PlayScreen({ tripId }: { tripId: string }) {
     const { feedback } = phase
     const next = trip.currentRound?.turns[trip.currentRound.answers.length]
     return (
-      <Screen title={feedback.title} back={back}>
+      <Screen title={feedback.title} back={back} theme={tripTheme(trip.kind)}>
         <FeedbackView feedback={feedback} playerName={nameOf(feedback.turn.playerId)} />
         {feedback.finishedRoundId ? (
           <Button
@@ -63,7 +64,7 @@ export default function PlayScreen({ tripId }: { tripId: string }) {
 
   if (phase.name === 'ready') {
     return (
-      <Screen title={title} back={back}>
+      <Screen title={title} back={back} theme={tripTheme(trip.kind)}>
         <div className={styles.ready}>
           <p className={styles.readyLabel}>Sıradaki oyuncu</p>
           <p className={styles.playerName}>{nameOf(turn.playerId)}</p>
@@ -90,7 +91,7 @@ export default function PlayScreen({ tripId }: { tripId: string }) {
   }
 
   return (
-    <Screen title={title} back={back}>
+    <Screen title={title} back={back} theme={tripTheme(trip.kind)}>
       <QuestionView
         turn={turn}
         playerName={nameOf(turn.playerId)}

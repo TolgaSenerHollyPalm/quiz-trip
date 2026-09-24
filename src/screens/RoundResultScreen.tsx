@@ -3,6 +3,7 @@ import { quizTotals, rankPlayers } from '../game/scoring.ts'
 import { LinkButton } from '../ui/Button.tsx'
 import Missing from '../ui/Missing.tsx'
 import Screen from '../ui/Screen.tsx'
+import { tripTheme } from '../ui/tripTheme.ts'
 import StandingsList from '../ui/StandingsList.tsx'
 import styles from './RoundResultScreen.module.css'
 
@@ -17,7 +18,7 @@ export default function RoundResultScreen({ tripId, roundId }: { tripId: string;
   const seating = trip.players.map((player) => player.id)
 
   return (
-    <Screen title="Tur sonucu" back={back}>
+    <Screen title="Tur sonucu" back={back} theme={tripTheme(trip.kind)}>
       <h2 className={styles.heading}>Bu tur</h2>
       <StandingsList
         standings={rankPlayers(

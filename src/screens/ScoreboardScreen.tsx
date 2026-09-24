@@ -3,6 +3,7 @@ import { predictionTotals } from '../game/predictions.ts'
 import { quizTotals, rankPlayers } from '../game/scoring.ts'
 import Missing from '../ui/Missing.tsx'
 import Screen from '../ui/Screen.tsx'
+import { tripTheme } from '../ui/tripTheme.ts'
 import styles from './ScoreboardScreen.module.css'
 
 export default function ScoreboardScreen({ tripId }: { tripId: string }) {
@@ -23,7 +24,7 @@ export default function ScoreboardScreen({ tripId }: { tripId: string }) {
   const resolved = trip.predictions.filter((prediction) => prediction.status === 'resolved').length
 
   return (
-    <Screen title="Skor tablosu" back={back}>
+    <Screen title="Skor tablosu" back={back} theme={tripTheme(trip.kind)}>
       {trip.players.length === 0 ? (
         <p>Henüz oyuncu eklenmedi.</p>
       ) : (

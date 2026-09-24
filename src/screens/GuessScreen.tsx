@@ -6,6 +6,7 @@ import { Button, LinkButton } from '../ui/Button.tsx'
 import GuessList from '../ui/GuessList.tsx'
 import Missing from '../ui/Missing.tsx'
 import Screen from '../ui/Screen.tsx'
+import { tripTheme } from '../ui/tripTheme.ts'
 import text from '../ui/text.module.css'
 import ValueField from '../ui/ValueField.tsx'
 import styles from './GuessScreen.module.css'
@@ -39,7 +40,7 @@ export default function GuessScreen({ tripId, predictionId, playerId }: GuessScr
 
   if (phase === 'locked') {
     return (
-      <Screen title="Tahminler kilitlendi" back={detail}>
+      <Screen title="Tahminler kilitlendi" back={detail} theme={tripTheme(trip.kind)}>
         <p className={styles.done}>Herkes girdi. Artık tahminler değiştirilemez.</p>
         <p className={text.question}>{prediction.text}</p>
         <GuessList prediction={prediction} players={trip.players} />
@@ -78,7 +79,7 @@ export default function GuessScreen({ tripId, predictionId, playerId }: GuessScr
   if (phase === 'handoff') {
     const previous = trip.players.find((p) => p.id === queue[position - 1])
     return (
-      <Screen title="Tahmin girişi" back={detail}>
+      <Screen title="Tahmin girişi" back={detail} theme={tripTheme(trip.kind)}>
         {previous && <p className={styles.saved}>Kaydedildi. Telefonu sıradaki oyuncuya ver.</p>}
         <div className={styles.handoff}>
           <p className={styles.label}>Sıradaki oyuncu</p>
@@ -97,7 +98,7 @@ export default function GuessScreen({ tripId, predictionId, playerId }: GuessScr
 
   const bounds = describeBounds(prediction)
   return (
-    <Screen title="Tahmin girişi" back={detail}>
+    <Screen title="Tahmin girişi" back={detail} theme={tripTheme(trip.kind)}>
       <p className={styles.player}>{player.nickname}</p>
       <p className={text.question}>{prediction.text}</p>
       {prediction.type === 'number' && bounds && <p className={text.meta}>{bounds}</p>}

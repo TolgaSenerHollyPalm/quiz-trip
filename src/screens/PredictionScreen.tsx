@@ -7,6 +7,7 @@ import ConfirmDialog from '../ui/ConfirmDialog.tsx'
 import GuessList from '../ui/GuessList.tsx'
 import Missing from '../ui/Missing.tsx'
 import Screen from '../ui/Screen.tsx'
+import { tripTheme } from '../ui/tripTheme.ts'
 import StatusBadge from '../ui/StatusBadge.tsx'
 import text from '../ui/text.module.css'
 import styles from './PredictionScreen.module.css'
@@ -27,7 +28,7 @@ export default function PredictionScreen({ tripId, predictionId }: { tripId: str
   const bounds = prediction.type === 'number' ? describeBounds(prediction) : prediction.options?.join(' / ')
 
   return (
-    <Screen title="Tahmin" back={back}>
+    <Screen title="Tahmin" back={back} theme={tripTheme(trip.kind)}>
       <div>
         <StatusBadge status={prediction.status} />
       </div>

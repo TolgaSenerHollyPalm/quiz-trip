@@ -18,6 +18,7 @@ import { Button } from '../ui/Button.tsx'
 import ChoiceGroup from '../ui/ChoiceGroup.tsx'
 import Missing from '../ui/Missing.tsx'
 import Screen from '../ui/Screen.tsx'
+import { tripTheme } from '../ui/tripTheme.ts'
 import text from '../ui/text.module.css'
 import styles from './AddPredictionScreen.module.css'
 
@@ -41,7 +42,7 @@ export default function AddPredictionScreen({ tripId }: { tripId: string }) {
   }
 
   return (
-    <Screen title="Tahmin ekle" back={{ screen: 'predictions', tripId }}>
+    <Screen title="Tahmin ekle" back={{ screen: 'predictions', tripId }} theme={tripTheme(trip.kind)}>
       <h2 className={text.heading}>Paketteki sorular</h2>
       <ul className={styles.templates}>
         {collection.templates.map((template) => {

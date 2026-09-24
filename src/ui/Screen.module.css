@@ -46,6 +46,11 @@
   }
 }
 
+.header > svg {
+  flex: none;
+  margin-right: 2px;
+}
+
 .title {
   flex: 1;
   min-width: 0;

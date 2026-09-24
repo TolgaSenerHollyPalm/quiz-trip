@@ -5,6 +5,7 @@ import type { Prediction } from '../game/types.ts'
 import { LinkButton } from '../ui/Button.tsx'
 import Missing from '../ui/Missing.tsx'
 import Screen from '../ui/Screen.tsx'
+import { tripTheme } from '../ui/tripTheme.ts'
 import StatusBadge from '../ui/StatusBadge.tsx'
 import text from '../ui/text.module.css'
 import styles from './PredictionsScreen.module.css'
@@ -27,7 +28,7 @@ export default function PredictionsScreen({ tripId }: { tripId: string }) {
   }
 
   return (
-    <Screen title="Tahminler" back={{ screen: 'trip', tripId }}>
+    <Screen title="Tahminler" back={{ screen: 'trip', tripId }} theme={tripTheme(trip.kind)}>
       {trip.players.length === 0 && (
         <p className={text.notice}>
           Tahmin girmek için önce <a href={href({ screen: 'players', tripId })}>oyuncuları ekle</a>.

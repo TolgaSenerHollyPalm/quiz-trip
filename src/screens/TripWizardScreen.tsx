@@ -11,6 +11,7 @@ import { todayIso } from '../trips/dates.ts'
 import { TRANSPORTS, TRIP_KINDS, type Transport, type TripKind } from '../trips/types.ts'
 import { Button } from '../ui/Button.tsx'
 import ChoiceGroup from '../ui/ChoiceGroup.tsx'
+import { CheckIcon, PlusIcon } from '../ui/icons.tsx'
 import { TRANSPORT_LABELS, TRIP_KIND_LABELS } from '../ui/labels.ts'
 import Screen from '../ui/Screen.tsx'
 import text from '../ui/text.module.css'
@@ -242,6 +243,8 @@ export default function TripWizardScreen() {
                 options={choices.map((choice) => ({
                   value: choice.id,
                   label: `${choice.title}${choice.questionCount ? ` (${choice.questionCount} soru)` : ''}`,
+                  // A plus to add, a tick once it is in: the row has to look like something you press.
+                  icon: chosenPacks.includes(choice.id) ? <CheckIcon /> : <PlusIcon />,
                 }))}
                 selected={chosenPacks}
                 onToggle={(id) =>
@@ -251,8 +254,9 @@ export default function TripWizardScreen() {
                 }
               />
               <p className={text.hint}>
-                Paketler gezide oynanan bilgi yarışmasını ve tahmin sorularını getirir. Seçtiklerin gezi
-                oluşturulurken indirilir; sonra da ekleyebilirsin.
+                {chosenPacks.length === 0
+                  ? 'Eklemek için pakete dokun. Paketler gezide oynanan bilgi yarışmasını ve tahmin sorularını getirir.'
+                  : 'Seçtiklerin gezi oluşturulurken indirilir; sonra da ekleyip çıkarabilirsin.'}
               </p>
             </>
           ) : (

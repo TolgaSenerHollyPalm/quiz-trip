@@ -8,6 +8,7 @@ import { Button } from '../ui/Button.tsx'
 import ConfirmDialog from '../ui/ConfirmDialog.tsx'
 import Missing from '../ui/Missing.tsx'
 import Screen from '../ui/Screen.tsx'
+import { tripTheme } from '../ui/tripTheme.ts'
 import styles from './PlayersScreen.module.css'
 
 const MAX_NICKNAME_LENGTH = 16
@@ -53,7 +54,7 @@ export default function PlayersScreen({ tripId, next }: { tripId: string; next?:
   }
 
   return (
-    <Screen title="Oyuncular" back={back}>
+    <Screen title="Oyuncular" back={back} theme={tripTheme(trip.kind)}>
       <p className={styles.intro}>
         {MIN_PLAYERS}–{MAX_PLAYERS} oyuncu. Oyun bu sırayla döner; her turda ilk sıradaki kişi bir sonrakine geçer.
       </p>

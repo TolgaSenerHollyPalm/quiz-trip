@@ -96,6 +96,44 @@
   }
 }
 
+/*
+ * The canvas is never flat: a glow of the current colour set in one corner and a warmer one in the
+ * other. The flat colour above stays as the fallback, so an older browser simply gets no glow.
+ */
+@supports (background: color-mix(in srgb, red 10%, transparent)) {
+  :root {
+    background-image:
+      radial-gradient(
+        46% 30% at 4% -6%,
+        color-mix(in srgb, var(--trip-edge, var(--color-primary)) 18%, transparent),
+        transparent 68%
+      ),
+      radial-gradient(
+        40% 28% at 104% 102%,
+        color-mix(in srgb, var(--trip-button-from, var(--color-accent)) 13%, transparent),
+        transparent 66%
+      );
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      background-image:
+        radial-gradient(
+          46% 30% at 4% -6%,
+          color-mix(in srgb, var(--trip-edge, var(--color-primary)) 26%, transparent),
+          transparent 68%
+        ),
+        radial-gradient(
+          40% 28% at 104% 102%,
+          color-mix(in srgb, var(--trip-button-from, var(--color-accent)) 18%, transparent),
+          transparent 66%
+        );
+    }
+  }
+}
+
 *,
 *::before,
 *::after {
