@@ -5,8 +5,8 @@ import { manifest } from './pwa-manifest.ts'
 
 // https://vite.dev/config/
 export default defineConfig({
-  // GitHub Pages serves the app from https://<user>.github.io/quiz-trip/
-  base: '/quiz-trip/',
+  // GitHub Pages serves the app from the root of its custom domain, https://trip.kitshelf.app/
+  base: '/',
   define: {
     __BUILD_TIME__: JSON.stringify(new Date().toISOString()),
   },

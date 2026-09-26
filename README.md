@@ -4,7 +4,7 @@ A trip companion that works offline: a countdown to departure, a packing and to-
 vehicle and the kind of holiday, and a quiz and prediction game for the journey itself. Installed as a PWA
 from GitHub Pages, on Android or iOS, and usable in a desktop browser; no backend.
 
-The repository, and with it the Pages URL, is still called `quiz-trip`.
+The repository is still called `quiz-trip`; the app is served from its own subdomain, `https://trip.kitshelf.app`.
 
 ## Development
 
@@ -12,10 +12,10 @@ Requires Node 26 (see `.github/workflows/deploy.yml`).
 
 ```bash
 npm install
-npm run dev        # http://localhost:5173/quiz-trip/
+npm run dev        # http://localhost:5173/
 npm test           # unit tests (Vitest)
 npm run build      # type-check + production build into dist/
-npm run preview    # serve dist/ with the service worker at http://localhost:4173/quiz-trip/
+npm run preview    # serve dist/ with the service worker at http://localhost:4173/
 ```
 
 The service worker only runs in the production build, so test offline behaviour with `npm run build && npm run preview`.
@@ -57,11 +57,11 @@ Prediction templates are `number` or `choice`. A number template can have:
 
 ## Deployment
 
-Every push to `main` runs `.github/workflows/deploy.yml`, which tests, builds and publishes `dist/` to GitHub Pages at `https://<user>.github.io/quiz-trip/`.
+Every push to `main` runs `.github/workflows/deploy.yml`, which tests, builds and publishes `dist/` to GitHub Pages at `https://trip.kitshelf.app`.
 
 One-time setup: in the repository go to **Settings → Pages → Build and deployment → Source** and choose **GitHub Actions**. On the GitHub Free plan Pages only works for public repositories.
 
-The Vite `base` in `vite.config.ts` must match the repository name.
+The custom domain is set under **Settings → Pages → Custom domain**; its DNS is a `CNAME` from `trip` to `<user>.github.io` in Cloudflare, proxy status *DNS only*. No `CNAME` file is needed because the site is published by a GitHub Actions workflow. The Vite `base` in `vite.config.ts` is `/` because the app sits at the root of that domain; it has to go back to `/<repository>/` if the custom domain is ever removed.
 
 ## Icons
 
