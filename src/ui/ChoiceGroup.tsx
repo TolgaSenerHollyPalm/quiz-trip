@@ -1,5 +1,6 @@
 import { useId, type ReactNode } from 'react'
 import styles from './ChoiceGroup.module.css'
+import RequiredMark from './RequiredMark.tsx'
 
 /** Past this many options a wall of buttons is harder to use than a dropdown. */
 export const COLLAPSE_AT = 20
@@ -12,6 +13,7 @@ interface ChoiceGroupProps<T extends string | number> {
   /** Exactly one of these is chosen, which is what lets a long list collapse into a dropdown. */
   pickOne?: boolean
   placeholder?: string // shown by the dropdown while nothing is chosen
+  required?: boolean
 }
 
 /** Large toggle buttons; the caller decides whether one or several can be on. */
@@ -22,6 +24,7 @@ export default function ChoiceGroup<T extends string | number>({
   onToggle,
   pickOne,
   placeholder = 'Seç…',
+  required,
 }: ChoiceGroupProps<T>) {
   const id = useId()
 
@@ -31,6 +34,7 @@ export default function ChoiceGroup<T extends string | number>({
       <div className={styles.group}>
         <label className={styles.legend} htmlFor={id}>
           {label}
+          {required && <RequiredMark />}
         </label>
         <select
           id={id}
@@ -59,7 +63,10 @@ export default function ChoiceGroup<T extends string | number>({
 
   return (
     <fieldset className={styles.group}>
-      <legend className={styles.legend}>{label}</legend>
+      <legend className={styles.legend}>
+        {label}
+        {required && <RequiredMark />}
+      </legend>
       <div className={styles.options}>
         {options.map((option) => (
           <button

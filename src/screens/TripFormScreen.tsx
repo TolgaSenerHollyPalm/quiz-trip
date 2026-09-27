@@ -9,6 +9,7 @@ import { Button } from '../ui/Button.tsx'
 import ChoiceGroup from '../ui/ChoiceGroup.tsx'
 import { TRANSPORT_LABELS, TRIP_KIND_LABELS } from '../ui/labels.ts'
 import Missing from '../ui/Missing.tsx'
+import RequiredMark from '../ui/RequiredMark.tsx'
 import Screen from '../ui/Screen.tsx'
 import { tripTheme } from '../ui/tripTheme.ts'
 import text from '../ui/text.module.css'
@@ -58,7 +59,10 @@ export default function TripFormScreen({ tripId }: { tripId: string }) {
   return (
     <Screen title="Geziyi düzenle" back={{ screen: 'trip', tripId }} theme={tripTheme(existing.kind)}>
       <label className={styles.field}>
-        <span className={styles.label}>Gezinin adı</span>
+        <span className={styles.label}>
+          Gezinin adı
+          <RequiredMark />
+        </span>
         <input
           className={styles.input}
           value={name}
@@ -70,7 +74,10 @@ export default function TripFormScreen({ tripId }: { tripId: string }) {
 
       <div className={styles.pair}>
         <label className={styles.field}>
-          <span className={styles.label}>Gidiş</span>
+          <span className={styles.label}>
+            Gidiş
+            <RequiredMark />
+          </span>
           <input
             className={styles.input}
             type="date"
@@ -79,7 +86,7 @@ export default function TripFormScreen({ tripId }: { tripId: string }) {
           />
         </label>
         <label className={styles.field}>
-          <span className={styles.label}>Dönüş (isteğe bağlı)</span>
+          <span className={styles.label}>Dönüş</span>
           <input
             className={styles.input}
             type="date"
@@ -111,6 +118,7 @@ export default function TripFormScreen({ tripId }: { tripId: string }) {
 
       <ChoiceGroup
         label="Ülke"
+        required
         options={destinations.map((option) => ({ value: option.code, label: option.name }))}
         selected={country === '' ? [] : [country]}
         pickOne
@@ -121,7 +129,7 @@ export default function TripFormScreen({ tripId }: { tripId: string }) {
         }}
       />
       <ChoiceGroup
-        label="Şehir (isteğe bağlı)"
+        label="Şehir"
         options={[
           { value: '', label: 'Farketmez' },
           ...(findCountry(destinations, country)?.cities ?? []).map((city) => ({ value: city.id, label: city.name })),

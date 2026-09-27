@@ -17,6 +17,7 @@ import type { PredictionTemplate } from '../packs/types.ts'
 import { Button } from '../ui/Button.tsx'
 import ChoiceGroup from '../ui/ChoiceGroup.tsx'
 import Missing from '../ui/Missing.tsx'
+import RequiredMark from '../ui/RequiredMark.tsx'
 import Screen from '../ui/Screen.tsx'
 import { tripTheme } from '../ui/tripTheme.ts'
 import text from '../ui/text.module.css'
@@ -104,7 +105,10 @@ function CustomPredictionForm({ onAdd }: { onAdd: (input: CustomPredictionInput)
   return (
     <div className={styles.form}>
       <label className={styles.field}>
-        <span className={styles.label}>Soru</span>
+        <span className={styles.label}>
+          Soru
+          <RequiredMark />
+        </span>
         <input
           className={styles.input}
           value={question}
@@ -118,16 +122,16 @@ function CustomPredictionForm({ onAdd }: { onAdd: (input: CustomPredictionInput)
       {kind === 'number' && (
         <>
           <label className={styles.field}>
-            <span className={styles.label}>Birim (isteğe bağlı)</span>
+            <span className={styles.label}>Birim</span>
             <input className={styles.input} value={unit} maxLength={12} placeholder="ör. kg" onChange={(event) => setUnit(event.target.value)} />
           </label>
           <div className={styles.pair}>
             <label className={styles.field}>
-              <span className={styles.label}>En az (isteğe bağlı)</span>
+              <span className={styles.label}>En az</span>
               <input className={styles.input} inputMode="decimal" value={min} onChange={(event) => setMin(event.target.value)} />
             </label>
             <label className={styles.field}>
-              <span className={styles.label}>En çok (isteğe bağlı)</span>
+              <span className={styles.label}>En çok</span>
               <input className={styles.input} inputMode="decimal" value={max} onChange={(event) => setMax(event.target.value)} />
             </label>
           </div>

@@ -14,6 +14,7 @@ import { Button } from '../ui/Button.tsx'
 import ChoiceGroup from '../ui/ChoiceGroup.tsx'
 import { CheckIcon, PlusIcon } from '../ui/icons.tsx'
 import { TRANSPORT_LABELS, TRIP_KIND_LABELS } from '../ui/labels.ts'
+import RequiredMark from '../ui/RequiredMark.tsx'
 import Screen from '../ui/Screen.tsx'
 import text from '../ui/text.module.css'
 import TransportIcon from '../ui/TransportIcon.tsx'
@@ -139,6 +140,7 @@ export default function TripWizardScreen() {
         <>
           <ChoiceGroup
             label="Ülke"
+            required
             options={destinations.map((option) => ({ value: option.code, label: option.name }))}
             selected={country ? [country] : []}
             pickOne
@@ -155,7 +157,7 @@ export default function TripWizardScreen() {
       {step === 1 && (
         <>
           <ChoiceGroup
-            label="Şehir (isteğe bağlı)"
+            label="Şehir"
             options={[
               { value: ANY_CITY, label: 'Farketmez' },
               ...cities.map((city) => ({ value: city.id, label: city.name })),
@@ -174,7 +176,10 @@ export default function TripWizardScreen() {
         <>
           <div className={styles.pair}>
             <label className={styles.field}>
-              <span className={styles.label}>Gidiş</span>
+              <span className={styles.label}>
+                Gidiş
+                <RequiredMark />
+              </span>
               <input
                 className={styles.input}
                 type="date"
@@ -183,7 +188,7 @@ export default function TripWizardScreen() {
               />
             </label>
             <label className={styles.field}>
-              <span className={styles.label}>Dönüş (isteğe bağlı)</span>
+              <span className={styles.label}>Dönüş</span>
               <input
                 className={styles.input}
                 type="date"
@@ -226,7 +231,10 @@ export default function TripWizardScreen() {
       {step === 5 && (
         <>
           <label className={styles.field}>
-            <span className={styles.label}>Ad</span>
+            <span className={styles.label}>
+              Ad
+              <RequiredMark />
+            </span>
             <input
               className={styles.input}
               value={name}
