@@ -18,7 +18,9 @@ import TripScreen from '../screens/TripScreen.tsx'
 import TripSettingsScreen from '../screens/TripSettingsScreen.tsx'
 import TripWizardScreen from '../screens/TripWizardScreen.tsx'
 import AppDataProvider from './AppDataProvider.tsx'
+import ConnectionNotice from './ConnectionNotice.tsx'
 import { href, useRoute, type Route } from './router.ts'
+import toast from './toast.module.css'
 import UpdatePrompt from './UpdatePrompt.tsx'
 
 export default function App() {
@@ -35,7 +37,10 @@ export default function App() {
         {/* Keyed by address so a screen starts fresh whenever the route changes. */}
         <CurrentScreen key={address} route={route} />
       </AppDataProvider>
-      <UpdatePrompt />
+      <div className={toast.stack}>
+        <UpdatePrompt />
+        <ConnectionNotice />
+      </div>
     </>
   )
 }

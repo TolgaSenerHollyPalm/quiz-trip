@@ -1,12 +1,22 @@
-import { useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useRegisterSW } from 'virtual:pwa-register/react'
 import { Button } from '../ui/Button.tsx'
-import styles from './UpdatePrompt.module.css'
+import toast from './toast.module.css'
 
 // The app can stay open for days during a trip, so look for a new version every hour while online.
 const UPDATE_CHECK_INTERVAL_MS = 60 * 60 * 1000
 // Coming back to the app checks too; this keeps app switching from asking the server every few seconds.
 const MIN_TIME_BETWEEN_CHECKS_MS = 5 * 60 * 1000
+// "Works offline now" is news once per device; after that it would only be noise.
+const OFFLINE_READY_SHOWN = 'offline-ready-shown'
+
+function offlineReadyShownBefore(): boolean {
+  try {
+    return localStorage.getItem(OFFLINE_READY_SHOWN) === 'yes'
+  } catch {
+    return false // private window: nothing is remembered
+  }
+}
 
 export default function UpdatePrompt() {
   const registration = useRef<ServiceWorkerRegistration | undefined>(undefined)
@@ -36,7 +46,20 @@ export default function UpdatePrompt() {
     },
   })
 
-  if (!offlineReady && !needRefresh) return null
+  const [shownBefore] = useState(offlineReadyShownBefore)
+  const showOfflineReady = offlineReady && !shownBefore
+
+  // Remembered as soon as it is on screen, so closing the app without tapping Tamam does not bring it back.
+  useEffect(() => {
+    if (!showOfflineReady) return
+    try {
+      localStorage.setItem(OFFLINE_READY_SHOWN, 'yes')
+    } catch {
+      // Nothing to remember it with; it may show again.
+    }
+  }, [showOfflineReady])
+
+  if (!showOfflineReady && !needRefresh) return null
 
   const close = () => {
     setOfflineReady(false)
@@ -58,9 +81,9 @@ export default function UpdatePrompt() {
   }
 
   return (
-    <div className={styles.toast} role="status">
+    <div className={toast.toast} role="status">
       <p>{needRefresh ? 'Güncelleme hazır.' : 'Uygulama artık internetsiz de çalışır.'}</p>
-      <div className={styles.actions}>
+      <div className={toast.actions}>
         {needRefresh && (
           <Button variant="primary" onClick={refresh}>
             Yenile
