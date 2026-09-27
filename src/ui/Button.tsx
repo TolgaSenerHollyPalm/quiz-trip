@@ -4,16 +4,17 @@ import styles from './Button.module.css'
 
 type Variant = 'primary' | 'secondary' | 'text' | 'danger'
 
-const className = (variant: Variant, big = false) =>
-  [styles.button, styles[variant], big && styles.big].filter(Boolean).join(' ')
+const className = (variant: Variant, big = false, inline = false) =>
+  [styles.button, styles[variant], big && styles.big, inline && styles.inline].filter(Boolean).join(' ')
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: Variant
   big?: boolean
+  inline?: boolean // as wide as its text, e.g. a quiet action centred under a list
 }
 
-export function Button({ variant = 'secondary', big, type = 'button', ...props }: ButtonProps) {
-  return <button type={type} className={className(variant, big)} {...props} />
+export function Button({ variant = 'secondary', big, inline, type = 'button', ...props }: ButtonProps) {
+  return <button type={type} className={className(variant, big, inline)} {...props} />
 }
 
 interface LinkButtonProps {

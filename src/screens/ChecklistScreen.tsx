@@ -1,143 +1,123 @@
-import { useState } from 'react'
+import { useId, useState } from 'react'
 import { useTrip } from '../app/appData.ts'
 import { applySuggestions } from '../trips/checklist.ts'
 import type { ChecklistItem } from '../trips/types.ts'
+import AddField from '../ui/AddField.tsx'
 import { Button } from '../ui/Button.tsx'
-import { PlusIcon } from '../ui/icons.tsx'
+import CheckButton from '../ui/CheckButton.tsx'
+import DeleteButton from '../ui/DeleteButton.tsx'
+import Disclosure from '../ui/Disclosure.tsx'
+import { RefreshIcon } from '../ui/icons.tsx'
+import { checklistBasis, sourceLabel } from '../ui/labels.ts'
+import { ItemRow, ListCard } from '../ui/ListCard.tsx'
 import Missing from '../ui/Missing.tsx'
+import ProgressBar from '../ui/ProgressBar.tsx'
 import Screen from '../ui/Screen.tsx'
-import { tripTheme } from '../ui/tripTheme.ts'
+import SegmentedTabs from '../ui/SegmentedTabs.tsx'
 import text from '../ui/text.module.css'
 import styles from './ChecklistScreen.module.css'
 
-const GROUPS = [
-  { group: 'pack' as const, title: 'Alınacaklar', placeholder: 'Ör. fotoğraf makinesi' },
-  { group: 'do' as const, title: 'Yapılacaklar', placeholder: 'Ör. komşuya anahtar' },
-]
+type Group = ChecklistItem['group']
+
+const GROUPS: Record<Group, { tab: string; label: string; placeholder: string }> = {
+  pack: { tab: 'Alınacaklar', label: 'Yeni alınacak', placeholder: 'Madde ekle, ör. fotoğraf makinesi' },
+  do: { tab: 'Yapılacaklar', label: 'Yeni yapılacak', placeholder: 'Madde ekle, ör. komşuya anahtar' },
+}
 
 export default function ChecklistScreen({ tripId }: { tripId: string }) {
   const { trip, saveTrip } = useTrip(tripId)
+  const [group, setGroup] = useState<Group>('pack')
+  const [editing, setEditing] = useState(false)
+  const panelId = useId()
   if (!trip) return <Missing message="Bu gezi bulunamadı." back={{ screen: 'home' }} />
 
+  const items = trip.checklist
   const save = (checklist: ChecklistItem[]) => saveTrip({ ...trip, checklist })
-  const toggle = (id: string) =>
-    save(trip.checklist.map((item) => (item.id === id ? { ...item, done: !item.done } : item)))
-  const remove = (id: string) => save(trip.checklist.filter((item) => item.id !== id))
-  const add = (group: ChecklistItem['group'], itemText: string) =>
-    save([...trip.checklist, { id: crypto.randomUUID(), text: itemText, group, done: false }])
+  const toggle = (id: string) => save(items.map((item) => (item.id === id ? { ...item, done: !item.done } : item)))
+  const remove = (id: string) => save(items.filter((item) => item.id !== id))
+  const add = (itemText: string) => save([...items, { id: crypto.randomUUID(), text: itemText, group, done: false }])
 
-  const done = trip.checklist.filter((item) => item.done).length
-  const total = trip.checklist.length
+  const done = items.filter((item) => item.done).length
+  const open = (of: Group) => items.filter((item) => item.group === of && !item.done)
+  const finished = items.filter((item) => item.group === group && item.done)
+  const inEditMode = editing && items.length > 0
+
+  const row = (item: ChecklistItem) => (
+    <ItemRow
+      key={item.id}
+      control={<CheckButton checked={item.done} item={item.text} tone="teal" onToggle={() => toggle(item.id)} />}
+      text={item.text}
+      note={item.done ? undefined : sourceLabel(item.source)} // where a done item came from no longer matters
+      done={item.done}
+      trailing={
+        inEditMode && (
+          <DeleteButton item={item.text} onDelete={() => remove(item.id)} />
+        )
+      }
+    />
+  )
 
   return (
-    <Screen title="Hazırlık listesi" back={{ screen: 'trip', tripId }} wide theme={tripTheme(trip.kind)}>
-      {total > 0 && (
-        <p className={styles.progress}>
-          <span className={styles.count}>
-            {done} / {total} tamam
-          </span>
-          <span className={styles.bar}>
-            <span className={styles.fill} style={{ width: `${Math.round((done / total) * 100)}%` }} />
-          </span>
-        </p>
-      )}
-
-      {total === 0 && (
+    <Screen
+      title="Hazırlık listesi"
+      subtitle={checklistBasis(trip.transport, trip.kind)}
+      back={{ screen: 'trip', tripId }}
+      aside={
+        items.length > 0 && (
+          <Button variant="text" onClick={() => setEditing(!inEditMode)}>
+            {inEditMode ? 'Bitti' : 'Düzenle'}
+          </Button>
+        )
+      }
+    >
+      {items.length > 0 ? (
+        <section className={styles.progress} aria-label="İlerleme">
+          <div className={styles.progressHead}>
+            <p className={styles.count}>
+              <strong>{done}</strong> / {items.length} tamam
+            </p>
+            <span className={styles.percent}>%{Math.round((done / items.length) * 100)}</span>
+          </div>
+          <ProgressBar value={done} max={items.length} tone="teal" label="Hazırlık listesi" thick />
+        </section>
+      ) : (
         <p className={text.hint}>
-          Liste boş. Aracına ve tatil türüne göre hazır bir liste getirebilir ya da maddeleri kendin
-          yazabilirsin.
+          Liste boş. Ulaşım türüne ve tatil tarzına göre hazır bir liste getirebilir ya da maddeleri kendin yazabilirsin.
         </p>
       )}
 
-      <div className={styles.sections}>
-        {GROUPS.map(({ group, title, placeholder }) => {
-          const items = trip.checklist.filter((item) => item.group === group)
-          return (
-            <section key={group} className={styles.section}>
-              <h2 className={text.heading}>{title}</h2>
-              {items.length === 0 ? (
-                <p className={text.hint}>Bu bölümde henüz madde yok.</p>
-              ) : (
-                <ul className={styles.items}>
-                  {items.map((item) => (
-                    <li key={item.id} className={styles.item}>
-                      <label className={styles.check}>
-                        <input
-                          type="checkbox"
-                          className={styles.box}
-                          checked={item.done}
-                          onChange={() => toggle(item.id)}
-                        />
-                        <span className={item.done ? styles.doneText : undefined}>{item.text}</span>
-                      </label>
-                      <button
-                        type="button"
-                        className={styles.remove}
-                        aria-label={`${item.text} maddesini sil`}
-                        onClick={() => remove(item.id)}
-                      >
-                        ×
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              )}
-              <AddRow title={title} placeholder={placeholder} onAdd={(itemText) => add(group, itemText)} />
-            </section>
-          )
-        })}
+      <SegmentedTabs
+        label="Liste türü"
+        options={(['pack', 'do'] as const).map((value) => ({ value, label: `${GROUPS[value].tab} · ${open(value).length}` }))}
+        selected={group}
+        onSelect={setGroup}
+        panelId={panelId}
+      />
+
+      <div id={panelId} role="tabpanel" aria-label={GROUPS[group].tab} className={styles.panel}>
+        <ListCard>
+          {open(group).map(row)}
+          <AddField inRow label={GROUPS[group].label} placeholder={GROUPS[group].placeholder} tone="teal" onAdd={add} />
+        </ListCard>
+
+        {finished.length > 0 && (
+          <div className={styles.finished}>
+            <Disclosure title={`Tamamlananlar · ${finished.length}`}>
+              <ListCard>{finished.map(row)}</ListCard>
+            </Disclosure>
+          </div>
+        )}
       </div>
 
-      <Button variant="primary" onClick={() => save(applySuggestions(trip))}>
-        {total === 0 ? 'Önerilen listeyi getir' : 'Önerileri yenile'}
-      </Button>
-      <p className={text.hint}>
-        Öneriler aracına ve tatil türüne göre gelir. İşaretlediğin ve kendi yazdığın maddeler yerinde kalır.
-      </p>
+      <div className={styles.suggestions}>
+        <Button variant={items.length === 0 ? 'primary' : 'secondary'} inline onClick={() => save(applySuggestions(trip))}>
+          <RefreshIcon />
+          {items.length === 0 ? 'Önerilen listeyi getir' : 'Önerileri yenile'}
+        </Button>
+        <p className={styles.explain}>
+          Öneriler ulaşım türüne ve tatil tarzına göre gelir. İşaretlediğin ve kendi yazdığın maddeler yerinde kalır.
+        </p>
+      </div>
     </Screen>
-  )
-}
-
-interface AddRowProps {
-  title: string
-  placeholder: string
-  onAdd: (text: string) => void
-}
-
-/** The field takes the whole row; the button is a plus, so even a long item stays readable while typing. */
-function AddRow({ title, placeholder, onAdd }: AddRowProps) {
-  const [draft, setDraft] = useState('')
-  const submit = () => {
-    const trimmed = draft.trim()
-    if (trimmed === '') return
-    onAdd(trimmed)
-    setDraft('')
-  }
-
-  return (
-    <form
-      className={styles.add}
-      onSubmit={(event) => {
-        event.preventDefault()
-        submit()
-      }}
-    >
-      <input
-        className={styles.input}
-        value={draft}
-        maxLength={80}
-        placeholder={placeholder}
-        aria-label={`${title} listesine yeni madde`}
-        onChange={(event) => setDraft(event.target.value)}
-      />
-      <button
-        type="submit"
-        className={styles.addButton}
-        disabled={draft.trim() === ''}
-        aria-label={`${title} listesine ekle`}
-      >
-        <PlusIcon size={26} />
-      </button>
-    </form>
   )
 }

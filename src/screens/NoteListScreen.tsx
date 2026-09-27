@@ -5,8 +5,9 @@ import type { NoteItem } from '../trips/types.ts'
 import AddField from '../ui/AddField.tsx'
 import { Button } from '../ui/Button.tsx'
 import CheckButton from '../ui/CheckButton.tsx'
+import DeleteButton from '../ui/DeleteButton.tsx'
 import Disclosure from '../ui/Disclosure.tsx'
-import { BagIcon, CloseIcon, ForkKnifeIcon } from '../ui/icons.tsx'
+import { BagIcon, ForkKnifeIcon } from '../ui/icons.tsx'
 import { ItemRow, ListCard } from '../ui/ListCard.tsx'
 import Missing from '../ui/Missing.tsx'
 import ProgressBar from '../ui/ProgressBar.tsx'
@@ -84,9 +85,7 @@ export default function NoteListScreen({ tripId, list }: { tripId: string; list:
       openLabel={`${item.text}${item.note ? `, ${item.note}` : ''}: düzenle`}
       trailing={
         inEditMode && (
-          <button type="button" className={styles.remove} aria-label={`Sil: ${item.text}`} onClick={() => save(removeNote(items, item.id))}>
-            <CloseIcon size={20} />
-          </button>
+          <DeleteButton item={item.text} onDelete={() => save(removeNote(items, item.id))} />
         )
       }
     />

@@ -1,145 +1,66 @@
 .progress {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-}
-
-.count {
-  font-weight: 700;
-}
-
-.bar {
-  height: 10px;
-  border-radius: 999px;
-  background: var(--color-border);
-  overflow: hidden;
-}
-
-.fill {
-  display: block;
-  height: 100%;
-  border-radius: 999px;
-  background: var(--color-primary);
-  transition: width 0.2s ease-out;
-}
-
-.sections {
-  display: grid;
-  gap: var(--space);
-}
-
-/* Side by side once there is room; on a phone they stay stacked. */
-@media (min-width: 760px) {
-  .sections {
-    grid-template-columns: 1fr 1fr;
-    align-items: start;
-  }
-}
-
-.section {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.items {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.item {
-  display: flex;
-  align-items: center;
-  gap: 4px;
+  gap: 10px;
+  padding: var(--space);
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
   background: var(--color-surface);
 }
 
-@media (hover: hover) {
-  .item:hover {
-    border-color: var(--color-check-border);
-  }
+.progressHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
 }
 
-.check {
+.count {
+  font-size: 0.9375rem;
+  color: var(--color-muted);
+}
+
+.count strong {
+  margin-right: 2px;
+  font-family: var(--font-display);
+  font-size: 2.125rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--color-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.percent {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--color-primary-dark);
+  font-variant-numeric: tabular-nums;
+}
+
+.panel {
   display: flex;
-  flex: 1;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.finished {
+  margin-top: 8px;
+}
+
+
+.suggestions {
+  display: flex;
+  flex-direction: column;
   align-items: center;
   gap: 12px;
-  min-height: var(--tap-size);
-  padding: 8px 0 8px var(--space);
-  cursor: pointer;
+  margin-top: 16px;
 }
 
-.box {
-  flex: none;
-  width: 26px;
-  height: 26px;
-  accent-color: var(--color-primary);
-}
-
-.doneText {
+.explain {
+  max-width: 34ch;
+  font-size: 0.875rem;
+  line-height: 1.5;
   color: var(--color-muted);
-  text-decoration: line-through;
-  text-decoration-color: var(--color-strike);
-}
-
-.remove {
-  flex: none;
-  width: var(--tap-size);
-  min-height: var(--tap-size);
-  border: 0;
-  border-radius: var(--radius);
-  background: none;
-  color: var(--color-muted);
-  font-size: 1.6rem;
-  line-height: 1;
-  cursor: pointer;
-}
-
-.add {
-  display: flex;
-  gap: 8px;
-}
-
-.input {
-  flex: 1 1 auto;
-  width: 100%;
-  min-width: 0;
-  min-height: var(--tap-size);
-  padding: 0 14px;
-  border: 2px solid var(--color-border);
-  border-radius: var(--radius);
-  background: var(--color-surface);
-}
-
-.input:focus {
-  border-color: var(--color-primary);
-  outline: none;
-}
-
-/* Just a plus: the field needs the width more than the word "Ekle" does. */
-.addButton {
-  display: grid;
-  place-items: center;
-  flex: none;
-  width: var(--tap-size);
-  height: var(--tap-size);
-  border: 0;
-  border-radius: var(--radius-field);
-  background: var(--color-primary);
-  color: var(--color-on-primary);
-  cursor: pointer;
-  touch-action: manipulation;
-}
-
-.addButton:disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
-}
-
-.addButton:active:not(:disabled) {
-  transform: scale(0.96);
+  text-align: center;
 }

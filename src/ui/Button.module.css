@@ -57,6 +57,12 @@
   color: var(--color-on-danger);
 }
 
+/* As wide as its text rather than the column. */
+.inline {
+  width: auto;
+  align-self: center;
+}
+
 /* The main action at the foot of a screen. */
 .big {
   min-height: 54px;

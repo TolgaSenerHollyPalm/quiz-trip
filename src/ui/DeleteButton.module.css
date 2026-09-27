@@ -1,0 +1,19 @@
+/* Shown only while a list is being edited, at the end of each row. */
+.delete {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: var(--tap-size);
+  height: var(--tap-size);
+  margin-right: -8px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--color-danger);
+  cursor: pointer;
+}
+
+.delete:active {
+  background: var(--color-danger-bg);
+}
