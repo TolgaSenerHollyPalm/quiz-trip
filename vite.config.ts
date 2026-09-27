@@ -17,6 +17,8 @@ export default defineConfig({
       registerType: 'prompt',
       includeAssets: ['favicon.svg', 'apple-touch-icon-180x180.png'],
       manifest,
+      // Workbox's default leaves fonts out; without them the offline app would fall back to system type.
+      workbox: { globPatterns: ['**/*.{js,css,html,woff2}'] },
     }),
   ],
 })

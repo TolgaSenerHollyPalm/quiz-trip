@@ -19,6 +19,14 @@ describe('web app manifest', () => {
   })
 
   // Chrome offers "Install app" only with 192px and 512px icons; Android launchers use the maskable one.
+  // The splash screen and the status bar should be the page's own paper colour, as in index.html.
+  it('uses the page colour for the theme and the splash screen', () => {
+    const html = readFileSync(new URL('./index.html', import.meta.url), 'utf8')
+    const light = html.match(/<meta name="theme-color" content="([^"]+)" media="\(prefers-color-scheme: light\)"/)
+    expect(manifest.theme_color).toBe(light?.[1])
+    expect(manifest.background_color).toBe('#f7f5f0')
+  })
+
   it('has the icons Android needs to install the app', () => {
     expect(icons.some((i) => i.sizes === '192x192' && i.purpose === 'any')).toBe(true)
     expect(icons.some((i) => i.sizes === '512x512' && i.purpose === 'any')).toBe(true)

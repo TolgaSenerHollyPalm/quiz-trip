@@ -16,8 +16,7 @@
 }
 
 .first {
-  border: 2px solid var(--color-accent);
-  background: var(--color-warning-bg);
+  background: var(--color-amber-soft);
 }
 
 .rank {

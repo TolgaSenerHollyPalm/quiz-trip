@@ -1,198 +1,46 @@
 /*
- * A colour set per holiday type: a gentle gradient, a deeper edge to draw it, a badge pair that stays
- * readable, a filled-button pair, an icon tone between the tint and the edge, and the header the trip's
- * screens wear, down to the page behind them. Cards, buttons, the header and the canvas read these
- * variables; nothing else knows about holidays.
+ * A trip's colour comes from its holiday type and appears in three places only: the countdown card
+ * (white text on --trip-color), the top of the featured trip card on the home screen, and the holiday
+ * type chip (--trip-ink on --trip-soft). The page, the header and the buttons never take it.
  */
-.other {
-  --trip-from: var(--color-primary-soft);
-  --trip-edge: var(--color-primary);
-  --trip-icon: var(--color-primary);
-  --trip-badge-bg: var(--color-primary);
-  --trip-badge-ink: var(--color-on-primary);
-}
-
 .beach {
-  --trip-from: #cdeeff;
-  --trip-edge: #1b7fb8;
-  --trip-icon: #156c9c;
-  --trip-badge-bg: #1b7fb8;
-  --trip-badge-ink: #ffffff;
-  --trip-button-from: #3fa3d8;
-  --trip-button-to: #1b7fb8;
-  --trip-button-edge: #14618f;
-  --trip-button-ink: #ffffff;
-  --trip-header-bg: linear-gradient(120deg, #14618f, #2a8ec6);
-  --trip-header-ink: #ffffff;
-  --trip-page-bg: #f1fafe;
+  --trip-color: #1a6e9e;
+  --trip-soft: #dceef8;
+  --trip-ink: #155a82;
 }
 
-/* A theme park: the yellow of the sign and the blue of the sky. */
 .fun {
-  --trip-from: #ffe7a8;
-  --trip-via: #dbe9ff;
-  --trip-edge: #d99a1f;
-  --trip-icon: #b8801a;
-  --trip-badge-bg: #e8a92a;
-  --trip-badge-ink: #2a1c00;
-  --trip-button-from: #f0b93f;
-  --trip-button-to: #d99a1f;
-  --trip-button-edge: #b07a12;
-  --trip-button-ink: #2a1c00;
-  --trip-header-bg: linear-gradient(120deg, #c9891a, #efb63d);
-  --trip-header-ink: #2a1c00;
-  --trip-page-bg: #fff9ec;
+  --trip-color: #9a6a0e;
+  --trip-soft: #fbf0d6;
+  --trip-ink: #8a5a0b;
 }
 
 .winter {
-  --trip-from: #e9f3fa;
-  --trip-edge: #7ba3bd;
-  --trip-icon: #5d8aa4;
-  --trip-badge-bg: #6f96ad;
-  --trip-badge-ink: #ffffff;
-  --trip-button-from: #7ba3bd;
-  --trip-button-to: #5b86a0;
-  --trip-button-edge: #47708a;
-  --trip-button-ink: #ffffff;
-  --trip-header-bg: linear-gradient(120deg, #47708a, #6f96ad);
-  --trip-header-ink: #ffffff;
-  --trip-page-bg: #f6fafd;
+  --trip-color: #47708a;
+  --trip-soft: #e6eff5;
+  --trip-ink: #3a5f76;
 }
 
 .city {
-  --trip-from: #f2eadf;
-  --trip-edge: #a9784f;
-  --trip-icon: #8e5f3c;
-  --trip-badge-bg: #a9714a;
-  --trip-badge-ink: #ffffff;
-  --trip-button-from: #bd8558;
-  --trip-button-to: #a9714a;
-  --trip-button-edge: #8a5a37;
-  --trip-button-ink: #ffffff;
-  --trip-header-bg: linear-gradient(120deg, #8a5a37, #b07e55);
-  --trip-header-ink: #ffffff;
-  --trip-page-bg: #faf6f1;
+  --trip-color: #8a5a37;
+  --trip-soft: #f2eadf;
+  --trip-ink: #7a4e2f;
 }
 
 .nature {
-  --trip-from: #d9f2dc;
-  --trip-edge: #3f8d4f;
-  --trip-icon: #33753f;
-  --trip-badge-bg: #3f8d4f;
-  --trip-badge-ink: #ffffff;
-  --trip-button-from: #4fa361;
-  --trip-button-to: #3f8d4f;
-  --trip-button-edge: #336f3f;
-  --trip-button-ink: #ffffff;
-  --trip-header-bg: linear-gradient(120deg, #336f3f, #4b9c5d);
-  --trip-header-ink: #ffffff;
-  --trip-page-bg: #f3fbf4;
+  --trip-color: #2f6e3b;
+  --trip-soft: #ddf0e0;
+  --trip-ink: #276131;
 }
 
 .business {
-  --trip-from: #e4e9f3;
-  --trip-edge: #5a6b8c;
-  --trip-icon: #4a5b78;
-  --trip-badge-bg: #5a6b8c;
-  --trip-badge-ink: #ffffff;
-  --trip-button-from: #6b7ea3;
-  --trip-button-to: #5a6b8c;
-  --trip-button-edge: #45546f;
-  --trip-button-ink: #ffffff;
-  --trip-header-bg: linear-gradient(120deg, #45546f, #6b7ea3);
-  --trip-header-ink: #ffffff;
-  --trip-page-bg: #f5f7fb;
+  --trip-color: #4a5b78;
+  --trip-soft: #e4e9f3;
+  --trip-ink: #3f4e68;
 }
 
-@media (prefers-color-scheme: dark) {
-  .beach {
-    --trip-from: #0d3047;
-    --trip-edge: #3f9bd0;
-    --trip-icon: #6bc0ea;
-    --trip-badge-bg: #4aa8dd;
-    --trip-badge-ink: #04202f;
-    --trip-button-from: #5cb6e5;
-    --trip-button-to: #4aa8dd;
-    --trip-button-edge: #2f8fc4;
-    --trip-button-ink: #04202f;
-    --trip-header-bg: linear-gradient(120deg, #0d3047, #17465f);
-    --trip-header-ink: #e3f4f1;
-      --trip-page-bg: #061b27;
-}
-
-  .fun {
-    --trip-from: #3a2f12;
-    --trip-via: #16304d;
-    --trip-edge: #cfa03a;
-    --trip-icon: #f0cb63;
-    --trip-badge-bg: #e8bf4d;
-    --trip-badge-ink: #2a1c00;
-    --trip-button-from: #f0cb63;
-    --trip-button-to: #e8bf4d;
-    --trip-button-edge: #c79f2e;
-    --trip-button-ink: #2a1c00;
-    --trip-header-bg: linear-gradient(120deg, #3a2f12, #16304d);
-    --trip-header-ink: #f6ecd8;
-      --trip-page-bg: #1c1809;
-}
-
-  .winter {
-    --trip-from: #1c2f3b;
-    --trip-edge: #8badc2;
-    --trip-icon: #b6d3e3;
-    --trip-badge-bg: #9fc3d8;
-    --trip-badge-ink: #12242e;
-    --trip-button-from: #b0cfe0;
-    --trip-button-to: #9fc3d8;
-    --trip-button-edge: #7da5bd;
-    --trip-button-ink: #12242e;
-    --trip-header-bg: linear-gradient(120deg, #1c2f3b, #284657);
-    --trip-header-ink: #e3f4f1;
-      --trip-page-bg: #0c1a22;
-}
-
-  .city {
-    --trip-from: #33281f;
-    --trip-edge: #b98a5e;
-    --trip-icon: #d6b08a;
-    --trip-badge-bg: #c79a6d;
-    --trip-badge-ink: #2a1c10;
-    --trip-button-from: #d4ab7f;
-    --trip-button-to: #c79a6d;
-    --trip-button-edge: #a87c50;
-    --trip-button-ink: #2a1c10;
-    --trip-header-bg: linear-gradient(120deg, #33281f, #47372a);
-    --trip-header-ink: #f3e8dc;
-      --trip-page-bg: #1c1610;
-}
-
-  .nature {
-    --trip-from: #143320;
-    --trip-edge: #4e9e61;
-    --trip-icon: #7cc78f;
-    --trip-badge-bg: #5fb573;
-    --trip-badge-ink: #06230f;
-    --trip-button-from: #6fc283;
-    --trip-button-to: #5fb573;
-    --trip-button-edge: #46965a;
-    --trip-button-ink: #06230f;
-    --trip-header-bg: linear-gradient(120deg, #143320, #1d492c);
-    --trip-header-ink: #e4f4e7;
-      --trip-page-bg: #081c0f;
-}
-
-  .business {
-    --trip-from: #1c2536;
-    --trip-edge: #7d90b5;
-    --trip-icon: #a6b8d8;
-    --trip-badge-bg: #8fa3c8;
-    --trip-badge-ink: #101a2b;
-    --trip-button-from: #9fb2d4;
-    --trip-button-to: #8fa3c8;
-    --trip-button-edge: #7287ad;
-    --trip-button-ink: #101a2b;
-    --trip-header-bg: linear-gradient(120deg, #1c2536, #2a3750);
-    --trip-header-ink: #e3ecf8;
-      --trip-page-bg: #0f1420;
-}
+.other {
+  --trip-color: #0a7d76;
+  --trip-soft: #ddf1ee;
+  --trip-ink: #075f59;
 }

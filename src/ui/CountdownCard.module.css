@@ -1,20 +1,12 @@
-/* Painted by the trip's holiday type: a gradient down to the surface, drawn with a deeper edge. */
+/* The one place a trip's colour fills a whole card; everything on it is white. */
 .card {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  padding: 20px var(--space);
-  border: 2px solid var(--trip-edge);
-  border-radius: var(--radius);
-  background: linear-gradient(140deg, var(--trip-from), var(--trip-via, var(--trip-from)) 45%, var(--color-surface));
-  box-shadow: var(--shadow-card);
-}
-
-/* A finished or undated trip steps back rather than shouting a colour. */
-.after,
-.undated {
-  border-color: var(--color-border);
-  background: var(--color-surface);
+  padding: 20px;
+  border-radius: 24px;
+  background: var(--trip-color);
+  color: #ffffff;
 }
 
 .head {
@@ -31,15 +23,10 @@
 
 .head svg {
   flex: none;
-  color: var(--trip-icon, var(--trip-edge));
 }
 
-.after .head svg,
-.undated .head svg {
-  color: var(--color-muted);
-}
-
-.meta {
-  color: var(--color-muted);
-  font-size: 0.9rem;
+.card p {
+  font-size: 0.875rem;
+  line-height: 1.45;
+  color: rgb(255 255 255 / 0.9);
 }

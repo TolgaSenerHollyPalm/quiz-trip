@@ -1,53 +1,85 @@
-/* The game is passed around on one phone, often in a plane: every target stays at least 48px, above the 44pt
-   that phones ask for, and text stays large; inputs never go below 16px, where iOS would zoom in on focus.
-   Every colour is a token, so the dark theme only has to redefine this list. */
+/*
+ * Warm paper, white cards and one teal. Every colour is a token, so the dark theme only has to redefine
+ * this list. Targets stay at least 44px, as phones ask for, and inputs never go below 16px, where iOS
+ * would zoom in on focus.
+ */
 :root {
   color-scheme: light dark;
 
-  --color-bg: #f0faf8;
+  --color-bg: #f7f5f0;
   --color-surface: #ffffff;
-  --color-text: #0a2422;
-  --color-muted: #4a6562;
-  --color-border: #cfe7e3;
+  --color-text: #1b1f1e;
+  --color-muted: #5e6562;
+  --color-border: #e8e2d7;
+  --color-divider: #f0ebe2;
+  --color-chip: #efeae0;
+  --color-chip-text: #4a504d;
+  --color-sunken: #ede8de;
+  --color-check-border: #948c80;
+  --color-chevron: #8c918e;
+  --color-strike: #b7b0a3;
+  --color-placeholder: #7a807d;
 
+  /* Teal: the app itself and the packing list. */
   --color-primary: #0a7d76;
-  --color-primary-bright: #12a79d;
   --color-primary-dark: #075f59;
-  --color-primary-soft: #d8f4ef;
+  --color-primary-soft: #ddf1ee;
   --color-on-primary: #ffffff;
 
-  --color-accent: #ff6b57;
-  --color-accent-soft: #ffe7e2;
-  --color-on-accent: #3d1008;
+  /* Coral: things to buy before coming home. */
+  --color-coral: #ff6b57;
+  --color-coral-strong: #d9493a;
+  --color-coral-soft: #ffe9e4;
+  --color-coral-text: #b23a26;
+  --color-on-coral-strong: #ffffff;
 
-  --color-success: #15803d;
-  --color-success-bg: #dcfce7;
+  /* Amber: things to taste before coming home. */
+  --color-amber: #f0b23f;
+  --color-amber-strong: #b97a0b;
+  --color-amber-soft: #fbf0d6;
+  --color-amber-text: #8a5a0b;
+  --color-on-amber: #3a2a06;
+  --color-on-amber-strong: #ffffff;
+
+  --color-success: #1e7a45;
+  --color-success-bg: #e3f4e8;
+  --color-success-text: #14532d;
+  --color-online-bg: #e2f3e8;
+  --color-online-text: #1e6b3c;
+  --color-online-dot: #22a05a;
+
   --color-danger: #c02626;
   --color-danger-bg: #fdeaea;
   --color-on-danger: #ffffff;
-  --color-warning-bg: #fff0e6;
-  --color-warning-text: #8a3b1e;
+  --color-warning-bg: var(--color-amber-soft);
+  --color-warning-text: var(--color-amber-text);
   --color-info-bg: #e4eeff;
   --color-info-text: #27467e;
 
-  --header-bg: linear-gradient(120deg, #0a7d76, #12a79d);
-  --header-text: #ffffff;
-  --toast-bg: #0a2422;
-  --toast-text: #f0faf8;
-  --shadow-card: 0 1px 2px rgb(10 36 34 / 0.05), 0 8px 20px rgb(10 36 34 / 0.05);
-  --shadow-raised: 0 6px 18px rgb(10 125 118 / 0.22);
+  --toast-bg: #1b1f1e;
+  --toast-text: #f7f5f0;
+  /* Hardly any shadow: a 1px border separates things. Only what floats above the page gets one. */
+  --shadow-float: 0 10px 24px rgb(27 31 30 / 0.12);
 
-  --radius: 18px;
-  --tap-size: 48px;
-  --space: 16px;
+  --font-display: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;
+  --font-body: 'Figtree', ui-sans-serif, system-ui, sans-serif;
+
+  --radius: 20px; /* cards */
+  --radius-field: 14px; /* form fields and tiles */
+  --radius-pill: 999px; /* buttons and chips */
+  --tap-size: 44px;
+  --space: 16px; /* inside a card */
+  --page-margin: 20px;
+  --gap-card: 12px;
+  --gap-section: 28px;
   --content-width: 640px;
   --wide-width: 960px;
 
-  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans', sans-serif;
-  font-size: 18px;
+  font-family: var(--font-body);
+  font-size: 16px;
   line-height: 1.5;
   color: var(--color-text);
-  background-color: var(--trip-page-bg, var(--color-bg));
+  background-color: var(--color-bg);
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: transparent;
 }
@@ -90,51 +122,6 @@
   }
 }
 
-/* A mouse and a bigger screen can take a little more text. */
-@media (min-width: 900px) {
-  :root {
-    font-size: 19px;
-  }
-}
-
-/*
- * The canvas is never flat: a glow of the current colour set in one corner and a warmer one in the
- * other. The flat colour above stays as the fallback, so an older browser simply gets no glow.
- */
-@supports (background: color-mix(in srgb, red 10%, transparent)) {
-  :root {
-    background-image:
-      radial-gradient(
-        46% 30% at 4% -6%,
-        color-mix(in srgb, var(--trip-edge, var(--color-primary)) 18%, transparent),
-        transparent 68%
-      ),
-      radial-gradient(
-        40% 28% at 104% 102%,
-        color-mix(in srgb, var(--trip-button-from, var(--color-accent)) 13%, transparent),
-        transparent 66%
-      );
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    :root {
-      background-image:
-        radial-gradient(
-          46% 30% at 4% -6%,
-          color-mix(in srgb, var(--trip-edge, var(--color-primary)) 26%, transparent),
-          transparent 68%
-        ),
-        radial-gradient(
-          40% 28% at 104% 102%,
-          color-mix(in srgb, var(--trip-button-from, var(--color-accent)) 18%, transparent),
-          transparent 66%
-        );
-    }
-  }
-}
-
 *,
 *::before,
 *::after {
@@ -162,12 +149,26 @@ ul {
 }
 
 button,
-input {
+input,
+select,
+textarea {
   font: inherit;
   color: inherit;
 }
 
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--color-placeholder);
+}
+
 :focus-visible {
-  outline: 3px solid var(--color-accent);
+  outline: 3px solid var(--color-coral);
   outline-offset: 2px;
 }

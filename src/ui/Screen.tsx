@@ -1,41 +1,45 @@
-import { useEffect, type ReactNode } from 'react'
-import { href, type Route } from '../app/router.ts'
+import type { ReactNode } from 'react'
+import type { Route } from '../app/router.ts'
+import { IconLink } from './IconButton.tsx'
+import { BackIcon } from './icons.tsx'
 import styles from './Screen.module.css'
 
 interface ScreenProps {
   title: string
-  icon?: ReactNode // shown before the title, e.g. the app's own mark on the home screen
+  subtitle?: ReactNode // the quiet line under the title
+  above?: ReactNode // chips or a count shown over the title
+  icon?: ReactNode // left of the top bar when there is no way back, e.g. the app's own mark on the home screen
   back?: Route
-  aside?: ReactNode // right side of the header
+  aside?: ReactNode // right of the top bar: at most two actions
+  footer?: ReactNode // the screen's one main action, which stays at the bottom while a long screen scrolls
   wide?: boolean // a list screen, which may spread out on a desktop window
-  theme?: string // a trip's colour set, from tripTheme()
+  theme?: string // a trip's colour, from tripTheme()
   children: ReactNode
 }
 
-export default function Screen({ title, icon, back, aside, wide, theme, children }: ScreenProps) {
-  // The page behind the screen is painted by <html>, so the trip's colour has to reach that far up.
-  useEffect(() => {
-    if (!theme) return undefined
-    document.documentElement.classList.add(theme)
-    return () => document.documentElement.classList.remove(theme)
-  }, [theme])
-
+export default function Screen({ title, subtitle, above, icon, back, aside, footer, wide, theme, children }: ScreenProps) {
   const classes = [styles.screen, wide && styles.wide, theme].filter(Boolean).join(' ')
   return (
     <div className={classes}>
-      <header className={styles.header}>
-        {back && (
-          <a className={styles.back} href={href(back)} aria-label="Geri">
-            <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true">
-              <path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </a>
+      <header className={styles.bar}>
+        {back ? (
+          <IconLink to={back} label="Geri">
+            <BackIcon />
+          </IconLink>
+        ) : (
+          icon
         )}
-        {icon}
-        <h1 className={styles.title}>{title}</h1>
-        {aside}
+        {aside && <div className={styles.actions}>{aside}</div>}
       </header>
-      <main className={styles.content}>{children}</main>
+      <main className={styles.content}>
+        <div className={styles.heading}>
+          {above}
+          <h1 className={styles.title}>{title}</h1>
+          {subtitle && <p className={styles.subtitle}>{subtitle}</p>}
+        </div>
+        {children}
+      </main>
+      {footer && <div className={styles.footer}>{footer}</div>}
     </div>
   )
 }

@@ -5,8 +5,7 @@
   padding: 18px var(--space);
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
-  background: linear-gradient(135deg, var(--color-primary-soft), var(--color-surface) 70%);
-  box-shadow: var(--shadow-card);
+  background: var(--color-surface);
 }
 
 .facts {

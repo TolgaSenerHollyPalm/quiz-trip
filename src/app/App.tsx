@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { lazy, Suspense, useEffect } from 'react'
 import AddPredictionScreen from '../screens/AddPredictionScreen.tsx'
 import AppSettingsScreen from '../screens/AppSettingsScreen.tsx'
 import ChecklistScreen from '../screens/ChecklistScreen.tsx'
@@ -23,6 +23,9 @@ import { href, useRoute, type Route } from './router.ts'
 import toast from './toast.module.css'
 import UpdatePrompt from './UpdatePrompt.tsx'
 
+// A page of every building block, for the development server only; production builds drop it.
+const DesignGallery = import.meta.env.DEV ? lazy(() => import('../dev/DesignGallery.tsx')) : null
+
 export default function App() {
   const route = useRoute()
   const address = href(route)
@@ -30,6 +33,14 @@ export default function App() {
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [address])
+
+  if (DesignGallery && location.hash === '#/tasarim') {
+    return (
+      <Suspense>
+        <DesignGallery />
+      </Suspense>
+    )
+  }
 
   return (
     <>

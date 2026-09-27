@@ -19,12 +19,7 @@
   display: block;
   height: 100%;
   border-radius: 999px;
-  /* The trip's own colours where there are any, otherwise the two in the app icon. */
-  background: linear-gradient(
-    90deg,
-    var(--trip-button-edge, var(--color-primary)),
-    var(--trip-button-from, var(--color-accent))
-  );
+  background: var(--color-primary);
   transition: width 0.2s ease-out;
 }
 
@@ -60,12 +55,11 @@
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
   background: var(--color-surface);
-  box-shadow: var(--shadow-card);
 }
 
 @media (hover: hover) {
   .item:hover {
-    border-color: var(--trip-edge, var(--color-primary));
+    border-color: var(--color-check-border);
   }
 }
 
@@ -83,12 +77,13 @@
   flex: none;
   width: 26px;
   height: 26px;
-  accent-color: var(--trip-icon, var(--color-primary));
+  accent-color: var(--color-primary);
 }
 
 .doneText {
   color: var(--color-muted);
   text-decoration: line-through;
+  text-decoration-color: var(--color-strike);
 }
 
 .remove {
@@ -121,7 +116,7 @@
 }
 
 .input:focus {
-  border-color: var(--trip-edge, var(--color-primary));
+  border-color: var(--color-primary);
   outline: none;
 }
 
@@ -132,14 +127,10 @@
   flex: none;
   width: var(--tap-size);
   height: var(--tap-size);
-  border: 2px solid var(--trip-button-edge, var(--color-primary-dark));
-  border-radius: var(--radius);
-  background: linear-gradient(
-    140deg,
-    var(--trip-button-from, var(--color-primary-bright)),
-    var(--trip-button-to, var(--color-primary))
-  );
-  color: var(--trip-button-ink, var(--color-on-primary));
+  border: 0;
+  border-radius: var(--radius-field);
+  background: var(--color-primary);
+  color: var(--color-on-primary);
   cursor: pointer;
   touch-action: manipulation;
 }

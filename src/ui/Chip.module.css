@@ -1,0 +1,46 @@
+.chip {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 6px;
+  height: 28px;
+  padding: 0 10px;
+  border-radius: var(--radius-pill);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.neutral {
+  background: var(--color-chip);
+  color: var(--color-chip-text);
+}
+
+/* A finished trip. */
+.quiet {
+  background: var(--color-chip);
+  color: var(--color-muted);
+}
+
+/* A holiday type or a trip's day count: the trip's own soft colour. */
+.trip {
+  background: var(--trip-soft);
+  color: var(--trip-ink);
+}
+
+.online {
+  background: var(--color-online-bg);
+  color: var(--color-online-text);
+}
+
+.online::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-online-dot);
+}
+
+.strong {
+  font-weight: 700;
+}

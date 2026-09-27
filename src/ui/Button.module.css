@@ -1,6 +1,6 @@
 /*
- * Buttons speak the same language as the cards: a gradient face, a deeper edge around it and the same
- * corner radius. On a trip's screens the trip's own colours come in through the --trip-button-* variables.
+ * One main action per screen: teal, filled, 52px. Everything else is the quiet white button or bare
+ * text in teal. Every button is fully round and flat; a 1px border does the separating.
  */
 .button {
   display: flex;
@@ -9,16 +9,16 @@
   gap: 8px;
   width: 100%;
   min-height: var(--tap-size);
-  padding: 6px 16px;
-  border: 2px solid var(--color-primary);
-  border-radius: var(--radius);
-  font-size: 0.95rem;
-  font-weight: 700;
+  padding: 0 18px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.2;
   text-align: center;
   text-decoration: none;
   cursor: pointer;
   touch-action: manipulation;
-  transition: box-shadow 0.15s ease-out, transform 0.1s ease-out;
 }
 
 .button:active {
@@ -32,43 +32,50 @@
 }
 
 .primary {
-  border-color: var(--trip-button-edge, var(--color-primary-dark));
-  background: linear-gradient(
-    140deg,
-    var(--trip-button-from, var(--color-primary-bright)),
-    var(--trip-button-to, var(--color-primary))
-  );
-  color: var(--trip-button-ink, var(--color-on-primary));
-  box-shadow: var(--shadow-raised);
+  min-height: 52px;
+  padding: 0 24px;
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  font-size: 1rem;
 }
 
-/* The quiet half of the pair: the surface with a hint of the trip's colour and its edge drawn around it. */
 .secondary {
-  border-color: var(--trip-edge, var(--color-primary));
-  background: linear-gradient(140deg, var(--trip-from, var(--color-primary-soft)), var(--color-surface) 70%);
-  color: var(--color-text);
-  box-shadow: var(--shadow-card);
+  border-color: var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-primary-dark);
+}
+
+.text {
+  width: auto;
+  padding: 0 12px;
+  background: transparent;
+  color: var(--color-primary-dark);
 }
 
 .danger {
-  border-color: var(--color-danger);
-  background: linear-gradient(140deg, var(--color-danger), var(--color-danger) 60%, var(--color-danger-bg));
+  background: var(--color-danger);
   color: var(--color-on-danger);
 }
 
+/* The main action at the foot of a screen. */
 .big {
-  min-height: 56px;
-  font-size: 1.1rem;
+  min-height: 54px;
 }
 
 @media (hover: hover) {
-  .primary:hover:not(:disabled),
+  .primary:hover:not(:disabled) {
+    background: var(--color-primary-dark);
+  }
+
   .secondary:hover:not(:disabled) {
-    box-shadow: var(--shadow-raised);
-    transform: translateY(-1px);
+    border-color: var(--color-check-border);
+  }
+
+  .text:hover:not(:disabled) {
+    color: var(--color-primary);
   }
 
   .danger:hover:not(:disabled) {
-    filter: brightness(0.94);
+    filter: brightness(0.92);
   }
 }

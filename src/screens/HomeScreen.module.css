@@ -32,18 +32,15 @@
   }
 }
 
-/* The holiday type paints the card: a hint of its colour, drawn on the left in a deeper tone. */
 .card {
   display: flex;
   flex-direction: column;
   gap: 4px;
   height: 100%;
   padding: 18px var(--space);
-  border: 1px solid var(--trip-edge);
-  border-left: 8px solid var(--trip-edge);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius);
-  background: linear-gradient(120deg, var(--trip-from), var(--color-surface) 60%);
-  box-shadow: var(--shadow-card);
+  background: var(--color-surface);
   color: inherit;
   text-decoration: none;
 }
@@ -54,7 +51,7 @@
 
 @media (hover: hover) {
   .card:hover {
-    box-shadow: var(--shadow-raised);
+    border-color: var(--color-check-border);
   }
 }
 
@@ -66,7 +63,7 @@
 
 .head svg {
   flex: none;
-  color: var(--trip-icon, var(--color-primary));
+  color: var(--trip-ink);
 }
 
 .title {
@@ -76,7 +73,7 @@
 }
 
 .badgeDone {
-  background: var(--color-border);
+  background: var(--color-chip);
   color: var(--color-muted);
 }
 
@@ -84,8 +81,8 @@
   flex: none;
   padding: 2px 10px;
   border-radius: 999px;
-  background: var(--trip-badge-bg);
-  color: var(--trip-badge-ink);
+  background: var(--trip-soft);
+  color: var(--trip-ink);
   font-size: 0.8rem;
   font-weight: 700;
   white-space: nowrap;
@@ -134,50 +131,15 @@
   text-align: center;
 }
 
-/*
- * The first thing a new player sees: what this app is for, in three lines, inside a border with a
- * highlight that keeps going round it. The angle is an animated custom property, so the whole border
- * is one conic gradient rather than a stack of moving elements; a browser that cannot animate the
- * property simply shows the gradient standing still.
- */
-@property --sheen-angle {
-  syntax: '<angle>';
-  initial-value: 0deg;
-  inherits: false;
-}
-
+/* The first thing a new player sees: what this app is for, in three lines, on a plain card. */
 .welcome {
   display: flex;
   flex-direction: column;
   gap: 14px;
   padding: 20px var(--space);
-  border: 2px solid transparent;
+  border: 1px solid var(--color-border);
   border-radius: var(--radius);
-  background:
-    linear-gradient(135deg, var(--trip-from, var(--color-primary-soft)), var(--color-surface) 70%) padding-box,
-    conic-gradient(
-        from var(--sheen-angle),
-        var(--color-border) 0 62%,
-        var(--trip-edge, var(--color-primary)) 76%,
-        var(--color-accent) 84%,
-        var(--color-border) 94%
-      )
-      border-box;
-  box-shadow: var(--shadow-card);
-  animation: sheen 7s linear infinite;
-}
-
-@keyframes sheen {
-  to {
-    --sheen-angle: 360deg;
-  }
-}
-
-/* Someone who asked their system for less motion gets the same border, holding still. */
-@media (prefers-reduced-motion: reduce) {
-  .welcome {
-    animation: none;
-  }
+  background: var(--color-surface);
 }
 
 .welcomeTitle {

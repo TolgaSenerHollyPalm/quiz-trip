@@ -8,8 +8,8 @@ export const manifest: Partial<ManifestOptions> = {
   lang: 'tr',
   display: 'standalone',
   // Must match the light <meta name="theme-color"> in index.html.
-  theme_color: '#0a7d76',
-  background_color: '#f0faf8',
+  theme_color: '#f7f5f0',
+  background_color: '#f7f5f0',
   icons: [
     { src: 'pwa-192x192.png', sizes: '192x192', type: 'image/png', purpose: 'any' },
     { src: 'pwa-512x512.png', sizes: '512x512', type: 'image/png', purpose: 'any' },

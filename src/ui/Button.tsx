@@ -2,7 +2,7 @@ import type { ButtonHTMLAttributes, ReactNode } from 'react'
 import { href, type Route } from '../app/router.ts'
 import styles from './Button.module.css'
 
-type Variant = 'primary' | 'secondary' | 'danger'
+type Variant = 'primary' | 'secondary' | 'text' | 'danger'
 
 const className = (variant: Variant, big = false) =>
   [styles.button, styles[variant], big && styles.big].filter(Boolean).join(' ')

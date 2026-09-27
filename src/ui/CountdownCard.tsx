@@ -15,13 +15,13 @@ export default function CountdownCard({ trip }: { trip: TripState }) {
     .join(' · ')
 
   return (
-    <section className={`${styles.card} ${styles[phase.kind]} ${tripTheme(trip.kind)}`}>
+    <section className={`${styles.card} ${tripTheme(trip.kind)}`}>
       <div className={styles.head}>
         <h2 className={styles.title}>{title}</h2>
         <TransportIcon transport={trip.transport} size={34} />
       </div>
       <p>{message}</p>
-      {meta !== '' && <p className={styles.meta}>{meta}</p>}
+      {meta !== '' && <p>{meta}</p>}
     </section>
   )
 }

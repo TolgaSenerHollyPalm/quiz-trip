@@ -1,5 +1,7 @@
 .screen {
   --width: var(--content-width);
+  /* Lines the top bar up with the content column on a wide screen. */
+  --inline: max(var(--page-margin), calc((100% - var(--width)) / 2 + var(--page-margin)));
   display: flex;
   flex-direction: column;
   min-height: 100dvh;
@@ -10,64 +12,63 @@
   --width: var(--wide-width);
 }
 
-.header {
-  position: sticky;
-  top: 0;
-  z-index: 1;
+/* No colour of its own: the page shows through, and the title sits under it, not in it. */
+.bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 60px;
+  padding: 12px var(--inline) 0;
+}
+
+.actions {
   display: flex;
   align-items: center;
   gap: 8px;
-  min-height: 64px;
-  /* Lines the title up with the content column on a wide screen. */
-  padding: 8px max(var(--space), calc((100% - var(--width)) / 2));
-  background: var(--trip-header-bg, var(--header-bg));
-  color: var(--trip-header-ink, var(--header-text));
-  box-shadow: var(--shadow-card);
-}
-
-.back {
-  display: grid;
-  place-items: center;
-  flex: none;
-  width: 48px;
-  height: 48px;
-  margin-left: -12px;
-  border-radius: 50%;
-  color: inherit;
-}
-
-.back:active {
-  background: rgb(255 255 255 / 0.15);
-}
-
-@media (hover: hover) {
-  .back:hover {
-    background: rgb(255 255 255 / 0.15);
-  }
-}
-
-.header > svg {
-  flex: none;
-  margin-right: 2px;
-}
-
-.title {
-  flex: 1;
-  min-width: 0;
-  overflow: hidden;
-  font-size: 1.25rem;
-  line-height: 1.3;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  margin-left: auto;
 }
 
 .content {
   display: flex;
   flex: 1;
   flex-direction: column;
-  gap: var(--space);
+  gap: var(--gap-card);
   width: 100%;
-  max-width: var(--width);
+  max-width: calc(var(--width) + 2 * var(--page-margin));
   margin: 0 auto;
-  padding: 20px var(--space) 32px;
+  padding: 14px var(--page-margin) 32px;
+}
+
+.heading {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 6px;
+}
+
+.title {
+  font-size: 1.875rem;
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  overflow-wrap: anywhere;
+}
+
+.subtitle {
+  font-size: 0.875rem;
+  color: var(--color-muted);
+}
+
+.footer {
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+  width: 100%;
+  max-width: calc(var(--width) + 2 * var(--page-margin));
+  margin: 0 auto;
+  padding: 12px var(--page-margin) calc(28px + env(safe-area-inset-bottom, 0px));
+}
+
+.footer > * {
+  box-shadow: var(--shadow-float);
 }
