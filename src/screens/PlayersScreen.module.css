@@ -25,7 +25,7 @@
   width: 100%;
   min-width: 0;
   min-height: var(--tap-size);
-  padding: 8px 14px;
+  padding: 6px 12px;
   border: 2px solid var(--color-border);
   border-radius: var(--radius);
   background: var(--color-surface);

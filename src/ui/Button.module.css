@@ -9,10 +9,10 @@
   gap: 8px;
   width: 100%;
   min-height: var(--tap-size);
-  padding: 8px 20px;
+  padding: 6px 16px;
   border: 2px solid var(--color-primary);
   border-radius: var(--radius);
-  font-size: 1.05rem;
+  font-size: 0.95rem;
   font-weight: 700;
   text-align: center;
   text-decoration: none;
@@ -57,8 +57,8 @@
 }
 
 .big {
-  min-height: 72px;
-  font-size: 1.35rem;
+  min-height: 56px;
+  font-size: 1.1rem;
 }
 
 @media (hover: hover) {

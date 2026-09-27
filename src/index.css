@@ -1,4 +1,5 @@
-/* The game is passed around on one phone, often in a plane: big targets, big text.
+/* The game is passed around on one phone, often in a plane: every target stays at least 48px, above the 44pt
+   that phones ask for, and text stays large; inputs never go below 16px, where iOS would zoom in on focus.
    Every colour is a token, so the dark theme only has to redefine this list. */
 :root {
   color-scheme: light dark;
@@ -37,7 +38,7 @@
   --shadow-raised: 0 6px 18px rgb(10 125 118 / 0.22);
 
   --radius: 18px;
-  --tap-size: 56px;
+  --tap-size: 48px;
   --space: 16px;
   --content-width: 640px;
   --wide-width: 960px;

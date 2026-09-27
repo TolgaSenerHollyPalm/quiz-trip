@@ -14,11 +14,11 @@
   width: 100%;
   min-width: 0;
   min-height: var(--tap-size);
-  padding: 8px 14px;
+  padding: 6px 12px;
   border: 2px solid var(--color-border);
   border-radius: var(--radius);
   background: var(--color-surface);
-  font-size: 1.05rem;
+  font-size: 1rem;
 }
 
 .input:focus {
@@ -26,10 +26,16 @@
   outline: none;
 }
 
+/* Two dates side by side only where both fit; on a phone the second goes under the first. */
 .pair {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
   gap: 12px;
+}
+
+/* iOS centres the date inside the field; keep it where every other value starts. */
+.input::-webkit-date-and-time-value {
+  text-align: left;
 }
 
 .problems {

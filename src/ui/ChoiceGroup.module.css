@@ -22,12 +22,13 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  min-width: 88px;
+  min-width: 80px;
   min-height: var(--tap-size);
-  padding: 8px 14px;
+  padding: 6px 12px;
   border: 2px solid var(--color-border);
   border-radius: var(--radius);
   background: var(--color-surface);
+  font-size: 0.95rem;
   font-weight: 600;
   cursor: pointer;
   touch-action: manipulation;
@@ -43,12 +44,12 @@
 .select {
   width: 100%;
   min-height: var(--tap-size);
-  padding: 8px 14px;
+  padding: 6px 12px;
   border: 2px solid var(--trip-edge, var(--color-primary));
   border-radius: var(--radius);
   background: linear-gradient(140deg, var(--trip-from, var(--color-primary-soft)), var(--color-surface) 70%);
   color: var(--color-text);
-  font-size: 1.05rem;
+  font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
   touch-action: manipulation;

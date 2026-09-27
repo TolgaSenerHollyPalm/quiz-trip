@@ -14,12 +14,12 @@
 .input {
   width: 100%;
   min-width: 0;
-  min-height: 64px;
-  padding: 8px 14px;
+  min-height: 56px;
+  padding: 6px 12px;
   border: 2px solid var(--color-border);
   border-radius: var(--radius);
   background: var(--color-surface);
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   font-weight: 700;
   text-align: center;
 }
@@ -40,7 +40,7 @@
 }
 
 .colon {
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   font-weight: 700;
 }
 
@@ -51,12 +51,12 @@
 }
 
 .choice {
-  min-height: 60px;
-  padding: 10px 16px;
+  min-height: 52px;
+  padding: 8px 14px;
   border: 2px solid var(--color-border);
   border-radius: var(--radius);
   background: var(--color-surface);
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 600;
   text-align: left;
   cursor: pointer;
