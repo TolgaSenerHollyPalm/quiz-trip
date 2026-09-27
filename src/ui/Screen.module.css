@@ -7,10 +7,6 @@
   min-height: 100dvh;
 }
 
-/* List screens can use the whole desktop window; the game screens stay a phone-sized column. */
-.wide {
-  --width: var(--wide-width);
-}
 
 /* No colour of its own: the page shows through, and the title sits under it, not in it. */
 .bar {

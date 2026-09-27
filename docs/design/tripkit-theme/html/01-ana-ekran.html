@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>TripKit — Ana ekran</title>
+</head>
+<body>
+<x-dc>
+<helmet>
+<!-- Fontlar: Bricolage Grotesque + Figtree -->
+<style>
+body{margin:0;background:#F7F5F0}
+a{color:#075F59}a:hover{color:#0A7D76}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; position: relative; overflow: hidden; display: flex; flex-direction: column; background: #F7F5F0; color: #1B1F1E; font-family: 'Figtree', system-ui, sans-serif">
+
+<header style="padding: 14px 20px 0; height: 62px; box-sizing: border-box; display: flex; align-items: center; justify-content: space-between">
+<div style="display: flex; align-items: center; gap: 10px">
+<svg width="32" height="32" viewBox="0 0 512 512" aria-hidden="true"><rect width="512" height="512" rx="112" fill="#0A7D76"></rect><path d="M212 154v-28a26 26 0 0 1 26-26h36a26 26 0 0 1 26 26v28" fill="none" stroke="#CFF8F2" stroke-width="22" stroke-linecap="round"></path><rect x="112" y="154" width="288" height="216" rx="40" fill="#FF6B57"></rect><rect x="112" y="236" width="288" height="44" fill="#0A7D76"></rect><circle cx="256" cy="258" r="14" fill="#CFF8F2"></circle></svg>
+<span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 21px; font-weight: 700; letter-spacing: -0.02em">TripKit</span>
+</div>
+<div style="display: flex; align-items: center; gap: 8px">
+<span style="display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 10px; border-radius: 999px; background: #E2F3E8; color: #1E6B3C; font-size: 13px; font-weight: 600"><span style="width: 7px; height: 7px; border-radius: 999px; background: #22A05A"></span>Çevrimiçi</span>
+<button aria-label="Ayarlar" style="width: 44px; height: 44px; border-radius: 999px; border: 1px solid #E8E2D7; background: #FFFFFF; display: flex; align-items: center; justify-content: center; padding: 0; cursor: pointer"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h9M17 7h3M4 17h3M11 17h9" fill="none" stroke="#1B1F1E" stroke-width="1.8" stroke-linecap="round"></path><circle cx="15" cy="7" r="2.2" fill="none" stroke="#1B1F1E" stroke-width="1.8"></circle><circle cx="9" cy="17" r="2.2" fill="none" stroke="#1B1F1E" stroke-width="1.8"></circle></svg></button>
+</div>
+</header>
+
+<div style="padding: 22px 20px 16px; display: flex; flex-direction: column; gap: 2px">
+<span style="font-size: 14px; font-weight: 600; color: #5E6562">3 gezi</span>
+<h1 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 32px; line-height: 1.05; letter-spacing: -0.035em; font-weight: 800">Gezilerin</h1>
+</div>
+
+<a href="02-gezi.html" style="margin: 0 20px; display: block; text-decoration: none; color: #1B1F1E; border-radius: 24px; overflow: hidden; background: #FFFFFF; border: 1px solid #E8E2D7; box-shadow: 0 14px 28px -20px rgba(27, 31, 30, 0.35)">
+<div style="background: #1A6E9E; padding: 16px 20px 20px; color: #FFFFFF; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: center; justify-content: space-between">
+<span style="padding: 4px 10px; border-radius: 999px; background: rgba(255, 255, 255, 0.18); font-size: 12px; font-weight: 700">Sıradaki gezi</span>
+<svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15.5v-1.8l-7.5-4.6V4a1.5 1.5 0 0 0-3 0v5.1L3 13.7v1.8l7.5-2.3v4.9l-2 1.5V21l3.5-1 3.5 1v-1.4l-2-1.5v-4.9z" fill="none" stroke="#FFFFFF" stroke-width="1.6" stroke-linejoin="round"></path></svg>
+</div>
+<div style="display: flex; align-items: baseline; gap: 8px">
+<span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 64px; line-height: 0.9; font-weight: 800; letter-spacing: -0.04em">17</span>
+<span style="font-size: 17px; font-weight: 600">gün kaldı</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 2px">
+<span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 23px; font-weight: 700; letter-spacing: -0.02em">Sharm el-Şeyh</span>
+<span style="font-size: 14px; color: #E3F1FA">14 – 21 Ekim · Uçak · Deniz</span>
+</div>
+</div>
+<div style="padding: 14px 20px 18px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<span style="font-size: 12px; font-weight: 600; color: #5E6562">Hazırlık</span>
+<span style="font-size: 15px; font-weight: 700">4 / 9</span>
+<span style="height: 4px; border-radius: 999px; background: #EFEAE0; overflow: hidden"><span style="display: block; width: 44%; height: 4px; background: #0A7D76"></span></span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<span style="font-size: 12px; font-weight: 600; color: #5E6562">Almadan gelme</span>
+<span style="font-size: 15px; font-weight: 700">2 / 6</span>
+<span style="height: 4px; border-radius: 999px; background: #EFEAE0; overflow: hidden"><span style="display: block; width: 33%; height: 4px; background: #FF6B57"></span></span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<span style="font-size: 12px; font-weight: 600; color: #5E6562">Tatmadan gelme</span>
+<span style="font-size: 15px; font-weight: 700">1 / 7</span>
+<span style="height: 4px; border-radius: 999px; background: #EFEAE0; overflow: hidden"><span style="display: block; width: 14%; height: 4px; background: #F0B23F"></span></span>
+</div>
+</div>
+</a>
+
+<div style="padding: 26px 20px 10px">
+<h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 19px; font-weight: 700; letter-spacing: -0.02em">Diğer geziler</h2>
+</div>
+<div style="margin: 0 20px; background: #FFFFFF; border: 1px solid #E8E2D7; border-radius: 20px; overflow: hidden">
+<a href="#" style="display: flex; align-items: center; gap: 14px; padding: 14px 16px; text-decoration: none; color: #1B1F1E">
+<span style="width: 44px; height: 44px; border-radius: 14px; background: #FBF0D6; display: flex; align-items: center; justify-content: center; flex-shrink: 0"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 16.5v-3.2L5.2 8h13.6l2.2 5.3v3.2" fill="none" stroke="#8A5A0B" stroke-width="1.7" stroke-linejoin="round"></path><path d="M3 13.3h18M3 16.5h18" fill="none" stroke="#8A5A0B" stroke-width="1.7"></path><circle cx="7.5" cy="18" r="1.6" fill="none" stroke="#8A5A0B" stroke-width="1.7"></circle><circle cx="16.5" cy="18" r="1.6" fill="none" stroke="#8A5A0B" stroke-width="1.7"></circle></svg></span>
+<span style="flex-grow: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0">
+<span style="font-size: 16px; font-weight: 600">Land of Legends</span>
+<span style="font-size: 13px; color: #5E6562">23 – 26 Kasım · Araba · Eğlence</span>
+</span>
+<span style="padding: 4px 10px; border-radius: 999px; background: #FBF0D6; color: #8A5A0B; font-size: 12px; font-weight: 700; white-space: nowrap">57 gün</span>
+</a>
+<div style="height: 1px; background: #F0EBE2; margin-left: 74px"></div>
+<a href="#" style="display: flex; align-items: center; gap: 14px; padding: 14px 16px; text-decoration: none; color: #1B1F1E">
+<span style="width: 44px; height: 44px; border-radius: 14px; background: #EFEAE0; display: flex; align-items: center; justify-content: center; flex-shrink: 0"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="15" rx="3" fill="none" stroke="#5E6562" stroke-width="1.7"></rect><path d="M5 11h14M7.5 18v2.5M16.5 18v2.5" fill="none" stroke="#5E6562" stroke-width="1.7" stroke-linecap="round"></path><circle cx="8.5" cy="14.5" r="1" fill="#5E6562"></circle><circle cx="15.5" cy="14.5" r="1" fill="#5E6562"></circle></svg></span>
+<span style="flex-grow: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0">
+<span style="font-size: 16px; font-weight: 600">Kapadokya</span>
+<span style="font-size: 13px; color: #5E6562">12 – 15 Haziran · Otobüs · Şehir</span>
+</span>
+<span style="padding: 4px 10px; border-radius: 999px; background: #EFEAE0; color: #5E6562; font-size: 12px; font-weight: 700; white-space: nowrap">Bitti</span>
+</a>
+</div>
+
+<a href="#" style="position: absolute; left: 20px; right: 20px; bottom: 28px; height: 54px; border-radius: 999px; background: #0A7D76; color: #FFFFFF; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 16px; font-weight: 600; box-shadow: 0 12px 24px -12px rgba(7, 95, 89, 0.6)"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"></path></svg>Yeni gezi</a>
+
+</div>
+</x-dc>
+</body>
+</html>

@@ -8,7 +8,7 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-  margin-top: 16px;
+  margin-top: calc(var(--gap-section) - var(--gap-card));
 }
 
 .sectionHead {

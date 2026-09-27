@@ -119,7 +119,7 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-top: 16px;
+  margin-top: calc(var(--gap-section) - var(--gap-card));
 }
 
 /* The first thing a new player sees: what this app is for, in three lines, on a plain card. */

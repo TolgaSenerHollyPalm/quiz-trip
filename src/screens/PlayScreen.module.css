@@ -189,7 +189,7 @@ button.option:active {
 
 .right .letter {
   background: var(--color-success);
-  color: #ffffff;
+  color: var(--color-on-success);
 }
 
 .wrong {
@@ -198,8 +198,9 @@ button.option:active {
   color: var(--color-coral-text);
 }
 
+/* The letter is small text, so it sits on the deeper coral that white can be read on. */
 .wrong .letter {
-  background: var(--color-coral-strong);
+  background: var(--color-coral-text);
   color: var(--color-on-coral-strong);
 }
 

@@ -1,5 +1,5 @@
 .later {
-  margin-top: 16px;
+  margin-top: calc(var(--gap-section) - var(--gap-card));
 }
 
 .note {

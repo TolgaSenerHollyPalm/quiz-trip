@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>TripKit — Hazırlık listesi</title>
+</head>
+<body>
+<x-dc>
+<helmet>
+<!-- Fontlar: Bricolage Grotesque + Figtree -->
+<style>
+body{margin:0;background:#F7F5F0}
+a{color:#075F59}a:hover{color:#0A7D76}
+input::placeholder{color:#7A807D}
+</style>
+</helmet>
+<div style="width: 390px; height: 1060px; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; background: #F7F5F0; color: #1B1F1E; font-family: 'Figtree', system-ui, sans-serif">
+
+<header style="padding: 12px 20px 0; height: 60px; box-sizing: border-box; display: flex; align-items: center; justify-content: space-between">
+<a href="02-gezi.html" aria-label="Geri" style="width: 44px; height: 44px; border-radius: 999px; border: 1px solid #E8E2D7; background: #FFFFFF; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6" fill="none" stroke="#1B1F1E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
+<button style="height: 44px; padding: 0 14px; border: 0; background: transparent; color: #075F59; font: inherit; font-size: 15px; font-weight: 600; cursor: pointer">Düzenle</button>
+</header>
+
+<div style="padding: 14px 20px 0; display: flex; flex-direction: column; gap: 4px">
+<h1 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 30px; line-height: 1.05; letter-spacing: -0.035em; font-weight: 800">Hazırlık listesi</h1>
+<span style="font-size: 14px; color: #5E6562">Uçak ve deniz tatiline göre önerildi</span>
+</div>
+
+<section style="margin: 16px 20px 0; padding: 16px; background: #FFFFFF; border: 1px solid #E8E2D7; border-radius: 20px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: baseline; justify-content: space-between">
+<span style="display: flex; align-items: baseline; gap: 6px"><span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 34px; line-height: 1; font-weight: 800; letter-spacing: -0.03em">4</span><span style="font-size: 15px; color: #5E6562">/ 9 tamam</span></span>
+<span style="font-size: 14px; font-weight: 700; color: #075F59">%44</span>
+</div>
+<span style="height: 8px; border-radius: 999px; background: #EFEAE0; overflow: hidden"><span style="display: block; width: 44%; height: 8px; border-radius: 999px; background: #0A7D76"></span></span>
+</section>
+
+<div role="tablist" aria-label="Liste türü" style="margin: 16px 20px 0; padding: 4px; border-radius: 14px; background: #EDE8DE; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px">
+<button role="tab" aria-selected="true" style="height: 40px; border: 0; border-radius: 11px; background: #FFFFFF; box-shadow: 0 1px 3px rgba(27, 31, 30, 0.12); color: #1B1F1E; font: inherit; font-size: 15px; font-weight: 600; cursor: pointer">Alınacaklar · 7</button>
+<button role="tab" aria-selected="false" style="height: 40px; border: 0; border-radius: 11px; background: transparent; color: #5E6562; font: inherit; font-size: 15px; font-weight: 600; cursor: pointer">Yapılacaklar · 2</button>
+</div>
+
+<ul style="margin: 12px 20px 0; padding: 0; list-style: none; background: #FFFFFF; border: 1px solid #E8E2D7; border-radius: 20px; overflow: hidden">
+<li style="display: flex; align-items: center; gap: 12px; padding: 8px 16px 8px 8px; border-bottom: 1px solid #F0EBE2">
+<button aria-label="Powerbank: işaretle" style="width: 44px; height: 44px; border: 0; background: transparent; padding: 0; display: flex; align-items: center; justify-content: center; cursor: pointer"><span style="width: 24px; height: 24px; box-sizing: border-box; border-radius: 999px; border: 2px solid #948C80"></span></button>
+<span style="flex-grow: 1; display: flex; flex-direction: column"><span style="font-size: 16px">Powerbank</span><span style="font-size: 12px; color: #5E6562">Genel</span></span>
+</li>
+<li style="display: flex; align-items: center; gap: 12px; padding: 8px 16px 8px 8px; border-bottom: 1px solid #F0EBE2">
+<button aria-label="İlaçlar ve küçük ilk yardım seti: işaretle" style="width: 44px; height: 44px; border: 0; background: transparent; padding: 0; display: flex; align-items: center; justify-content: center; cursor: pointer"><span style="width: 24px; height: 24px; box-sizing: border-box; border-radius: 999px; border: 2px solid #948C80"></span></button>
+<span style="flex-grow: 1; display: flex; flex-direction: column"><span style="font-size: 16px">İlaçlar ve küçük ilk yardım seti</span><span style="font-size: 12px; color: #5E6562">Genel</span></span>
+</li>
+<li style="display: flex; align-items: center; gap: 12px; padding: 8px 16px 8px 8px; border-bottom: 1px solid #F0EBE2">
+<button aria-label="Sıvıları ayır: işaretle" style="width: 44px; height: 44px; border: 0; background: transparent; padding: 0; display: flex; align-items: center; justify-content: center; cursor: pointer"><span style="width: 24px; height: 24px; box-sizing: border-box; border-radius: 999px; border: 2px solid #948C80"></span></button>
+<span style="flex-grow: 1; display: flex; flex-direction: column"><span style="font-size: 16px">Sıvıları 100 ml’lik kaplara ayır</span><span style="font-size: 12px; color: #5E6562">Uçak</span></span>
+</li>
+<li style="display: flex; align-items: center; gap: 12px; padding: 8px 16px 8px 8px; border-bottom: 1px solid #F0EBE2">
+<button aria-label="Güneş kremi: işaretle" style="width: 44px; height: 44px; border: 0; background: transparent; padding: 0; display: flex; align-items: center; justify-content: center; cursor: pointer"><span style="width: 24px; height: 24px; box-sizing: border-box; border-radius: 999px; border: 2px solid #948C80"></span></button>
+<span style="flex-grow: 1; display: flex; flex-direction: column"><span style="font-size: 16px">Yüksek faktörlü güneş kremi</span><span style="font-size: 12px; color: #5E6562">Deniz</span></span>
+</li>
+<li style="display: flex; align-items: center; gap: 8px; padding: 8px 8px 8px 18px">
+<label for="add-pack" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Yeni madde</label>
+<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" fill="none" stroke="#0A7D76" stroke-width="2" stroke-linecap="round"></path></svg>
+<input id="add-pack" type="text" placeholder="Madde ekle, ör. fotoğraf makinesi" style="flex-grow: 1; min-width: 0; height: 44px; border: 0; background: transparent; font: inherit; font-size: 16px; color: #1B1F1E; outline: none">
+</li>
+</ul>
+
+<button style="margin: 20px 20px 0; align-self: flex-start; height: 44px; padding: 0 4px; border: 0; background: transparent; display: flex; align-items: center; gap: 8px; color: #4A504D; font: inherit; font-size: 14px; font-weight: 700; cursor: pointer"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="#4A504D" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>Tamamlananlar · 3</button>
+<ul style="margin: 4px 20px 0; padding: 0; list-style: none; background: #FFFFFF; border: 1px solid #E8E2D7; border-radius: 20px; overflow: hidden">
+<li style="display: flex; align-items: center; gap: 12px; padding: 4px 16px 4px 8px; border-bottom: 1px solid #F0EBE2">
+<button aria-label="Kimlik / pasaport: işareti kaldır" style="width: 44px; height: 44px; border: 0; background: transparent; padding: 0; display: flex; align-items: center; justify-content: center; cursor: pointer"><span style="width: 24px; height: 24px; border-radius: 999px; background: #0A7D76; display: flex; align-items: center; justify-content: center"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></button>
+<span style="font-size: 16px; color: #5E6562; text-decoration: line-through; text-decoration-color: #B7B0A3">Kimlik / pasaport</span>
+</li>
+<li style="display: flex; align-items: center; gap: 12px; padding: 4px 16px 4px 8px; border-bottom: 1px solid #F0EBE2">
+<button aria-label="Şarj aleti: işareti kaldır" style="width: 44px; height: 44px; border: 0; background: transparent; padding: 0; display: flex; align-items: center; justify-content: center; cursor: pointer"><span style="width: 24px; height: 24px; border-radius: 999px; background: #0A7D76; display: flex; align-items: center; justify-content: center"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></button>
+<span style="font-size: 16px; color: #5E6562; text-decoration: line-through; text-decoration-color: #B7B0A3">Telefon şarj aleti ve kablosu</span>
+</li>
+<li style="display: flex; align-items: center; gap: 12px; padding: 4px 16px 4px 8px">
+<button aria-label="Mayo / bikini: işareti kaldır" style="width: 44px; height: 44px; border: 0; background: transparent; padding: 0; display: flex; align-items: center; justify-content: center; cursor: pointer"><span style="width: 24px; height: 24px; border-radius: 999px; background: #0A7D76; display: flex; align-items: center; justify-content: center"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></button>
+<span style="font-size: 16px; color: #5E6562; text-decoration: line-through; text-decoration-color: #B7B0A3">Mayo / bikini</span>
+</li>
+</ul>
+
+<div style="margin: 24px 20px 0; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center">
+<button style="height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid #E8E2D7; background: #FFFFFF; display: flex; align-items: center; gap: 8px; color: #075F59; font: inherit; font-size: 15px; font-weight: 600; cursor: pointer"><svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.3 5.7M20 4.5V11h-6.5" fill="none" stroke="#075F59" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>Önerileri yenile</button>
+<p style="margin: 0; max-width: 300px; font-size: 13px; line-height: 1.5; color: #5E6562">Öneriler ulaşım türüne ve tatil tarzına göre gelir. İşaretlediğin ve kendi yazdığın maddeler yerinde kalır.</p>
+</div>
+
+</div>
+</x-dc>
+</body>
+</html>

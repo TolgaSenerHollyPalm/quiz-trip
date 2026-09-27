@@ -1,7 +1,8 @@
 # TripKit
 
 A trip companion that works offline: a countdown to departure, a packing and to-do list that follows the
-vehicle and the kind of holiday, and a quiz and prediction game for the journey itself. Installed as a PWA
+vehicle and the kind of holiday, two lists of your own for what to buy and what to taste before coming home,
+and a quiz and prediction game for the journey itself. Installed as a PWA
 from GitHub Pages, on Android or iOS, and usable in a desktop browser; no backend.
 
 The repository is still called `quiz-trip`; the app is served from its own subdomain, `https://trip.kitshelf.app`.
@@ -19,6 +20,22 @@ npm run preview    # serve dist/ with the service worker at http://localhost:417
 ```
 
 The service worker only runs in the production build, so test offline behaviour with `npm run build && npm run preview`.
+
+The development server also shows every building block of the design on one page, at `http://localhost:5173/#/tasarim`;
+production builds leave that page out.
+
+## Design
+
+The design is specified in `docs/design/tripkit-theme/THEME.md`, with screenshots and static HTML of the screens next to
+it. In the code:
+
+- Colours, sizes and radii are tokens at the top of `src/index.css`, with the dark theme redefining the same list.
+- Bricolage Grotesque (headings, large figures) and Figtree (everything else) come from `@fontsource-variable`, latin
+  and latin-ext only, through `src/fonts.css`; `vite.config.ts` adds `woff2` to the service worker's precache so the
+  fonts also show offline.
+- A trip's colour comes from its holiday type in `src/ui/tripTheme.module.css` and appears only on the countdown card,
+  the featured trip on the home screen and the holiday type chip.
+- Text keeps a contrast of at least 4.5:1 and icons and field edges 3:1, in both themes.
 
 ## Destinations
 

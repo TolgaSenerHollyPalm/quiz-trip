@@ -19,7 +19,7 @@
   --color-field-border: #948c80; /* a form field's edge, 3:1 against white and paper */
   --color-chevron: #8c918e;
   --color-strike: #b7b0a3;
-  --color-placeholder: #7a807d;
+  --color-placeholder: #707673; /* 4.6:1 on white */
 
   /* Teal: the app itself and the packing list. */
   --color-primary: #0a7d76;
@@ -43,6 +43,7 @@
   --color-on-amber-strong: #ffffff;
 
   --color-success: #1e7a45;
+  --color-on-success: #ffffff;
   --color-success-bg: #e3f4e8;
   --color-success-text: #14532d;
   --color-online-bg: #e2f3e8;
@@ -53,9 +54,6 @@
   --color-danger-bg: #fdeaea;
   --color-on-danger: #ffffff;
   --color-warning-bg: var(--color-amber-soft);
-  --color-warning-text: var(--color-amber-text);
-  --color-info-bg: #e4eeff;
-  --color-info-text: #27467e;
 
   /* The quiz's dark tile on the trip screen. */
   --color-ink-tile: #1b1f1e;
@@ -78,9 +76,8 @@
   --space: 16px; /* inside a card */
   --page-margin: 20px;
   --gap-card: 12px;
-  --gap-section: 28px;
+  --gap-section: 28px; /* between parts of a screen */
   --content-width: 640px;
-  --wide-width: 960px;
 
   font-family: var(--font-body);
   font-size: 16px;
@@ -94,38 +91,59 @@
 /* Follows the phone's own setting; there is no theme switch in the app. */
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-bg: #061a19;
-    --color-surface: #0f2b29;
-    --color-text: #e3f4f1;
-    --color-muted: #9bb8b4;
-    --color-border: #23504c;
+    --color-bg: #111615;
+    --color-surface: #1a201f;
+    --color-text: #ece8e0;
+    --color-muted: #a6aeaa;
+    --color-border: #2a3230;
+    --color-divider: #232a28;
+    --color-chip: #262e2c;
+    --color-chip-text: #c9cecb;
+    --color-sunken: #262e2c;
+    --color-check-border: #76807c;
+    --color-field-border: #76807c;
+    --color-chevron: #8a918e;
+    --color-strike: #6b726f;
+    --color-placeholder: #8f9693;
 
     --color-primary: #2dd4bf;
-    --color-primary-bright: #5eead4;
-    --color-primary-dark: #14b8a6;
+    --color-primary-dark: #5eead4;
     --color-primary-soft: #10403c;
     --color-on-primary: #05221f;
 
-    --color-accent: #ff8a75;
-    --color-accent-soft: #3b1e18;
-    --color-on-accent: #2b0a04;
+    --color-coral: #ff8a75;
+    --color-coral-strong: #ff8a75;
+    --color-coral-soft: #3b1e18;
+    --color-coral-text: #ffb4a6;
+    --color-on-coral-strong: #3a0e06;
+
+    --color-amber: #f0b23f;
+    --color-amber-strong: #f0b23f;
+    --color-amber-soft: #3a2a0e;
+    --color-amber-text: #f5c96a;
+    --color-on-amber: #2a1c00;
+    --color-on-amber-strong: #2a1c00;
 
     --color-success: #4ade80;
+    --color-on-success: #052e16;
     --color-success-bg: #123420;
+    --color-success-text: #86efac;
+    --color-online-bg: #123420;
+    --color-online-text: #86efac;
+    --color-online-dot: #4ade80;
+
     --color-danger: #fca5a5;
     --color-danger-bg: #3c1717;
     --color-on-danger: #3c0d0d;
-    --color-warning-bg: #3a2616;
-    --color-warning-text: #fbbf24;
-    --color-info-bg: #16304d;
-    --color-info-text: #c4d8ff;
 
-    --header-bg: #0f2b29;
-    --header-text: #e3f4f1;
-    --toast-bg: #17403c;
-    --toast-text: #e3f4f1;
-    --shadow-card: 0 1px 2px rgb(0 0 0 / 0.35);
-    --shadow-raised: 0 6px 18px rgb(0 0 0 / 0.45);
+    /* On a dark page the quiz tile goes deep teal instead of ink, so it still stands out. */
+    --color-ink-tile: #0f2b29;
+    --color-ink-tile-raised: #16403c;
+    --color-on-ink-tile: #ece8e0;
+
+    --toast-bg: #262e2c;
+    --toast-text: #ece8e0;
+    --shadow-float: 0 10px 24px rgb(0 0 0 / 0.45);
   }
 }
 

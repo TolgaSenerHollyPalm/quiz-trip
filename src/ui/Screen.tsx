@@ -14,13 +14,12 @@ interface ScreenProps {
   back?: Route
   aside?: ReactNode // right of the top bar: at most two actions
   footer?: ReactNode // the screen's one main action, which stays at the bottom while a long screen scrolls
-  wide?: boolean // a list screen, which may spread out on a desktop window
   theme?: string // a trip's colour, from tripTheme()
   children: ReactNode
 }
 
-export default function Screen({ title, eyebrow, subtitle, above, mark, icon, back, aside, footer, wide, theme, children }: ScreenProps) {
-  const classes = [styles.screen, wide && styles.wide, theme].filter(Boolean).join(' ')
+export default function Screen({ title, eyebrow, subtitle, above, mark, icon, back, aside, footer, theme, children }: ScreenProps) {
+  const classes = [styles.screen, theme].filter(Boolean).join(' ')
   return (
     <div className={classes}>
       <header className={styles.bar}>
