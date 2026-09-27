@@ -5,8 +5,8 @@
   "country": "EG",
   "city": "Sharm el-Sheikh",
   "cityId": "sharm-el-sheikh",
-  "version": 3,
-  "updatedAt": "2026-09-23",
+  "version": 4,
+  "updatedAt": "2026-09-27",
   "questions": [
     {
       "id": "eg-hist-001",
@@ -511,20 +511,6 @@
       ],
       "answerIndex": 3,
       "explanation": "Ammit timsah, aslan ve su aygırı karışımı bir yaratık olarak tasvir edilir."
-    },
-    {
-      "id": "eg-myth-011",
-      "category": "mythology",
-      "difficulty": "easy",
-      "text": "Ankh sembolü neyi simgeler?",
-      "options": [
-        "Savaşı",
-        "Yaşamı",
-        "Ölümü",
-        "Nil'in taşkınını"
-      ],
-      "answerIndex": 1,
-      "explanation": "Halkalı haç biçimindeki ankh yaşamın simgesidir; tanrılar onu ellerinde taşır."
     },
     {
       "id": "eg-myth-012",
@@ -1143,20 +1129,6 @@
       "explanation": "'Gali' pahalı demektir; pazarlığın klasik açılış cümlesidir."
     },
     {
-      "id": "eg-cult-001",
-      "category": "culture",
-      "difficulty": "medium",
-      "text": "Hiyerogliflerde kral adlarını çevreleyen oval çerçeveye ne denir?",
-      "options": [
-        "Kartuş",
-        "Stel",
-        "Sistrum",
-        "Pilon"
-      ],
-      "answerIndex": 0,
-      "explanation": "Kartuş, içindeki adın bir krala ait olduğunu gösterir; Champollion'un çözümünde de ipucu olmuştur."
-    },
-    {
       "id": "eg-cult-002",
       "category": "culture",
       "difficulty": "easy",
@@ -1169,20 +1141,6 @@
       ],
       "answerIndex": 3,
       "explanation": "Papirüsün sapı şeritler halinde kesilip preslenerek yazı yüzeyi yapılırdı."
-    },
-    {
-      "id": "eg-cult-003",
-      "category": "culture",
-      "difficulty": "hard",
-      "text": "Firavunların alnındaki şahlanmış kobra simgesinin adı nedir?",
-      "options": [
-        "Uraeus",
-        "Ankh",
-        "Ced",
-        "Nemes"
-      ],
-      "answerIndex": 0,
-      "explanation": "Uraeus krallığın ve tanrısal korumanın simgesidir; Tutankhamon maskesinde akbabayla birlikte görülür."
     },
     {
       "id": "eg-cult-004",
@@ -1253,20 +1211,6 @@
       ],
       "answerIndex": 1,
       "explanation": "Beyin kancalı bir aletle burun yoluyla çıkarılır ve saklanmazdı."
-    },
-    {
-      "id": "eg-cult-009",
-      "category": "culture",
-      "difficulty": "hard",
-      "text": "Mısır bayrağının ortasındaki altın renkli simge nedir?",
-      "options": [
-        "Hilal ve yıldız",
-        "Sfenks",
-        "Kureyş Şahini",
-        "Selahaddin Kartalı"
-      ],
-      "answerIndex": 3,
-      "explanation": "Kırmızı, beyaz ve siyah şeritli bayrağın ortasında 1984'ten beri Selahaddin Kartalı yer alır."
     },
     {
       "id": "eg-cult-010",
