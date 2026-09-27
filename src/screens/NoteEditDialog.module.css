@@ -1,0 +1,58 @@
+/* Slides up from the bottom of a phone, where the thumb already is. */
+.sheet {
+  width: min(100%, 480px);
+  max-width: none;
+  margin: auto auto 0;
+  padding: 20px var(--page-margin) calc(20px + env(safe-area-inset-bottom, 0px));
+  border: 0;
+  border-radius: 24px 24px 0 0;
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.sheet::backdrop {
+  background: rgb(27 31 30 / 0.45);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.title {
+  font-size: 1.1875rem;
+  font-weight: 700;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.input {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 14px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-field);
+  background: var(--color-surface);
+  font-size: 1rem;
+}
+
+.input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-soft);
+  outline: none;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+}

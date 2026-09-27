@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import type { Pack } from '../packs/types.ts'
 import { DIFFICULTY_POINTS } from './scoring.ts'
 import { makeQuestions, seededRng } from './test-helpers.ts'
-import { answerTurn, cancelRound, newTrip, playersWithData, startRound, updatePlayers } from './trip.ts'
+import { answerTurn, cancelRound, newTrip, playersWithData, resetGames, startRound, updatePlayers } from './trip.ts'
 import type { TripState } from './types.ts'
 
 const pack: Pack = {
@@ -136,5 +136,32 @@ describe('updatePlayers', () => {
     expect(updatePlayers(inRound, [{ id: 'a', nickname: 'Ali' }]).currentRound).toBeUndefined()
     const withNewPlayer = updatePlayers(inRound, [...inRound.players, { id: 'c', nickname: 'Deniz' }])
     expect(withNewPlayer.currentRound).toEqual(inRound.currentRound)
+  })
+})
+
+describe('resetGames', () => {
+  it('clears what the games collected and keeps the trip and every list', () => {
+    const trip: TripState = {
+      ...newTrip('test', 'Test gezisi'),
+      startDate: '2026-10-14',
+      checklist: [{ id: 'c1', text: 'Pasaport', group: 'pack', done: true }],
+      souvenirs: [{ id: 's1', text: 'Baharat', done: false }],
+      tastes: [{ id: 't1', text: 'Koşari', note: 'Sokak yemeği', done: true }],
+      players: [{ id: 'a', nickname: 'Ayşe' }],
+      params: { minFloor: 1 },
+      askedQuestionIds: ['q1'],
+      rounds: [{ id: 'r1', playedAt: '2026-10-15T10:00:00Z', scores: { a: 3 } }],
+    }
+    const reset = resetGames(trip)
+    expect(reset).toMatchObject({ players: [], params: {}, askedQuestionIds: [], rounds: [], predictions: [] })
+    expect(reset.currentRound).toBeUndefined()
+    expect(reset.checklist).toBe(trip.checklist)
+    expect(reset.souvenirs).toBe(trip.souvenirs)
+    expect(reset.tastes).toBe(trip.tastes)
+    expect(reset.startDate).toBe('2026-10-14')
+  })
+
+  it('starts a new trip with both lists empty', () => {
+    expect(newTrip('test', 'Test gezisi')).toMatchObject({ souvenirs: [], tastes: [] })
   })
 })

@@ -4,6 +4,7 @@ import AppSettingsScreen from '../screens/AppSettingsScreen.tsx'
 import ChecklistScreen from '../screens/ChecklistScreen.tsx'
 import GuessScreen from '../screens/GuessScreen.tsx'
 import HomeScreen from '../screens/HomeScreen.tsx'
+import NoteListScreen from '../screens/NoteListScreen.tsx'
 import PlayersScreen from '../screens/PlayersScreen.tsx'
 import PlayScreen from '../screens/PlayScreen.tsx'
 import PredictionResultScreen from '../screens/PredictionResultScreen.tsx'
@@ -70,6 +71,9 @@ function CurrentScreen({ route }: { route: Route }) {
       return <TripScreen tripId={route.tripId} />
     case 'checklist':
       return <ChecklistScreen tripId={route.tripId} />
+    case 'souvenirs':
+    case 'tastes':
+      return <NoteListScreen tripId={route.tripId} list={route.screen} />
     case 'trip-packs':
       return <TripPacksScreen tripId={route.tripId} />
     case 'players':

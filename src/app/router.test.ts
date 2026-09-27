@@ -11,6 +11,8 @@ describe('routes', () => {
     { screen: 'trip', tripId: TRIP },
     { screen: 'trip-edit', tripId: TRIP },
     { screen: 'checklist', tripId: TRIP },
+    { screen: 'souvenirs', tripId: TRIP },
+    { screen: 'tastes', tripId: TRIP },
     { screen: 'trip-packs', tripId: TRIP },
     { screen: 'players', tripId: TRIP },
     { screen: 'players', tripId: TRIP, next: 'quiz' },
@@ -35,6 +37,11 @@ describe('routes', () => {
     expect(parseRoute('#/nowhere')).toEqual({ screen: 'home' })
     expect(parseRoute('#/trips/olmayan')).toEqual({ screen: 'home' })
     expect(parseRoute('#/trip/%E0%A4%A')).toEqual({ screen: 'home' })
+  })
+
+  it('reads the two lists of things to buy and taste from their addresses', () => {
+    expect(parseRoute('#/trip/x/souvenirs')).toEqual({ screen: 'souvenirs', tripId: 'x' })
+    expect(parseRoute('#/trip/x/tastes')).toEqual({ screen: 'tastes', tripId: 'x' })
   })
 
   it('falls back to the trip screen for an unknown page of a trip', () => {

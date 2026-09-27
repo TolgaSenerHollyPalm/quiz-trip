@@ -57,17 +57,26 @@ interface ItemRowProps {
   done?: boolean
   strong?: boolean // the lists the user writes put the item in bold
   trailing?: ReactNode // e.g. a delete button while editing
+  onOpen?: () => void // tapping the text opens the item, e.g. to rename it
+  openLabel?: string // what that tap does, for screen readers
 }
 
-export function ItemRow({ control, text, note, done, strong, trailing }: ItemRowProps) {
+export function ItemRow({ control, text, note, done, strong, trailing, onOpen, openLabel }: ItemRowProps) {
   const textClass = [strong && styles.strong, done && styles.done].filter(Boolean).join(' ')
   return (
     <li className={styles.item}>
       {control}
-      <span className={styles.itemText}>
-        <span className={textClass || undefined}>{text}</span>
-        {note && <span className={styles.note}>{note}</span>}
-      </span>
+      {onOpen ? (
+        <button type="button" className={`${styles.itemText} ${styles.open}`} aria-label={openLabel} onClick={onOpen}>
+          <span className={textClass || undefined}>{text}</span>
+          {note && <span className={styles.note}>{note}</span>}
+        </button>
+      ) : (
+        <span className={styles.itemText}>
+          <span className={textClass || undefined}>{text}</span>
+          {note && <span className={styles.note}>{note}</span>}
+        </span>
+      )}
       {trailing}
     </li>
   )

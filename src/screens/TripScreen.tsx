@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useAppData, useTrip } from '../app/appData.ts'
 import { navigate, type Route } from '../app/router.ts'
-import { cancelRound } from '../game/trip.ts'
+import { cancelRound, resetGames } from '../game/trip.ts'
 import { Button, LinkButton } from '../ui/Button.tsx'
 import ConfirmDialog from '../ui/ConfirmDialog.tsx'
 import CountdownCard from '../ui/CountdownCard.tsx'
@@ -10,6 +10,7 @@ import { orphanPacks } from '../trips/packMatch.ts'
 import Screen from '../ui/Screen.tsx'
 import { tripTheme } from '../ui/tripTheme.ts'
 import text from '../ui/text.module.css'
+import TripLists from './TripLists.tsx'
 import styles from './TripScreen.module.css'
 
 export default function TripScreen({ tripId }: { tripId: string }) {
@@ -30,7 +31,6 @@ export default function TripScreen({ tripId }: { tripId: string }) {
     trip.players.length > 0 || trip.rounds.length > 0 || trip.predictions.length > 0 || Object.keys(trip.params).length > 0
   const quiz: Route =
     trip.players.length === 0 ? { screen: 'players', tripId, next: 'quiz' } : { screen: 'quiz', tripId }
-  const packed = trip.checklist.filter((item) => item.done).length
   // Packs this trip alone plays with; they are deleted with it rather than left behind.
   const orphans = orphanPacks(trip, trips)
 
@@ -38,9 +38,7 @@ export default function TripScreen({ tripId }: { tripId: string }) {
     <Screen title={trip.name} back={{ screen: 'home' }} theme={tripTheme(trip.kind)}>
       <CountdownCard trip={trip} />
 
-      <LinkButton to={{ screen: 'checklist', tripId }} variant="primary" big>
-        {trip.checklist.length > 0 ? `Hazırlık listesi (${packed}/${trip.checklist.length})` : 'Hazırlık listesi'}
-      </LinkButton>
+      <TripLists trip={trip} />
 
       {collection.packs.length > 0 ? (
         <>
@@ -118,21 +116,12 @@ export default function TripScreen({ tripId }: { tripId: string }) {
         title="Oyun verileri sıfırlansın mı?"
         confirmLabel="Sıfırla"
         onConfirm={() => {
-          saveTrip({
-            ...trip,
-            players: [],
-            params: {},
-            askedQuestionIds: [],
-            rounds: [],
-            predictions: [],
-            quizSettings: undefined,
-            currentRound: undefined,
-          })
+          saveTrip(resetGames(trip))
           setConfirmingReset(false)
         }}
         onCancel={() => setConfirmingReset(false)}
       >
-        Oyuncular, puanlar, tahminler ve gezi ayarları silinecek. Gezinin adı, tarihleri ve hazırlık listesi kalır.
+        Oyuncular, puanlar, tahminler ve gezi ayarları silinecek. Gezinin adı, tarihleri ve listeleri kalır.
       </ConfirmDialog>
 
       <ConfirmDialog

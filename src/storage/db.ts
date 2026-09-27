@@ -2,7 +2,14 @@ import { openDB, type DBSchema, type IDBPDatabase } from 'idb'
 import type { TripState } from '../game/types.ts'
 import type { PackStore } from '../packs/sync.ts'
 import type { Pack } from '../packs/types.ts'
-import { migrateToMultiPack, migrateTrip, type LegacyTrip, type SinglePackTrip } from './migrations.ts'
+import {
+  addNoteLists,
+  migrateToMultiPack,
+  migrateTrip,
+  type LegacyTrip,
+  type SinglePackTrip,
+  type TripBeforeNotes,
+} from './migrations.ts'
 
 interface QuizTripDB extends DBSchema {
   packs: { key: string; value: Pack }
@@ -18,7 +25,7 @@ let waitingForAnotherTab = false
 export const blockedByAnotherTab = () => waitingForAnotherTab
 
 function database() {
-  connection ??= openDB<QuizTripDB>(DATABASE_NAME, 3, {
+  connection ??= openDB<QuizTripDB>(DATABASE_NAME, 4, {
     async upgrade(db, oldVersion, _newVersion, tx) {
       // Packs and trips live in separate stores, so updating a pack can never touch a trip.
       if (oldVersion < 1) db.createObjectStore('packs', { keyPath: 'id' })
@@ -30,7 +37,7 @@ function database() {
         const trips = db.createObjectStore('trips', { keyPath: 'id' })
         for (const trip of legacy) {
           const pack = packs.find((candidate) => candidate.id === trip.packId)
-          trips.put(migrateToMultiPack(migrateTrip(trip, pack?.title), pack))
+          trips.put(addNoteLists(migrateToMultiPack(migrateTrip(trip, pack?.title), pack)))
         }
       }
       if (oldVersion === 2) {
@@ -39,8 +46,13 @@ function database() {
         const packs = await tx.objectStore('packs').getAll()
         const stored = (await store.getAll()) as unknown as SinglePackTrip[]
         for (const trip of stored) {
-          store.put(migrateToMultiPack(trip, packs.find((pack) => pack.id === trip.packId)))
+          store.put(addNoteLists(migrateToMultiPack(trip, packs.find((pack) => pack.id === trip.packId))))
         }
+      }
+      if (oldVersion === 3) {
+        // Trips gained two lists of their own: things to buy and things to taste before coming home.
+        const store = tx.objectStore('trips')
+        for (const trip of (await store.getAll()) as unknown as TripBeforeNotes[]) store.put(addNoteLists(trip))
       }
     },
     // An upgrade cannot run while an older copy of the app still holds the database open.

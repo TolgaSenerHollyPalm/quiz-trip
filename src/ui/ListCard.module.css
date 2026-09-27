@@ -111,6 +111,19 @@
   overflow-wrap: anywhere;
 }
 
+/* The item's text as a button: it looks like text, and the whole height is the target. */
+.open {
+  align-self: stretch;
+  justify-content: center;
+  min-height: var(--tap-size);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
 .strong {
   font-weight: 600;
 }

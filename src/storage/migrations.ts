@@ -19,8 +19,11 @@ export function migrateTrip(legacy: LegacyTrip, packTitle?: string): SinglePackT
   }
 }
 
+/** A trip as version 3 stored it, before the lists of things to buy and taste. */
+export type TripBeforeNotes = Omit<TripState, 'souvenirs' | 'tastes'>
+
 /** A trip as version 2 stored it: at most one pack, and ids that were unique only inside that pack. */
-export interface SinglePackTrip extends Omit<TripState, 'packIds' | 'country' | 'cityId' | 'kind'> {
+export interface SinglePackTrip extends Omit<TripBeforeNotes, 'packIds' | 'country' | 'cityId' | 'kind'> {
   packId?: string
   kind?: TripKind | 'hotel' // "Otel tatili" before it became "Eğlence"
 }
@@ -30,7 +33,7 @@ export interface SinglePackTrip extends Omit<TripState, 'packIds' | 'country' | 
  * named a question, category or template of that pack is qualified with the pack id, so the trip keeps its
  * history. The destination is taken from the pack, which is where the trip was going all along.
  */
-export function migrateToMultiPack(legacy: SinglePackTrip, pack?: Pick<Pack, 'country' | 'cityId'>): TripState {
+export function migrateToMultiPack(legacy: SinglePackTrip, pack?: Pick<Pack, 'country' | 'cityId'>): TripBeforeNotes {
   const { packId, kind, ...rest } = legacy
   const mine = (id: string) => (packId ? qualify(packId, id) : id)
 
@@ -58,4 +61,9 @@ export function migrateToMultiPack(legacy: SinglePackTrip, pack?: Pick<Pack, 'co
       },
     }),
   }
+}
+
+/** Gives a trip the two lists the user writes alone, empty; lists it somehow already has are kept. */
+export function addNoteLists(trip: TripBeforeNotes & Partial<Pick<TripState, 'souvenirs' | 'tastes'>>): TripState {
+  return { ...trip, souvenirs: trip.souvenirs ?? [], tastes: trip.tastes ?? [] }
 }

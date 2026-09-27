@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { migrateToMultiPack, migrateTrip, type LegacyTrip, type SinglePackTrip } from './migrations.ts'
+import { addNoteLists, migrateToMultiPack, migrateTrip, type LegacyTrip, type SinglePackTrip } from './migrations.ts'
 
 const legacy: LegacyTrip = {
   packId: 'eg-sharm-el-sheikh',
@@ -97,5 +97,25 @@ describe('migrateToMultiPack', () => {
     expect(trip.packIds).toEqual([])
     expect(trip.country).toBeUndefined()
     expect(trip.askedQuestionIds).toEqual(['nlol-sb-001'])
+  })
+})
+
+describe('addNoteLists', () => {
+  const stored = migrateToMultiPack(singlePack, { country: 'TR', cityId: 'antalya' })
+
+  it('gives a stored trip two empty lists and changes nothing else', () => {
+    expect(addNoteLists(stored)).toEqual({ ...stored, souvenirs: [], tastes: [] })
+  })
+
+  it('keeps lists a trip already has', () => {
+    const souvenirs = [{ id: 's1', text: 'Baharat', done: false }]
+    expect(addNoteLists({ ...stored, souvenirs }).souvenirs).toBe(souvenirs)
+  })
+
+  it('also completes a trip migrated all the way from the first version', () => {
+    const trip = addNoteLists(migrateToMultiPack(migrateTrip(legacy, 'Mısır'), { country: 'EG' }))
+    expect(trip.souvenirs).toEqual([])
+    expect(trip.tastes).toEqual([])
+    expect(trip.checklist).toEqual([])
   })
 })

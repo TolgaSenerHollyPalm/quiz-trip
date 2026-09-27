@@ -1,0 +1,49 @@
+.progress {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.progress > :first-child {
+  flex: 1;
+}
+
+.count {
+  flex: none;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--tone-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.empty {
+  padding: 4px 4px 0;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--color-muted);
+}
+
+.done {
+  margin-top: 16px;
+}
+
+/* Only while editing: takes the row's end. */
+.remove {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: var(--tap-size);
+  height: var(--tap-size);
+  margin-right: -8px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--color-danger);
+  cursor: pointer;
+}
+
+.remove:active {
+  background: var(--color-danger-bg);
+}

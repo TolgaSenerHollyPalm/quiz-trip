@@ -8,6 +8,8 @@ export type Route =
   | { screen: 'trip'; tripId: string }
   | { screen: 'trip-edit'; tripId: string }
   | { screen: 'checklist'; tripId: string }
+  | { screen: 'souvenirs'; tripId: string } // Almadan gelme
+  | { screen: 'tastes'; tripId: string } // Tatmadan gelme
   | { screen: 'trip-packs'; tripId: string }
   | { screen: 'players'; tripId: string; next?: 'quiz' }
   | { screen: 'quiz'; tripId: string }
@@ -38,6 +40,8 @@ export function href(route: Route): string {
     case 'trip-edit':
       return `${trip}/edit`
     case 'checklist':
+    case 'souvenirs':
+    case 'tastes':
     case 'quiz':
     case 'play':
     case 'scores':
@@ -89,6 +93,8 @@ export function parseRoute(hash: string): Route {
     case 'edit':
       return { screen: 'trip-edit', tripId }
     case 'checklist':
+    case 'souvenirs':
+    case 'tastes':
     case 'quiz':
     case 'play':
     case 'scores':

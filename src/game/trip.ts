@@ -11,11 +11,27 @@ export function newTrip(id: string, name: string): TripState {
     name,
     packIds: [],
     checklist: [],
+    souvenirs: [],
+    tastes: [],
     players: [],
     params: {},
     askedQuestionIds: [],
     rounds: [],
     predictions: [],
+  }
+}
+
+/** Clears what the games collected. The trip itself stays: its name, dates and every list. */
+export function resetGames(trip: TripState): TripState {
+  return {
+    ...trip,
+    players: [],
+    params: {},
+    askedQuestionIds: [],
+    rounds: [],
+    predictions: [],
+    quizSettings: undefined,
+    currentRound: undefined,
   }
 }
 

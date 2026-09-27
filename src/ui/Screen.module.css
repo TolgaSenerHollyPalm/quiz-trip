@@ -42,8 +42,26 @@
 .heading {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 10px;
   margin-bottom: 6px;
+}
+
+/* A tile beside the title rather than chips above it. */
+.marked {
+  flex-direction: row;
+  align-items: center;
+  gap: 14px;
+}
+
+.titles {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.marked .titles {
+  gap: 2px;
 }
 
 .title {

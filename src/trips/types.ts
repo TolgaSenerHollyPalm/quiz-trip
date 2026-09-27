@@ -11,3 +11,11 @@ export interface ChecklistItem {
   source?: string // the suggestion list it came from; absent when a player wrote it
   done: boolean
 }
+
+/** An item of a list the user writes alone: something to buy, or to taste, before coming home. */
+export interface NoteItem {
+  id: string
+  text: string
+  note?: string // e.g. "Eski Pazar'da bakılacak"
+  done: boolean
+}

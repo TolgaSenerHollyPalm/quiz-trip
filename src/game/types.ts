@@ -1,5 +1,5 @@
 import type { Category, Difficulty, Question } from '../packs/types.ts'
-import type { ChecklistItem, Transport, TripKind } from '../trips/types.ts'
+import type { ChecklistItem, NoteItem, Transport, TripKind } from '../trips/types.ts'
 
 export interface Player {
   id: string
@@ -69,6 +69,8 @@ export interface TripState {
   transport?: Transport
   kind?: TripKind
   checklist: ChecklistItem[]
+  souvenirs: NoteItem[] // Almadan gelme
+  tastes: NoteItem[] // Tatmadan gelme
   players: Player[]
   params: Record<string, number> // values for parameterised prediction templates
   askedQuestionIds: string[] // oldest first
