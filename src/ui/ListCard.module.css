@@ -34,14 +34,19 @@
   background: var(--color-divider);
 }
 
-.link:active {
+a.link:active {
   background: var(--color-bg);
 }
 
 @media (hover: hover) {
-  .link:hover {
+  a.link:hover {
     background: var(--color-bg);
   }
+}
+
+/* A row that only informs. */
+.still {
+  color: var(--color-muted);
 }
 
 .body {

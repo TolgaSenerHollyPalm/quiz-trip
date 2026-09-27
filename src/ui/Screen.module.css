@@ -72,6 +72,13 @@
   overflow-wrap: anywhere;
 }
 
+.eyebrow {
+  margin-bottom: -2px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-muted);
+}
+
 .subtitle {
   font-size: 0.875rem;
   color: var(--color-muted);

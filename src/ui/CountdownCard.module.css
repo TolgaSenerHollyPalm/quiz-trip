@@ -1,32 +1,48 @@
 /* The one place a trip's colour fills a whole card; everything on it is white. */
 .card {
   display: flex;
-  flex-direction: column;
-  gap: 6px;
+  align-items: center;
+  gap: 16px;
   padding: 20px;
   border-radius: 24px;
   background: var(--trip-color);
   color: #ffffff;
 }
 
-.head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.title {
-  font-size: 1.6rem;
-  line-height: 1.2;
-}
-
-.head svg {
+.days {
   flex: none;
+  font-family: var(--font-display);
+  font-size: 4.5rem;
+  font-weight: 800;
+  line-height: 0.85;
+  letter-spacing: -0.045em;
+  font-variant-numeric: tabular-nums;
 }
 
-.card p {
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.label {
+  font-family: var(--font-body);
+  font-size: 1.125rem;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+/* Where there is no count, the heading is the big line. */
+.heading {
+  font-size: 1.625rem;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+/* Plain white: on the darkest trip colour anything fainter drops under 4.5:1. */
+.message {
   font-size: 0.875rem;
   line-height: 1.45;
-  color: rgb(255 255 255 / 0.9);
 }

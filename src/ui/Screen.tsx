@@ -6,6 +6,7 @@ import styles from './Screen.module.css'
 
 interface ScreenProps {
   title: string
+  eyebrow?: ReactNode // a short line right over the title, e.g. how many trips there are
   subtitle?: ReactNode // the quiet line under the title
   above?: ReactNode // chips or a count shown over the title
   mark?: ReactNode // a tile beside the title, e.g. on a list's own page
@@ -18,7 +19,7 @@ interface ScreenProps {
   children: ReactNode
 }
 
-export default function Screen({ title, subtitle, above, mark, icon, back, aside, footer, wide, theme, children }: ScreenProps) {
+export default function Screen({ title, eyebrow, subtitle, above, mark, icon, back, aside, footer, wide, theme, children }: ScreenProps) {
   const classes = [styles.screen, wide && styles.wide, theme].filter(Boolean).join(' ')
   return (
     <div className={classes}>
@@ -37,6 +38,7 @@ export default function Screen({ title, subtitle, above, mark, icon, back, aside
           {above}
           {mark}
           <div className={styles.titles}>
+            {eyebrow && <p className={styles.eyebrow}>{eyebrow}</p>}
             <h1 className={styles.title}>{title}</h1>
             {subtitle && <p className={styles.subtitle}>{subtitle}</p>}
           </div>

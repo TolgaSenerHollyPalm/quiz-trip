@@ -19,7 +19,7 @@ export function ListCard({ as: Tag = 'ul', label, children }: ListCardProps) {
 }
 
 interface LinkRowProps {
-  to: Route
+  to?: Route // without one the row only informs, e.g. while it is locked
   tile: ReactNode
   title: ReactNode
   subtitle?: ReactNode
@@ -30,8 +30,9 @@ interface LinkRowProps {
 }
 
 export function LinkRow({ to, tile, title, subtitle, meta, bar, trailing, small }: LinkRowProps) {
+  const Row = to ? 'a' : 'div'
   return (
-    <a href={href(to)} className={small ? `${styles.link} ${styles.small}` : styles.link}>
+    <Row href={to && href(to)} className={[styles.link, small && styles.small, !to && styles.still].filter(Boolean).join(' ')}>
       {tile}
       <span className={bar ? `${styles.body} ${styles.withBar}` : styles.body}>
         <span className={styles.top}>
@@ -41,12 +42,13 @@ export function LinkRow({ to, tile, title, subtitle, meta, bar, trailing, small 
         {subtitle && <span className={styles.subtitle}>{subtitle}</span>}
         {bar}
       </span>
-      {trailing ?? (
-        <span className={styles.chevron}>
-          <ChevronRightIcon />
-        </span>
-      )}
-    </a>
+      {trailing ??
+        (to && (
+          <span className={styles.chevron}>
+            <ChevronRightIcon />
+          </span>
+        ))}
+    </Row>
   )
 }
 

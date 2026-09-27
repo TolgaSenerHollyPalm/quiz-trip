@@ -1,27 +1,26 @@
 import type { TripState } from '../game/types.ts'
 import { countdownMessage, tripPhase } from '../trips/countdown.ts'
-import { formatDateRange, todayIso } from '../trips/dates.ts'
-import { TRIP_KIND_LABELS } from './labels.ts'
+import { todayIso } from '../trips/dates.ts'
 import styles from './CountdownCard.module.css'
-import TransportIcon from './TransportIcon.tsx'
 import { tripTheme } from './tripTheme.ts'
 
-/** The top of the trip screen: how long until departure, and a nudge for today. */
+/**
+ * The top of the trip screen, in the trip's colour: the days left in large type with the day's nudge
+ * beside them. Without a count (no date, departure day, on the trip, back home) the heading takes its place.
+ */
 export default function CountdownCard({ trip }: { trip: TripState }) {
   const phase = tripPhase(trip, todayIso())
   const { title, message } = countdownMessage(phase)
-  const meta = [trip.startDate && formatDateRange(trip.startDate, trip.endDate), trip.kind && TRIP_KIND_LABELS[trip.kind]]
-    .filter(Boolean)
-    .join(' · ')
 
   return (
     <section className={`${styles.card} ${tripTheme(trip.kind)}`}>
-      <div className={styles.head}>
-        <h2 className={styles.title}>{title}</h2>
-        <TransportIcon transport={trip.transport} size={34} />
+      {phase.kind === 'before' && <span className={styles.days}>{phase.daysLeft}</span>}
+      <div className={styles.text}>
+        <h2 className={phase.kind === 'before' ? styles.label : styles.heading}>
+          {phase.kind === 'before' ? 'gün kaldı' : title}
+        </h2>
+        <p className={styles.message}>{message}</p>
       </div>
-      <p>{message}</p>
-      {meta !== '' && <p>{meta}</p>}
     </section>
   )
 }

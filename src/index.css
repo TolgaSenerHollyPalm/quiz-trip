@@ -56,6 +56,12 @@
   --color-info-bg: #e4eeff;
   --color-info-text: #27467e;
 
+  /* The quiz's dark tile on the trip screen. */
+  --color-ink-tile: #1b1f1e;
+  --color-ink-tile-raised: #2c3431;
+  --color-on-ink-tile: #f7f5f0;
+  --color-mint: #5eead4;
+
   --toast-bg: #1b1f1e;
   --toast-text: #f7f5f0;
   /* Hardly any shadow: a 1px border separates things. Only what floats above the page gets one. */

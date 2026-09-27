@@ -217,3 +217,16 @@ export function BoxIcon({ size = 19, strokeWidth = 1.7 }: IconProps) {
     </svg>
   )
 }
+
+/** The app's icon as the home screen shows it beside the name: the suitcase on the teal tile. */
+export function AppIcon({ size = 32 }: IconProps) {
+  return (
+    <svg viewBox="0 0 512 512" width={size} height={size} aria-hidden="true">
+      <rect width="512" height="512" rx="112" fill="#0a7d76" />
+      <path d="M212 154v-28a26 26 0 0 1 26-26h36a26 26 0 0 1 26 26v28" fill="none" stroke="#cff8f2" strokeWidth="22" strokeLinecap="round" />
+      <rect x="112" y="154" width="288" height="216" rx="40" fill="#ff6b57" />
+      <rect x="112" y="236" width="288" height="44" fill="#0a7d76" />
+      <circle cx="256" cy="258" r="14" fill="#cff8f2" />
+    </svg>
+  )
+}

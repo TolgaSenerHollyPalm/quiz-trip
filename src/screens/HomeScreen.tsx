@@ -1,53 +1,75 @@
 import { useAppData } from '../app/appData.ts'
 import { href } from '../app/router.ts'
 import type { TripState } from '../game/types.ts'
-import { countdownBadge, tripPhase } from '../trips/countdown.ts'
-import { formatDateRange, todayIso } from '../trips/dates.ts'
+import { countdownBadge, countdownMessage, tripPhase } from '../trips/countdown.ts'
+import { formatDateRangeShort, todayIso } from '../trips/dates.ts'
 import { sortTrips } from '../trips/list.ts'
 import { LinkButton } from '../ui/Button.tsx'
-import { AppMark, GearIcon } from '../ui/icons.tsx'
+import Chip from '../ui/Chip.tsx'
+import { IconLink } from '../ui/IconButton.tsx'
+import { AppIcon, PlusIcon, SlidersIcon } from '../ui/icons.tsx'
 import IosInstallHint from '../ui/IosInstallHint.tsx'
-import { TRIP_KIND_LABELS } from '../ui/labels.ts'
+import { TRANSPORT_LABELS, TRIP_KIND_LABELS } from '../ui/labels.ts'
+import { LinkRow, ListCard } from '../ui/ListCard.tsx'
 import OnlineBadge from '../ui/OnlineBadge.tsx'
+import ProgressBar from '../ui/ProgressBar.tsx'
 import Screen from '../ui/Screen.tsx'
 import text from '../ui/text.module.css'
+import Tile from '../ui/Tile.tsx'
+import type { Tone } from '../ui/tone.ts'
 import TransportIcon from '../ui/TransportIcon.tsx'
+import TripKindIcon from '../ui/TripKindIcon.tsx'
 import { tripTheme } from '../ui/tripTheme.ts'
 import styles from './HomeScreen.module.css'
 
-const buildTime = new Date(__BUILD_TIME__).toLocaleString('tr-TR', { dateStyle: 'short', timeStyle: 'short' })
+/** "14 – 21 Ekim · Uçak · Deniz"; "diğer" says nothing, so it is left out. */
+function tripLine(trip: TripState, today: string): string {
+  return [
+    trip.startDate && formatDateRangeShort(trip.startDate, trip.endDate, today),
+    trip.transport && trip.transport !== 'other' && TRANSPORT_LABELS[trip.transport],
+    trip.kind && trip.kind !== 'other' && TRIP_KIND_LABELS[trip.kind],
+  ]
+    .filter(Boolean)
+    .join(' · ')
+}
 
 export default function HomeScreen() {
   const { trips } = useAppData()
   const today = todayIso()
   const sorted = sortTrips(trips, today)
-
-  const details = (trip: TripState) => {
-    const parts = trip.startDate ? [formatDateRange(trip.startDate, trip.endDate)] : []
-    if (trip.kind) parts.push(TRIP_KIND_LABELS[trip.kind])
-    const packed = trip.checklist.filter((item) => item.done).length
-    if (trip.checklist.length > 0) parts.push(`${packed}/${trip.checklist.length} hazır`)
-    return parts.join(' · ')
-  }
+  // The first trip still to come or under way; an undated one has no count to lead with.
+  const featured = sorted.find((trip) => ['before', 'today', 'during'].includes(tripPhase(trip, today).kind))
+  const others = sorted.filter((trip) => trip !== featured)
 
   return (
     <Screen
-      title="TripKit"
-      icon={<AppMark />}
-      aside={
-        <span className={styles.headerActions}>
-          <OnlineBadge />
-          <a className={styles.settings} href={href({ screen: 'app-settings' })} aria-label="Ayarlar">
-            <GearIcon />
-          </a>
+      title="Gezilerin"
+      eyebrow={trips.length > 0 && `${trips.length} gezi`}
+      icon={
+        <span className={styles.brand}>
+          <AppIcon />
+          TripKit
         </span>
       }
-      wide
+      aside={
+        <>
+          <OnlineBadge />
+          <IconLink to={{ screen: 'app-settings' }} label="Ayarlar">
+            <SlidersIcon />
+          </IconLink>
+        </>
+      }
+      footer={
+        <LinkButton to={{ screen: 'trip-new' }} variant="primary" big>
+          <PlusIcon size={20} strokeWidth={2.2} />
+          Yeni gezi
+        </LinkButton>
+      }
     >
       <IosInstallHint />
 
       {/* An empty app should say what it is for before it asks for anything. */}
-      {sorted.length === 0 && (
+      {trips.length === 0 && (
         <section className={styles.welcome}>
           <h2 className={styles.welcomeTitle}>Gezini kur, gerisini TripKit hatırlasın</h2>
           <ol className={styles.steps}>
@@ -69,38 +91,102 @@ export default function HomeScreen() {
         </section>
       )}
 
-      <div className={styles.action}>
-        <LinkButton to={{ screen: 'trip-new' }} variant="primary" big>
-          + Yeni gezi
-        </LinkButton>
-      </div>
+      {featured && <FeaturedTrip trip={featured} today={today} />}
 
-      {sorted.length > 0 && (
-        <ul className={styles.list}>
-          {sorted.map((trip) => {
-            const phase = tripPhase(trip, today)
-            const badge = countdownBadge(phase)
-            return (
-              <li key={trip.id}>
-                <a className={`${styles.card} ${tripTheme(trip.kind)}`} href={href({ screen: 'trip', tripId: trip.id })}>
-                  <span className={styles.head}>
-                    <TransportIcon transport={trip.transport} size={26} />
-                    <span className={styles.title}>{trip.name}</span>
-                    {badge && (
-                      <span className={`${styles.badge} ${phase.kind === 'after' ? styles.badgeDone : ''}`}>
-                        {badge}
-                      </span>
-                    )}
-                  </span>
-                  <span className={styles.details}>{details(trip)}</span>
-                </a>
-              </li>
-            )
-          })}
-        </ul>
+      {others.length > 0 && (
+        <section className={styles.section}>
+          <h2 className={text.sectionTitle}>{featured ? 'Diğer geziler' : 'Geziler'}</h2>
+          <ListCard as="nav" label="Geziler">
+            {others.map((trip) => (
+              <OtherTrip key={trip.id} trip={trip} today={today} />
+            ))}
+          </ListCard>
+        </section>
       )}
-
-      <p className={styles.version}>Sürüm: {buildTime}</p>
     </Screen>
+  )
+}
+
+/** The trip that is next: its countdown in its own colour, and how far its three lists have got. */
+function FeaturedTrip({ trip, today }: { trip: TripState; today: string }) {
+  const phase = tripPhase(trip, today)
+  const lists: [string, Tone, { done: boolean }[]][] = [
+    ['Hazırlık', 'teal', trip.checklist],
+    ['Almadan gelme', 'coral', trip.souvenirs],
+    ['Tatmadan gelme', 'amber', trip.tastes],
+  ]
+
+  return (
+    <a className={`${styles.featured} ${tripTheme(trip.kind)}`} href={href({ screen: 'trip', tripId: trip.id })}>
+      <div className={styles.top}>
+        <div className={styles.topRow}>
+          <span className={styles.next}>{phase.kind === 'during' ? 'Devam eden gezi' : 'Sıradaki gezi'}</span>
+          <TransportIcon transport={trip.transport} size={22} decorative />
+        </div>
+        {phase.kind === 'before' ? (
+          <p className={styles.count}>
+            <span className={styles.days}>{phase.daysLeft}</span>
+            gün kaldı
+          </p>
+        ) : (
+          <p className={styles.headline}>{countdownMessage(phase).title}</p>
+        )}
+        <div className={styles.names}>
+          <h2 className={styles.name}>{trip.name}</h2>
+          <p className={styles.line}>{tripLine(trip, today)}</p>
+        </div>
+      </div>
+      <div className={styles.lists}>
+        {lists.map(([label, tone, items]) => {
+          const done = items.filter((item) => item.done).length
+          return (
+            <div key={label} className={styles.list}>
+              <span className={styles.listLabel}>{label}</span>
+              <span className={styles.listCount}>{items.length > 0 ? `${done} / ${items.length}` : '—'}</span>
+              <ProgressBar value={done} max={items.length} tone={tone} label={label} />
+            </div>
+          )
+        })}
+      </div>
+    </a>
+  )
+}
+
+function OtherTrip({ trip, today }: { trip: TripState; today: string }) {
+  const phase = tripPhase(trip, today)
+  const badge = countdownBadge(phase)
+  const finished = phase.kind === 'after'
+  const icon =
+    trip.transport && trip.transport !== 'other' ? (
+      <TransportIcon transport={trip.transport} size={22} decorative />
+    ) : (
+      <TripKindIcon kind={trip.kind ?? 'other'} size={22} />
+    )
+
+  return (
+    <LinkRow
+      to={{ screen: 'trip', tripId: trip.id }}
+      tile={
+        <Tile tone={finished ? 'neutral' : 'trip'} theme={tripTheme(trip.kind)}>
+          {icon}
+        </Tile>
+      }
+      title={trip.name}
+      subtitle={tripLine(trip, today) || undefined}
+      trailing={
+        badge &&
+        (finished ? (
+          <Chip tone="quiet" strong>
+            {badge}
+          </Chip>
+        ) : (
+          <span className={tripTheme(trip.kind)}>
+            <Chip tone="trip" strong>
+              {badge}
+            </Chip>
+          </span>
+        ))
+      }
+    />
   )
 }

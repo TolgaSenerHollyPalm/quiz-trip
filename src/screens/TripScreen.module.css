@@ -1,15 +1,119 @@
-.resume {
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.section {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  margin-top: 16px;
+}
+
+.sectionHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.sectionMeta {
+  font-size: 0.8125rem;
+  color: var(--color-muted);
+}
+
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.tile {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+  min-height: 168px;
+  padding: 16px;
+  border-radius: var(--radius);
+  text-decoration: none;
+}
+
+/* The quiz: the one dark tile, the game to reach for first. */
+.quiz {
+  background: var(--color-ink-tile);
+  color: var(--color-on-ink-tile);
+}
+
+.predictions {
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.tileIcon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+}
+
+.quiz .tileIcon {
+  background: var(--color-ink-tile-raised);
+  color: var(--color-mint);
+}
+
+.predictions .tileIcon {
+  background: var(--color-coral-soft);
+  color: var(--color-coral-text);
+}
+
+.tileTitle {
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.tileAction,
+.waiting,
+.tileNote {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: auto;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.tileAction {
+  color: var(--color-mint);
+}
+
+.waiting {
+  color: var(--color-coral-text);
+}
+
+.waiting::before {
+  content: '';
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-coral);
+}
+
+.tileNote {
+  color: var(--color-muted);
+}
+
+.notice {
   padding: var(--space);
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
-  background: var(--color-warning-bg);
-}
-
-.hint {
-  margin-top: -8px;
-  font-size: 0.9rem;
+  background: var(--color-surface);
   color: var(--color-muted);
 }

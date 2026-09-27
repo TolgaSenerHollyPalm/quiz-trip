@@ -6,6 +6,7 @@ import ProgressBar from '../ui/ProgressBar.tsx'
 import Tile from '../ui/Tile.tsx'
 import type { Tone } from '../ui/tone.ts'
 import type { Route } from '../app/router.ts'
+import text from '../ui/text.module.css'
 import styles from './TripLists.module.css'
 
 /** The trip's three lists, each with how much of it is done. */
@@ -26,7 +27,7 @@ export default function TripLists({ trip }: { trip: TripState }) {
 
   return (
     <section className={styles.section}>
-      <h2 className={styles.title}>Listeler</h2>
+      <h2 className={text.sectionTitle}>Listeler</h2>
       <ListCard as="nav" label="Listeler">
         {row({ screen: 'checklist', tripId }, 'Hazırlık listesi', 'teal', <SuitcaseIcon />, trip.checklist)}
         {row({ screen: 'souvenirs', tripId }, 'Almadan gelme', 'coral', <BagIcon />, trip.souvenirs)}

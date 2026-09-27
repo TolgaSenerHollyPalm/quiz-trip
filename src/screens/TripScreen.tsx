@@ -1,15 +1,24 @@
 import { useState } from 'react'
 import { useAppData, useTrip } from '../app/appData.ts'
-import { navigate, type Route } from '../app/router.ts'
+import { href, navigate, type Route } from '../app/router.ts'
+import { scoreSummary } from '../game/summary.ts'
 import { cancelRound, resetGames } from '../game/trip.ts'
-import { Button, LinkButton } from '../ui/Button.tsx'
+import { formatDateRange, tripLength } from '../trips/dates.ts'
+import { orphanPacks } from '../trips/packMatch.ts'
+import Chip from '../ui/Chip.tsx'
 import ConfirmDialog from '../ui/ConfirmDialog.tsx'
 import CountdownCard from '../ui/CountdownCard.tsx'
+import { ArrowRightIcon, BoxIcon, PeopleIcon, QuizIcon, TargetIcon, TrophyIcon } from '../ui/icons.tsx'
+import { TRANSPORT_LABELS, TRIP_KIND_LABELS } from '../ui/labels.ts'
+import { LinkRow, ListCard } from '../ui/ListCard.tsx'
+import Menu, { type MenuItem } from '../ui/Menu.tsx'
 import Missing from '../ui/Missing.tsx'
-import { orphanPacks } from '../trips/packMatch.ts'
 import Screen from '../ui/Screen.tsx'
-import { tripTheme } from '../ui/tripTheme.ts'
 import text from '../ui/text.module.css'
+import Tile from '../ui/Tile.tsx'
+import TransportIcon from '../ui/TransportIcon.tsx'
+import TripKindIcon from '../ui/TripKindIcon.tsx'
+import { tripTheme } from '../ui/tripTheme.ts'
 import TripLists from './TripLists.tsx'
 import styles from './TripScreen.module.css'
 
@@ -34,69 +43,127 @@ export default function TripScreen({ tripId }: { tripId: string }) {
   // Packs this trip alone plays with; they are deleted with it rather than left behind.
   const orphans = orphanPacks(trip, trips)
 
+  // The rarer actions wait behind "…"; each one that removes something still asks first.
+  const menu: MenuItem[] = [
+    { label: 'Geziyi düzenle', onSelect: () => navigate({ screen: 'trip-edit', tripId }) },
+    ...(collection.templates.some((template) => template.params)
+      ? [{ label: 'Gezi ayarları', onSelect: () => navigate({ screen: 'settings', tripId }) }]
+      : []),
+    ...(round ? [{ label: 'Turu iptal et', onSelect: () => setConfirmingCancel(true), danger: true }] : []),
+    ...(played ? [{ label: 'Oyun verilerini sıfırla', onSelect: () => setConfirmingReset(true), danger: true }] : []),
+    { label: 'Geziyi sil', onSelect: () => setConfirmingDelete(true), danger: true },
+  ]
+
+  const chips = (trip.kind || trip.transport) && (
+    <div className={styles.chips}>
+      {trip.kind && (
+        <Chip tone="trip" icon={<TripKindIcon kind={trip.kind} />}>
+          {TRIP_KIND_LABELS[trip.kind]}
+        </Chip>
+      )}
+      {trip.transport && (
+        <Chip icon={<TransportIcon transport={trip.transport} size={14} decorative />}>{TRANSPORT_LABELS[trip.transport]}</Chip>
+      )}
+    </div>
+  )
+  // "14 – 21 Ekim 2026 · 8 gün"; a one-day trip needs no count.
+  const dates =
+    trip.startDate &&
+    [formatDateRange(trip.startDate, trip.endDate), trip.endDate && `${tripLength(trip.startDate, trip.endDate)} gün`]
+      .filter(Boolean)
+      .join(' · ')
+
   return (
-    <Screen title={trip.name} back={{ screen: 'home' }} theme={tripTheme(trip.kind)}>
+    <Screen
+      title={trip.name}
+      above={chips}
+      subtitle={dates || undefined}
+      back={{ screen: 'home' }}
+      aside={<Menu items={menu} />}
+      theme={tripTheme(trip.kind)}
+    >
       <CountdownCard trip={trip} />
 
       <TripLists trip={trip} />
 
       {collection.packs.length > 0 ? (
-        <>
-          <h2 className={text.heading}>Gezide eğlence</h2>
-          {round ? (
-            <section className={styles.resume}>
-              <p>
-                <strong>Yarım kalan bir tur var.</strong> Sıradaki soru: {round.answers.length + 1} /{' '}
-                {round.turns.length}
-              </p>
-              <LinkButton to={{ screen: 'play', tripId }} variant="primary" big>
-                Tura devam et
-              </LinkButton>
-              <Button onClick={() => setConfirmingCancel(true)}>Turu iptal et</Button>
-            </section>
-          ) : (
-            <LinkButton to={quiz} variant="primary" big>
-              Bilgi yarışması
-            </LinkButton>
-          )}
+        <section className={styles.section}>
+          <div className={styles.sectionHead}>
+            <h2 className={text.sectionTitle}>Oyunlar</h2>
+            <span className={styles.sectionMeta}>
+              {collection.questions.length} soru · {trip.players.length} oyuncu
+            </span>
+          </div>
 
-          <LinkButton to={{ screen: 'predictions', tripId }} variant="primary" big>
-            {waiting > 0 ? `Tahminler (${waiting} bekliyor)` : 'Tahminler'}
-          </LinkButton>
-          <LinkButton to={{ screen: 'scores', tripId }}>Skor tablosu</LinkButton>
+          <div className={styles.tiles}>
+            <a className={`${styles.tile} ${styles.quiz}`} href={href(round ? { screen: 'play', tripId } : quiz)}>
+              <span className={styles.tileIcon}>
+                <QuizIcon />
+              </span>
+              <span className={styles.tileTitle}>Bilgi yarışması</span>
+              <span className={styles.tileAction}>
+                {round ? `Tura devam et · ${round.answers.length + 1} / ${round.turns.length}` : 'Tura başla'}
+                <ArrowRightIcon size={16} />
+              </span>
+            </a>
+            <a className={`${styles.tile} ${styles.predictions}`} href={href({ screen: 'predictions', tripId })}>
+              <span className={styles.tileIcon}>
+                <TargetIcon />
+              </span>
+              <span className={styles.tileTitle}>Tahminler</span>
+              {waiting > 0 ? (
+                <span className={styles.waiting}>{waiting} tahmin bekliyor</span>
+              ) : (
+                <span className={styles.tileNote}>{trip.predictions.length === 0 ? 'Tahmin ekle' : 'Hepsi sonuçlandı'}</span>
+              )}
+            </a>
+          </div>
 
-          {round ? (
-            <>
-              <Button disabled>Oyuncular ({trip.players.length})</Button>
-              <p className={styles.hint}>Tur bitene ya da iptal edilene kadar oyuncular değiştirilemez.</p>
-            </>
-          ) : (
-            <LinkButton to={{ screen: 'players', tripId }}>
-              {trip.players.length > 0 ? `Oyuncular (${trip.players.length})` : 'Oyuncuları ekle'}
-            </LinkButton>
-          )}
-
-          {collection.templates.some((template) => template.params) && (
-            <LinkButton to={{ screen: 'settings', tripId }}>Gezi ayarları</LinkButton>
-          )}
-          <LinkButton to={{ screen: 'trip-packs', tripId }}>Soru paketleri ({collection.packs.length})</LinkButton>
-        </>
+          <ListCard as="nav" label="Oyun ayrıntıları">
+            <LinkRow
+              small
+              to={{ screen: 'scores', tripId }}
+              tile={<Tile tone="neutral" size="small"><TrophyIcon /></Tile>}
+              title="Skor tablosu"
+              subtitle={scoreSummary(trip)}
+            />
+            <LinkRow
+              small
+              to={round ? undefined : { screen: 'players', tripId }}
+              tile={<Tile tone="neutral" size="small"><PeopleIcon /></Tile>}
+              title="Oyuncular"
+              subtitle={
+                round
+                  ? 'Tur bitene ya da iptal edilene kadar değiştirilemez'
+                  : trip.players.map((player) => player.nickname).join(', ') || 'Henüz oyuncu yok'
+              }
+            />
+            <LinkRow
+              small
+              to={{ screen: 'trip-packs', tripId }}
+              tile={<Tile tone="neutral" size="small"><BoxIcon /></Tile>}
+              title="Soru paketleri"
+              subtitle={collection.packs.map((pack) => pack.title).join(', ')}
+            />
+          </ListCard>
+        </section>
       ) : (
-        <>
-          <p className={text.notice}>
+        <section className={styles.section}>
+          <p className={styles.notice}>
             {trip.packIds.length > 0
               ? 'Bu gezinin soru paketi cihazda yok. Soru paketleri ekranından yeniden indirebilirsin.'
               : 'Bu geziye soru paketi bağlı değil. Paket eklersen bilgi yarışması ve tahminler açılır.'}
           </p>
-          <LinkButton to={{ screen: 'trip-packs', tripId }} variant="primary">
-            Soru paketleri
-          </LinkButton>
-        </>
+          <ListCard as="nav" label="Soru paketleri">
+            <LinkRow
+              small
+              to={{ screen: 'trip-packs', tripId }}
+              tile={<Tile tone="neutral" size="small"><BoxIcon /></Tile>}
+              title="Soru paketleri"
+            />
+          </ListCard>
+        </section>
       )}
-
-      <LinkButton to={{ screen: 'trip-edit', tripId }}>Geziyi düzenle</LinkButton>
-      {played && <Button onClick={() => setConfirmingReset(true)}>Oyun verilerini sıfırla</Button>}
-      <Button onClick={() => setConfirmingDelete(true)}>Geziyi sil</Button>
 
       <ConfirmDialog
         open={confirmingCancel}

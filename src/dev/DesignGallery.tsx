@@ -13,6 +13,7 @@ import Menu from '../ui/Menu.tsx'
 import ProgressBar from '../ui/ProgressBar.tsx'
 import Screen from '../ui/Screen.tsx'
 import Tile from '../ui/Tile.tsx'
+import TripKindIcon from '../ui/TripKindIcon.tsx'
 import { tripTheme } from '../ui/tripTheme.ts'
 import styles from './DesignGallery.module.css'
 
@@ -96,7 +97,9 @@ export default function DesignGallery() {
         <div className={styles.trips}>
           {TRIP_KINDS.map((kind) => (
             <div key={kind} className={`${styles.trip} ${tripTheme(kind)}`}>
-              <Chip tone="trip">{TRIP_KIND_LABELS[kind]}</Chip>
+              <Chip tone="trip" icon={<TripKindIcon kind={kind} />}>
+                {TRIP_KIND_LABELS[kind]}
+              </Chip>
               <div className={styles.countdown}>
                 <span className={styles.days}>17</span>
                 <span className={styles.left}>
@@ -105,6 +108,19 @@ export default function DesignGallery() {
                 </span>
               </div>
             </div>
+          ))}
+        </div>
+      </section>
+
+      <section className={styles.section}>
+        <h2 className={styles.sectionTitle}>Tatil tipi ikonları</h2>
+        <div className={styles.row}>
+          {TRIP_KINDS.map((kind) => (
+            <span key={kind} className={tripTheme(kind)}>
+              <Tile tone="trip">
+                <TripKindIcon kind={kind} size={24} />
+              </Tile>
+            </span>
           ))}
         </div>
       </section>
