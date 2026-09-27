@@ -72,7 +72,19 @@ export default function TripPacksScreen({ tripId }: { tripId: string }) {
   }
 
   return (
-    <Screen title="Soru paketleri" back={{ screen: 'trip', tripId }} wide theme={tripTheme(trip.kind)}>
+    <Screen
+      title="Soru paketleri"
+      back={{ screen: 'trip', tripId }}
+      theme={tripTheme(trip.kind)}
+      footer={
+        trip.country !== undefined &&
+        online && (
+          <Button variant="primary" big disabled={searching} onClick={() => void search()}>
+            {searching ? 'Aranıyor…' : 'Paketleri getir ve güncelle'}
+          </Button>
+        )
+      }
+    >
       <p className={text.meta}>{where === '' ? 'Bu gezinin ülkesi seçilmemiş.' : `${where} paketleri`}</p>
 
       {collection.packs.length === 0 ? (
@@ -91,7 +103,9 @@ export default function TripPacksScreen({ tripId }: { tripId: string }) {
                 </p>
               </div>
               <div className={styles.action}>
-                <Button onClick={() => setRemoving(pack)}>Çıkar</Button>
+                <Button inline onClick={() => setRemoving(pack)}>
+                  Çıkar
+                </Button>
               </div>
             </li>
           ))}
@@ -106,7 +120,7 @@ export default function TripPacksScreen({ tripId }: { tripId: string }) {
 
       {nearby.length > 0 && (
         <>
-          <h2 className={text.heading}>Cihazdaki diğer paketler</h2>
+          <h2 className={text.sectionTitle}>Cihazdaki diğer paketler</h2>
           <ul className={styles.list}>
             {nearby.map((pack) => (
               <li key={pack.id} className={styles.pack}>
@@ -115,7 +129,9 @@ export default function TripPacksScreen({ tripId }: { tripId: string }) {
                   <p className={text.hint}>{pack.questions.length} soru</p>
                 </div>
                 <div className={styles.action}>
-                  <Button onClick={() => void link(pack.id)}>Ekle</Button>
+                  <Button inline onClick={() => void link(pack.id)}>
+                    Ekle
+                  </Button>
                 </div>
               </li>
             ))}
@@ -125,12 +141,8 @@ export default function TripPacksScreen({ tripId }: { tripId: string }) {
 
       {trip.country === undefined ? (
         <p className={text.hint}>Geziyi düzenleyip ülkesini seçersen o destinasyonun paketlerini indirebilirim.</p>
-      ) : !online ? (
-        <p className={text.hint}>İnternet yokken paket indirilemez. Bağlanınca bu ekrandan tekrar dene.</p>
       ) : (
-        <Button variant="primary" disabled={searching} onClick={() => void search()}>
-          {searching ? 'Aranıyor…' : 'Paketleri getir ve güncelle'}
-        </Button>
+        !online && <p className={text.hint}>İnternet yokken paket indirilemez. Bağlanınca bu ekrandan tekrar dene.</p>
       )}
 
       {nothingNew && !searching && (

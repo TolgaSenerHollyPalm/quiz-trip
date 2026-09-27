@@ -7,46 +7,65 @@
 .legend {
   margin-bottom: 8px;
   padding: 0;
-  font-weight: 700;
+  font-size: 0.875rem;
+  font-weight: 600;
 }
 
+/* Two or three tiles to a row; each is a whole button, the chosen one teal. */
 .options {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
   gap: 8px;
 }
 
 .option {
-  display: inline-flex;
-  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  min-width: 80px;
-  min-height: var(--tap-size);
-  padding: 6px 12px;
-  border: 2px solid var(--color-border);
-  border-radius: var(--radius);
+  gap: 4px;
+  min-width: 0;
+  min-height: 52px;
+  padding: 8px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-field);
   background: var(--color-surface);
-  font-size: 0.95rem;
+  font-size: 0.9375rem;
   font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+  overflow-wrap: anywhere;
   cursor: pointer;
   touch-action: manipulation;
 }
 
+.option svg {
+  color: var(--color-chip-text);
+}
+
 .option[aria-pressed='true'] {
-  border-color: var(--color-primary);
-  background: var(--color-primary);
-  color: var(--color-on-primary);
+  border: 1.5px solid var(--color-primary);
+  background: var(--color-primary-soft);
+  color: var(--color-primary-dark);
+}
+
+.option[aria-pressed='true'] svg {
+  color: var(--color-primary-dark);
+}
+
+@media (hover: hover) {
+  .option:hover {
+    border-color: var(--color-check-border);
+  }
 }
 
 /* Only for a long single-choice list; the platform draws its own arrow. */
 .select {
   width: 100%;
-  min-height: var(--tap-size);
-  padding: 6px 12px;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius);
+  min-height: 48px;
+  padding: 0 14px;
+  border: 1px solid var(--color-field-border);
+  border-radius: var(--radius-field);
   background: var(--color-surface);
   color: var(--color-text);
   font-size: 1rem;

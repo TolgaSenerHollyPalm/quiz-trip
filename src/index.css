@@ -16,6 +16,7 @@
   --color-chip-text: #4a504d;
   --color-sunken: #ede8de;
   --color-check-border: #948c80;
+  --color-field-border: #948c80; /* a form field's edge, 3:1 against white and paper */
   --color-chevron: #8c918e;
   --color-strike: #b7b0a3;
   --color-placeholder: #7a807d;

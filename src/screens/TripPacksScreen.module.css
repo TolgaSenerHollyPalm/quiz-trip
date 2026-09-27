@@ -1,12 +1,9 @@
+/* A white card, a row per pack, with its one action at the end. */
 .list {
-  display: grid;
-  gap: 10px;
-}
-
-@media (min-width: 720px) {
-  .list {
-    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-  }
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
 }
 
 .pack {
@@ -14,29 +11,29 @@
   grid-template-columns: 1fr auto;
   align-items: center;
   gap: 12px;
-  padding: 14px var(--space);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius);
-  background: var(--color-surface);
+  padding: 14px 16px;
+}
+
+.pack + .pack {
+  border-top: 1px solid var(--color-divider);
 }
 
 .title {
-  font-size: 1.1rem;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .action {
-  width: 88px;
+  display: flex;
 }
 
 .report {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding: 12px var(--space);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius);
-  background: var(--color-surface);
+  padding: 14px 16px;
+  border-radius: 18px;
+  background: var(--color-sunken);
+  font-size: 0.9375rem;
 }
 
 .failed {

@@ -94,6 +94,7 @@
   padding: 12px var(--page-margin) calc(28px + env(safe-area-inset-bottom, 0px));
 }
 
-.footer > * {
+.footer a,
+.footer button {
   box-shadow: var(--shadow-float);
 }

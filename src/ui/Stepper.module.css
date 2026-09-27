@@ -7,7 +7,7 @@
 }
 
 .label {
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .controls {
@@ -19,12 +19,12 @@
 .controls button {
   width: var(--tap-size);
   height: var(--tap-size);
-  border: 2px solid var(--color-primary);
+  border: 1px solid var(--color-field-border);
   border-radius: 50%;
   background: var(--color-surface);
-  color: var(--color-primary);
+  color: var(--color-text);
   font-size: 1.4rem;
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1;
   cursor: pointer;
   touch-action: manipulation;
@@ -37,7 +37,9 @@
 
 .value {
   min-width: 2ch;
-  font-size: 1.35rem;
-  font-weight: 700;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 800;
   text-align: center;
+  font-variant-numeric: tabular-nums;
 }

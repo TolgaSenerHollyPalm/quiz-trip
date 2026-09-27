@@ -1,0 +1,20 @@
+.avatar {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--color-primary-soft);
+  color: var(--color-primary-dark);
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  font-weight: 800;
+}
+
+/* On the hand-over screens, big enough to be seen across a table. */
+.large {
+  width: 72px;
+  height: 72px;
+  font-size: 2rem;
+}

@@ -3,6 +3,7 @@ import { href } from '../app/router.ts'
 import { formatAnswer } from '../game/predictions.ts'
 import type { Prediction } from '../game/types.ts'
 import { LinkButton } from '../ui/Button.tsx'
+import { ChevronRightIcon, PlusIcon } from '../ui/icons.tsx'
 import Missing from '../ui/Missing.tsx'
 import Screen from '../ui/Screen.tsx'
 import { tripTheme } from '../ui/tripTheme.ts'
@@ -28,15 +29,22 @@ export default function PredictionsScreen({ tripId }: { tripId: string }) {
   }
 
   return (
-    <Screen title="Tahminler" back={{ screen: 'trip', tripId }} theme={tripTheme(trip.kind)}>
+    <Screen
+      title="Tahminler"
+      back={{ screen: 'trip', tripId }}
+      theme={tripTheme(trip.kind)}
+      footer={
+        <LinkButton to={{ screen: 'prediction-new', tripId }} variant="primary" big>
+          <PlusIcon size={20} strokeWidth={2.2} />
+          Tahmin ekle
+        </LinkButton>
+      }
+    >
       {trip.players.length === 0 && (
         <p className={text.notice}>
           Tahmin girmek için önce <a href={href({ screen: 'players', tripId })}>oyuncuları ekle</a>.
         </p>
       )}
-      <LinkButton to={{ screen: 'prediction-new', tripId }} variant="primary">
-        + Tahmin ekle
-      </LinkButton>
       {trip.predictions.length === 0 && (
         <p className={text.hint}>Henüz tahmin yok. Paketteki hazır sorulardan seçebilir ya da kendi sorunu yazabilirsin.</p>
       )}
@@ -45,15 +53,20 @@ export default function PredictionsScreen({ tripId }: { tripId: string }) {
         if (items.length === 0) return null
         return (
           <section key={status} className={styles.section}>
-            <h2 className={text.heading}>{title}</h2>
+            <h2 className={text.sectionTitle}>{title}</h2>
             <ul className={styles.list}>
               {items.map((prediction) => (
                 <li key={prediction.id}>
                   <a className={styles.item} href={href({ screen: 'prediction', tripId, predictionId: prediction.id })}>
-                    <span className={styles.text}>{prediction.text}</span>
-                    <span className={styles.meta}>
-                      <StatusBadge status={prediction.status} />
-                      {detail(prediction)}
+                    <span className={styles.body}>
+                      <span className={styles.text}>{prediction.text}</span>
+                      <span className={styles.meta}>
+                        <StatusBadge status={prediction.status} />
+                        {detail(prediction)}
+                      </span>
+                    </span>
+                    <span className={styles.chevron}>
+                      <ChevronRightIcon />
                     </span>
                   </a>
                 </li>

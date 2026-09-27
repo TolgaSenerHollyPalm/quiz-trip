@@ -33,7 +33,16 @@ export default function PredictionResultScreen({ tripId, predictionId }: { tripI
   }
 
   return (
-    <Screen title={correcting ? 'Sonucu düzelt' : 'Sonucu gir'} back={detail} theme={tripTheme(trip.kind)}>
+    <Screen
+      title={correcting ? 'Sonucu düzelt' : 'Sonucu gir'}
+      back={detail}
+      theme={tripTheme(trip.kind)}
+      footer={
+        <Button variant="primary" big onClick={save}>
+          {correcting ? 'Düzelt, puanları yeniden hesapla' : 'Kaydet ve puanla'}
+        </Button>
+      }
+    >
       <p className={text.question}>{prediction.text}</p>
       {correcting && <p className={text.meta}>Şu anki sonuç: {formatAnswer(prediction, prediction.result!)}</p>}
       <ValueField
@@ -51,9 +60,6 @@ export default function PredictionResultScreen({ tripId, predictionId }: { tripI
           {problem}
         </p>
       )}
-      <Button variant="primary" big onClick={save}>
-        {correcting ? 'Düzelt, puanları yeniden hesapla' : 'Kaydet ve puanla'}
-      </Button>
     </Screen>
   )
 }

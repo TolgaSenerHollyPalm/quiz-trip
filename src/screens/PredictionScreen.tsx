@@ -2,9 +2,10 @@ import { useState } from 'react'
 import { useTrip } from '../app/appData.ts'
 import { href, navigate } from '../app/router.ts'
 import { deletePrediction, describeBounds, formatAnswer } from '../game/predictions.ts'
-import { Button, LinkButton } from '../ui/Button.tsx'
+import { LinkButton } from '../ui/Button.tsx'
 import ConfirmDialog from '../ui/ConfirmDialog.tsx'
 import GuessList from '../ui/GuessList.tsx'
+import Menu from '../ui/Menu.tsx'
 import Missing from '../ui/Missing.tsx'
 import Screen from '../ui/Screen.tsx'
 import { tripTheme } from '../ui/tripTheme.ts'
@@ -28,7 +29,23 @@ export default function PredictionScreen({ tripId, predictionId }: { tripId: str
   const bounds = prediction.type === 'number' ? describeBounds(prediction) : prediction.options?.join(' / ')
 
   return (
-    <Screen title="Tahmin" back={back} theme={tripTheme(trip.kind)}>
+    <Screen
+      title="Tahmin"
+      back={back}
+      theme={tripTheme(trip.kind)}
+      aside={<Menu items={[{ label: 'Tahmini sil', onSelect: () => setConfirmingDelete(true), danger: true }]} />}
+      footer={
+        prediction.status === 'open' && trip.players.length > 0 ? (
+          <LinkButton to={guess} variant="primary" big>
+            {entered.length === 0 ? 'Tahminleri girmeye başla' : 'Kalan oyuncular girsin'}
+          </LinkButton>
+        ) : prediction.status === 'locked' ? (
+          <LinkButton to={resultEntry} variant="primary" big>
+            Sonucu gir
+          </LinkButton>
+        ) : undefined
+      }
+    >
       <div>
         <StatusBadge status={prediction.status} />
       </div>
@@ -52,13 +69,7 @@ export default function PredictionScreen({ tripId, predictionId }: { tripId: str
               </li>
             ))}
           </ul>
-          {trip.players.length === 0 ? (
-            <p className={text.notice}>Önce oyuncuları ekle.</p>
-          ) : (
-            <LinkButton to={guess} variant="primary" big>
-              {entered.length === 0 ? 'Tahminleri girmeye başla' : 'Kalan oyuncular girsin'}
-            </LinkButton>
-          )}
+          {trip.players.length === 0 && <p className={text.notice}>Önce oyuncuları ekle.</p>}
         </>
       )}
 
@@ -66,9 +77,6 @@ export default function PredictionScreen({ tripId, predictionId }: { tripId: str
         <>
           <p>Herkes girdi; tahminler kilitlendi.</p>
           <GuessList prediction={prediction} players={trip.players} />
-          <LinkButton to={resultEntry} variant="primary" big>
-            Sonucu gir
-          </LinkButton>
         </>
       )}
 
@@ -80,7 +88,6 @@ export default function PredictionScreen({ tripId, predictionId }: { tripId: str
         </>
       )}
 
-      <Button onClick={() => setConfirmingDelete(true)}>Tahmini sil</Button>
       <ConfirmDialog
         open={confirmingDelete}
         title="Tahmin silinsin mi?"

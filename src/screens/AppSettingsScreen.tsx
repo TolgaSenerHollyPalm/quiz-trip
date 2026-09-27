@@ -44,7 +44,7 @@ export default function AppSettingsScreen() {
   return (
     <Screen title="Ayarlar" back={{ screen: 'home' }}>
       <section className={styles.card}>
-        <h2 className={text.heading}>Bu cihazda</h2>
+        <h2 className={text.sectionTitle}>Bu cihazda</h2>
         <dl className={styles.facts}>
           <div>
             <dt>Gezi</dt>
@@ -69,7 +69,7 @@ export default function AppSettingsScreen() {
         </p>
       </section>
 
-      <h2 className={text.heading}>Verileri sil</h2>
+      <h2 className={`${text.sectionTitle} ${styles.later}`}>Verileri sil</h2>
       <p className={text.hint}>
         Uygulamanın bu cihazda tuttuğu her şeyi siler: geziler, oyuncular, puanlar, tahminler, hazırlık
         listeleri, indirilmiş soru paketleri ve ayarlar. Geri alınamaz.

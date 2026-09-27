@@ -1,7 +1,9 @@
+/* Who has guessed so far: a white card, a row per player. */
 .players {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
 }
 
 .player {
@@ -9,16 +11,20 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  min-height: var(--tap-size);
-  padding: 8px var(--space);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius);
-  background: var(--color-surface);
+  min-height: 56px;
+  padding: 8px 16px;
+}
+
+.player + .player {
+  border-top: 1px solid var(--color-divider);
 }
 
 .player a {
-  font-weight: 700;
-  color: var(--color-primary);
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap-size);
+  font-weight: 600;
+  color: var(--color-primary-dark);
 }
 
 .name {
@@ -27,10 +33,12 @@
 }
 
 .result {
-  padding: 12px var(--space);
+  padding: 16px;
+  border: 1px solid var(--color-border);
   border-radius: var(--radius);
   background: var(--color-surface);
-  border: 2px solid var(--color-primary);
-  font-size: 1.2rem;
-  font-weight: 800;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }

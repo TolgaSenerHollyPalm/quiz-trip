@@ -76,7 +76,18 @@ export default function TripSettingsScreen({ tripId, add }: { tripId: string; ad
   }
 
   return (
-    <Screen title="Gezi ayarları" back={back} theme={tripTheme(trip.kind)}>
+    <Screen
+      title="Gezi ayarları"
+      back={back}
+      theme={tripTheme(trip.kind)}
+      footer={
+        groups.length > 0 && (
+          <Button variant="primary" big onClick={save}>
+            {target ? 'Kaydet ve tahmini ekle' : 'Kaydet'}
+          </Button>
+        )
+      }
+    >
       {target && (
         <p className={text.notice}>
           “{target.text}” tahmini için aşağıdaki değerleri gir; kaydedince tahmin eklenecek.
@@ -112,11 +123,6 @@ export default function TripSettingsScreen({ tripId, add }: { tripId: string; ad
             </li>
           ))}
         </ul>
-      )}
-      {groups.length > 0 && (
-        <Button variant="primary" big onClick={save}>
-          {target ? 'Kaydet ve tahmini ekle' : 'Kaydet'}
-        </Button>
       )}
     </Screen>
   )

@@ -1,5 +1,5 @@
 import type { Difficulty, Question } from '../packs/types.ts'
-import type { QuizRound } from './types.ts'
+import type { CurrentRound, QuizRound } from './types.ts'
 
 export const DIFFICULTY_POINTS: Record<Difficulty, number> = { easy: 1, medium: 2, hard: 3 }
 
@@ -40,4 +40,14 @@ export function rankPlayers(playerIds: readonly string[], points: Readonly<Recor
   return [...rows]
     .sort((a, b) => b.points - a.points)
     .map((row) => ({ ...row, rank: 1 + rows.filter((other) => other.points > row.points).length }))
+}
+
+/** Points each player has taken so far in a round, from the answers given; players yet to answer are left out. */
+export function roundPoints(round: Pick<CurrentRound, 'turns' | 'answers'>): Record<string, number> {
+  const points: Record<string, number> = {}
+  round.answers.forEach((answer, index) => {
+    const { playerId } = round.turns[index]
+    points[playerId] = (points[playerId] ?? 0) + answer.points
+  })
+  return points
 }

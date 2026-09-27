@@ -5,6 +5,7 @@ import Missing from '../ui/Missing.tsx'
 import Screen from '../ui/Screen.tsx'
 import { tripTheme } from '../ui/tripTheme.ts'
 import StandingsList from '../ui/StandingsList.tsx'
+import text from '../ui/text.module.css'
 import styles from './RoundResultScreen.module.css'
 
 export default function RoundResultScreen({ tripId, roundId }: { tripId: string; roundId: string }) {
@@ -18,8 +19,17 @@ export default function RoundResultScreen({ tripId, roundId }: { tripId: string;
   const seating = trip.players.map((player) => player.id)
 
   return (
-    <Screen title="Tur sonucu" back={back} theme={tripTheme(trip.kind)}>
-      <h2 className={styles.heading}>Bu tur</h2>
+    <Screen
+      title="Tur sonucu"
+      back={back}
+      theme={tripTheme(trip.kind)}
+      footer={
+        <LinkButton to={{ screen: 'quiz', tripId }} variant="primary" big>
+          Yeni tur
+        </LinkButton>
+      }
+    >
+      <h2 className={text.sectionTitle}>Bu tur</h2>
       <StandingsList
         standings={rankPlayers(
           seating.filter((id) => id in round.scores),
@@ -27,13 +37,10 @@ export default function RoundResultScreen({ tripId, roundId }: { tripId: string;
         )}
         names={names}
       />
-      <h2 className={styles.heading}>Genel sıralama</h2>
+      <h2 className={`${text.sectionTitle} ${styles.later}`}>Genel sıralama</h2>
       <p className={styles.note}>Bu gezide oynanan {trip.rounds.length} turun toplamı</p>
       <StandingsList standings={rankPlayers(seating, quizTotals(trip.rounds))} names={names} />
-      <LinkButton to={{ screen: 'quiz', tripId }} variant="primary" big>
-        Yeni tur
-      </LinkButton>
-      <LinkButton to={back}>Gezi ekranı</LinkButton>
+      <LinkButton to={back}>Gezi ekranına dön</LinkButton>
     </Screen>
   )
 }

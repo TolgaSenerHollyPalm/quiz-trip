@@ -6,6 +6,7 @@ import { playersWithData, updatePlayers } from '../game/trip.ts'
 import type { Player } from '../game/types.ts'
 import { Button } from '../ui/Button.tsx'
 import ConfirmDialog from '../ui/ConfirmDialog.tsx'
+import { CloseIcon, PlusIcon } from '../ui/icons.tsx'
 import Missing from '../ui/Missing.tsx'
 import Screen from '../ui/Screen.tsx'
 import { tripTheme } from '../ui/tripTheme.ts'
@@ -54,14 +55,25 @@ export default function PlayersScreen({ tripId, next }: { tripId: string; next?:
   }
 
   return (
-    <Screen title="Oyuncular" back={back} theme={tripTheme(trip.kind)}>
+    <Screen
+      title="Oyuncular"
+      back={back}
+      theme={tripTheme(trip.kind)}
+      footer={
+        <Button variant="primary" big onClick={save}>
+          Kaydet
+        </Button>
+      }
+    >
       <p className={styles.intro}>
         {MIN_PLAYERS}–{MAX_PLAYERS} oyuncu. Oyun bu sırayla döner; her turda ilk sıradaki kişi bir sonrakine geçer.
       </p>
       <ol className={styles.list}>
         {players.map((player, index) => (
           <li key={player.id} className={styles.row}>
-            <span className={styles.number}>{index + 1}.</span>
+            <span className={styles.number} aria-hidden="true">
+              {index + 1}
+            </span>
             <input
               className={styles.input}
               value={player.nickname}
@@ -81,19 +93,15 @@ export default function PlayersScreen({ tripId, next }: { tripId: string; next?:
               disabled={players.length <= MIN_PLAYERS}
               onClick={() => setPlayers(players.filter((_, i) => i !== index))}
             >
-              <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
-                <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
-              </svg>
+              <CloseIcon size={20} />
             </button>
             {showProblems && problems[index] && <p className={styles.problem}>{problems[index]}</p>}
           </li>
         ))}
       </ol>
-      <Button disabled={players.length >= MAX_PLAYERS} onClick={() => setPlayers([...players, newPlayer()])}>
-        + Oyuncu ekle
-      </Button>
-      <Button variant="primary" big onClick={save}>
-        Kaydet
+      <Button inline disabled={players.length >= MAX_PLAYERS} onClick={() => setPlayers([...players, newPlayer()])}>
+        <PlusIcon size={18} strokeWidth={2.2} />
+        Oyuncu ekle
       </Button>
 
       <ConfirmDialog

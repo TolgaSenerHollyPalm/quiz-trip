@@ -1,7 +1,9 @@
+/* The pack's ready questions: a white card, a row each, with its own small "Ekle". */
 .templates {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
 }
 
 .template {
@@ -9,25 +11,26 @@
   grid-template-columns: 1fr auto;
   align-items: center;
   gap: 12px;
-  padding: 12px var(--space);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius);
-  background: var(--color-surface);
+  padding: 12px 16px;
+}
+
+.template + .template {
+  border-top: 1px solid var(--color-divider);
 }
 
 .templateText {
-  font-weight: 700;
+  font-weight: 600;
 }
 
-.templateAction {
-  width: 104px;
+.later {
+  margin-top: 16px;
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  gap: var(--space);
-  padding: var(--space);
+  gap: 16px;
+  padding: 16px;
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
   background: var(--color-surface);
@@ -42,21 +45,24 @@
 }
 
 .label {
-  font-weight: 700;
+  font-size: 0.875rem;
+  font-weight: 600;
 }
 
 .input {
   width: 100%;
   min-width: 0;
-  min-height: var(--tap-size);
-  padding: 6px 12px;
-  border: 2px solid var(--color-border);
-  border-radius: var(--radius);
+  min-height: 48px;
+  padding: 0 14px;
+  border: 1px solid var(--color-field-border);
+  border-radius: var(--radius-field);
   background: var(--color-surface);
+  font-size: 1rem;
 }
 
 .input:focus {
   border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-soft);
   outline: none;
 }
 
@@ -91,7 +97,7 @@
 }
 
 .remove:disabled {
-  color: var(--color-border);
+  color: var(--color-check-border);
   cursor: not-allowed;
 }
 

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { quizTotals, rankPlayers, turnPoints } from './scoring.ts'
+import { quizTotals, rankPlayers, roundPoints, turnPoints } from './scoring.ts'
 import { makeQuestion } from './test-helpers.ts'
 import type { QuizRound } from './types.ts'
 
@@ -56,5 +56,18 @@ describe('quizTotals', () => {
       { id: 'r2', playedAt: '', scores: { a: 2, c: 4 } },
     ]
     expect(quizTotals(rounds)).toEqual({ a: 5, b: 1, c: 4 })
+  })
+})
+
+describe('roundPoints', () => {
+  it('adds up what each player has taken so far, turn by turn', () => {
+    const question = makeQuestion('q')
+    const turns = ['t', 'd', 'a', 't', 'd'].map((playerId) => ({ playerId, question, optionOrder: [0, 1, 2, 3] }))
+    expect(roundPoints({ turns, answers: [{ choice: 0, points: 3 }, { choice: 1, points: 0 }, { choice: null, points: 0 }, { choice: 0, points: 2 }] })).toEqual({
+      t: 5,
+      d: 0,
+      a: 0,
+    })
+    expect(roundPoints({ turns, answers: [] })).toEqual({})
   })
 })

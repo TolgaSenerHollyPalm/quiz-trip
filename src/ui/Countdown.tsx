@@ -1,11 +1,13 @@
 import { useEffect, useEffectEvent, useState } from 'react'
 import styles from './Countdown.module.css'
+import { StopwatchIcon } from './icons.tsx'
 
 interface CountdownProps {
   seconds: number
   onExpire: () => void
 }
 
+/** The time left for a question, as "0:09"; the last five seconds turn red. */
 export default function Countdown({ seconds, onExpire }: CountdownProps) {
   const total = seconds * 1000
   const [left, setLeft] = useState(total)
@@ -26,9 +28,9 @@ export default function Countdown({ seconds, onExpire }: CountdownProps) {
 
   const secondsLeft = Math.ceil(left / 1000)
   return (
-    <div className={styles.countdown} data-urgent={secondsLeft <= 5} role="timer" aria-label={`${secondsLeft} saniye kaldı`}>
-      <div className={styles.bar} style={{ width: `${(left / total) * 100}%` }} />
-      <span className={styles.value}>{secondsLeft} sn</span>
-    </div>
+    <span className={styles.countdown} data-urgent={secondsLeft <= 5} role="timer" aria-label={`${secondsLeft} saniye kaldı`}>
+      <StopwatchIcon />
+      {Math.floor(secondsLeft / 60)}:{String(secondsLeft % 60).padStart(2, '0')}
+    </span>
   )
 }

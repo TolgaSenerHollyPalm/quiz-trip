@@ -1,8 +1,10 @@
 import { useTrip } from '../app/appData.ts'
 import { predictionTotals } from '../game/predictions.ts'
 import { quizTotals, rankPlayers } from '../game/scoring.ts'
+import { TrophyIcon } from '../ui/icons.tsx'
 import Missing from '../ui/Missing.tsx'
 import Screen from '../ui/Screen.tsx'
+import text from '../ui/text.module.css'
 import { tripTheme } from '../ui/tripTheme.ts'
 import styles from './ScoreboardScreen.module.css'
 
@@ -50,8 +52,19 @@ export default function ScoreboardScreen({ tripId }: { tripId: string }) {
             </thead>
             <tbody>
               {standings.map(({ playerId, points, rank }) => (
-                <tr key={playerId} className={rank === 1 && points > 0 ? styles.first : undefined}>
-                  <td>{rank}.</td>
+                <tr key={playerId}>
+                  <td>
+                    <span className={rank === 1 && points > 0 ? `${styles.rank} ${styles.first}` : styles.rank}>
+                      {rank === 1 && points > 0 ? (
+                        <>
+                          <TrophyIcon size={18} />
+                          <span className={text.visuallyHidden}>1</span>
+                        </>
+                      ) : (
+                        rank
+                      )}
+                    </span>
+                  </td>
                   <td className={styles.name}>{names.get(playerId)}</td>
                   <td className={styles.points}>{quiz[playerId] ?? 0}</td>
                   <td className={styles.points}>{predictions[playerId] ?? 0}</td>

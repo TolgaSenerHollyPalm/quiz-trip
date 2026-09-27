@@ -48,21 +48,33 @@ export default function QuizSettingsScreen({ tripId }: { tripId: string }) {
   }
   if (trip.players.length === 0) {
     return (
-      <Screen title="Quiz ayarları" back={back} theme={tripTheme(trip.kind)}>
+      <Screen
+        title="Quiz ayarları"
+        back={back}
+        theme={tripTheme(trip.kind)}
+        footer={
+          <LinkButton to={{ screen: 'players', tripId, next: 'quiz' }} variant="primary" big>
+            Oyuncuları ekle
+          </LinkButton>
+        }
+      >
         <p>Önce oyuncuları ekle.</p>
-        <LinkButton to={{ screen: 'players', tripId, next: 'quiz' }} variant="primary" big>
-          Oyuncuları ekle
-        </LinkButton>
       </Screen>
     )
   }
   if (trip.currentRound) {
     return (
-      <Screen title="Quiz ayarları" back={back} theme={tripTheme(trip.kind)}>
+      <Screen
+        title="Quiz ayarları"
+        back={back}
+        theme={tripTheme(trip.kind)}
+        footer={
+          <LinkButton to={{ screen: 'play', tripId }} variant="primary" big>
+            Tura devam et
+          </LinkButton>
+        }
+      >
         <p>Yarım kalan bir tur var. Yeni tur için önce onu bitir ya da iptal et.</p>
-        <LinkButton to={{ screen: 'play', tripId }} variant="primary" big>
-          Tura devam et
-        </LinkButton>
       </Screen>
     )
   }
@@ -93,7 +105,16 @@ export default function QuizSettingsScreen({ tripId }: { tripId: string }) {
   }
 
   return (
-    <Screen title="Quiz ayarları" back={back} theme={tripTheme(trip.kind)}>
+    <Screen
+      title="Quiz ayarları"
+      back={back}
+      theme={tripTheme(trip.kind)}
+      footer={
+        <Button variant="primary" big disabled={pool.length === 0} onClick={start}>
+          Başla
+        </Button>
+      }
+    >
       {/* With several packs each one gets its own row, titled with the pack it came from. */}
       {groups.map((group) => (
         <ChoiceGroup
@@ -136,9 +157,6 @@ export default function QuizSettingsScreen({ tripId }: { tripId: string }) {
       <p className={styles.summary} role="status">
         {summary(pool.length, needed, neverAsked)}
       </p>
-      <Button variant="primary" big disabled={pool.length === 0} onClick={start}>
-        Başla
-      </Button>
     </Screen>
   )
 }

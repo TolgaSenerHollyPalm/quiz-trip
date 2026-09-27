@@ -14,10 +14,12 @@ import { Button } from '../ui/Button.tsx'
 import ChoiceGroup from '../ui/ChoiceGroup.tsx'
 import { CheckIcon, PlusIcon } from '../ui/icons.tsx'
 import { TRANSPORT_LABELS, TRIP_KIND_LABELS } from '../ui/labels.ts'
+import ProgressBar from '../ui/ProgressBar.tsx'
 import RequiredMark from '../ui/RequiredMark.tsx'
 import Screen from '../ui/Screen.tsx'
 import text from '../ui/text.module.css'
 import TransportIcon from '../ui/TransportIcon.tsx'
+import TripKindIcon from '../ui/TripKindIcon.tsx'
 import { useOnline } from '../ui/useOnline.ts'
 import styles from './TripWizardScreen.module.css'
 
@@ -125,15 +127,30 @@ export default function TripWizardScreen() {
 
   return (
     // The header leaves the wizard; the Geri button walks back through it.
-    <Screen title="Yeni gezi" back={{ screen: 'home' }}>
-      <p className={styles.progress}>
-        <span className={styles.stepCount}>
-          Adım {step + 1} / {steps.length}
-        </span>
-        <span className={styles.bar}>
-          <span className={styles.fill} style={{ width: `${((step + 1) / steps.length) * 100}%` }} />
-        </span>
-      </p>
+    <Screen
+      title="Yeni gezi"
+      eyebrow={`Adım ${step + 1} / ${steps.length}`}
+      back={{ screen: 'home' }}
+      footer={
+        <div className={styles.nav}>
+          {step > 0 && (
+            <Button onClick={() => setStep(step - 1)} disabled={busy}>
+              Geri
+            </Button>
+          )}
+          {step < last ? (
+            <Button variant="primary" big disabled={!steps[step].ready} onClick={() => setStep(step + 1)}>
+              Devam
+            </Button>
+          ) : (
+            <Button variant="primary" big disabled={busy} onClick={() => void create()}>
+              {busy ? 'Hazırlanıyor…' : 'Geziyi oluştur'}
+            </Button>
+          )}
+        </div>
+      }
+    >
+      <ProgressBar value={step + 1} max={steps.length} tone="teal" label="Adım" thick />
       <h2 className={styles.question}>{steps[step].title}</h2>
 
       {step === 0 && (
@@ -220,7 +237,7 @@ export default function TripWizardScreen() {
         <>
           <ChoiceGroup
             label="Tatil türü"
-            options={TRIP_KINDS.map((value) => ({ value, label: TRIP_KIND_LABELS[value] }))}
+            options={TRIP_KINDS.map((value) => ({ value, label: TRIP_KIND_LABELS[value], icon: <TripKindIcon kind={value} size={22} /> }))}
             selected={kind ? [kind] : []}
             onToggle={(value) => setKind(value === kind ? undefined : value)}
           />
@@ -283,22 +300,6 @@ export default function TripWizardScreen() {
         </>
       )}
 
-      <div className={styles.nav}>
-        {step > 0 && (
-          <Button onClick={() => setStep(step - 1)} disabled={busy}>
-            Geri
-          </Button>
-        )}
-        {step < last ? (
-          <Button variant="primary" big disabled={!steps[step].ready} onClick={() => setStep(step + 1)}>
-            Devam
-          </Button>
-        ) : (
-          <Button variant="primary" big disabled={busy} onClick={() => void create()}>
-            {busy ? 'Hazırlanıyor…' : 'Geziyi oluştur'}
-          </Button>
-        )}
-      </div>
     </Screen>
   )
 }

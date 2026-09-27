@@ -1,27 +1,18 @@
 .countdown {
-  position: relative;
-  height: 36px;
-  overflow: hidden;
-  border-radius: 999px;
-  background: var(--color-border);
-}
-
-.bar {
-  height: 100%;
-  background: var(--color-primary);
-  transition: width 0.2s linear;
-}
-
-.countdown[data-urgent='true'] .bar {
-  background: var(--color-danger);
-}
-
-.value {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  font-size: 0.875rem;
   font-weight: 700;
-  color: var(--color-text);
-  text-shadow: 0 0 6px rgb(255 255 255 / 0.9);
+  font-variant-numeric: tabular-nums;
+}
+
+.countdown[data-urgent='true'] {
+  border-color: var(--color-coral-strong);
+  color: var(--color-coral-text);
 }

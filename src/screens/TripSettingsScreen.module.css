@@ -11,7 +11,7 @@
 
 .legend {
   padding: 0 6px;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .field {
@@ -27,18 +27,21 @@
 
 .input {
   width: 100%;
-  min-height: var(--tap-size);
-  padding: 6px 12px;
-  border: 2px solid var(--color-border);
-  border-radius: var(--radius);
+  min-height: 48px;
+  padding: 0 12px;
+  border: 1px solid var(--color-field-border);
+  border-radius: var(--radius-field);
   background: var(--color-surface);
-  font-size: 1.2rem;
-  font-weight: 700;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 800;
   text-align: center;
+  font-variant-numeric: tabular-nums;
 }
 
 .input:focus {
   border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-soft);
   outline: none;
 }
 

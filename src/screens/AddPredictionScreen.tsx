@@ -16,6 +16,7 @@ import { parseNumber } from '../game/values.ts'
 import type { PredictionTemplate } from '../packs/types.ts'
 import { Button } from '../ui/Button.tsx'
 import ChoiceGroup from '../ui/ChoiceGroup.tsx'
+import { PlusIcon } from '../ui/icons.tsx'
 import Missing from '../ui/Missing.tsx'
 import RequiredMark from '../ui/RequiredMark.tsx'
 import Screen from '../ui/Screen.tsx'
@@ -44,7 +45,7 @@ export default function AddPredictionScreen({ tripId }: { tripId: string }) {
 
   return (
     <Screen title="Tahmin ekle" back={{ screen: 'predictions', tripId }} theme={tripTheme(trip.kind)}>
-      <h2 className={text.heading}>Paketteki sorular</h2>
+      <h2 className={text.sectionTitle}>Paketteki sorular</h2>
       <ul className={styles.templates}>
         {collection.templates.map((template) => {
           const added = trip.predictions.some((prediction) => prediction.templateId === template.id)
@@ -56,6 +57,7 @@ export default function AddPredictionScreen({ tripId }: { tripId: string }) {
               </div>
               <div className={styles.templateAction}>
                 <Button
+                  inline
                   disabled={added}
                   onClick={() =>
                     missingParams(template, trip.params).length > 0
@@ -71,7 +73,7 @@ export default function AddPredictionScreen({ tripId }: { tripId: string }) {
         })}
       </ul>
 
-      <h2 className={text.heading}>Kendi sorun</h2>
+      <h2 className={`${text.sectionTitle} ${styles.later}`}>Kendi sorun</h2>
       <CustomPredictionForm onAdd={(input) => add(customPrediction(input, crypto.randomUUID()))} />
     </Screen>
   )
@@ -165,8 +167,9 @@ function CustomPredictionForm({ onAdd }: { onAdd: (input: CustomPredictionInput)
               </li>
             ))}
           </ol>
-          <Button disabled={options.length >= MAX_CHOICE_OPTIONS} onClick={() => setOptions([...options, ''])}>
-            + Seçenek ekle
+          <Button inline disabled={options.length >= MAX_CHOICE_OPTIONS} onClick={() => setOptions([...options, ''])}>
+            <PlusIcon size={18} strokeWidth={2.2} />
+            Seçenek ekle
           </Button>
         </>
       )}
