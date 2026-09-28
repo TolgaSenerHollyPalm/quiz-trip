@@ -5,8 +5,8 @@
   "country": "EG",
   "city": "Sharm el-Sheikh",
   "cityId": "sharm-el-sheikh",
-  "version": 4,
-  "updatedAt": "2026-09-27",
+  "version": 5,
+  "updatedAt": "2026-09-28",
   "questions": [
     {
       "id": "eg-hist-001",
@@ -1360,7 +1360,7 @@
     {
       "id": "souvenir-count",
       "type": "number",
-      "text": "Gezi sonunda toplam kaç parça hediyelik almış olacağız?",
+      "text": "Seyahat sonunda toplam kaç parça hediyelik almış olacağız?",
       "unit": "adet",
       "min": 0,
       "max": 100,

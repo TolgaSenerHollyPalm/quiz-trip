@@ -60,3 +60,84 @@
 .nav > :last-child {
   flex: 1;
 }
+
+/* The packs on offer: one full-width row each in a white card, with a teal ring that fills in once added. */
+.packs {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.packs legend {
+  margin-bottom: 8px;
+  padding: 0;
+}
+
+.packList {
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  list-style: none;
+}
+
+.packList li + li {
+  border-top: 1px solid var(--color-divider);
+}
+
+.pack {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 64px;
+  padding: 12px 16px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.pack[aria-pressed='true'] {
+  background: var(--color-primary-soft);
+}
+
+.packText {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.packTitle {
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.packMeta {
+  color: var(--color-muted);
+  font-size: 0.875rem;
+}
+
+.packToggle {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 2px solid var(--color-primary);
+  border-radius: 50%;
+  color: var(--color-primary);
+}
+
+.pack[aria-pressed='true'] .packToggle {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+}

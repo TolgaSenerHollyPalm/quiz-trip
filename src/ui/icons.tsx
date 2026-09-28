@@ -218,12 +218,12 @@ export function BoxIcon({ size = 19, strokeWidth = 1.7 }: IconProps) {
   )
 }
 
-/** Appearance: follow the phone. */
-export function PhoneIcon({ size = 22, strokeWidth = 1.7 }: IconProps) {
+/** Appearance: automatic, light or dark as the phone is set. */
+export function AutoIcon({ size = 22, strokeWidth = 1.7 }: IconProps) {
   return (
     <svg {...line(size, strokeWidth)}>
-      <rect x="6.5" y="2.8" width="11" height="18.4" rx="2.6" />
-      <path d="M10.5 17.8h3" />
+      <circle cx="12" cy="12" r="8.5" />
+      <path d="M12 3.5a8.5 8.5 0 0 1 0 17z" fill="currentColor" stroke="none" />
     </svg>
   )
 }

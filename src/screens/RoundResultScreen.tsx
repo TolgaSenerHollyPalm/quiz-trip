@@ -12,7 +12,7 @@ export default function RoundResultScreen({ tripId, roundId }: { tripId: string;
   const { trip } = useTrip(tripId)
   const back = { screen: 'trip', tripId } as const
   const round = trip?.rounds.find((r) => r.id === roundId)
-  if (!trip) return <Missing message="Bu gezi bulunamadı." back={{ screen: 'home' }} />
+  if (!trip) return <Missing message="Bu seyahat bulunamadı." back={{ screen: 'home' }} />
   if (!round) return <Missing message="Bu tur bulunamadı." back={back} />
 
   const names = new Map(trip.players.map((player) => [player.id, player.nickname]))
@@ -38,9 +38,9 @@ export default function RoundResultScreen({ tripId, roundId }: { tripId: string;
         names={names}
       />
       <h2 className={`${text.sectionTitle} ${styles.later}`}>Genel sıralama</h2>
-      <p className={styles.note}>Bu gezide oynanan {trip.rounds.length} turun toplamı</p>
+      <p className={styles.note}>Bu seyahatte oynanan {trip.rounds.length} turun toplamı</p>
       <StandingsList standings={rankPlayers(seating, quizTotals(trip.rounds))} names={names} />
-      <LinkButton to={back}>Gezi ekranına dön</LinkButton>
+      <LinkButton to={back}>Seyahat ekranına dön</LinkButton>
     </Screen>
   )
 }

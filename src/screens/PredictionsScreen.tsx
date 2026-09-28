@@ -19,7 +19,7 @@ const SECTIONS: { status: Prediction['status']; title: string }[] = [
 
 export default function PredictionsScreen({ tripId }: { tripId: string }) {
   const { trip } = useTrip(tripId)
-  if (!trip) return <Missing message="Bu gezi bulunamadı." back={{ screen: 'home' }} />
+  if (!trip) return <Missing message="Bu seyahat bulunamadı." back={{ screen: 'home' }} />
 
   const detail = (prediction: Prediction) => {
     if (prediction.status === 'resolved') return `Sonuç: ${formatAnswer(prediction, prediction.result!)}`

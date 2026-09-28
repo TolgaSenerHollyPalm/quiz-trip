@@ -43,8 +43,8 @@ export default function HomeScreen() {
 
   return (
     <Screen
-      title="Gezilerin"
-      eyebrow={trips.length > 0 && `${trips.length} gezi`}
+      title="Seyahatlerin"
+      eyebrow={trips.length > 0 && `${trips.length} seyahat`}
       icon={
         <span className={styles.brand}>
           <AppIcon />
@@ -62,7 +62,7 @@ export default function HomeScreen() {
       footer={
         <LinkButton to={{ screen: 'trip-new' }} variant="primary" big>
           <PlusIcon size={20} strokeWidth={2.2} />
-          Yeni gezi
+          Yeni seyahat
         </LinkButton>
       }
     >
@@ -71,7 +71,7 @@ export default function HomeScreen() {
       {/* An empty app should say what it is for before it asks for anything. */}
       {trips.length === 0 && (
         <section className={styles.welcome}>
-          <h2 className={styles.welcomeTitle}>Gezini kur, gerisini TripKit hatırlasın</h2>
+          <h2 className={styles.welcomeTitle}>Seyahatini kur, gerisini TripKit hatırlasın</h2>
           <ol className={styles.steps}>
             <li>
               <span className={styles.stepNumber}>1</span>
@@ -95,8 +95,8 @@ export default function HomeScreen() {
 
       {others.length > 0 && (
         <section className={styles.section}>
-          <h2 className={text.sectionTitle}>{featured ? 'Diğer geziler' : 'Geziler'}</h2>
-          <ListCard as="nav" label="Geziler">
+          <h2 className={text.sectionTitle}>{featured ? 'Diğer seyahatler' : 'Seyahatler'}</h2>
+          <ListCard as="nav" label="Seyahatler">
             {others.map((trip) => (
               <OtherTrip key={trip.id} trip={trip} today={today} />
             ))}
@@ -120,7 +120,7 @@ function FeaturedTrip({ trip, today }: { trip: TripState; today: string }) {
     <a className={`${styles.featured} ${tripTheme(trip.kind)}`} href={href({ screen: 'trip', tripId: trip.id })}>
       <div className={styles.top}>
         <div className={styles.topRow}>
-          <span className={styles.next}>{phase.kind === 'during' ? 'Devam eden gezi' : 'Sıradaki gezi'}</span>
+          <span className={styles.next}>{phase.kind === 'during' ? 'Devam eden seyahat' : 'Sıradaki seyahat'}</span>
           <TransportIcon transport={trip.transport} size={22} decorative />
         </div>
         {phase.kind === 'before' ? (

@@ -22,7 +22,7 @@ describe('migrateTrip', () => {
   })
 
   it('falls back to a plain name when the pack is gone', () => {
-    expect(migrateTrip(legacy).name).toBe('Gezi')
+    expect(migrateTrip(legacy).name).toBe('Seyahat')
   })
 })
 

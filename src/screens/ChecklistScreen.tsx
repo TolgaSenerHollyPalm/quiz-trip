@@ -29,7 +29,7 @@ export default function ChecklistScreen({ tripId }: { tripId: string }) {
   const [group, setGroup] = useState<Group>('pack')
   const [editing, setEditing] = useState(false)
   const panelId = useId()
-  if (!trip) return <Missing message="Bu gezi bulunamadı." back={{ screen: 'home' }} />
+  if (!trip) return <Missing message="Bu seyahat bulunamadı." back={{ screen: 'home' }} />
 
   const items = trip.checklist
   const save = (checklist: ChecklistItem[]) => saveTrip({ ...trip, checklist })

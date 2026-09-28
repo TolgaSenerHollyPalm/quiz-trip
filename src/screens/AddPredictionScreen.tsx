@@ -26,9 +26,9 @@ import styles from './AddPredictionScreen.module.css'
 
 export default function AddPredictionScreen({ tripId }: { tripId: string }) {
   const { collection, trip, saveTrip } = useTrip(tripId)
-  if (!trip) return <Missing message="Bu gezi bulunamadı." back={{ screen: 'home' }} />
+  if (!trip) return <Missing message="Bu seyahat bulunamadı." back={{ screen: 'home' }} />
   if (collection.packs.length === 0) {
-    return <Missing message="Bu gezinin soru paketi cihazda yok." back={{ screen: 'trip', tripId }} />
+    return <Missing message="Bu seyahatin soru paketi cihazda yok." back={{ screen: 'trip', tripId }} />
   }
 
   const add = (prediction: Prediction) => {
@@ -39,7 +39,7 @@ export default function AddPredictionScreen({ tripId }: { tripId: string }) {
   const summary = (template: PredictionTemplate) => {
     if (template.type === 'choice') return template.options?.join(' / ')
     const missing = missingParams(template, trip.params)
-    if (missing.length > 0) return `Önce gezi ayarlarında: ${missing.map((param) => param.label).join(', ')}`
+    if (missing.length > 0) return `Önce seyahat ayarlarında: ${missing.map((param) => param.label).join(', ')}`
     return describeBounds(predictionFromTemplate(template, trip.params, ''))
   }
 

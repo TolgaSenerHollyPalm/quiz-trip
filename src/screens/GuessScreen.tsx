@@ -37,7 +37,7 @@ export default function GuessScreen({ tripId, predictionId, playerId }: GuessScr
   const [problem, setProblem] = useState<string>()
 
   const detail = { screen: 'prediction', tripId, predictionId } as const
-  if (!trip) return <Missing message="Bu gezi bulunamadı." back={{ screen: 'home' }} />
+  if (!trip) return <Missing message="Bu seyahat bulunamadı." back={{ screen: 'home' }} />
   if (!prediction) return <Missing message="Bu tahmin bulunamadı." back={{ screen: 'predictions', tripId }} />
 
   if (phase === 'locked') {

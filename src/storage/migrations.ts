@@ -14,7 +14,7 @@ export function migrateTrip(legacy: LegacyTrip, packTitle?: string): SinglePackT
     ...legacy,
     id: legacy.packId,
     packId: legacy.packId,
-    name: packTitle ?? 'Gezi',
+    name: packTitle ?? 'Seyahat',
     checklist: [],
   }
 }

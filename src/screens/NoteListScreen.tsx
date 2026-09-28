@@ -64,7 +64,7 @@ export default function NoteListScreen({ tripId, list }: { tripId: string; list:
   const { trip, saveTrip } = useTrip(tripId)
   const [editing, setEditing] = useState(false)
   const [openId, setOpenId] = useState<string>()
-  if (!trip) return <Missing message="Bu gezi bulunamadı." back={{ screen: 'home' }} />
+  if (!trip) return <Missing message="Bu seyahat bulunamadı." back={{ screen: 'home' }} />
 
   const words = NOTE_LISTS[list]
   const items = trip[list]

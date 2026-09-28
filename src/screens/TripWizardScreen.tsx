@@ -47,6 +47,10 @@ export default function TripWizardScreen() {
   const suggestedName = destinationName(destinations, country, cityId === ANY_CITY ? undefined : cityId)
   const name = typedName ?? suggestedName // the destination names the trip until the player does
   const cities = findCountry(destinations, country)?.cities ?? []
+  const countryName = findCountry(destinations, country)?.name
+  // The country was the first answer, so a pack titled "Mısır — Sharm el-Şeyh" shows as "Sharm el-Şeyh".
+  const shortTitle = (title: string) =>
+    countryName && title.startsWith(`${countryName} — `) ? title.slice(countryName.length + 3) : title
   // What the device already has, then what the app itself carries, then what the server offers.
   const installed = packs.filter((pack) => matchesDestination(pack, destination))
   const inApp = bundledPacks().filter(
@@ -66,7 +70,7 @@ export default function TripWizardScreen() {
     { title: 'Ne zaman?', ready: startDate !== '' && (endDate === '' || endDate >= startDate) },
     { title: 'Nasıl gidiyorsun?', ready: true },
     { title: 'Ne tatili?', ready: true },
-    { title: 'Gezinin adı', ready: name.trim() !== '' },
+    { title: 'Seyahatin adı', ready: name.trim() !== '' },
     { title: 'Soru paketleri', ready: true },
   ]
   const last = steps.length - 1
@@ -128,7 +132,7 @@ export default function TripWizardScreen() {
   return (
     // The header leaves the wizard; the Geri button walks back through it.
     <Screen
-      title="Yeni gezi"
+      title="Yeni seyahat"
       eyebrow={`Adım ${step + 1} / ${steps.length}`}
       back={{ screen: 'home' }}
       footer={
@@ -144,7 +148,7 @@ export default function TripWizardScreen() {
             </Button>
           ) : (
             <Button variant="primary" big disabled={busy} onClick={() => void create()}>
-              {busy ? 'Hazırlanıyor…' : 'Geziyi oluştur'}
+              {busy ? 'Hazırlanıyor…' : 'Seyahati oluştur'}
             </Button>
           )}
         </div>
@@ -167,7 +171,7 @@ export default function TripWizardScreen() {
               setCityId(ANY_CITY)
             }}
           />
-          <p className={text.hint}>Ülke, gezinin soru paketlerini getirir. Gerisini sonra da değiştirebilirsin.</p>
+          <p className={text.hint}>Ülke, seyahatinin soru ve eğlence paketlerini getirir. Gerisini sonra da değiştirebilirsin.</p>
         </>
       )}
 
@@ -184,7 +188,7 @@ export default function TripWizardScreen() {
             pickOne
           />
           <p className={text.hint}>
-            Şehir seçersen o şehrin paketi gelir. Seçmezsen ülkenin bütün paketleri bu geziye eklenebilir.
+            Şehir seçersen o şehrin paketi gelir. Seçmezsen ülkenin bütün paketleri bu seyahate eklenebilir.
           </p>
         </>
       )}
@@ -215,7 +219,7 @@ export default function TripWizardScreen() {
               />
             </label>
           </div>
-          <p className={text.hint}>Gidiş tarihiyle sayaç başlar; dönüşü girersen sayaç gezi boyunca devam eder.</p>
+          <p className={text.hint}>Gidiş tarihiyle sayaç başlar; dönüşü girersen sayaç seyahat boyunca devam eder.</p>
           {endDate !== '' && endDate < startDate && <p className={text.problem}>Dönüş, gidişten önce olamaz.</p>}
         </>
       )}
@@ -260,7 +264,7 @@ export default function TripWizardScreen() {
               onChange={(event) => setTypedName(event.target.value)}
             />
           </label>
-          <p className={text.hint}>Gezini listede bu adla göreceksin.</p>
+          <p className={text.hint}>Seyahatini listede bu adla göreceksin.</p>
         </>
       )}
 
@@ -268,31 +272,42 @@ export default function TripWizardScreen() {
         <>
           {choices.length > 0 ? (
             <>
-              <ChoiceGroup
-                label={`${suggestedName} için paketler`}
-                options={choices.map((choice) => ({
-                  value: choice.id,
-                  label: `${choice.title}${choice.questionCount ? ` (${choice.questionCount} soru)` : ''}`,
-                  // A plus to add, a tick once it is in: the row has to look like something you press.
-                  icon: chosenPacks.includes(choice.id) ? <CheckIcon /> : <PlusIcon />,
-                }))}
-                selected={chosenPacks}
-                onToggle={(id) =>
-                  setChosenPacks(
-                    chosenPacks.includes(id) ? chosenPacks.filter((other) => other !== id) : [...chosenPacks, id],
-                  )
-                }
-              />
+              <fieldset className={styles.packs}>
+                <legend className={styles.label}>{suggestedName} için paketler</legend>
+                <ul className={styles.packList}>
+                  {choices.map((choice) => {
+                    const added = chosenPacks.includes(choice.id)
+                    return (
+                      <li key={choice.id}>
+                        <button
+                          type="button"
+                          className={styles.pack}
+                          aria-pressed={added}
+                          onClick={() =>
+                            setChosenPacks(added ? chosenPacks.filter((id) => id !== choice.id) : [...chosenPacks, choice.id])
+                          }
+                        >
+                          <span className={styles.packText}>
+                            <span className={styles.packTitle}>{shortTitle(choice.title)}</span>
+                            {choice.questionCount ? <span className={styles.packMeta}>{choice.questionCount} soru</span> : null}
+                          </span>
+                          <span className={styles.packToggle}>{added ? <CheckIcon size={18} /> : <PlusIcon size={18} />}</span>
+                        </button>
+                      </li>
+                    )
+                  })}
+                </ul>
+              </fieldset>
               <p className={text.hint}>
                 {chosenPacks.length === 0
-                  ? 'Eklemek için pakete dokun. Paketler gezide oynanan bilgi yarışmasını ve tahmin sorularını getirir.'
-                  : 'Seçtiklerin gezi oluşturulurken indirilir; sonra da ekleyip çıkarabilirsin.'}
+                  ? 'Eklemek için pakete dokun. Paketler seyahatte oynanan bilgi yarışmasını ve tahmin sorularını getirir.'
+                  : 'Seçtiklerin seyahat oluşturulurken indirilir; sonra da ekleyip çıkarabilirsin.'}
               </p>
             </>
           ) : (
             <p className={text.hint}>
               {!online
-                ? 'İnternet yokken paket listesi okunamıyor. Gezi ekranından sonra ekleyebilirsin.'
+                ? 'İnternet yokken paket listesi okunamıyor. Seyahat ekranından sonra ekleyebilirsin.'
                 : (listProblem ?? (offered === undefined ? 'Paketler aranıyor…' : 'Bu destinasyon için paket yok.'))}
             </p>
           )}

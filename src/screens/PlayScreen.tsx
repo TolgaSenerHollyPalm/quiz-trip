@@ -34,9 +34,9 @@ export default function PlayScreen({ tripId }: { tripId: string }) {
   const [phase, setPhase] = useState<Phase>({ name: 'ready' })
   const back: Route = { screen: 'trip', tripId }
 
-  if (!trip) return <Missing message="Bu gezi bulunamadı." back={{ screen: 'home' }} />
+  if (!trip) return <Missing message="Bu seyahat bulunamadı." back={{ screen: 'home' }} />
   if (collection.packs.length === 0) {
-    return <Missing message="Bu gezinin soru paketi cihazda yok." back={back} />
+    return <Missing message="Bu seyahatin soru paketi cihazda yok." back={back} />
   }
   const player = (playerId: string) => trip.players.find((candidate) => candidate.id === playerId)
   const nameOf = (playerId: string) => player(playerId)?.nickname ?? '?'

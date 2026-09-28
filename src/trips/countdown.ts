@@ -39,12 +39,12 @@ export function countdownMessage(phase: TripPhase): CountdownMessage {
       return { title: 'Bugün yola çıkıyorsun!', message: 'İyi yolculuk. Listede işaretlenmemiş bir şey kaldı mı?' }
     case 'during':
       return {
-        title: `Gezinin ${phase.day}. günü`,
+        title: `Seyahatin ${phase.day}. günü`,
         message: 'Keyfini çıkar. Canın sıkılırsa bilgi yarışması ve tahminler burada.',
       }
     case 'after':
       return {
-        title: 'Gezi tamamlandı',
+        title: 'Seyahat tamamlandı',
         message: phase.daysAgo === 1 ? 'Dün döndün. Umarız harikaydı.' : 'Umarız harikaydı. Skorlara bakmayı unutma.',
       }
   }

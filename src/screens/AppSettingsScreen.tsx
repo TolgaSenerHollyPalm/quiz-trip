@@ -5,7 +5,7 @@ import { wipeDevice } from '../storage/wipe.ts'
 import { Button } from '../ui/Button.tsx'
 import ChoiceGroup from '../ui/ChoiceGroup.tsx'
 import ConfirmDialog from '../ui/ConfirmDialog.tsx'
-import { MoonIcon, PhoneIcon, SunIcon } from '../ui/icons.tsx'
+import { AutoIcon, MoonIcon, SunIcon } from '../ui/icons.tsx'
 import Screen from '../ui/Screen.tsx'
 import text from '../ui/text.module.css'
 import styles from './AppSettingsScreen.module.css'
@@ -13,7 +13,7 @@ import styles from './AppSettingsScreen.module.css'
 const buildTime = new Date(__BUILD_TIME__).toLocaleString('tr-TR', { dateStyle: 'short', timeStyle: 'short' })
 
 const APPEARANCES: { value: Appearance; label: string; icon: ReactNode }[] = [
-  { value: 'system', label: 'Telefona uy', icon: <PhoneIcon /> },
+  { value: 'system', label: 'Oto', icon: <AutoIcon /> },
   { value: 'light', label: 'Açık', icon: <SunIcon /> },
   { value: 'dark', label: 'Koyu', icon: <MoonIcon /> },
 ]
@@ -69,7 +69,7 @@ export default function AppSettingsScreen() {
         <h2 className={text.sectionTitle}>Bu cihazda</h2>
         <dl className={styles.facts}>
           <div>
-            <dt>Gezi</dt>
+            <dt>Seyahat</dt>
             <dd>{trips.length}</dd>
           </div>
           <div>
@@ -86,14 +86,14 @@ export default function AppSettingsScreen() {
           </div>
         </dl>
         <p className={text.hint}>
-          Gezilerin, puanların ve indirdiğin paketler yalnızca bu cihazda duruyor; hiçbiri sunucuya
+          Seyahatlerin, puanların ve indirdiğin paketler yalnızca bu cihazda duruyor; hiçbiri sunucuya
           gönderilmiyor. Başka bir cihazda görünmemelerinin sebebi de bu.
         </p>
       </section>
 
       <h2 className={`${text.sectionTitle} ${styles.later}`}>Verileri sil</h2>
       <p className={text.hint}>
-        Uygulamanın bu cihazda tuttuğu her şeyi siler: geziler, oyuncular, puanlar, tahminler, hazırlık
+        Uygulamanın bu cihazda tuttuğu her şeyi siler: seyahatler, oyuncular, puanlar, tahminler, hazırlık
         listeleri, indirilmiş soru paketleri ve ayarlar. Geri alınamaz.
       </p>
       <Button variant="danger" disabled={wiping} onClick={() => setConfirming(true)}>
@@ -114,7 +114,7 @@ export default function AppSettingsScreen() {
       >
         {trips.length > 0 ? (
           <>
-            <strong>{trips.length} gezi</strong> ve {packs.length} soru paketi, oyuncular, puanlar, tahminler ve
+            <strong>{trips.length} seyahat</strong> ve {packs.length} soru paketi, oyuncular, puanlar, tahminler ve
             hazırlık listeleriyle birlikte silinecek.
           </>
         ) : (

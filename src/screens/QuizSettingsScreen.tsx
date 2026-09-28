@@ -42,9 +42,9 @@ export default function QuizSettingsScreen({ tripId }: { tripId: string }) {
   })
 
   const back = { screen: 'trip', tripId } as const
-  if (!trip) return <Missing message="Bu gezi bulunamadı." back={{ screen: 'home' }} />
+  if (!trip) return <Missing message="Bu seyahat bulunamadı." back={{ screen: 'home' }} />
   if (collection.packs.length === 0) {
-    return <Missing message="Bu gezinin soru paketi cihazda yok." back={{ screen: 'trip', tripId }} />
+    return <Missing message="Bu seyahatin soru paketi cihazda yok." back={{ screen: 'trip', tripId }} />
   }
   if (trip.players.length === 0) {
     return (

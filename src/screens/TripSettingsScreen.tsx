@@ -33,9 +33,9 @@ export default function TripSettingsScreen({ tripId, add }: { tripId: string; ad
     Object.fromEntries(Object.entries(trip?.params ?? {}).map(([key, value]) => [key, String(value).replace('.', ',')])),
   )
   const [problems, setProblems] = useState<string[]>([])
-  if (!trip) return <Missing message="Bu gezi bulunamadı." back={{ screen: 'home' }} />
+  if (!trip) return <Missing message="Bu seyahat bulunamadı." back={{ screen: 'home' }} />
   if (collection.packs.length === 0) {
-    return <Missing message="Bu gezinin soru paketi cihazda yok." back={{ screen: 'trip', tripId }} />
+    return <Missing message="Bu seyahatin soru paketi cihazda yok." back={{ screen: 'trip', tripId }} />
   }
 
   const groups = settingGroups(collection.templates)
@@ -77,7 +77,7 @@ export default function TripSettingsScreen({ tripId, add }: { tripId: string; ad
 
   return (
     <Screen
-      title="Gezi ayarları"
+      title="Seyahat ayarları"
       back={back}
       theme={tripTheme(trip.kind)}
       footer={
@@ -94,10 +94,10 @@ export default function TripSettingsScreen({ tripId, add }: { tripId: string; ad
         </p>
       )}
       <p className={text.hint}>
-        Otel gibi geziye göre değişen tahmin aralıkları. Bir tahmin eklenirken buradaki değerler ona kopyalanır;
+        Otel gibi seyahate göre değişen tahmin aralıkları. Bir tahmin eklenirken buradaki değerler ona kopyalanır;
         sonradan değiştirmek, eklenmiş tahminleri etkilemez.
       </p>
-      {groups.length === 0 && <p>Bu pakette gezi ayarı gerektiren bir tahmin yok.</p>}
+      {groups.length === 0 && <p>Bu pakette seyahat ayarı gerektiren bir tahmin yok.</p>}
       {groups.map(({ template, params }) => (
         <fieldset key={template.id} className={styles.group}>
           <legend className={styles.legend}>{template.text}</legend>

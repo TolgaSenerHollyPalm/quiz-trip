@@ -11,7 +11,7 @@ import styles from './ScoreboardScreen.module.css'
 export default function ScoreboardScreen({ tripId }: { tripId: string }) {
   const { trip } = useTrip(tripId)
   const back = { screen: 'trip', tripId } as const
-  if (!trip) return <Missing message="Bu gezi bulunamadı." back={{ screen: 'home' }} />
+  if (!trip) return <Missing message="Bu seyahat bulunamadı." back={{ screen: 'home' }} />
 
   const names = new Map(trip.players.map((player) => [player.id, player.nickname]))
   const quiz = quizTotals(trip.rounds)

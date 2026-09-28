@@ -15,7 +15,7 @@ export default function PredictionResultScreen({ tripId, predictionId }: { tripI
   const [problem, setProblem] = useState<string>()
   const detail = { screen: 'prediction', tripId, predictionId } as const
   const prediction = trip?.predictions.find((p) => p.id === predictionId)
-  if (!trip) return <Missing message="Bu gezi bulunamadı." back={{ screen: 'home' }} />
+  if (!trip) return <Missing message="Bu seyahat bulunamadı." back={{ screen: 'home' }} />
   if (!prediction) return <Missing message="Bu tahmin bulunamadı." back={{ screen: 'predictions', tripId }} />
   if (prediction.status === 'open') {
     return <Missing message="Sonuç, herkes tahminini girdikten sonra girilebilir." back={detail} />

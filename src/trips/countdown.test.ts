@@ -47,12 +47,12 @@ describe('countdownMessage', () => {
 
   it('numbers the days of the trip and celebrates the departure', () => {
     expect(countdownMessage({ kind: 'today' }).title).toBe('Bugün yola çıkıyorsun!')
-    expect(countdownMessage({ kind: 'during', day: 3 }).title).toBe('Gezinin 3. günü')
+    expect(countdownMessage({ kind: 'during', day: 3 }).title).toBe('Seyahatin 3. günü')
   })
 
   it('has a line for a finished and for an undated trip', () => {
     expect(countdownMessage({ kind: 'after', daysAgo: 1 })).toEqual({
-      title: 'Gezi tamamlandı',
+      title: 'Seyahat tamamlandı',
       message: expect.stringContaining('Dün döndün'),
     })
     expect(countdownMessage({ kind: 'undated' }).message).toContain('Gidiş tarihini')

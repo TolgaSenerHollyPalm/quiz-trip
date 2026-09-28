@@ -20,7 +20,7 @@ export default function PredictionScreen({ tripId, predictionId }: { tripId: str
   const back = { screen: 'predictions', tripId } as const
   const prediction = trip?.predictions.find((p) => p.id === predictionId)
   if (deleted) return null // leaving for the list
-  if (!trip) return <Missing message="Bu gezi bulunamadı." back={{ screen: 'home' }} />
+  if (!trip) return <Missing message="Bu seyahat bulunamadı." back={{ screen: 'home' }} />
   if (!prediction) return <Missing message="Bu tahmin bulunamadı." back={back} />
 
   const guess = { screen: 'guess', tripId, predictionId } as const

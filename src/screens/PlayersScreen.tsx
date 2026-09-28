@@ -30,7 +30,7 @@ export default function PlayersScreen({ tripId, next }: { tripId: string; next?:
   const [losing, setLosing] = useState<Player[]>([]) // removed players whose points would be deleted
 
   const back = { screen: 'trip', tripId } as const
-  if (!trip) return <Missing message="Bu gezi bulunamadı." back={{ screen: 'home' }} />
+  if (!trip) return <Missing message="Bu seyahat bulunamadı." back={{ screen: 'home' }} />
   if (trip.currentRound) {
     return <Missing message="Tur bitene ya da iptal edilene kadar oyuncular değiştirilemez." back={back} />
   }

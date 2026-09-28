@@ -30,12 +30,12 @@ export default function TripFormScreen({ tripId }: { tripId: string }) {
   const [cityId, setCityId] = useState(existing?.cityId ?? '')
   const [problems, setProblems] = useState<string[]>([])
 
-  if (!existing) return <Missing message="Bu gezi bulunamadı." back={{ screen: 'home' }} />
+  if (!existing) return <Missing message="Bu seyahat bulunamadı." back={{ screen: 'home' }} />
 
   const save = () => {
     const found: string[] = []
-    if (name.trim() === '') found.push('Geziye bir ad ver.')
-    if (country === '') found.push('Gezinin ülkesini seç.')
+    if (name.trim() === '') found.push('Seyahate bir ad ver.')
+    if (country === '') found.push('Seyahatin ülkesini seç.')
     if (startDate === '') found.push('Gidiş tarihini seç.')
     if (endDate !== '' && startDate !== '' && endDate < startDate) found.push('Dönüş, gidişten önce olamaz.')
     setProblems(found)
@@ -59,7 +59,7 @@ export default function TripFormScreen({ tripId }: { tripId: string }) {
 
   return (
     <Screen
-      title="Geziyi düzenle"
+      title="Seyahati düzenle"
       back={{ screen: 'trip', tripId }}
       theme={tripTheme(existing.kind)}
       footer={
@@ -70,7 +70,7 @@ export default function TripFormScreen({ tripId }: { tripId: string }) {
     >
       <label className={styles.field}>
         <span className={styles.label}>
-          Gezinin adı
+          Seyahatin adı
           <RequiredMark />
         </span>
         <input
@@ -107,7 +107,7 @@ export default function TripFormScreen({ tripId }: { tripId: string }) {
         </label>
       </div>
 
-      <p className={text.hint}>Dönüş tarihini girersen sayaç gezi boyunca devam eder.</p>
+      <p className={text.hint}>Dönüş tarihini girersen sayaç seyahat boyunca devam eder.</p>
 
       <ChoiceGroup
         label="Nasıl gidiyorsun?"
@@ -149,7 +149,7 @@ export default function TripFormScreen({ tripId }: { tripId: string }) {
         pickOne
       />
       <p className={text.hint}>
-        Destinasyon, geziye hangi soru paketlerinin uyduğunu belirler; paketleri gezinin kendi “Soru paketleri”
+        Destinasyon, seyahate hangi soru paketlerinin uyduğunu belirler; paketleri seyahatin kendi “Soru paketleri”
         ekranından yönetirsin. Araç ve tatil türünü değiştirdiğinde hazırlık listesi yenilenir.
       </p>
 

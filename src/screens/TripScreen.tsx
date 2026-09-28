@@ -30,7 +30,7 @@ export default function TripScreen({ tripId }: { tripId: string }) {
   const [confirmingDelete, setConfirmingDelete] = useState(false)
   const [deleted, setDeleted] = useState(false)
   if (deleted) return null // leaving for the home screen
-  if (!trip) return <Missing message="Bu gezi bulunamadı." back={{ screen: 'home' }} />
+  if (!trip) return <Missing message="Bu seyahat bulunamadı." back={{ screen: 'home' }} />
 
   const round = trip.currentRound
   // Predictions that still need guesses or a result.
@@ -45,13 +45,13 @@ export default function TripScreen({ tripId }: { tripId: string }) {
 
   // The rarer actions wait behind "…"; each one that removes something still asks first.
   const menu: MenuItem[] = [
-    { label: 'Geziyi düzenle', onSelect: () => navigate({ screen: 'trip-edit', tripId }) },
+    { label: 'Seyahati düzenle', onSelect: () => navigate({ screen: 'trip-edit', tripId }) },
     ...(collection.templates.some((template) => template.params)
-      ? [{ label: 'Gezi ayarları', onSelect: () => navigate({ screen: 'settings', tripId }) }]
+      ? [{ label: 'Seyahat ayarları', onSelect: () => navigate({ screen: 'settings', tripId }) }]
       : []),
     ...(round ? [{ label: 'Turu iptal et', onSelect: () => setConfirmingCancel(true), danger: true }] : []),
     ...(played ? [{ label: 'Oyun verilerini sıfırla', onSelect: () => setConfirmingReset(true), danger: true }] : []),
-    { label: 'Geziyi sil', onSelect: () => setConfirmingDelete(true), danger: true },
+    { label: 'Seyahati sil', onSelect: () => setConfirmingDelete(true), danger: true },
   ]
 
   const chips = (trip.kind || trip.transport) && (
@@ -151,8 +151,8 @@ export default function TripScreen({ tripId }: { tripId: string }) {
         <section className={styles.section}>
           <p className={styles.notice}>
             {trip.packIds.length > 0
-              ? 'Bu gezinin soru paketi cihazda yok. Soru paketleri ekranından yeniden indirebilirsin.'
-              : 'Bu geziye soru paketi bağlı değil. Paket eklersen bilgi yarışması ve tahminler açılır.'}
+              ? 'Bu seyahatin soru paketi cihazda yok. Soru paketleri ekranından yeniden indirebilirsin.'
+              : 'Bu seyahate soru paketi bağlı değil. Paket eklersen bilgi yarışması ve tahminler açılır.'}
           </p>
           <ListCard as="nav" label="Soru paketleri">
             <LinkRow
@@ -188,12 +188,12 @@ export default function TripScreen({ tripId }: { tripId: string }) {
         }}
         onCancel={() => setConfirmingReset(false)}
       >
-        Oyuncular, puanlar, tahminler ve gezi ayarları silinecek. Gezinin adı, tarihleri ve listeleri kalır.
+        Oyuncular, puanlar, tahminler ve seyahat ayarları silinecek. Seyahatin adı, tarihleri ve listeleri kalır.
       </ConfirmDialog>
 
       <ConfirmDialog
         open={confirmingDelete}
-        title="Gezi silinsin mi?"
+        title="Seyahat silinsin mi?"
         confirmLabel="Sil"
         onConfirm={() => {
           setDeleted(true)
@@ -203,10 +203,10 @@ export default function TripScreen({ tripId }: { tripId: string }) {
         }}
         onCancel={() => setConfirmingDelete(false)}
       >
-        <strong>{trip.name}</strong> gezisi, oyuncuları, puanları ve tahminleriyle birlikte silinecek.
+        <strong>{trip.name}</strong> seyahati, oyuncuları, puanları ve tahminleriyle birlikte silinecek.
         {orphans.length > 0
-          ? ` Yalnızca bu gezide kullanılan ${orphans.length === 1 ? 'soru paketi' : `${orphans.length} soru paketi`} de telefondan silinecek; internet varken yeniden indirebilirsin.`
-          : ' Soru paketleri başka gezilerde kullanıldığı için telefonda kalır.'}
+          ? ` Yalnızca bu seyahatte kullanılan ${orphans.length === 1 ? 'soru paketi' : `${orphans.length} soru paketi`} de telefondan silinecek; internet varken yeniden indirebilirsin.`
+          : ' Soru paketleri başka seyahatlerde kullanıldığı için telefonda kalır.'}
       </ConfirmDialog>
     </Screen>
   )

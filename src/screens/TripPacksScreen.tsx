@@ -23,7 +23,7 @@ export default function TripPacksScreen({ tripId }: { tripId: string }) {
   const [result, setResult] = useState<SyncResult>()
   const [nothingNew, setNothingNew] = useState(false)
   const [removing, setRemoving] = useState<Pack>()
-  if (!trip) return <Missing message="Bu gezi bulunamadı." back={{ screen: 'home' }} />
+  if (!trip) return <Missing message="Bu seyahat bulunamadı." back={{ screen: 'home' }} />
 
   const destination = { country: trip.country, cityId: trip.cityId }
   const where = destinationName(destinations, trip.country, trip.cityId)
@@ -85,11 +85,11 @@ export default function TripPacksScreen({ tripId }: { tripId: string }) {
         )
       }
     >
-      <p className={text.meta}>{where === '' ? 'Bu gezinin ülkesi seçilmemiş.' : `${where} paketleri`}</p>
+      <p className={text.meta}>{where === '' ? 'Bu seyahatin ülkesi seçilmemiş.' : `${where} paketleri`}</p>
 
       {collection.packs.length === 0 ? (
         <p className={text.hint}>
-          Bu geziye paket bağlı değil. Paketler bilgi yarışmasını ve tahmin sorularını getirir.
+          Bu seyahate paket bağlı değil. Paketler bilgi yarışmasını ve tahmin sorularını getirir.
         </p>
       ) : (
         <ul className={styles.list}>
@@ -114,7 +114,7 @@ export default function TripPacksScreen({ tripId }: { tripId: string }) {
 
       {trip.packIds.some((packId) => !packs.some((pack) => pack.id === packId)) && (
         <p className={text.notice}>
-          Bu gezinin bağlı paketlerinden biri cihazda yok. İnternet varken aşağıdan yeniden indirebilirsin.
+          Bu seyahatin bağlı paketlerinden biri cihazda yok. İnternet varken aşağıdan yeniden indirebilirsin.
         </p>
       )}
 
@@ -140,14 +140,14 @@ export default function TripPacksScreen({ tripId }: { tripId: string }) {
       )}
 
       {trip.country === undefined ? (
-        <p className={text.hint}>Geziyi düzenleyip ülkesini seçersen o destinasyonun paketlerini indirebilirim.</p>
+        <p className={text.hint}>Seyahati düzenleyip ülkesini seçersen o destinasyonun paketlerini indirebilirim.</p>
       ) : (
         !online && <p className={text.hint}>İnternet yokken paket indirilemez. Bağlanınca bu ekrandan tekrar dene.</p>
       )}
 
       {nothingNew && !searching && (
         <p className={styles.report} role="status">
-          Bu gezinin paketleri güncel.
+          Bu seyahatin paketleri güncel.
         </p>
       )}
       {result && !result.ok && (
@@ -181,9 +181,9 @@ export default function TripPacksScreen({ tripId }: { tripId: string }) {
         }}
         onCancel={() => setRemoving(undefined)}
       >
-        <strong>{removing?.title}</strong> bu geziden çıkarılacak
-        {removing && !usedElsewhere(removing.id) ? ' ve başka gezide kullanılmadığı için telefondan silinecek' : ''}.
-        Gezinin oyuncuları, puanları ve tahminleri durur; internet varken paketi yeniden indirebilirsin.
+        <strong>{removing?.title}</strong> bu seyahatten çıkarılacak
+        {removing && !usedElsewhere(removing.id) ? ' ve başka seyahatte kullanılmadığı için telefondan silinecek' : ''}.
+        Seyahatin oyuncuları, puanları ve tahminleri durur; internet varken paketi yeniden indirebilirsin.
       </ConfirmDialog>
     </Screen>
   )

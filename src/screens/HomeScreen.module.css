@@ -61,7 +61,7 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* Where there is no count to show, e.g. "Gezinin 3. günü". */
+/* Where there is no count to show, e.g. "Seyahatin 3. günü". */
 .headline {
   font-family: var(--font-display);
   font-size: 1.75rem;

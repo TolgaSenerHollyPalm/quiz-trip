@@ -4,7 +4,7 @@ import type { ManifestOptions } from 'vite-plugin-pwa'
 export const manifest: Partial<ManifestOptions> = {
   name: 'TripKit',
   short_name: 'TripKit',
-  description: 'Gezi sayacı, hazırlık listesi ve yolda oynanan çevrimdışı bilgi yarışması',
+  description: 'Seyahat sayacı, hazırlık listesi ve yolda oynanan çevrimdışı bilgi yarışması',
   lang: 'tr',
   display: 'standalone',
   // Must match the light <meta name="theme-color"> in index.html.

@@ -5,8 +5,8 @@
   "country": "TR",
   "city": "Belek, Antalya",
   "cityId": "antalya",
-  "version": 2,
-  "updatedAt": "2026-09-23",
+  "version": 3,
+  "updatedAt": "2026-09-28",
   "categories": [
     { "id": "spongebob", "label": "SpongeBob" },
     { "id": "tmnt", "label": "Ninja Kaplumbağalar" },
@@ -1029,7 +1029,7 @@
     {
       "id": "hyper-coaster-rides",
       "type": "number",
-      "text": "Hyper Coaster'a gezi boyunca toplam kaç kez bineceğiz?",
+      "text": "Hyper Coaster'a seyahat boyunca toplam kaç kez bineceğiz?",
       "unit": "kez",
       "min": 0,
       "max": 20,
@@ -1038,7 +1038,7 @@
     {
       "id": "ice-cream-count",
       "type": "number",
-      "text": "Gezi boyunca toplam kaç dondurma yiyeceğiz?",
+      "text": "Seyahat boyunca toplam kaç dondurma yiyeceğiz?",
       "unit": "adet",
       "min": 0,
       "max": 50,
@@ -1056,7 +1056,7 @@
     {
       "id": "photo-with-character-count",
       "type": "number",
-      "text": "Gezi boyunca toplam kaç karakterle fotoğraf çektireceğiz?",
+      "text": "Seyahat boyunca toplam kaç karakterle fotoğraf çektireceğiz?",
       "unit": "adet",
       "min": 0,
       "max": 20,
@@ -1085,7 +1085,7 @@
     {
       "id": "favorite-ride-vote",
       "type": "choice",
-      "text": "Gezi sonunda oy birliğiyle 'favori attraksiyon' seçilecek olursa hangisi kazanır?",
+      "text": "Seyahat sonunda oy birliğiyle 'favori attraksiyon' seçilecek olursa hangisi kazanır?",
       "options": [
         "Hyper Coaster",
         "Turtle Coaster",

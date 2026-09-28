@@ -44,16 +44,16 @@ export default function DesignGallery() {
       aside={
         <Menu
           items={[
-            { label: 'Geziyi düzenle', onSelect: () => undefined },
+            { label: 'Seyahati düzenle', onSelect: () => undefined },
             { label: 'Oyun verilerini sıfırla', onSelect: () => undefined, danger: true },
-            { label: 'Geziyi sil', onSelect: () => undefined, danger: true },
+            { label: 'Seyahati sil', onSelect: () => undefined, danger: true },
           ]}
         />
       }
       footer={
         <Button variant="primary" big>
           <PlusIcon size={20} strokeWidth={2.2} />
-          Yeni gezi
+          Yeni seyahat
         </Button>
       }
     >
@@ -79,7 +79,7 @@ export default function DesignGallery() {
             ['Teal · hazırlık', 'var(--color-primary)', 'var(--color-primary-soft)'],
             ['Mercan · almadan gelme', 'var(--color-coral-strong)', 'var(--color-coral-soft)'],
             ['Amber · tatmadan gelme', 'var(--color-amber-strong)', 'var(--color-amber-soft)'],
-            ['Gezi rengi · deniz', '#1A6E9E', '#DCEEF8'],
+            ['Seyahat rengi · deniz', '#1A6E9E', '#DCEEF8'],
           ].map(([name, strong, soft]) => (
             <span key={name} className={styles.swatch}>
               <span className={styles.pair}>
@@ -93,7 +93,7 @@ export default function DesignGallery() {
       </section>
 
       <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>Tatil tipine göre gezi rengi</h2>
+        <h2 className={styles.sectionTitle}>Tatil tipine göre seyahat rengi</h2>
         <div className={styles.trips}>
           {TRIP_KINDS.map((kind) => (
             <div key={kind} className={`${styles.trip} ${tripTheme(kind)}`}>
