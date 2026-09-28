@@ -1,4 +1,4 @@
-import { useRef, useState, type ReactNode } from 'react'
+import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { useTrip } from '../app/appData.ts'
 import { navigate, type Route } from '../app/router.ts'
 import { DIFFICULTY_POINTS, isCorrectChoice, roundPoints, turnPoints } from '../game/scoring.ts'
@@ -15,7 +15,7 @@ import Missing from '../ui/Missing.tsx'
 import ProgressBar from '../ui/ProgressBar.tsx'
 import text from '../ui/text.module.css'
 import { tripTheme } from '../ui/tripTheme.ts'
-import { dative, locative } from '../ui/turkish.ts'
+import { locative } from '../ui/turkish.ts'
 import styles from './PlayScreen.module.css'
 
 interface Feedback {
@@ -26,12 +26,14 @@ interface Feedback {
   finishedRoundId?: string // set once the last answer has closed the round
 }
 
-type Phase = { name: 'ready' } | { name: 'question' } | { name: 'feedback'; feedback: Feedback }
+type Phase = { name: 'question' } | { name: 'feedback'; feedback: Feedback }
+
+const DOUBLE_TAP_MS = 400
 
 // Every step of a round is saved as it happens; leaving and coming back resumes at the current player's turn.
 export default function PlayScreen({ tripId }: { tripId: string }) {
   const { collection, trip, saveTrip } = useTrip(tripId)
-  const [phase, setPhase] = useState<Phase>({ name: 'ready' })
+  const [phase, setPhase] = useState<Phase>({ name: 'question' })
   const back: Route = { screen: 'trip', tripId }
 
   if (!trip) return <Missing message="Bu seyahat bulunamadı." back={{ screen: 'home' }} />
@@ -62,8 +64,8 @@ export default function PlayScreen({ tripId }: { tripId: string }) {
               Turu bitir
             </Button>
           ) : (
-            <Button variant="primary" big onClick={() => setPhase({ name: 'ready' })}>
-              Sıradaki: {next ? nameOf(next.playerId) : ''}
+            <Button variant="primary" big onClick={() => setPhase({ name: 'question' })}>
+              {next && trip.players.length > 1 ? `Sıradaki: ${nameOf(next.playerId)}` : 'Sonraki soru'}
               <ArrowRightIcon />
             </Button>
           )
@@ -82,29 +84,6 @@ export default function PlayScreen({ tripId }: { tripId: string }) {
   if (!round || !turn) return <Missing message="Devam eden bir tur yok." back={back} />
   const number = round.answers.length + 1
   const position = `Soru ${number} / ${round.turns.length}`
-
-  if (phase.name === 'ready') {
-    const name = nameOf(turn.playerId)
-    const to = dative(name)
-    return (
-      <GameScreen
-        theme={theme}
-        back={back}
-        position={position}
-        progress={[round.answers.length, round.turns.length]}
-        footer={
-          <Button variant="primary" big onClick={() => setPhase({ name: 'question' })}>
-            Hazırım
-          </Button>
-        }
-      >
-        <div className={styles.handOver}>
-          <Avatar name={nameOf(turn.playerId)} large />
-          <p className={styles.handOverText}>{to ? `Telefonu ${to} ver` : `Telefonu ver: ${name}`}</p>
-        </div>
-      </GameScreen>
-    )
-  }
 
   const answer = (choice: number | null) => {
     const updated = answerTurn(trip, choice, new Date().toISOString())
@@ -185,6 +164,17 @@ function QuestionPhase({ theme, back, position, round, turn, players, categoryNa
     answered.current = true
     onAnswer(choice)
   }
+  // A double tap on "Sıradaki" would otherwise answer this question with its second half.
+  const armed = useRef(false)
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      armed.current = true
+    }, DOUBLE_TAP_MS)
+    return () => clearTimeout(timer)
+  }, [])
+  const tap = (choice: number) => {
+    if (armed.current) choose(choice)
+  }
   const { question } = turn
 
   return (
@@ -200,7 +190,7 @@ function QuestionPhase({ theme, back, position, round, turn, players, categoryNa
       <ol className={styles.options}>
         {turn.optionOrder.map((optionIndex, position) => (
           <li key={optionIndex}>
-            <button type="button" className={styles.option} onClick={() => choose(position)}>
+            <button type="button" className={styles.option} onClick={() => tap(position)}>
               <span className={styles.letter}>{OPTION_LETTERS[position]}</span>
               <span className={styles.optionText}>{question.options[optionIndex]}</span>
             </button>

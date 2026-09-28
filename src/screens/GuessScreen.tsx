@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useTrip } from '../app/appData.ts'
 import { navigate } from '../app/router.ts'
 import { describeBounds, guessProblem, submitGuess } from '../game/predictions.ts'
@@ -9,11 +9,13 @@ import Missing from '../ui/Missing.tsx'
 import Screen from '../ui/Screen.tsx'
 import { tripTheme } from '../ui/tripTheme.ts'
 import text from '../ui/text.module.css'
-import { dative } from '../ui/turkish.ts'
+import { locative } from '../ui/turkish.ts'
 import ValueField from '../ui/ValueField.tsx'
 import styles from './GuessScreen.module.css'
 
-type Phase = 'handoff' | 'input' | 'locked'
+type Phase = 'input' | 'locked'
+
+const DOUBLE_TAP_MS = 400
 
 interface GuessScreenProps {
   tripId: string
@@ -23,7 +25,7 @@ interface GuessScreenProps {
 
 /**
  * Players enter their guesses one after another on the same phone. Nobody sees an earlier guess: the field
- * always starts empty and a hand-over screen sits between players. The last guess locks the prediction.
+ * starts empty for each player. The last guess locks the prediction.
  */
 export default function GuessScreen({ tripId, predictionId, playerId }: GuessScreenProps) {
   const { trip, saveTrip } = useTrip(tripId)
@@ -32,9 +34,18 @@ export default function GuessScreen({ tripId, predictionId, playerId }: GuessScr
     playerId ? [playerId] : (trip?.players ?? []).filter((player) => !(player.id in (prediction?.guesses ?? {}))).map((p) => p.id),
   )
   const [position, setPosition] = useState(0)
-  const [phase, setPhase] = useState<Phase>(playerId ? 'input' : 'handoff')
+  const [phase, setPhase] = useState<Phase>('input')
   const [value, setValue] = useState<number>()
   const [problem, setProblem] = useState<string>()
+  // Kaydet sits where it did for the previous player: a double tap must not submit an empty guess.
+  const armed = useRef(false)
+  useEffect(() => {
+    armed.current = false
+    const timer = setTimeout(() => {
+      armed.current = true
+    }, DOUBLE_TAP_MS)
+    return () => clearTimeout(timer)
+  }, [position])
 
   const detail = { screen: 'prediction', tripId, predictionId } as const
   if (!trip) return <Missing message="Bu seyahat bulunamadı." back={{ screen: 'home' }} />
@@ -64,14 +75,14 @@ export default function GuessScreen({ tripId, predictionId, playerId }: GuessScr
     return <Missing message="Bu tahmine girilecek bir şey kalmadı." back={detail} />
   }
 
-  const moveTo = (next: number, nextPhase: Phase) => {
+  const moveTo = (next: number) => {
     setPosition(next)
-    setPhase(nextPhase)
     setValue(undefined)
     setProblem(undefined)
   }
 
   const save = () => {
+    if (!armed.current) return
     const issue = guessProblem(prediction, value ?? Number.NaN)
     if (issue) {
       setProblem(issue)
@@ -80,40 +91,12 @@ export default function GuessScreen({ tripId, predictionId, playerId }: GuessScr
     const updated = submitGuess(trip, prediction.id, player.id, value!)
     saveTrip(updated)
     if (updated.predictions.find((p) => p.id === prediction.id)?.status === 'locked') setPhase('locked')
-    else if (position + 1 < queue.length) moveTo(position + 1, 'handoff')
+    else if (position + 1 < queue.length) moveTo(position + 1)
     else navigate(detail, { replace: true })
   }
 
-  if (phase === 'handoff') {
-    const previous = trip.players.find((p) => p.id === queue[position - 1])
-    return (
-      <Screen
-        title="Tahmin girişi"
-        back={detail}
-        theme={tripTheme(trip.kind)}
-        footer={
-          <Button variant="primary" big onClick={() => setPhase('input')}>
-            Hazırım
-          </Button>
-        }
-      >
-        {previous && <p className={styles.saved}>Kaydedildi.</p>}
-        <div className={styles.handoff}>
-          <Avatar name={player.nickname} large />
-          <p className={styles.handoffText}>
-            {dative(player.nickname) ? `Telefonu ${dative(player.nickname)} ver` : `Telefonu ver: ${player.nickname}`}
-          </p>
-          <p className={text.hint}>Diğerlerinin tahminleri gizli.</p>
-        </div>
-        {previous && (
-          <Button inline variant="text" onClick={() => moveTo(position - 1, 'input')}>
-            Geri: {previous.nickname} tahminini değiştirsin
-          </Button>
-        )}
-      </Screen>
-    )
-  }
-
+  const previous = trip.players.find((p) => p.id === queue[position - 1])
+  const where = locative(player.nickname)
   const bounds = describeBounds(prediction)
   return (
     <Screen
@@ -126,9 +109,10 @@ export default function GuessScreen({ tripId, predictionId, playerId }: GuessScr
         </Button>
       }
     >
+      {previous && <p className={styles.saved}>Tahmin kaydedildi.</p>}
       <p className={styles.player}>
         <Avatar name={player.nickname} />
-        {player.nickname}
+        {where ? `Sıra ${where}` : `Sıra: ${player.nickname}`}
       </p>
       <p className={text.question}>{prediction.text}</p>
       {prediction.type === 'number' && bounds && <p className={text.meta}>{bounds}</p>}
@@ -142,11 +126,18 @@ export default function GuessScreen({ tripId, predictionId, playerId }: GuessScr
           setProblem(undefined)
         }}
       />
-      {player.id in prediction.guesses && <p className={text.hint}>Önceki tahminin gizli; yenisini gir.</p>}
+      <p className={text.hint}>
+        {player.id in prediction.guesses ? 'Önceki tahminin gizli; yenisini gir.' : 'Diğerlerinin tahminleri gizli.'}
+      </p>
       {problem && (
         <p className={text.problem} role="alert">
           {problem}
         </p>
+      )}
+      {previous && (
+        <Button inline variant="text" onClick={() => moveTo(position - 1)}>
+          Geri: {previous.nickname} tahminini değiştirsin
+        </Button>
       )}
     </Screen>
   )

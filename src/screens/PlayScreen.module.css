@@ -236,24 +236,3 @@ button.option:active {
 .verdictWrong {
   color: var(--color-coral-text);
 }
-
-/* Between turns: whose turn it is, large, so the phone can be passed across a table. */
-.handOver {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  min-height: 40dvh;
-  text-align: center;
-}
-
-.handOverText {
-  font-family: var(--font-display);
-  font-size: 1.625rem;
-  font-weight: 800;
-  line-height: 1.15;
-  letter-spacing: -0.03em;
-  overflow-wrap: anywhere;
-}

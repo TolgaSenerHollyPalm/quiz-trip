@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { dative, locative } from './turkish.ts'
+import { locative } from './turkish.ts'
 
 describe('locative', () => {
   it('follows the last vowel and hardens after a voiceless consonant', () => {
@@ -17,20 +17,5 @@ describe('locative', () => {
     expect(locative('Ali2')).toBeUndefined()
     expect(locative('TRT')).toBeUndefined()
     expect(locative('  ')).toBeUndefined()
-  })
-})
-
-describe('dative', () => {
-  it('adds a y after a vowel and follows the last vowel', () => {
-    expect(dative('Ada')).toBe('Ada’ya')
-    expect(dative('Tolga')).toBe('Tolga’ya')
-    expect(dative('Ayşe')).toBe('Ayşe’ye')
-    expect(dative('Deniz')).toBe('Deniz’e')
-    expect(dative('Burak')).toBe('Burak’a')
-    expect(dative('Öykü')).toBe('Öykü’ye')
-  })
-
-  it('gives up where a suffix cannot be judged', () => {
-    expect(dative('Ali2')).toBeUndefined()
   })
 })

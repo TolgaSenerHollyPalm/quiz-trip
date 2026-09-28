@@ -17,10 +17,3 @@ export function locative(name: string): string | undefined {
   if (!s) return undefined
   return `${name.trim()}’${HARD_CONSONANTS.includes(s.last) ? 't' : 'd'}${s.back ? 'a' : 'e'}`
 }
-
-/** "Ada’ya", "Deniz’e", "Burak’a": whom to hand the phone to. Undefined when the name will not take a suffix. */
-export function dative(name: string): string | undefined {
-  const s = sound(name)
-  if (!s) return undefined
-  return `${name.trim()}’${VOWELS.includes(s.last) ? 'y' : ''}${s.back ? 'a' : 'e'}`
-}

@@ -11,10 +11,3 @@
   font-size: 1.125rem;
   font-weight: 800;
 }
-
-/* On the hand-over screens, big enough to be seen across a table. */
-.large {
-  width: 72px;
-  height: 72px;
-  font-size: 2rem;
-}
