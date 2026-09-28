@@ -45,39 +45,37 @@
   --trip-ink: #075f59;
 }
 
-@media (prefers-color-scheme: dark) {
-  .beach {
-    --trip-soft: #1a3745;
-    --trip-ink: #98bed3;
-  }
+:global(:root[data-scheme='dark']) .beach {
+  --trip-soft: #1a3745;
+  --trip-ink: #98bed3;
+}
 
-  .fun {
-    --trip-soft: #40361a;
-    --trip-ink: #d2bc93;
-  }
+:global(:root[data-scheme='dark']) .fun {
+  --trip-soft: #40361a;
+  --trip-ink: #d2bc93;
+}
 
-  .winter {
-    --trip-soft: #28383f;
-    --trip-ink: #acbfca;
-  }
+:global(:root[data-scheme='dark']) .winter {
+  --trip-soft: #28383f;
+  --trip-ink: #acbfca;
+}
 
-  .city {
-    --trip-soft: #3c3126;
-    --trip-ink: #cab5a5;
-  }
+:global(:root[data-scheme='dark']) .city {
+  --trip-soft: #3c3126;
+  --trip-ink: #cab5a5;
+}
 
-  .nature {
-    --trip-soft: #203727;
-    --trip-ink: #a1bea7;
-  }
+:global(:root[data-scheme='dark']) .nature {
+  --trip-soft: #203727;
+  --trip-ink: #a1bea7;
+}
 
-  .business {
-    --trip-soft: #28323a;
-    --trip-ink: #aeb5c2;
-  }
+:global(:root[data-scheme='dark']) .business {
+  --trip-soft: #28323a;
+  --trip-ink: #aeb5c2;
+}
 
-  .other {
-    --trip-soft: #153c39;
-    --trip-ink: #91c4c1;
-  }
+:global(:root[data-scheme='dark']) .other {
+  --trip-soft: #153c39;
+  --trip-ink: #91c4c1;
 }

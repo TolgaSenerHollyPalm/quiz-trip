@@ -218,6 +218,35 @@ export function BoxIcon({ size = 19, strokeWidth = 1.7 }: IconProps) {
   )
 }
 
+/** Appearance: follow the phone. */
+export function PhoneIcon({ size = 22, strokeWidth = 1.7 }: IconProps) {
+  return (
+    <svg {...line(size, strokeWidth)}>
+      <rect x="6.5" y="2.8" width="11" height="18.4" rx="2.6" />
+      <path d="M10.5 17.8h3" />
+    </svg>
+  )
+}
+
+/** Appearance: always light. */
+export function SunIcon({ size = 22, strokeWidth = 1.7 }: IconProps) {
+  return (
+    <svg {...line(size, strokeWidth)}>
+      <circle cx="12" cy="12" r="3.8" />
+      <path d="M12 2.8V5M12 19v2.2M2.8 12H5M19 12h2.2M5.5 5.5L7 7M17 17l1.5 1.5M5.5 18.5L7 17M17 7l1.5-1.5" />
+    </svg>
+  )
+}
+
+/** Appearance: always dark. */
+export function MoonIcon({ size = 22, strokeWidth = 1.7 }: IconProps) {
+  return (
+    <svg {...line(size, strokeWidth)}>
+      <path d="M20 13.5A8.5 8.5 0 1 1 10.5 4a7 7 0 0 0 9.5 9.5z" />
+    </svg>
+  )
+}
+
 /** The app's icon as the home screen shows it beside the name: the suitcase on the teal tile. */
 export function AppIcon({ size = 32 }: IconProps) {
   return (

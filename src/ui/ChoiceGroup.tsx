@@ -1,12 +1,15 @@
 import { useId, type ReactNode } from 'react'
 import styles from './ChoiceGroup.module.css'
 import RequiredMark from './RequiredMark.tsx'
+import text from './text.module.css'
 
 /** Past this many options a wall of buttons is harder to use than a dropdown. */
 export const COLLAPSE_AT = 20
 
 interface ChoiceGroupProps<T extends string | number> {
   label: string
+  /** Under a heading that already says it: screen readers still hear the label. */
+  hideLabel?: boolean
   options: { value: T; label: string; icon?: ReactNode }[]
   selected: readonly T[]
   onToggle: (value: T) => void
@@ -19,6 +22,7 @@ interface ChoiceGroupProps<T extends string | number> {
 /** Large toggle buttons; the caller decides whether one or several can be on. */
 export default function ChoiceGroup<T extends string | number>({
   label,
+  hideLabel,
   options,
   selected,
   onToggle,
@@ -27,12 +31,13 @@ export default function ChoiceGroup<T extends string | number>({
   required,
 }: ChoiceGroupProps<T>) {
   const id = useId()
+  const labelClass = hideLabel ? text.visuallyHidden : styles.legend
 
   if (pickOne && options.length >= COLLAPSE_AT) {
     const chosen = options.find((option) => selected.includes(option.value))
     return (
       <div className={styles.group}>
-        <label className={styles.legend} htmlFor={id}>
+        <label className={labelClass} htmlFor={id}>
           {label}
           {required && <RequiredMark />}
         </label>
@@ -63,7 +68,7 @@ export default function ChoiceGroup<T extends string | number>({
 
   return (
     <fieldset className={styles.group}>
-      <legend className={styles.legend}>
+      <legend className={labelClass}>
         {label}
         {required && <RequiredMark />}
       </legend>

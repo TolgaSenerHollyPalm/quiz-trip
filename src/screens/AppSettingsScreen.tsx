@@ -1,13 +1,22 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
 import { useAppData } from '../app/appData.ts'
+import { currentAppearance, saveAppearance, type Appearance } from '../app/appearance.ts'
 import { wipeDevice } from '../storage/wipe.ts'
 import { Button } from '../ui/Button.tsx'
+import ChoiceGroup from '../ui/ChoiceGroup.tsx'
 import ConfirmDialog from '../ui/ConfirmDialog.tsx'
+import { MoonIcon, PhoneIcon, SunIcon } from '../ui/icons.tsx'
 import Screen from '../ui/Screen.tsx'
 import text from '../ui/text.module.css'
 import styles from './AppSettingsScreen.module.css'
 
 const buildTime = new Date(__BUILD_TIME__).toLocaleString('tr-TR', { dateStyle: 'short', timeStyle: 'short' })
+
+const APPEARANCES: { value: Appearance; label: string; icon: ReactNode }[] = [
+  { value: 'system', label: 'Telefona uy', icon: <PhoneIcon /> },
+  { value: 'light', label: 'Açık', icon: <SunIcon /> },
+  { value: 'dark', label: 'Koyu', icon: <MoonIcon /> },
+]
 
 const megabytes = (bytes: number) => `${(bytes / 1024 / 1024).toFixed(1)} MB`
 
@@ -16,6 +25,7 @@ export default function AppSettingsScreen() {
   const [usage, setUsage] = useState<number>()
   const [confirming, setConfirming] = useState(false)
   const [wiping, setWiping] = useState(false)
+  const [appearance, setAppearance] = useState(currentAppearance)
 
   // How much room the app takes; the browser answers for the whole site, not just our stores.
   useEffect(() => {
@@ -43,7 +53,19 @@ export default function AppSettingsScreen() {
 
   return (
     <Screen title="Ayarlar" back={{ screen: 'home' }}>
-      <section className={styles.card}>
+      <h2 className={text.sectionTitle}>Görünüm</h2>
+      <ChoiceGroup
+        label="Görünüm"
+        hideLabel
+        options={APPEARANCES}
+        selected={[appearance]}
+        onToggle={(value) => {
+          saveAppearance(value)
+          setAppearance(value)
+        }}
+      />
+
+      <section className={`${styles.card} ${styles.later}`}>
         <h2 className={text.sectionTitle}>Bu cihazda</h2>
         <dl className={styles.facts}>
           <div>

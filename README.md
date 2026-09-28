@@ -30,6 +30,8 @@ The design is specified in `docs/design/tripkit-theme/THEME.md`, with screenshot
 it. In the code:
 
 - Colours, sizes and radii are tokens at the top of `src/index.css`, with the dark theme redefining the same list.
+  The dark list applies under `<html data-scheme="dark">`, not a media query: the Görünüm setting (follow the phone,
+  light or dark, `src/app/appearance.ts`) decides, and an inline script in `index.html` sets it before the first paint.
 - Bricolage Grotesque (headings, large figures) and Figtree (everything else) come from `@fontsource-variable`, latin
   and latin-ext only, through `src/fonts.css`; `vite.config.ts` adds `woff2` to the service worker's precache so the
   fonts also show offline.

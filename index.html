@@ -7,6 +7,21 @@
     <meta name="description" content="Gezi sayacı, hazırlık listesi ve yolda oynanan çevrimdışı bilgi yarışması" />
     <meta name="theme-color" content="#f7f5f0" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#111615" media="(prefers-color-scheme: dark)" />
+    <!-- Picks light or dark before the first paint; src/app/appearance.ts takes over once the app runs. -->
+    <script>
+      {
+        let stored = null
+        try {
+          stored = localStorage.getItem('tripkit-appearance')
+        } catch {}
+        const fixed = stored === 'light' || stored === 'dark'
+        const dark = fixed ? stored === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches
+        document.documentElement.dataset.scheme = dark ? 'dark' : 'light'
+        if (fixed) {
+          for (const meta of document.querySelectorAll('meta[name="theme-color"]')) meta.content = dark ? '#111615' : '#f7f5f0'
+        }
+      }
+    </script>
     <!-- Android reads the web manifest; iOS needs these to open a home-screen app without the browser bars. -->
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />

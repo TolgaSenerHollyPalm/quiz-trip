@@ -1,7 +1,7 @@
 import { closeDatabase, DATABASE_NAME } from './db.ts'
 
 /** The keys this app owns; the origin may one day host another app, whose keys are none of our business. */
-const OWN_KEYS = ['tripkit-destinations', 'ios-install-hint-dismissed']
+const OWN_KEYS = ['tripkit-destinations', 'ios-install-hint-dismissed', 'tripkit-appearance']
 
 /**
  * Removes everything this app keeps on the device: trips, packs, settings and — when there is a network to

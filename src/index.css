@@ -4,7 +4,7 @@
  * would zoom in on focus.
  */
 :root {
-  color-scheme: light dark;
+  color-scheme: light;
 
   --color-bg: #f7f5f0;
   --color-surface: #ffffff;
@@ -88,63 +88,63 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Follows the phone's own setting; there is no theme switch in the app. */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-bg: #111615;
-    --color-surface: #1a201f;
-    --color-text: #ece8e0;
-    --color-muted: #a6aeaa;
-    --color-border: #2a3230;
-    --color-divider: #232a28;
-    --color-chip: #262e2c;
-    --color-chip-text: #c9cecb;
-    --color-sunken: #262e2c;
-    --color-check-border: #76807c;
-    --color-field-border: #76807c;
-    --color-chevron: #8a918e;
-    --color-strike: #6b726f;
-    --color-placeholder: #8f9693;
+/* Set before the first paint from the Görünüm setting (the phone's own by default), never by a media query. */
+:root[data-scheme='dark'] {
+  color-scheme: dark;
 
-    --color-primary: #2dd4bf;
-    --color-primary-dark: #5eead4;
-    --color-primary-soft: #10403c;
-    --color-on-primary: #05221f;
+  --color-bg: #111615;
+  --color-surface: #1a201f;
+  --color-text: #ece8e0;
+  --color-muted: #a6aeaa;
+  --color-border: #2a3230;
+  --color-divider: #232a28;
+  --color-chip: #262e2c;
+  --color-chip-text: #c9cecb;
+  --color-sunken: #262e2c;
+  --color-check-border: #76807c;
+  --color-field-border: #76807c;
+  --color-chevron: #8a918e;
+  --color-strike: #6b726f;
+  --color-placeholder: #8f9693;
 
-    --color-coral: #ff8a75;
-    --color-coral-strong: #ff8a75;
-    --color-coral-soft: #3b1e18;
-    --color-coral-text: #ffb4a6;
-    --color-on-coral-strong: #3a0e06;
+  --color-primary: #2dd4bf;
+  --color-primary-dark: #5eead4;
+  --color-primary-soft: #10403c;
+  --color-on-primary: #05221f;
 
-    --color-amber: #f0b23f;
-    --color-amber-strong: #f0b23f;
-    --color-amber-soft: #3a2a0e;
-    --color-amber-text: #f5c96a;
-    --color-on-amber: #2a1c00;
-    --color-on-amber-strong: #2a1c00;
+  --color-coral: #ff8a75;
+  --color-coral-strong: #ff8a75;
+  --color-coral-soft: #3b1e18;
+  --color-coral-text: #ffb4a6;
+  --color-on-coral-strong: #3a0e06;
 
-    --color-success: #4ade80;
-    --color-on-success: #052e16;
-    --color-success-bg: #123420;
-    --color-success-text: #86efac;
-    --color-online-bg: #123420;
-    --color-online-text: #86efac;
-    --color-online-dot: #4ade80;
+  --color-amber: #f0b23f;
+  --color-amber-strong: #f0b23f;
+  --color-amber-soft: #3a2a0e;
+  --color-amber-text: #f5c96a;
+  --color-on-amber: #2a1c00;
+  --color-on-amber-strong: #2a1c00;
 
-    --color-danger: #fca5a5;
-    --color-danger-bg: #3c1717;
-    --color-on-danger: #3c0d0d;
+  --color-success: #4ade80;
+  --color-on-success: #052e16;
+  --color-success-bg: #123420;
+  --color-success-text: #86efac;
+  --color-online-bg: #123420;
+  --color-online-text: #86efac;
+  --color-online-dot: #4ade80;
 
-    /* On a dark page the quiz tile goes deep teal instead of ink, so it still stands out. */
-    --color-ink-tile: #0f2b29;
-    --color-ink-tile-raised: #16403c;
-    --color-on-ink-tile: #ece8e0;
+  --color-danger: #fca5a5;
+  --color-danger-bg: #3c1717;
+  --color-on-danger: #3c0d0d;
 
-    --toast-bg: #262e2c;
-    --toast-text: #ece8e0;
-    --shadow-float: 0 10px 24px rgb(0 0 0 / 0.45);
-  }
+  /* On a dark page the quiz tile goes deep teal instead of ink, so it still stands out. */
+  --color-ink-tile: #0f2b29;
+  --color-ink-tile-raised: #16403c;
+  --color-on-ink-tile: #ece8e0;
+
+  --toast-bg: #262e2c;
+  --toast-text: #ece8e0;
+  --shadow-float: 0 10px 24px rgb(0 0 0 / 0.45);
 }
 
 *,
