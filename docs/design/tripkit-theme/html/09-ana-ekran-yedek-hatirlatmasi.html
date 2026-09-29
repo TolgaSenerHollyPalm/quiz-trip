@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>TripKit — Yedek hatırlatması</title>
+</head>
+<body>
+<x-dc>
+<helmet>
+<!-- Fontlar: Bricolage Grotesque + Figtree -->
+<style>
+body{margin:0;background:#F7F5F0}
+a{color:#075F59}a:hover{color:#0A7D76}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; position: relative; overflow: hidden; display: flex; flex-direction: column; background: #F7F5F0; color: #1B1F1E; font-family: 'Figtree', system-ui, sans-serif">
+
+<header style="padding: 14px 20px 0; height: 62px; box-sizing: border-box; display: flex; align-items: center; justify-content: space-between">
+<div style="display: flex; align-items: center; gap: 10px">
+<svg width="32" height="32" viewBox="0 0 512 512" aria-hidden="true"><rect width="512" height="512" rx="112" fill="#0A7D76"></rect><path d="M212 154v-28a26 26 0 0 1 26-26h36a26 26 0 0 1 26 26v28" fill="none" stroke="#CFF8F2" stroke-width="22" stroke-linecap="round"></path><rect x="112" y="154" width="288" height="216" rx="40" fill="#FF6B57"></rect><rect x="112" y="236" width="288" height="44" fill="#0A7D76"></rect><circle cx="256" cy="258" r="14" fill="#CFF8F2"></circle></svg>
+<span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 21px; font-weight: 700; letter-spacing: -0.02em">TripKit</span>
+</div>
+<div style="display: flex; align-items: center; gap: 8px">
+<span style="display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 10px; border-radius: 999px; background: #E2F3E8; color: #1E6B3C; font-size: 13px; font-weight: 600"><span style="width: 7px; height: 7px; border-radius: 999px; background: #22A05A"></span>Çevrimiçi</span>
+<a href="10-ayarlar-yedek.html" aria-label="Ayarlar" style="position: relative; width: 44px; height: 44px; border-radius: 999px; border: 1px solid #E8E2D7; background: #FFFFFF; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h9M17 7h3M4 17h3M11 17h9" fill="none" stroke="#1B1F1E" stroke-width="1.8" stroke-linecap="round"></path><circle cx="15" cy="7" r="2.2" fill="none" stroke="#1B1F1E" stroke-width="1.8"></circle><circle cx="9" cy="17" r="2.2" fill="none" stroke="#1B1F1E" stroke-width="1.8"></circle></svg><span style="position: absolute; top: 6px; right: 6px; width: 9px; height: 9px; border-radius: 999px; background: #B97A0B; border: 2px solid #FFFFFF"></span></a>
+</div>
+</header>
+
+<div style="padding: 22px 20px 14px; display: flex; flex-direction: column; gap: 2px">
+<span style="font-size: 14px; font-weight: 600; color: #5E6562">3 seyahat</span>
+<h1 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 32px; line-height: 1.05; letter-spacing: -0.035em; font-weight: 800">Seyahatlerin</h1>
+</div>
+
+<div role="status" style="margin: 0 20px 14px; padding: 12px 6px 6px 16px; border-radius: 18px; background: #FBF0D6; display: flex; align-items: flex-start; gap: 12px">
+<svg style="margin-top: 2px; flex-shrink: 0" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 12a8.5 8.5 0 1 0 2.6-6.1M3.5 4.5V9h4.5" fill="none" stroke="#8A5A0B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path><path d="M12 7.5V12l3 2" fill="none" stroke="#8A5A0B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+<div style="flex-grow: 1; display: flex; flex-direction: column; gap: 2px">
+<span style="font-size: 15px; font-weight: 700">Son yedeğin 34 gün önce</span>
+<span style="font-size: 13px; line-height: 1.45; color: #5E6562">Telefonun değişirse seyahatlerin kaybolmasın.</span>
+<a href="10-ayarlar-yedek.html" style="align-self: flex-start; min-height: 44px; display: inline-flex; align-items: center; color: #075F59; font-size: 14px; font-weight: 700; text-decoration: none">Şimdi yedekle</a>
+</div>
+<button aria-label="Hatırlatmayı kapat" style="width: 44px; height: 44px; border: 0; background: transparent; padding: 0; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="#5E6562" stroke-width="2.2" stroke-linecap="round"></path></svg></button>
+</div>
+
+<a href="#" style="margin: 0 20px; display: block; text-decoration: none; color: #1B1F1E; border-radius: 24px; overflow: hidden; background: #FFFFFF; border: 1px solid #E8E2D7; box-shadow: 0 14px 28px -20px rgba(27, 31, 30, 0.35)">
+<div style="background: #1A6E9E; padding: 16px 20px 20px; color: #FFFFFF; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: center; justify-content: space-between">
+<span style="padding: 4px 10px; border-radius: 999px; background: rgba(255, 255, 255, 0.18); font-size: 12px; font-weight: 700">Sıradaki seyahat</span>
+<svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15.5v-1.8l-7.5-4.6V4a1.5 1.5 0 0 0-3 0v5.1L3 13.7v1.8l7.5-2.3v4.9l-2 1.5V21l3.5-1 3.5 1v-1.4l-2-1.5v-4.9z" fill="none" stroke="#FFFFFF" stroke-width="1.6" stroke-linejoin="round"></path></svg>
+</div>
+<div style="display: flex; align-items: baseline; gap: 8px">
+<span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 64px; line-height: 0.9; font-weight: 800; letter-spacing: -0.04em">15</span>
+<span style="font-size: 17px; font-weight: 600">gün kaldı</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 2px">
+<span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 23px; font-weight: 700; letter-spacing: -0.02em">Sharm el-Şeyh</span>
+<span style="font-size: 14px; color: #E3F1FA">14 – 21 Ekim · Uçak · Deniz</span>
+</div>
+</div>
+<div style="padding: 14px 20px 18px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px">
+<div style="display: flex; flex-direction: column; gap: 6px"><span style="font-size: 12px; font-weight: 600; color: #5E6562">Hazırlık</span><span style="font-size: 15px; font-weight: 700">4 / 9</span><span style="height: 4px; border-radius: 999px; background: #EFEAE0; overflow: hidden"><span style="display: block; width: 44%; height: 4px; background: #0A7D76"></span></span></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><span style="font-size: 12px; font-weight: 600; color: #5E6562">Almadan gelme</span><span style="font-size: 15px; font-weight: 700">2 / 6</span><span style="height: 4px; border-radius: 999px; background: #EFEAE0; overflow: hidden"><span style="display: block; width: 33%; height: 4px; background: #FF6B57"></span></span></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><span style="font-size: 12px; font-weight: 600; color: #5E6562">Tatmadan gelme</span><span style="font-size: 15px; font-weight: 700">1 / 7</span><span style="height: 4px; border-radius: 999px; background: #EFEAE0; overflow: hidden"><span style="display: block; width: 14%; height: 4px; background: #F0B23F"></span></span></div>
+</div>
+</a>
+
+<a href="#" style="position: absolute; left: 20px; right: 20px; bottom: 28px; height: 54px; border-radius: 999px; background: #0A7D76; color: #FFFFFF; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 16px; font-weight: 600; box-shadow: 0 12px 24px -12px rgba(7, 95, 89, 0.6)"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"></path></svg>Yeni seyahat</a>
+
+</div>
+</x-dc>
+</body>
+</html>

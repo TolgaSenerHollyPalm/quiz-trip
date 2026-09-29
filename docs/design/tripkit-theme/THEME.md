@@ -22,6 +22,9 @@ Bu dosya Claude Code için çalışma talimatıdır. Önce tamamını oku, sonra
 | Bilgi yarışması (cevaplanmış soru) | `06-bilgi-yarismasi.png` | `PlayScreen` |
 | Tasarım dili | `07-tasarim-dili.png` | tokenlar ve bileşenler |
 | Gezi renkleri | `08-gezi-renkleri.png` | `tripTheme` |
+| Ana ekran · yedek hatırlatması | `09-ana-ekran-yedek-hatirlatmasi.png` | `HomeScreen` + yeni `BackupReminder` |
+| Ayarlar · yedek | `10-ayarlar-yedek.png` | `AppSettingsScreen` (yeniden düzenlenir) |
+| Yedekten geri yükle | `11-yedekten-geri-yukle.png` | yeni `RestoreSheet` |
 
 ## 1. Kapsam
 
