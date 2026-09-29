@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useAppData } from '../app/appData.ts'
-import { navigate } from '../app/router.ts'
+import { href, navigate } from '../app/router.ts'
 import { newTrip } from '../game/trip.ts'
 import type { TripState } from '../game/types.ts'
 import { bundledPacks } from '../packs/bundled.ts'
@@ -10,17 +10,17 @@ import { destinationName, findCountry } from '../trips/destinations.ts'
 import { matchesDestination } from '../trips/packMatch.ts'
 import { todayIso } from '../trips/dates.ts'
 import { TRANSPORTS, TRIP_KINDS, type Transport, type TripKind } from '../trips/types.ts'
-import { Button } from '../ui/Button.tsx'
-import ChoiceGroup from '../ui/ChoiceGroup.tsx'
-import { CheckIcon, PlusIcon } from '../ui/icons.tsx'
+import { Button } from 'kitshelf-ui/ui/Button.tsx'
+import ChoiceGroup from 'kitshelf-ui/ui/ChoiceGroup.tsx'
+import { CheckIcon, PlusIcon } from 'kitshelf-ui/ui/icons.tsx'
 import { TRANSPORT_LABELS, TRIP_KIND_LABELS } from '../ui/labels.ts'
-import ProgressBar from '../ui/ProgressBar.tsx'
-import RequiredMark from '../ui/RequiredMark.tsx'
-import Screen from '../ui/Screen.tsx'
-import text from '../ui/text.module.css'
+import ProgressBar from 'kitshelf-ui/ui/ProgressBar.tsx'
+import RequiredMark from 'kitshelf-ui/ui/RequiredMark.tsx'
+import Screen from 'kitshelf-ui/ui/Screen.tsx'
+import text from 'kitshelf-ui/ui/text.module.css'
 import TransportIcon from '../ui/TransportIcon.tsx'
 import TripKindIcon from '../ui/TripKindIcon.tsx'
-import { useOnline } from '../ui/useOnline.ts'
+import { useOnline } from 'kitshelf-ui/ui/useOnline.ts'
 import styles from './TripWizardScreen.module.css'
 
 const ANY_CITY = '' // "the whole country", which brings every pack of that country
@@ -134,7 +134,7 @@ export default function TripWizardScreen() {
     <Screen
       title="Yeni seyahat"
       eyebrow={`Adım ${step + 1} / ${steps.length}`}
-      back={{ screen: 'home' }}
+      back={href({ screen: 'home' })}
       footer={
         <div className={styles.nav}>
           {step > 0 && (

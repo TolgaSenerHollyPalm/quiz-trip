@@ -27,14 +27,16 @@ production builds leave that page out.
 ## Design
 
 The design is specified in `docs/design/tripkit-theme/THEME.md`, with screenshots and static HTML of the screens next to
-it. In the code:
+it. The theme and the shared components live in [kitshelf-ui](https://github.com/TolgaSenerHollyPalm/kitshelf-ui),
+which every KitShelf kit uses; `package.json` pins its tag. In the code:
 
-- Colours, sizes and radii are tokens at the top of `src/index.css`, with the dark theme redefining the same list.
-  The dark list applies under `<html data-scheme="dark">`, not a media query: the Görünüm setting (follow the phone,
-  light or dark, `src/app/appearance.ts`) decides, and an inline script in `index.html` sets it before the first paint.
-- Bricolage Grotesque (headings, large figures) and Figtree (everything else) come from `@fontsource-variable`, latin
-  and latin-ext only, through `src/fonts.css`; `vite.config.ts` adds `woff2` to the service worker's precache so the
-  fonts also show offline.
+- Colours, sizes and radii are tokens in `kitshelf-ui/styles/tokens.css`, with the dark theme redefining the same list.
+  The dark list applies under `<html data-scheme="dark">`, not a media query: the Görünüm setting (Oto, light or dark,
+  `kitshelf-ui/app/appearance.ts`) decides, and an inline script in `index.html` sets it before the first paint.
+- Bricolage Grotesque (headings, large figures) and Figtree (everything else) come with kitshelf-ui, latin and
+  latin-ext only; `vite.config.ts` adds `woff2` to the service worker's precache so the fonts also show offline.
+- `src/ui/` keeps what only TripKit uses: the trip colours, the countdown, the game lists, the holiday and transport
+  icons.
 - A trip's colour comes from its holiday type in `src/ui/tripTheme.module.css` and appears only on the countdown card,
   the featured trip on the home screen and the holiday type chip.
 - Text keeps a contrast of at least 4.5:1 and icons and field edges 3:1, in both themes.

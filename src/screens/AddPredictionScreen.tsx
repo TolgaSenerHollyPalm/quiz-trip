@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useTrip } from '../app/appData.ts'
-import { navigate } from '../app/router.ts'
+import { href, navigate } from '../app/router.ts'
 import {
   addPrediction,
   customPrediction,
@@ -14,21 +14,21 @@ import {
 import type { Prediction } from '../game/types.ts'
 import { parseNumber } from '../game/values.ts'
 import type { PredictionTemplate } from '../packs/types.ts'
-import { Button } from '../ui/Button.tsx'
-import ChoiceGroup from '../ui/ChoiceGroup.tsx'
-import { PlusIcon } from '../ui/icons.tsx'
-import Missing from '../ui/Missing.tsx'
-import RequiredMark from '../ui/RequiredMark.tsx'
-import Screen from '../ui/Screen.tsx'
+import { Button } from 'kitshelf-ui/ui/Button.tsx'
+import ChoiceGroup from 'kitshelf-ui/ui/ChoiceGroup.tsx'
+import { PlusIcon } from 'kitshelf-ui/ui/icons.tsx'
+import Missing from 'kitshelf-ui/ui/Missing.tsx'
+import RequiredMark from 'kitshelf-ui/ui/RequiredMark.tsx'
+import Screen from 'kitshelf-ui/ui/Screen.tsx'
 import { tripTheme } from '../ui/tripTheme.ts'
-import text from '../ui/text.module.css'
+import text from 'kitshelf-ui/ui/text.module.css'
 import styles from './AddPredictionScreen.module.css'
 
 export default function AddPredictionScreen({ tripId }: { tripId: string }) {
   const { collection, trip, saveTrip } = useTrip(tripId)
-  if (!trip) return <Missing message="Bu seyahat bulunamadı." back={{ screen: 'home' }} />
+  if (!trip) return <Missing message="Bu seyahat bulunamadı." back={href({ screen: 'home' })} />
   if (collection.packs.length === 0) {
-    return <Missing message="Bu seyahatin soru paketi cihazda yok." back={{ screen: 'trip', tripId }} />
+    return <Missing message="Bu seyahatin soru paketi cihazda yok." back={href({ screen: 'trip', tripId })} />
   }
 
   const add = (prediction: Prediction) => {
@@ -44,7 +44,7 @@ export default function AddPredictionScreen({ tripId }: { tripId: string }) {
   }
 
   return (
-    <Screen title="Tahmin ekle" back={{ screen: 'predictions', tripId }} theme={tripTheme(trip.kind)}>
+    <Screen title="Tahmin ekle" back={href({ screen: 'predictions', tripId })} theme={tripTheme(trip.kind)}>
       <h2 className={text.sectionTitle}>Paketteki sorular</h2>
       <ul className={styles.templates}>
         {collection.templates.map((template) => {

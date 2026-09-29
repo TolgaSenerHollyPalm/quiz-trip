@@ -1,17 +1,18 @@
+import { href } from '../app/router.ts'
 import { useTrip } from '../app/appData.ts'
 import { predictionTotals } from '../game/predictions.ts'
 import { quizTotals, rankPlayers } from '../game/scoring.ts'
 import { TrophyIcon } from '../ui/icons.tsx'
-import Missing from '../ui/Missing.tsx'
-import Screen from '../ui/Screen.tsx'
-import text from '../ui/text.module.css'
+import Missing from 'kitshelf-ui/ui/Missing.tsx'
+import Screen from 'kitshelf-ui/ui/Screen.tsx'
+import text from 'kitshelf-ui/ui/text.module.css'
 import { tripTheme } from '../ui/tripTheme.ts'
 import styles from './ScoreboardScreen.module.css'
 
 export default function ScoreboardScreen({ tripId }: { tripId: string }) {
   const { trip } = useTrip(tripId)
   const back = { screen: 'trip', tripId } as const
-  if (!trip) return <Missing message="Bu seyahat bulunamadı." back={{ screen: 'home' }} />
+  if (!trip) return <Missing message="Bu seyahat bulunamadı." back={href({ screen: 'home' })} />
 
   const names = new Map(trip.players.map((player) => [player.id, player.nickname]))
   const quiz = quizTotals(trip.rounds)
@@ -26,7 +27,7 @@ export default function ScoreboardScreen({ tripId }: { tripId: string }) {
   const resolved = trip.predictions.filter((prediction) => prediction.status === 'resolved').length
 
   return (
-    <Screen title="Skor tablosu" back={back} theme={tripTheme(trip.kind)}>
+    <Screen title="Skor tablosu" back={href(back)} theme={tripTheme(trip.kind)}>
       {trip.players.length === 0 ? (
         <p>Henüz oyuncu eklenmedi.</p>
       ) : (

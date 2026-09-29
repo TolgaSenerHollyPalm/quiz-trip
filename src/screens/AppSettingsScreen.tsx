@@ -1,13 +1,14 @@
 import { useEffect, useState, type ReactNode } from 'react'
+import { href } from '../app/router.ts'
 import { useAppData } from '../app/appData.ts'
-import { currentAppearance, saveAppearance, type Appearance } from '../app/appearance.ts'
+import { currentAppearance, saveAppearance, type Appearance } from 'kitshelf-ui/app/appearance.ts'
 import { wipeDevice } from '../storage/wipe.ts'
-import { Button } from '../ui/Button.tsx'
-import ChoiceGroup from '../ui/ChoiceGroup.tsx'
-import ConfirmDialog from '../ui/ConfirmDialog.tsx'
-import { AutoIcon, MoonIcon, SunIcon } from '../ui/icons.tsx'
-import Screen from '../ui/Screen.tsx'
-import text from '../ui/text.module.css'
+import { Button } from 'kitshelf-ui/ui/Button.tsx'
+import ChoiceGroup from 'kitshelf-ui/ui/ChoiceGroup.tsx'
+import ConfirmDialog from 'kitshelf-ui/ui/ConfirmDialog.tsx'
+import { AutoIcon, MoonIcon, SunIcon } from 'kitshelf-ui/ui/icons.tsx'
+import Screen from 'kitshelf-ui/ui/Screen.tsx'
+import text from 'kitshelf-ui/ui/text.module.css'
 import styles from './AppSettingsScreen.module.css'
 
 const buildTime = new Date(__BUILD_TIME__).toLocaleString('tr-TR', { dateStyle: 'short', timeStyle: 'short' })
@@ -52,7 +53,7 @@ export default function AppSettingsScreen() {
   }
 
   return (
-    <Screen title="Ayarlar" back={{ screen: 'home' }}>
+    <Screen title="Ayarlar" back={href({ screen: 'home' })}>
       <h2 className={text.sectionTitle}>Görünüm</h2>
       <ChoiceGroup
         label="Görünüm"

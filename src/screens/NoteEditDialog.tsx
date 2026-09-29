@@ -1,7 +1,7 @@
 import { useEffect, useId, useRef, useState } from 'react'
 import type { NoteItem } from '../trips/types.ts'
-import { Button } from '../ui/Button.tsx'
-import RequiredMark from '../ui/RequiredMark.tsx'
+import { Button } from 'kitshelf-ui/ui/Button.tsx'
+import RequiredMark from 'kitshelf-ui/ui/RequiredMark.tsx'
 import styles from './NoteEditDialog.module.css'
 
 interface NoteEditDialogProps {

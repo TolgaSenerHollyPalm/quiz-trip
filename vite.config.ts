@@ -10,6 +10,8 @@ export default defineConfig({
   define: {
     __BUILD_TIME__: JSON.stringify(new Date().toISOString()),
   },
+  // kitshelf-ui ships as TypeScript and CSS Modules, so Vite has to serve it as source rather than pre-bundle it.
+  optimizeDeps: { exclude: ['kitshelf-ui'] },
   plugins: [
     react(),
     VitePWA({

@@ -1,21 +1,21 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { useTrip } from '../app/appData.ts'
-import { navigate, type Route } from '../app/router.ts'
+import { href, navigate, type Route } from '../app/router.ts'
 import { DIFFICULTY_POINTS, isCorrectChoice, roundPoints, turnPoints } from '../game/scoring.ts'
 import { answerTurn } from '../game/trip.ts'
 import type { CurrentRound, Player, RoundTurn, TurnAnswer } from '../game/types.ts'
 import { categoryLabel } from '../packs/collection.ts'
-import Avatar from '../ui/Avatar.tsx'
-import { Button } from '../ui/Button.tsx'
+import Avatar from 'kitshelf-ui/ui/Avatar.tsx'
+import { Button } from 'kitshelf-ui/ui/Button.tsx'
 import Countdown from '../ui/Countdown.tsx'
-import { IconLink } from '../ui/IconButton.tsx'
-import { ArrowRightIcon, CheckIcon, CloseIcon } from '../ui/icons.tsx'
+import { IconLink } from 'kitshelf-ui/ui/IconButton.tsx'
+import { ArrowRightIcon, CheckIcon, CloseIcon } from 'kitshelf-ui/ui/icons.tsx'
 import { DIFFICULTY_LABELS, OPTION_LETTERS } from '../ui/labels.ts'
-import Missing from '../ui/Missing.tsx'
-import ProgressBar from '../ui/ProgressBar.tsx'
-import text from '../ui/text.module.css'
+import Missing from 'kitshelf-ui/ui/Missing.tsx'
+import ProgressBar from 'kitshelf-ui/ui/ProgressBar.tsx'
+import text from 'kitshelf-ui/ui/text.module.css'
 import { tripTheme } from '../ui/tripTheme.ts'
-import { locative } from '../ui/turkish.ts'
+import { locative } from 'kitshelf-ui/ui/turkish.ts'
 import styles from './PlayScreen.module.css'
 
 interface Feedback {
@@ -36,9 +36,9 @@ export default function PlayScreen({ tripId }: { tripId: string }) {
   const [phase, setPhase] = useState<Phase>({ name: 'question' })
   const back: Route = { screen: 'trip', tripId }
 
-  if (!trip) return <Missing message="Bu seyahat bulunamadı." back={{ screen: 'home' }} />
+  if (!trip) return <Missing message="Bu seyahat bulunamadı." back={href({ screen: 'home' })} />
   if (collection.packs.length === 0) {
-    return <Missing message="Bu seyahatin soru paketi cihazda yok." back={back} />
+    return <Missing message="Bu seyahatin soru paketi cihazda yok." back={href(back)} />
   }
   const player = (playerId: string) => trip.players.find((candidate) => candidate.id === playerId)
   const nameOf = (playerId: string) => player(playerId)?.nickname ?? '?'
@@ -81,7 +81,7 @@ export default function PlayScreen({ tripId }: { tripId: string }) {
 
   const round = trip.currentRound
   const turn = round?.turns[round.answers.length]
-  if (!round || !turn) return <Missing message="Devam eden bir tur yok." back={back} />
+  if (!round || !turn) return <Missing message="Devam eden bir tur yok." back={href(back)} />
   const number = round.answers.length + 1
   const position = `Soru ${number} / ${round.turns.length}`
 
@@ -130,7 +130,7 @@ function GameScreen({ theme, back, position, progress, timer, footer, children }
   return (
     <div className={`${styles.screen} ${theme}`}>
       <header className={styles.bar}>
-        <IconLink to={back} label="Turdan çık">
+        <IconLink to={href(back)} label="Turdan çık">
           <CloseIcon />
         </IconLink>
         <h1 className={styles.position}>{position}</h1>

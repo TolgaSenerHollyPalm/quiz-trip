@@ -1,14 +1,14 @@
 import { useState } from 'react'
 import { useTrip } from '../app/appData.ts'
-import { navigate } from '../app/router.ts'
+import { href, navigate } from '../app/router.ts'
 import { MAX_PLAYERS, MIN_PLAYERS } from '../game/quiz.ts'
 import { playersWithData, updatePlayers } from '../game/trip.ts'
 import type { Player } from '../game/types.ts'
-import { Button } from '../ui/Button.tsx'
-import ConfirmDialog from '../ui/ConfirmDialog.tsx'
-import { CloseIcon, PlusIcon } from '../ui/icons.tsx'
-import Missing from '../ui/Missing.tsx'
-import Screen from '../ui/Screen.tsx'
+import { Button } from 'kitshelf-ui/ui/Button.tsx'
+import ConfirmDialog from 'kitshelf-ui/ui/ConfirmDialog.tsx'
+import { CloseIcon, PlusIcon } from 'kitshelf-ui/ui/icons.tsx'
+import Missing from 'kitshelf-ui/ui/Missing.tsx'
+import Screen from 'kitshelf-ui/ui/Screen.tsx'
 import { tripTheme } from '../ui/tripTheme.ts'
 import styles from './PlayersScreen.module.css'
 
@@ -30,9 +30,9 @@ export default function PlayersScreen({ tripId, next }: { tripId: string; next?:
   const [losing, setLosing] = useState<Player[]>([]) // removed players whose points would be deleted
 
   const back = { screen: 'trip', tripId } as const
-  if (!trip) return <Missing message="Bu seyahat bulunamadı." back={{ screen: 'home' }} />
+  if (!trip) return <Missing message="Bu seyahat bulunamadı." back={href({ screen: 'home' })} />
   if (trip.currentRound) {
-    return <Missing message="Tur bitene ya da iptal edilene kadar oyuncular değiştirilemez." back={back} />
+    return <Missing message="Tur bitene ya da iptal edilene kadar oyuncular değiştirilemez." back={href(back)} />
   }
 
   const problems = players.map((_, index) => nicknameProblem(players, index))
@@ -57,7 +57,7 @@ export default function PlayersScreen({ tripId, next }: { tripId: string; next?:
   return (
     <Screen
       title="Oyuncular"
-      back={back}
+      back={href(back)}
       theme={tripTheme(trip.kind)}
       footer={
         <Button variant="primary" big onClick={save}>

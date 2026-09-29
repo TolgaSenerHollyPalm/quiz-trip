@@ -1,14 +1,14 @@
 import { useState } from 'react'
 import { useTrip } from '../app/appData.ts'
-import { navigate } from '../app/router.ts'
+import { href, navigate } from '../app/router.ts'
 import { addPrediction, missingParams, predictionFromTemplate } from '../game/predictions.ts'
 import { parseNumber } from '../game/values.ts'
 import type { PredictionTemplate, TemplateParam } from '../packs/types.ts'
-import { Button } from '../ui/Button.tsx'
-import Missing from '../ui/Missing.tsx'
-import Screen from '../ui/Screen.tsx'
+import { Button } from 'kitshelf-ui/ui/Button.tsx'
+import Missing from 'kitshelf-ui/ui/Missing.tsx'
+import Screen from 'kitshelf-ui/ui/Screen.tsx'
 import { tripTheme } from '../ui/tripTheme.ts'
-import text from '../ui/text.module.css'
+import text from 'kitshelf-ui/ui/text.module.css'
 import styles from './TripSettingsScreen.module.css'
 
 /** Each trip setting once, under the first template that needs it. */
@@ -33,9 +33,9 @@ export default function TripSettingsScreen({ tripId, add }: { tripId: string; ad
     Object.fromEntries(Object.entries(trip?.params ?? {}).map(([key, value]) => [key, String(value).replace('.', ',')])),
   )
   const [problems, setProblems] = useState<string[]>([])
-  if (!trip) return <Missing message="Bu seyahat bulunamadı." back={{ screen: 'home' }} />
+  if (!trip) return <Missing message="Bu seyahat bulunamadı." back={href({ screen: 'home' })} />
   if (collection.packs.length === 0) {
-    return <Missing message="Bu seyahatin soru paketi cihazda yok." back={{ screen: 'trip', tripId }} />
+    return <Missing message="Bu seyahatin soru paketi cihazda yok." back={href({ screen: 'trip', tripId })} />
   }
 
   const groups = settingGroups(collection.templates)
@@ -78,7 +78,7 @@ export default function TripSettingsScreen({ tripId, add }: { tripId: string; ad
   return (
     <Screen
       title="Seyahat ayarları"
-      back={back}
+      back={href(back)}
       theme={tripTheme(trip.kind)}
       footer={
         groups.length > 0 && (

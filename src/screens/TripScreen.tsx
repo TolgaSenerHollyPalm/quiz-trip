@@ -5,17 +5,18 @@ import { scoreSummary } from '../game/summary.ts'
 import { cancelRound, resetGames } from '../game/trip.ts'
 import { formatDateRange, tripLength } from '../trips/dates.ts'
 import { orphanPacks } from '../trips/packMatch.ts'
-import Chip from '../ui/Chip.tsx'
-import ConfirmDialog from '../ui/ConfirmDialog.tsx'
+import Chip from 'kitshelf-ui/ui/Chip.tsx'
+import ConfirmDialog from 'kitshelf-ui/ui/ConfirmDialog.tsx'
 import CountdownCard from '../ui/CountdownCard.tsx'
-import { ArrowRightIcon, BoxIcon, PeopleIcon, QuizIcon, TargetIcon, TrophyIcon } from '../ui/icons.tsx'
+import { ArrowRightIcon } from 'kitshelf-ui/ui/icons.tsx'
+import { BoxIcon, PeopleIcon, QuizIcon, TargetIcon, TrophyIcon } from '../ui/icons.tsx'
 import { TRANSPORT_LABELS, TRIP_KIND_LABELS } from '../ui/labels.ts'
-import { LinkRow, ListCard } from '../ui/ListCard.tsx'
-import Menu, { type MenuItem } from '../ui/Menu.tsx'
-import Missing from '../ui/Missing.tsx'
-import Screen from '../ui/Screen.tsx'
-import text from '../ui/text.module.css'
-import Tile from '../ui/Tile.tsx'
+import { LinkRow, ListCard } from 'kitshelf-ui/ui/ListCard.tsx'
+import Menu, { type MenuItem } from 'kitshelf-ui/ui/Menu.tsx'
+import Missing from 'kitshelf-ui/ui/Missing.tsx'
+import Screen from 'kitshelf-ui/ui/Screen.tsx'
+import text from 'kitshelf-ui/ui/text.module.css'
+import Tile from 'kitshelf-ui/ui/Tile.tsx'
 import TransportIcon from '../ui/TransportIcon.tsx'
 import TripKindIcon from '../ui/TripKindIcon.tsx'
 import { tripTheme } from '../ui/tripTheme.ts'
@@ -30,7 +31,7 @@ export default function TripScreen({ tripId }: { tripId: string }) {
   const [confirmingDelete, setConfirmingDelete] = useState(false)
   const [deleted, setDeleted] = useState(false)
   if (deleted) return null // leaving for the home screen
-  if (!trip) return <Missing message="Bu seyahat bulunamadı." back={{ screen: 'home' }} />
+  if (!trip) return <Missing message="Bu seyahat bulunamadı." back={href({ screen: 'home' })} />
 
   const round = trip.currentRound
   // Predictions that still need guesses or a result.
@@ -57,7 +58,7 @@ export default function TripScreen({ tripId }: { tripId: string }) {
   const chips = (trip.kind || trip.transport) && (
     <div className={styles.chips}>
       {trip.kind && (
-        <Chip tone="trip" icon={<TripKindIcon kind={trip.kind} />}>
+        <Chip tone="accent" icon={<TripKindIcon kind={trip.kind} />}>
           {TRIP_KIND_LABELS[trip.kind]}
         </Chip>
       )}
@@ -78,7 +79,7 @@ export default function TripScreen({ tripId }: { tripId: string }) {
       title={trip.name}
       above={chips}
       subtitle={dates || undefined}
-      back={{ screen: 'home' }}
+      back={href({ screen: 'home' })}
       aside={<Menu items={menu} />}
       theme={tripTheme(trip.kind)}
     >
@@ -122,14 +123,14 @@ export default function TripScreen({ tripId }: { tripId: string }) {
           <ListCard as="nav" label="Oyun ayrıntıları">
             <LinkRow
               small
-              to={{ screen: 'scores', tripId }}
+              to={href({ screen: 'scores', tripId })}
               tile={<Tile tone="neutral" size="small"><TrophyIcon /></Tile>}
               title="Skor tablosu"
               subtitle={scoreSummary(trip)}
             />
             <LinkRow
               small
-              to={round ? undefined : { screen: 'players', tripId }}
+              to={round ? undefined : href({ screen: 'players', tripId })}
               tile={<Tile tone="neutral" size="small"><PeopleIcon /></Tile>}
               title="Oyuncular"
               subtitle={
@@ -140,7 +141,7 @@ export default function TripScreen({ tripId }: { tripId: string }) {
             />
             <LinkRow
               small
-              to={{ screen: 'trip-packs', tripId }}
+              to={href({ screen: 'trip-packs', tripId })}
               tile={<Tile tone="neutral" size="small"><BoxIcon /></Tile>}
               title="Soru paketleri"
               subtitle={collection.packs.map((pack) => pack.title).join(', ')}
@@ -157,7 +158,7 @@ export default function TripScreen({ tripId }: { tripId: string }) {
           <ListCard as="nav" label="Soru paketleri">
             <LinkRow
               small
-              to={{ screen: 'trip-packs', tripId }}
+              to={href({ screen: 'trip-packs', tripId })}
               tile={<Tile tone="neutral" size="small"><BoxIcon /></Tile>}
               title="Soru paketleri"
             />

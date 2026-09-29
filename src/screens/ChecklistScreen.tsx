@@ -1,20 +1,21 @@
 import { useId, useState } from 'react'
+import { href } from '../app/router.ts'
 import { useTrip } from '../app/appData.ts'
 import { applySuggestions } from '../trips/checklist.ts'
 import type { ChecklistItem } from '../trips/types.ts'
-import AddField from '../ui/AddField.tsx'
-import { Button } from '../ui/Button.tsx'
-import CheckButton from '../ui/CheckButton.tsx'
-import DeleteButton from '../ui/DeleteButton.tsx'
-import Disclosure from '../ui/Disclosure.tsx'
-import { RefreshIcon } from '../ui/icons.tsx'
+import AddField from 'kitshelf-ui/ui/AddField.tsx'
+import { Button } from 'kitshelf-ui/ui/Button.tsx'
+import CheckButton from 'kitshelf-ui/ui/CheckButton.tsx'
+import DeleteButton from 'kitshelf-ui/ui/DeleteButton.tsx'
+import Disclosure from 'kitshelf-ui/ui/Disclosure.tsx'
+import { RefreshIcon } from 'kitshelf-ui/ui/icons.tsx'
 import { checklistBasis, sourceLabel } from '../ui/labels.ts'
-import { ItemRow, ListCard } from '../ui/ListCard.tsx'
-import Missing from '../ui/Missing.tsx'
-import ProgressBar from '../ui/ProgressBar.tsx'
-import Screen from '../ui/Screen.tsx'
-import SegmentedTabs from '../ui/SegmentedTabs.tsx'
-import text from '../ui/text.module.css'
+import { ItemRow, ListCard } from 'kitshelf-ui/ui/ListCard.tsx'
+import Missing from 'kitshelf-ui/ui/Missing.tsx'
+import ProgressBar from 'kitshelf-ui/ui/ProgressBar.tsx'
+import Screen from 'kitshelf-ui/ui/Screen.tsx'
+import SegmentedTabs from 'kitshelf-ui/ui/SegmentedTabs.tsx'
+import text from 'kitshelf-ui/ui/text.module.css'
 import styles from './ChecklistScreen.module.css'
 
 type Group = ChecklistItem['group']
@@ -29,7 +30,7 @@ export default function ChecklistScreen({ tripId }: { tripId: string }) {
   const [group, setGroup] = useState<Group>('pack')
   const [editing, setEditing] = useState(false)
   const panelId = useId()
-  if (!trip) return <Missing message="Bu seyahat bulunamadı." back={{ screen: 'home' }} />
+  if (!trip) return <Missing message="Bu seyahat bulunamadı." back={href({ screen: 'home' })} />
 
   const items = trip.checklist
   const save = (checklist: ChecklistItem[]) => saveTrip({ ...trip, checklist })
@@ -61,7 +62,7 @@ export default function ChecklistScreen({ tripId }: { tripId: string }) {
     <Screen
       title="Hazırlık listesi"
       subtitle={checklistBasis(trip.transport, trip.kind)}
-      back={{ screen: 'trip', tripId }}
+      back={href({ screen: 'trip', tripId })}
       aside={
         items.length > 0 && (
           <Button variant="text" onClick={() => setEditing(!inEditMode)}>

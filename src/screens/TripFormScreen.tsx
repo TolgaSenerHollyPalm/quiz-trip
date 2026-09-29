@@ -1,18 +1,18 @@
 import { useState } from 'react'
 import { useAppData } from '../app/appData.ts'
-import { navigate } from '../app/router.ts'
+import { href, navigate } from '../app/router.ts'
 import type { TripState } from '../game/types.ts'
 import { applySuggestions } from '../trips/checklist.ts'
 import { findCountry } from '../trips/destinations.ts'
 import { TRANSPORTS, TRIP_KINDS, type Transport, type TripKind } from '../trips/types.ts'
-import { Button } from '../ui/Button.tsx'
-import ChoiceGroup from '../ui/ChoiceGroup.tsx'
+import { Button } from 'kitshelf-ui/ui/Button.tsx'
+import ChoiceGroup from 'kitshelf-ui/ui/ChoiceGroup.tsx'
 import { TRANSPORT_LABELS, TRIP_KIND_LABELS } from '../ui/labels.ts'
-import Missing from '../ui/Missing.tsx'
-import RequiredMark from '../ui/RequiredMark.tsx'
-import Screen from '../ui/Screen.tsx'
+import Missing from 'kitshelf-ui/ui/Missing.tsx'
+import RequiredMark from 'kitshelf-ui/ui/RequiredMark.tsx'
+import Screen from 'kitshelf-ui/ui/Screen.tsx'
 import { tripTheme } from '../ui/tripTheme.ts'
-import text from '../ui/text.module.css'
+import text from 'kitshelf-ui/ui/text.module.css'
 import TransportIcon from '../ui/TransportIcon.tsx'
 import TripKindIcon from '../ui/TripKindIcon.tsx'
 import styles from './TripFormScreen.module.css'
@@ -30,7 +30,7 @@ export default function TripFormScreen({ tripId }: { tripId: string }) {
   const [cityId, setCityId] = useState(existing?.cityId ?? '')
   const [problems, setProblems] = useState<string[]>([])
 
-  if (!existing) return <Missing message="Bu seyahat bulunamadı." back={{ screen: 'home' }} />
+  if (!existing) return <Missing message="Bu seyahat bulunamadı." back={href({ screen: 'home' })} />
 
   const save = () => {
     const found: string[] = []
@@ -60,7 +60,7 @@ export default function TripFormScreen({ tripId }: { tripId: string }) {
   return (
     <Screen
       title="Seyahati düzenle"
-      back={{ screen: 'trip', tripId }}
+      back={href({ screen: 'trip', tripId })}
       theme={tripTheme(existing.kind)}
       footer={
         <Button variant="primary" big onClick={save}>

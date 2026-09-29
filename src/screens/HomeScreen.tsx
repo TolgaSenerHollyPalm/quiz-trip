@@ -4,19 +4,20 @@ import type { TripState } from '../game/types.ts'
 import { countdownBadge, countdownMessage, tripPhase } from '../trips/countdown.ts'
 import { formatDateRangeShort, todayIso } from '../trips/dates.ts'
 import { sortTrips } from '../trips/list.ts'
-import { LinkButton } from '../ui/Button.tsx'
-import Chip from '../ui/Chip.tsx'
-import { IconLink } from '../ui/IconButton.tsx'
-import { AppIcon, PlusIcon, SlidersIcon } from '../ui/icons.tsx'
-import IosInstallHint from '../ui/IosInstallHint.tsx'
+import { LinkButton } from 'kitshelf-ui/ui/Button.tsx'
+import Chip from 'kitshelf-ui/ui/Chip.tsx'
+import { IconLink } from 'kitshelf-ui/ui/IconButton.tsx'
+import { PlusIcon, SlidersIcon } from 'kitshelf-ui/ui/icons.tsx'
+import { AppIcon } from '../ui/icons.tsx'
+import IosInstallHint from 'kitshelf-ui/ui/IosInstallHint.tsx'
 import { TRANSPORT_LABELS, TRIP_KIND_LABELS } from '../ui/labels.ts'
-import { LinkRow, ListCard } from '../ui/ListCard.tsx'
-import OnlineBadge from '../ui/OnlineBadge.tsx'
-import ProgressBar from '../ui/ProgressBar.tsx'
-import Screen from '../ui/Screen.tsx'
-import text from '../ui/text.module.css'
-import Tile from '../ui/Tile.tsx'
-import type { Tone } from '../ui/tone.ts'
+import { LinkRow, ListCard } from 'kitshelf-ui/ui/ListCard.tsx'
+import OnlineBadge from 'kitshelf-ui/ui/OnlineBadge.tsx'
+import ProgressBar from 'kitshelf-ui/ui/ProgressBar.tsx'
+import Screen from 'kitshelf-ui/ui/Screen.tsx'
+import text from 'kitshelf-ui/ui/text.module.css'
+import Tile from 'kitshelf-ui/ui/Tile.tsx'
+import type { Tone } from 'kitshelf-ui/ui/tone.ts'
 import TransportIcon from '../ui/TransportIcon.tsx'
 import TripKindIcon from '../ui/TripKindIcon.tsx'
 import { tripTheme } from '../ui/tripTheme.ts'
@@ -54,19 +55,19 @@ export default function HomeScreen() {
       aside={
         <>
           <OnlineBadge />
-          <IconLink to={{ screen: 'app-settings' }} label="Ayarlar">
+          <IconLink to={href({ screen: 'app-settings' })} label="Ayarlar">
             <SlidersIcon />
           </IconLink>
         </>
       }
       footer={
-        <LinkButton to={{ screen: 'trip-new' }} variant="primary" big>
+        <LinkButton to={href({ screen: 'trip-new' })} variant="primary" big>
           <PlusIcon size={20} strokeWidth={2.2} />
           Yeni seyahat
         </LinkButton>
       }
     >
-      <IosInstallHint />
+      <IosInstallHint dismissedKey="ios-install-hint-dismissed" />
 
       {/* An empty app should say what it is for before it asks for anything. */}
       {trips.length === 0 && (
@@ -165,9 +166,9 @@ function OtherTrip({ trip, today }: { trip: TripState; today: string }) {
 
   return (
     <LinkRow
-      to={{ screen: 'trip', tripId: trip.id }}
+      to={href({ screen: 'trip', tripId: trip.id })}
       tile={
-        <Tile tone={finished ? 'neutral' : 'trip'} theme={tripTheme(trip.kind)}>
+        <Tile tone={finished ? 'neutral' : 'accent'} theme={tripTheme(trip.kind)}>
           {icon}
         </Tile>
       }
@@ -181,7 +182,7 @@ function OtherTrip({ trip, today }: { trip: TripState; today: string }) {
           </Chip>
         ) : (
           <span className={tripTheme(trip.kind)}>
-            <Chip tone="trip" strong>
+            <Chip tone="accent" strong>
               {badge}
             </Chip>
           </span>

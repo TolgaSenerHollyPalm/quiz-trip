@@ -1,12 +1,13 @@
 import type { ReactNode } from 'react'
+import { href } from '../app/router.ts'
 import type { TripState } from '../game/types.ts'
 import { BagIcon, ForkKnifeIcon, SuitcaseIcon } from '../ui/icons.tsx'
-import { LinkRow, ListCard } from '../ui/ListCard.tsx'
-import ProgressBar from '../ui/ProgressBar.tsx'
-import Tile from '../ui/Tile.tsx'
-import type { Tone } from '../ui/tone.ts'
+import { LinkRow, ListCard } from 'kitshelf-ui/ui/ListCard.tsx'
+import ProgressBar from 'kitshelf-ui/ui/ProgressBar.tsx'
+import Tile from 'kitshelf-ui/ui/Tile.tsx'
+import type { Tone } from 'kitshelf-ui/ui/tone.ts'
 import type { Route } from '../app/router.ts'
-import text from '../ui/text.module.css'
+import text from 'kitshelf-ui/ui/text.module.css'
 import styles from './TripLists.module.css'
 
 /** The trip's three lists, each with how much of it is done. */
@@ -16,7 +17,7 @@ export default function TripLists({ trip }: { trip: TripState }) {
     const done = items.filter((item) => item.done).length
     return (
       <LinkRow
-        to={to}
+        to={href(to)}
         tile={<Tile tone={tone}>{icon}</Tile>}
         title={title}
         meta={items.length > 0 ? `${done} / ${items.length}` : 'Ekle'}

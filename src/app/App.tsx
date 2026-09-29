@@ -19,9 +19,9 @@ import TripScreen from '../screens/TripScreen.tsx'
 import TripSettingsScreen from '../screens/TripSettingsScreen.tsx'
 import TripWizardScreen from '../screens/TripWizardScreen.tsx'
 import AppDataProvider from './AppDataProvider.tsx'
-import ConnectionNotice from './ConnectionNotice.tsx'
+import ConnectionNotice from 'kitshelf-ui/app/ConnectionNotice.tsx'
 import { href, useRoute, type Route } from './router.ts'
-import toast from './toast.module.css'
+import toast from 'kitshelf-ui/app/toast.module.css'
 import UpdatePrompt from './UpdatePrompt.tsx'
 
 // A page of every building block, for the development server only; production builds drop it.
@@ -51,7 +51,7 @@ export default function App() {
       </AppDataProvider>
       <div className={toast.stack}>
         <UpdatePrompt />
-        <ConnectionNotice />
+        <ConnectionNotice appName="TripKit" />
       </div>
     </>
   )

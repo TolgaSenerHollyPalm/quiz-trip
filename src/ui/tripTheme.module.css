@@ -45,6 +45,20 @@
   --trip-ink: #075f59;
 }
 
+/* kitshelf-ui's accent tone and chip read a trip's colour through these; the text on it stays white. */
+.beach,
+.fun,
+.winter,
+.city,
+.nature,
+.business,
+.other {
+  --accent-color: var(--trip-color);
+  --accent-soft: var(--trip-soft);
+  --accent-ink: var(--trip-ink);
+  --accent-on: #ffffff;
+}
+
 :global(:root[data-scheme='dark']) .beach {
   --trip-soft: #1a3745;
   --trip-ink: #98bed3;

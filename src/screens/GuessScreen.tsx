@@ -1,15 +1,15 @@
 import { useEffect, useRef, useState } from 'react'
 import { useTrip } from '../app/appData.ts'
-import { navigate } from '../app/router.ts'
+import { href, navigate } from '../app/router.ts'
 import { describeBounds, guessProblem, submitGuess } from '../game/predictions.ts'
-import Avatar from '../ui/Avatar.tsx'
-import { Button, LinkButton } from '../ui/Button.tsx'
+import Avatar from 'kitshelf-ui/ui/Avatar.tsx'
+import { Button, LinkButton } from 'kitshelf-ui/ui/Button.tsx'
 import GuessList from '../ui/GuessList.tsx'
-import Missing from '../ui/Missing.tsx'
-import Screen from '../ui/Screen.tsx'
+import Missing from 'kitshelf-ui/ui/Missing.tsx'
+import Screen from 'kitshelf-ui/ui/Screen.tsx'
 import { tripTheme } from '../ui/tripTheme.ts'
-import text from '../ui/text.module.css'
-import { locative } from '../ui/turkish.ts'
+import text from 'kitshelf-ui/ui/text.module.css'
+import { locative } from 'kitshelf-ui/ui/turkish.ts'
 import ValueField from '../ui/ValueField.tsx'
 import styles from './GuessScreen.module.css'
 
@@ -48,17 +48,17 @@ export default function GuessScreen({ tripId, predictionId, playerId }: GuessScr
   }, [position])
 
   const detail = { screen: 'prediction', tripId, predictionId } as const
-  if (!trip) return <Missing message="Bu seyahat bulunamadı." back={{ screen: 'home' }} />
-  if (!prediction) return <Missing message="Bu tahmin bulunamadı." back={{ screen: 'predictions', tripId }} />
+  if (!trip) return <Missing message="Bu seyahat bulunamadı." back={href({ screen: 'home' })} />
+  if (!prediction) return <Missing message="Bu tahmin bulunamadı." back={href({ screen: 'predictions', tripId })} />
 
   if (phase === 'locked') {
     return (
       <Screen
         title="Tahminler kilitlendi"
-        back={detail}
+        back={href(detail)}
         theme={tripTheme(trip.kind)}
         footer={
-          <LinkButton to={detail} variant="primary" big>
+          <LinkButton to={href(detail)} variant="primary" big>
             Tamam
           </LinkButton>
         }
@@ -72,7 +72,7 @@ export default function GuessScreen({ tripId, predictionId, playerId }: GuessScr
 
   const player = trip.players.find((p) => p.id === queue[position])
   if (prediction.status !== 'open' || !player) {
-    return <Missing message="Bu tahmine girilecek bir şey kalmadı." back={detail} />
+    return <Missing message="Bu tahmine girilecek bir şey kalmadı." back={href(detail)} />
   }
 
   const moveTo = (next: number) => {
@@ -101,7 +101,7 @@ export default function GuessScreen({ tripId, predictionId, playerId }: GuessScr
   return (
     <Screen
       title="Tahmin girişi"
-      back={detail}
+      back={href(detail)}
       theme={tripTheme(trip.kind)}
       footer={
         <Button variant="primary" big onClick={save}>

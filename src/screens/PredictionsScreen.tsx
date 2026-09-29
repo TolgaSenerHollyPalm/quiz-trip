@@ -2,13 +2,13 @@ import { useTrip } from '../app/appData.ts'
 import { href } from '../app/router.ts'
 import { formatAnswer } from '../game/predictions.ts'
 import type { Prediction } from '../game/types.ts'
-import { LinkButton } from '../ui/Button.tsx'
-import { ChevronRightIcon, PlusIcon } from '../ui/icons.tsx'
-import Missing from '../ui/Missing.tsx'
-import Screen from '../ui/Screen.tsx'
+import { LinkButton } from 'kitshelf-ui/ui/Button.tsx'
+import { ChevronRightIcon, PlusIcon } from 'kitshelf-ui/ui/icons.tsx'
+import Missing from 'kitshelf-ui/ui/Missing.tsx'
+import Screen from 'kitshelf-ui/ui/Screen.tsx'
 import { tripTheme } from '../ui/tripTheme.ts'
 import StatusBadge from '../ui/StatusBadge.tsx'
-import text from '../ui/text.module.css'
+import text from 'kitshelf-ui/ui/text.module.css'
 import styles from './PredictionsScreen.module.css'
 
 const SECTIONS: { status: Prediction['status']; title: string }[] = [
@@ -19,7 +19,7 @@ const SECTIONS: { status: Prediction['status']; title: string }[] = [
 
 export default function PredictionsScreen({ tripId }: { tripId: string }) {
   const { trip } = useTrip(tripId)
-  if (!trip) return <Missing message="Bu seyahat bulunamadı." back={{ screen: 'home' }} />
+  if (!trip) return <Missing message="Bu seyahat bulunamadı." back={href({ screen: 'home' })} />
 
   const detail = (prediction: Prediction) => {
     if (prediction.status === 'resolved') return `Sonuç: ${formatAnswer(prediction, prediction.result!)}`
@@ -31,10 +31,10 @@ export default function PredictionsScreen({ tripId }: { tripId: string }) {
   return (
     <Screen
       title="Tahminler"
-      back={{ screen: 'trip', tripId }}
+      back={href({ screen: 'trip', tripId })}
       theme={tripTheme(trip.kind)}
       footer={
-        <LinkButton to={{ screen: 'prediction-new', tripId }} variant="primary" big>
+        <LinkButton to={href({ screen: 'prediction-new', tripId })} variant="primary" big>
           <PlusIcon size={20} strokeWidth={2.2} />
           Tahmin ekle
         </LinkButton>

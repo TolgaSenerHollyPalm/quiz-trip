@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import { useTrip } from '../app/appData.ts'
-import { navigate } from '../app/router.ts'
+import { href, navigate } from '../app/router.ts'
 import { formatAnswer, resultProblem, setResult } from '../game/predictions.ts'
-import { Button } from '../ui/Button.tsx'
-import Missing from '../ui/Missing.tsx'
-import Screen from '../ui/Screen.tsx'
+import { Button } from 'kitshelf-ui/ui/Button.tsx'
+import Missing from 'kitshelf-ui/ui/Missing.tsx'
+import Screen from 'kitshelf-ui/ui/Screen.tsx'
 import { tripTheme } from '../ui/tripTheme.ts'
-import text from '../ui/text.module.css'
+import text from 'kitshelf-ui/ui/text.module.css'
 import ValueField from '../ui/ValueField.tsx'
 
 export default function PredictionResultScreen({ tripId, predictionId }: { tripId: string; predictionId: string }) {
@@ -15,10 +15,10 @@ export default function PredictionResultScreen({ tripId, predictionId }: { tripI
   const [problem, setProblem] = useState<string>()
   const detail = { screen: 'prediction', tripId, predictionId } as const
   const prediction = trip?.predictions.find((p) => p.id === predictionId)
-  if (!trip) return <Missing message="Bu seyahat bulunamadı." back={{ screen: 'home' }} />
-  if (!prediction) return <Missing message="Bu tahmin bulunamadı." back={{ screen: 'predictions', tripId }} />
+  if (!trip) return <Missing message="Bu seyahat bulunamadı." back={href({ screen: 'home' })} />
+  if (!prediction) return <Missing message="Bu tahmin bulunamadı." back={href({ screen: 'predictions', tripId })} />
   if (prediction.status === 'open') {
-    return <Missing message="Sonuç, herkes tahminini girdikten sonra girilebilir." back={detail} />
+    return <Missing message="Sonuç, herkes tahminini girdikten sonra girilebilir." back={href(detail)} />
   }
 
   const correcting = prediction.status === 'resolved'
@@ -35,7 +35,7 @@ export default function PredictionResultScreen({ tripId, predictionId }: { tripI
   return (
     <Screen
       title={correcting ? 'Sonucu düzelt' : 'Sonucu gir'}
-      back={detail}
+      back={href(detail)}
       theme={tripTheme(trip.kind)}
       footer={
         <Button variant="primary" big onClick={save}>

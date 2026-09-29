@@ -2,15 +2,15 @@ import { useState } from 'react'
 import { useTrip } from '../app/appData.ts'
 import { href, navigate } from '../app/router.ts'
 import { deletePrediction, describeBounds, formatAnswer } from '../game/predictions.ts'
-import { LinkButton } from '../ui/Button.tsx'
-import ConfirmDialog from '../ui/ConfirmDialog.tsx'
+import { LinkButton } from 'kitshelf-ui/ui/Button.tsx'
+import ConfirmDialog from 'kitshelf-ui/ui/ConfirmDialog.tsx'
 import GuessList from '../ui/GuessList.tsx'
-import Menu from '../ui/Menu.tsx'
-import Missing from '../ui/Missing.tsx'
-import Screen from '../ui/Screen.tsx'
+import Menu from 'kitshelf-ui/ui/Menu.tsx'
+import Missing from 'kitshelf-ui/ui/Missing.tsx'
+import Screen from 'kitshelf-ui/ui/Screen.tsx'
 import { tripTheme } from '../ui/tripTheme.ts'
 import StatusBadge from '../ui/StatusBadge.tsx'
-import text from '../ui/text.module.css'
+import text from 'kitshelf-ui/ui/text.module.css'
 import styles from './PredictionScreen.module.css'
 
 export default function PredictionScreen({ tripId, predictionId }: { tripId: string; predictionId: string }) {
@@ -20,8 +20,8 @@ export default function PredictionScreen({ tripId, predictionId }: { tripId: str
   const back = { screen: 'predictions', tripId } as const
   const prediction = trip?.predictions.find((p) => p.id === predictionId)
   if (deleted) return null // leaving for the list
-  if (!trip) return <Missing message="Bu seyahat bulunamadı." back={{ screen: 'home' }} />
-  if (!prediction) return <Missing message="Bu tahmin bulunamadı." back={back} />
+  if (!trip) return <Missing message="Bu seyahat bulunamadı." back={href({ screen: 'home' })} />
+  if (!prediction) return <Missing message="Bu tahmin bulunamadı." back={href(back)} />
 
   const guess = { screen: 'guess', tripId, predictionId } as const
   const resultEntry = { screen: 'prediction-result', tripId, predictionId } as const
@@ -31,16 +31,16 @@ export default function PredictionScreen({ tripId, predictionId }: { tripId: str
   return (
     <Screen
       title="Tahmin"
-      back={back}
+      back={href(back)}
       theme={tripTheme(trip.kind)}
       aside={<Menu items={[{ label: 'Tahmini sil', onSelect: () => setConfirmingDelete(true), danger: true }]} />}
       footer={
         prediction.status === 'open' && trip.players.length > 0 ? (
-          <LinkButton to={guess} variant="primary" big>
+          <LinkButton to={href(guess)} variant="primary" big>
             {entered.length === 0 ? 'Tahminleri girmeye başla' : 'Kalan oyuncular girsin'}
           </LinkButton>
         ) : prediction.status === 'locked' ? (
-          <LinkButton to={resultEntry} variant="primary" big>
+          <LinkButton to={href(resultEntry)} variant="primary" big>
             Sonucu gir
           </LinkButton>
         ) : undefined
@@ -84,7 +84,7 @@ export default function PredictionScreen({ tripId, predictionId }: { tripId: str
         <>
           <p className={styles.result}>Sonuç: {formatAnswer(prediction, prediction.result!)}</p>
           <GuessList prediction={prediction} players={trip.players} />
-          <LinkButton to={resultEntry}>Sonucu düzelt</LinkButton>
+          <LinkButton to={href(resultEntry)}>Sonucu düzelt</LinkButton>
         </>
       )}
 

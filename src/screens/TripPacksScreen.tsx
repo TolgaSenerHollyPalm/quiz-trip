@@ -1,17 +1,18 @@
 import { useState } from 'react'
+import { href } from '../app/router.ts'
 import { useAppData, useTrip } from '../app/appData.ts'
 import { bundledPacks } from '../packs/bundled.ts'
 import { fetchPackList, type SyncResult } from '../packs/sync.ts'
 import type { Pack } from '../packs/types.ts'
 import { destinationName } from '../trips/destinations.ts'
 import { matchesDestination } from '../trips/packMatch.ts'
-import { Button } from '../ui/Button.tsx'
-import ConfirmDialog from '../ui/ConfirmDialog.tsx'
-import Missing from '../ui/Missing.tsx'
-import Screen from '../ui/Screen.tsx'
+import { Button } from 'kitshelf-ui/ui/Button.tsx'
+import ConfirmDialog from 'kitshelf-ui/ui/ConfirmDialog.tsx'
+import Missing from 'kitshelf-ui/ui/Missing.tsx'
+import Screen from 'kitshelf-ui/ui/Screen.tsx'
 import { tripTheme } from '../ui/tripTheme.ts'
-import text from '../ui/text.module.css'
-import { useOnline } from '../ui/useOnline.ts'
+import text from 'kitshelf-ui/ui/text.module.css'
+import { useOnline } from 'kitshelf-ui/ui/useOnline.ts'
 import styles from './TripPacksScreen.module.css'
 
 /** The question packs of one trip: what it plays with, and what its destination still has to offer. */
@@ -23,7 +24,7 @@ export default function TripPacksScreen({ tripId }: { tripId: string }) {
   const [result, setResult] = useState<SyncResult>()
   const [nothingNew, setNothingNew] = useState(false)
   const [removing, setRemoving] = useState<Pack>()
-  if (!trip) return <Missing message="Bu seyahat bulunamadı." back={{ screen: 'home' }} />
+  if (!trip) return <Missing message="Bu seyahat bulunamadı." back={href({ screen: 'home' })} />
 
   const destination = { country: trip.country, cityId: trip.cityId }
   const where = destinationName(destinations, trip.country, trip.cityId)
@@ -74,7 +75,7 @@ export default function TripPacksScreen({ tripId }: { tripId: string }) {
   return (
     <Screen
       title="Soru paketleri"
-      back={{ screen: 'trip', tripId }}
+      back={href({ screen: 'trip', tripId })}
       theme={tripTheme(trip.kind)}
       footer={
         trip.country !== undefined &&

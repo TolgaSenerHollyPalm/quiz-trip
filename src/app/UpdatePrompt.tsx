@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useRegisterSW } from 'virtual:pwa-register/react'
-import { Button } from '../ui/Button.tsx'
-import toast from './toast.module.css'
+import UpdateToast from 'kitshelf-ui/app/UpdateToast.tsx'
 
 // The app can stay open for days during a trip, so look for a new version every hour while online.
 const UPDATE_CHECK_INTERVAL_MS = 60 * 60 * 1000
@@ -80,17 +79,5 @@ export default function UpdatePrompt() {
     void updateServiceWorker(true)
   }
 
-  return (
-    <div className={toast.toast} role="status">
-      <p>{needRefresh ? 'Güncelleme hazır.' : 'Uygulama artık internetsiz de çalışır.'}</p>
-      <div className={toast.actions}>
-        {needRefresh && (
-          <Button variant="primary" onClick={refresh}>
-            Yenile
-          </Button>
-        )}
-        <Button onClick={close}>{needRefresh ? 'Sonra' : 'Tamam'}</Button>
-      </div>
-    </div>
-  )
+  return <UpdateToast needRefresh={needRefresh} onRefresh={refresh} onClose={close} />
 }

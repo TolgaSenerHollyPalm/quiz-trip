@@ -1,18 +1,20 @@
 import { useState } from 'react'
+import { href } from '../app/router.ts'
 import { TRIP_KINDS } from '../trips/types.ts'
-import AddField from '../ui/AddField.tsx'
-import { Button } from '../ui/Button.tsx'
-import CheckButton from '../ui/CheckButton.tsx'
-import Chip from '../ui/Chip.tsx'
-import Disclosure from '../ui/Disclosure.tsx'
-import { IconButton } from '../ui/IconButton.tsx'
-import { BackIcon, BagIcon, BoxIcon, ForkKnifeIcon, PeopleIcon, PlusIcon, SuitcaseIcon, TrophyIcon } from '../ui/icons.tsx'
+import AddField from 'kitshelf-ui/ui/AddField.tsx'
+import { Button } from 'kitshelf-ui/ui/Button.tsx'
+import CheckButton from 'kitshelf-ui/ui/CheckButton.tsx'
+import Chip from 'kitshelf-ui/ui/Chip.tsx'
+import Disclosure from 'kitshelf-ui/ui/Disclosure.tsx'
+import { IconButton } from 'kitshelf-ui/ui/IconButton.tsx'
+import { BackIcon, PlusIcon } from 'kitshelf-ui/ui/icons.tsx'
+import { BagIcon, BoxIcon, ForkKnifeIcon, PeopleIcon, SuitcaseIcon, TrophyIcon } from '../ui/icons.tsx'
 import { TRIP_KIND_LABELS } from '../ui/labels.ts'
-import { ItemRow, LinkRow, ListCard } from '../ui/ListCard.tsx'
-import Menu from '../ui/Menu.tsx'
-import ProgressBar from '../ui/ProgressBar.tsx'
-import Screen from '../ui/Screen.tsx'
-import Tile from '../ui/Tile.tsx'
+import { ItemRow, LinkRow, ListCard } from 'kitshelf-ui/ui/ListCard.tsx'
+import Menu from 'kitshelf-ui/ui/Menu.tsx'
+import ProgressBar from 'kitshelf-ui/ui/ProgressBar.tsx'
+import Screen from 'kitshelf-ui/ui/Screen.tsx'
+import Tile from 'kitshelf-ui/ui/Tile.tsx'
 import TripKindIcon from '../ui/TripKindIcon.tsx'
 import { tripTheme } from '../ui/tripTheme.ts'
 import styles from './DesignGallery.module.css'
@@ -40,7 +42,7 @@ export default function DesignGallery() {
     <Screen
       title="Tasarım dili"
       subtitle="Uygulamanın her ekranı bu renk, yazı ve bileşenlerden kurulur."
-      back={home}
+      back={href(home)}
       aside={
         <Menu
           items={[
@@ -97,7 +99,7 @@ export default function DesignGallery() {
         <div className={styles.trips}>
           {TRIP_KINDS.map((kind) => (
             <div key={kind} className={`${styles.trip} ${tripTheme(kind)}`}>
-              <Chip tone="trip" icon={<TripKindIcon kind={kind} />}>
+              <Chip tone="accent" icon={<TripKindIcon kind={kind} />}>
                 {TRIP_KIND_LABELS[kind]}
               </Chip>
               <div className={styles.countdown}>
@@ -117,7 +119,7 @@ export default function DesignGallery() {
         <div className={styles.row}>
           {TRIP_KINDS.map((kind) => (
             <span key={kind} className={tripTheme(kind)}>
-              <Tile tone="trip">
+              <Tile tone="accent">
                 <TripKindIcon kind={kind} size={24} />
               </Tile>
             </span>
@@ -168,21 +170,21 @@ export default function DesignGallery() {
         <h2 className={styles.sectionTitle}>Listeler</h2>
         <ListCard as="nav" label="Listeler">
           <LinkRow
-            to={home}
+            to={href(home)}
             tile={<Tile tone="teal"><SuitcaseIcon /></Tile>}
             title="Hazırlık listesi"
             meta="4 / 9"
             bar={<ProgressBar value={4} max={9} tone="teal" label="Hazırlık listesi" />}
           />
           <LinkRow
-            to={home}
+            to={href(home)}
             tile={<Tile tone="coral"><BagIcon /></Tile>}
             title="Almadan gelme"
             meta="2 / 6"
             bar={<ProgressBar value={2} max={6} tone="coral" label="Almadan gelme" />}
           />
           <LinkRow
-            to={home}
+            to={href(home)}
             tile={<Tile tone="amber"><ForkKnifeIcon /></Tile>}
             title="Tatmadan gelme"
             meta="1 / 7"
@@ -190,15 +192,15 @@ export default function DesignGallery() {
           />
         </ListCard>
         <ListCard as="nav" label="Oyun ayrıntıları">
-          <LinkRow small to={home} tile={<Tile tone="neutral" size="small"><TrophyIcon /></Tile>} title="Skor tablosu" subtitle="Deniz önde · 14 puan" />
-          <LinkRow small to={home} tile={<Tile tone="neutral" size="small"><PeopleIcon /></Tile>} title="Oyuncular" subtitle="Tolga, Deniz, Ada" />
+          <LinkRow small to={href(home)} tile={<Tile tone="neutral" size="small"><TrophyIcon /></Tile>} title="Skor tablosu" subtitle="Deniz önde · 14 puan" />
+          <LinkRow small to={href(home)} tile={<Tile tone="neutral" size="small"><PeopleIcon /></Tile>} title="Oyuncular" subtitle="Tolga, Deniz, Ada" />
           <LinkRow
             small
-            to={home}
+            to={href(home)}
             tile={<Tile tone="neutral" size="small"><BoxIcon /></Tile>}
             title="Soru paketleri"
             subtitle="Mısır — Sharm el-Şeyh"
-            trailing={<span className={tripTheme('fun')}><Chip tone="trip" strong>57 gün</Chip></span>}
+            trailing={<span className={tripTheme('fun')}><Chip tone="accent" strong>57 gün</Chip></span>}
           />
         </ListCard>
       </section>
@@ -206,9 +208,9 @@ export default function DesignGallery() {
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Etiketler ve ilerleme</h2>
         <div className={styles.row}>
-          <span className={tripTheme('beach')}><Chip tone="trip">Deniz</Chip></span>
+          <span className={tripTheme('beach')}><Chip tone="accent">Deniz</Chip></span>
           <Chip>Uçak</Chip>
-          <span className={tripTheme('fun')}><Chip tone="trip" strong>57 gün</Chip></span>
+          <span className={tripTheme('fun')}><Chip tone="accent" strong>57 gün</Chip></span>
           <Chip tone="quiet" strong>Bitti</Chip>
           <Chip tone="online">Çevrimiçi</Chip>
         </div>

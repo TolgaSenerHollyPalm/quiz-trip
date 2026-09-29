@@ -1,4 +1,4 @@
-import { useSyncExternalStore } from 'react'
+import { go, useHash } from 'kitshelf-ui/app/hashRouter.ts'
 
 // Routes live in the URL hash, so GitHub Pages only ever serves index.html from the app's folder.
 export type Route =
@@ -132,16 +132,10 @@ function parsePredictionRoute(tripId: string, id?: string, action?: string, play
 }
 
 /** Goes to a route. `replace` swaps the current history entry, so the back button skips it. */
-export function navigate(route: Route, { replace = false } = {}): void {
-  if (replace) location.replace(href(route))
-  else location.hash = href(route)
-}
-
-function subscribe(onChange: () => void) {
-  window.addEventListener('hashchange', onChange)
-  return () => window.removeEventListener('hashchange', onChange)
+export function navigate(route: Route, options: { replace?: boolean } = {}): void {
+  go(href(route), options)
 }
 
 export function useRoute(): Route {
-  return parseRoute(useSyncExternalStore(subscribe, () => location.hash))
+  return parseRoute(useHash())
 }

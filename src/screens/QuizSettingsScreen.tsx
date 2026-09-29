@@ -1,16 +1,16 @@
 import { useState } from 'react'
 import { useTrip } from '../app/appData.ts'
-import { navigate } from '../app/router.ts'
+import { href, navigate } from '../app/router.ts'
 import { MAX_QUESTIONS_PER_PLAYER, questionPool } from '../game/quiz.ts'
 import { startRound } from '../game/trip.ts'
 import type { DifficultyChoice, QuizSettings } from '../game/types.ts'
-import { Button, LinkButton } from '../ui/Button.tsx'
-import ChoiceGroup from '../ui/ChoiceGroup.tsx'
+import { Button, LinkButton } from 'kitshelf-ui/ui/Button.tsx'
+import ChoiceGroup from 'kitshelf-ui/ui/ChoiceGroup.tsx'
 import { DIFFICULTY_LABELS } from '../ui/labels.ts'
-import Missing from '../ui/Missing.tsx'
-import Screen from '../ui/Screen.tsx'
+import Missing from 'kitshelf-ui/ui/Missing.tsx'
+import Screen from 'kitshelf-ui/ui/Screen.tsx'
 import { tripTheme } from '../ui/tripTheme.ts'
-import Stepper from '../ui/Stepper.tsx'
+import Stepper from 'kitshelf-ui/ui/Stepper.tsx'
 import styles from './QuizSettingsScreen.module.css'
 
 const DIFFICULTY_CHOICES: DifficultyChoice[] = ['mixed', 'easy', 'medium', 'hard']
@@ -42,18 +42,18 @@ export default function QuizSettingsScreen({ tripId }: { tripId: string }) {
   })
 
   const back = { screen: 'trip', tripId } as const
-  if (!trip) return <Missing message="Bu seyahat bulunamadı." back={{ screen: 'home' }} />
+  if (!trip) return <Missing message="Bu seyahat bulunamadı." back={href({ screen: 'home' })} />
   if (collection.packs.length === 0) {
-    return <Missing message="Bu seyahatin soru paketi cihazda yok." back={{ screen: 'trip', tripId }} />
+    return <Missing message="Bu seyahatin soru paketi cihazda yok." back={href({ screen: 'trip', tripId })} />
   }
   if (trip.players.length === 0) {
     return (
       <Screen
         title="Quiz ayarları"
-        back={back}
+        back={href(back)}
         theme={tripTheme(trip.kind)}
         footer={
-          <LinkButton to={{ screen: 'players', tripId, next: 'quiz' }} variant="primary" big>
+          <LinkButton to={href({ screen: 'players', tripId, next: 'quiz' })} variant="primary" big>
             Oyuncuları ekle
           </LinkButton>
         }
@@ -66,10 +66,10 @@ export default function QuizSettingsScreen({ tripId }: { tripId: string }) {
     return (
       <Screen
         title="Quiz ayarları"
-        back={back}
+        back={href(back)}
         theme={tripTheme(trip.kind)}
         footer={
-          <LinkButton to={{ screen: 'play', tripId }} variant="primary" big>
+          <LinkButton to={href({ screen: 'play', tripId })} variant="primary" big>
             Tura devam et
           </LinkButton>
         }
@@ -107,7 +107,7 @@ export default function QuizSettingsScreen({ tripId }: { tripId: string }) {
   return (
     <Screen
       title="Quiz ayarları"
-      back={back}
+      back={href(back)}
       theme={tripTheme(trip.kind)}
       footer={
         <Button variant="primary" big disabled={pool.length === 0} onClick={start}>

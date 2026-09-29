@@ -1,19 +1,20 @@
 import { useState, type ComponentType } from 'react'
+import { href } from '../app/router.ts'
 import { useTrip } from '../app/appData.ts'
 import { addNote, editNote, removeNote, toggleNote } from '../trips/notes.ts'
 import type { NoteItem } from '../trips/types.ts'
-import AddField from '../ui/AddField.tsx'
-import { Button } from '../ui/Button.tsx'
-import CheckButton from '../ui/CheckButton.tsx'
-import DeleteButton from '../ui/DeleteButton.tsx'
-import Disclosure from '../ui/Disclosure.tsx'
+import AddField from 'kitshelf-ui/ui/AddField.tsx'
+import { Button } from 'kitshelf-ui/ui/Button.tsx'
+import CheckButton from 'kitshelf-ui/ui/CheckButton.tsx'
+import DeleteButton from 'kitshelf-ui/ui/DeleteButton.tsx'
+import Disclosure from 'kitshelf-ui/ui/Disclosure.tsx'
 import { BagIcon, ForkKnifeIcon } from '../ui/icons.tsx'
-import { ItemRow, ListCard } from '../ui/ListCard.tsx'
-import Missing from '../ui/Missing.tsx'
-import ProgressBar from '../ui/ProgressBar.tsx'
-import Screen from '../ui/Screen.tsx'
-import Tile from '../ui/Tile.tsx'
-import { toneClass, type Tone } from '../ui/tone.ts'
+import { ItemRow, ListCard } from 'kitshelf-ui/ui/ListCard.tsx'
+import Missing from 'kitshelf-ui/ui/Missing.tsx'
+import ProgressBar from 'kitshelf-ui/ui/ProgressBar.tsx'
+import Screen from 'kitshelf-ui/ui/Screen.tsx'
+import Tile from 'kitshelf-ui/ui/Tile.tsx'
+import { toneClass, type Tone } from 'kitshelf-ui/ui/tone.ts'
 import NoteEditDialog from './NoteEditDialog.tsx'
 import styles from './NoteListScreen.module.css'
 
@@ -64,7 +65,7 @@ export default function NoteListScreen({ tripId, list }: { tripId: string; list:
   const { trip, saveTrip } = useTrip(tripId)
   const [editing, setEditing] = useState(false)
   const [openId, setOpenId] = useState<string>()
-  if (!trip) return <Missing message="Bu seyahat bulunamadı." back={{ screen: 'home' }} />
+  if (!trip) return <Missing message="Bu seyahat bulunamadı." back={href({ screen: 'home' })} />
 
   const words = NOTE_LISTS[list]
   const items = trip[list]
@@ -100,7 +101,7 @@ export default function NoteListScreen({ tripId, list }: { tripId: string; list:
           <words.Icon size={24} />
         </Tile>
       }
-      back={{ screen: 'trip', tripId }}
+      back={href({ screen: 'trip', tripId })}
       aside={
         items.length > 0 && (
           <Button variant="text" onClick={() => setEditing(!inEditMode)}>
