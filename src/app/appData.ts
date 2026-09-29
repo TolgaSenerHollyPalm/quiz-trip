@@ -28,6 +28,8 @@ export interface AppData {
   /** Downloads these packs and nothing else; what the wizard does once a destination is chosen. */
   downloadPacks: (packIds: string[]) => Promise<SyncResult>
   checkPacks: () => void
+  /** Reads everything from IndexedDB again, e.g. after a backup was restored. */
+  reload: () => Promise<void>
 }
 
 export const AppDataContext = createContext<AppData | null>(null)

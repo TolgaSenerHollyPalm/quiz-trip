@@ -1,4 +1,6 @@
 import { openDB, type DBSchema, type IDBPDatabase } from 'idb'
+import type { RestoreCount, RestoreMode } from 'kitshelf-ui/backup/format.ts'
+import { planRestore, type TripkitData } from '../backup/restorePlan.ts'
 import type { TripState } from '../game/types.ts'
 import type { PackStore } from '../packs/sync.ts'
 import type { Pack } from '../packs/types.ts'
@@ -17,6 +19,8 @@ interface QuizTripDB extends DBSchema {
 }
 
 export const DATABASE_NAME = 'quiz-trip'
+// Also a backup's dataVersion: raising it needs the same migrations in migrateTripkit (backup/tripkitBackup.ts).
+export const DATABASE_VERSION = 4
 
 let connection: Promise<IDBPDatabase<QuizTripDB>> | undefined
 let waitingForAnotherTab = false
@@ -25,7 +29,7 @@ let waitingForAnotherTab = false
 export const blockedByAnotherTab = () => waitingForAnotherTab
 
 function database() {
-  connection ??= openDB<QuizTripDB>(DATABASE_NAME, 4, {
+  connection ??= openDB<QuizTripDB>(DATABASE_NAME, DATABASE_VERSION, {
     async upgrade(db, oldVersion, _newVersion, tx) {
       // Packs and trips live in separate stores, so updating a pack can never touch a trip.
       if (oldVersion < 1) db.createObjectStore('packs', { keyPath: 'id' })
@@ -122,6 +126,25 @@ export async function deleteTrip(tripId: string): Promise<void> {
 export async function saveTrip(trip: TripState): Promise<void> {
   const db = await database()
   await db.put('trips', trip)
+}
+
+/** Writes a backup in one transaction on both stores; a failure anywhere leaves the device as it was. */
+export async function restoreBackup(data: TripkitData, mode: RestoreMode): Promise<RestoreCount[]> {
+  const db = await database()
+  const tx = db.transaction(['packs', 'trips'], 'readwrite')
+  const packs = tx.objectStore('packs')
+  const trips = tx.objectStore('trips')
+  // Read and planned inside the transaction; awaiting anything but its own requests would end it.
+  const [localPacks, localTrips] = await Promise.all([packs.getAll(), trips.getAll()])
+  const plan = planRestore({ packs: localPacks, trips: localTrips }, data, mode)
+  const clearing = plan.clear ? [packs.clear(), trips.clear()] : []
+  await Promise.all([
+    ...clearing,
+    ...plan.packs.map((pack) => packs.put(pack)),
+    ...plan.trips.map((trip) => trips.put(trip)),
+    tx.done,
+  ])
+  return plan.counts
 }
 
 /** Asks the browser not to clear our data when the device runs low on space. */

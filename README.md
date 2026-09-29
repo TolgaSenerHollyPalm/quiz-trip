@@ -76,6 +76,23 @@ Prediction templates are `number` or `choice`. A number template can have:
   `"params": { "min": { "key": "minFloor", "label": "En alt kat" }, "max": { "key": "maxFloor", "label": "En üst kat" } }`.
   Templates that need the same value share the `key`.
 
+## Backups
+
+Everything stays on the device, so a backup is a file the user keeps: Ayarlar › Yedek saves the trips and the downloaded
+question packs (`tripkit-yedek-YYYY-MM-DD.json`) through the phone's share sheet, or as a download where files cannot be
+shared, and restores them from such a file. The format, the checks and the screens come from
+[kitshelf-ui](https://github.com/TolgaSenerHollyPalm/kitshelf-ui)'s backup; `src/backup/tripkitBackup.ts` is TripKit's
+adapter and `restoreBackup` in `src/storage/db.ts` writes a restore in one IndexedDB transaction.
+
+- **Merge** adds the trips and packs the device lacks and keeps the newer copy of those it has: a trip by its `updatedAt`
+  (stamped on every save; older records without one count as the oldest), a pack by its `version`.
+- **Replace** empties both stores and writes the backup's trips and packs.
+- Deletions do not travel: merging an older backup brings back a trip deleted since.
+- A trip changed on two devices keeps the newer copy as a whole, with no merging of single items, and "newer" follows
+  each device's own clock.
+- A backup's `dataVersion` is the database version (4). Raising the database version needs the same migrations in
+  `migrateTripkit`, or older backups stop opening.
+
 ## Deployment
 
 Every push to `main` runs `.github/workflows/deploy.yml`, which tests, builds and publishes `dist/` to GitHub Pages at `https://trip.kitshelf.app`.

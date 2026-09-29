@@ -1,8 +1,16 @@
+import { backupKeyList } from 'kitshelf-ui/backup/state.ts'
 import { wipeDevice as wipe } from 'kitshelf-ui/storage/wipe.ts'
+import { KIT } from '../backup/tripkitBackup.ts'
 import { closeDatabase, DATABASE_NAME } from './db.ts'
 
 /** The keys this app owns; the origin may one day host another app, whose keys are none of our business. */
-export const OWN_KEYS = ['tripkit-destinations', 'ios-install-hint-dismissed', 'tripkit-appearance', 'offline-ready-shown']
+export const OWN_KEYS = [
+  'tripkit-destinations',
+  'ios-install-hint-dismissed',
+  'tripkit-appearance',
+  'offline-ready-shown',
+  ...backupKeyList(KIT),
+]
 
 /** Removes trips, packs and settings, and — when there is a network to fetch the app again — its offline copy. */
 export function wipeDevice({ appShell = navigator.onLine } = {}): Promise<void> {

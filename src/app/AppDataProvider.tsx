@@ -1,4 +1,6 @@
+import { trackDataSince } from 'kitshelf-ui/backup/state.ts'
 import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react'
+import { KIT, stampTrip } from '../backup/tripkitBackup.ts'
 import type { TripState } from '../game/types.ts'
 import { bundledPacks } from '../packs/bundled.ts'
 import {
@@ -37,6 +39,9 @@ interface Loaded {
 let syncing = false
 let checking = false
 let currentTrips: TripState[] = []
+
+// The backup reminder's clock starts with the first trip and stops when the last one is deleted.
+const noteTrips = () => trackDataSince(KIT, currentTrips.length > 0, new Date())
 
 const browserFetch: Fetcher = (url, init) => fetch(url, init)
 const server = (trips: readonly TripState[]) => ({
@@ -79,6 +84,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
       .then(({ packs, trips }) => {
         if (!active) return
         currentTrips = trips
+        noteTrips()
         setLoaded({ packs: mergePacks([], packs), trips })
         checkPacks()
       })
@@ -124,8 +130,10 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
   }, [])
 
   const saveTrip = useCallback(
-    (trip: TripState) => {
+    (changed: TripState) => {
+      const trip = stampTrip(changed, new Date())
       currentTrips = withTrip(currentTrips, trip)
+      noteTrips()
       setLoaded((current) => current && { ...current, trips: withTrip(current.trips, trip) })
       storeTrip(trip).catch(report)
     },
@@ -135,6 +143,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
   const deleteTrip = useCallback(
     (tripId: string) => {
       currentTrips = currentTrips.filter((trip) => trip.id !== tripId)
+      noteTrips()
       setLoaded((current) => current && { ...current, trips: current.trips.filter((trip) => trip.id !== tripId) })
       removeTrip(tripId).catch(report)
     },
@@ -203,10 +212,19 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
       })
   }, [checkPacks])
 
+  // A restore writes straight to IndexedDB; memory follows by reading it back.
+  const reload = useCallback(async () => {
+    const { packs, trips } = await loadAll()
+    currentTrips = trips
+    noteTrips()
+    setLoaded((current) => current && { ...current, packs: mergePacks([], packs), trips })
+    checkPacks()
+  }, [checkPacks])
+
   const value = useMemo(
     () =>
-      loaded && { ...loaded, destinations, saveTrip, deleteTrip, deletePack, sync, startSync, downloadPacks, checkPacks },
-    [loaded, destinations, saveTrip, deleteTrip, deletePack, sync, startSync, downloadPacks, checkPacks],
+      loaded && { ...loaded, destinations, saveTrip, deleteTrip, deletePack, sync, startSync, downloadPacks, checkPacks, reload },
+    [loaded, destinations, saveTrip, deleteTrip, deletePack, sync, startSync, downloadPacks, checkPacks, reload],
   )
 
   if (loadFailed) {

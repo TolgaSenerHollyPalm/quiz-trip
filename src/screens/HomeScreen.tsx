@@ -1,5 +1,7 @@
+import BackupReminder from 'kitshelf-ui/backup/BackupReminder.tsx'
 import { useAppData } from '../app/appData.ts'
 import { href } from '../app/router.ts'
+import { BACKUP_TEXTS, useBackupReminder } from '../backup/tripkitBackup.ts'
 import type { TripState } from '../game/types.ts'
 import { countdownBadge, countdownMessage, tripPhase } from '../trips/countdown.ts'
 import { formatDateRangeShort, todayIso } from '../trips/dates.ts'
@@ -36,6 +38,7 @@ function tripLine(trip: TripState, today: string): string {
 
 export default function HomeScreen() {
   const { trips } = useAppData()
+  const { reminder, lastBackupAt, snooze } = useBackupReminder()
   const today = todayIso()
   const sorted = sortTrips(trips, today)
   // The first trip still to come or under way; an undated one has no count to lead with.
@@ -55,7 +58,7 @@ export default function HomeScreen() {
       aside={
         <>
           <OnlineBadge />
-          <IconLink to={href({ screen: 'app-settings' })} label="Ayarlar">
+          <IconLink to={href({ screen: 'app-settings' })} label={reminder.due ? 'Ayarlar, yedek zamanı' : 'Ayarlar'} badge={reminder.due}>
             <SlidersIcon />
           </IconLink>
         </>
@@ -68,6 +71,15 @@ export default function HomeScreen() {
       }
     >
       <IosInstallHint dismissedKey="ios-install-hint-dismissed" />
+      {reminder.showBanner && (
+        <BackupReminder
+          reminder={reminder}
+          lastBackupAt={lastBackupAt}
+          text={BACKUP_TEXTS.banner}
+          href={href({ screen: 'app-settings' })}
+          onDismiss={snooze}
+        />
+      )}
 
       {/* An empty app should say what it is for before it asks for anything. */}
       {trips.length === 0 && (

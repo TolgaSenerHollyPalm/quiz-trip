@@ -78,4 +78,5 @@ export interface TripState {
   predictions: Prediction[]
   quizSettings?: QuizSettings // last used, offered again next time
   currentRound?: CurrentRound
+  updatedAt?: string // ISO, stamped on every save; a backup merge keeps the newer copy of a trip
 }
