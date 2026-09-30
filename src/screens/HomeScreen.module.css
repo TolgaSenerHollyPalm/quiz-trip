@@ -36,10 +36,11 @@
   gap: 12px;
 }
 
+/* A dark veil: a white one left this small white text under 4.5:1 on every trip colour. */
 .next {
   padding: 4px 10px;
   border-radius: var(--radius-pill);
-  background: rgb(255 255 255 / 0.18);
+  background: rgb(27 31 30 / 0.24);
   font-size: 0.75rem;
   font-weight: 700;
 }

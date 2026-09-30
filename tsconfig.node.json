@@ -19,5 +19,5 @@
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["vite.config.ts", "pwa-manifest.ts", "pwa-manifest.test.ts"]
+  "include": ["vite.config.ts", "pwa-manifest.ts", "pwa-manifest.test.ts", "trip-colours.test.ts"]
 }
