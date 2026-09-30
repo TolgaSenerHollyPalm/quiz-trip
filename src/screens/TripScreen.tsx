@@ -190,6 +190,7 @@ export default function TripScreen({ tripId }: { tripId: string }) {
         onCancel={() => setConfirmingReset(false)}
       >
         Oyuncular, puanlar, tahminler ve seyahat ayarları silinecek. Seyahatin adı, tarihleri ve listeleri kalır.
+        Sorulan sorular hatırlanır; yeni turlarda önce sorulmamışlar gelir.
       </ConfirmDialog>
 
       <ConfirmDialog

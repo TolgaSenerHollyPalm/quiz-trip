@@ -21,13 +21,15 @@ export function newTrip(id: string, name: string): TripState {
   }
 }
 
-/** Clears what the games collected. The trip itself stays: its name, dates and every list. */
+/**
+ * Clears what the games collected. The trip itself stays: its name, dates and every list, and the questions
+ * already asked, so new rounds still start with unasked ones.
+ */
 export function resetGames(trip: TripState): TripState {
   return {
     ...trip,
     players: [],
     params: {},
-    askedQuestionIds: [],
     rounds: [],
     predictions: [],
     quizSettings: undefined,
@@ -41,12 +43,14 @@ export function startRound(
   settings: QuizSettings,
   round: { id: string; startedAt: string },
   rng: Rng,
+  askedElsewhere: ReadonlySet<string>, // on the device's other trips
 ): TripState {
   const turns = buildRound({
     questions,
     settings,
     playerIds: trip.players.map((player) => player.id),
     askedQuestionIds: trip.askedQuestionIds,
+    askedElsewhere,
     roundsPlayed: trip.rounds.length,
     rng,
   })

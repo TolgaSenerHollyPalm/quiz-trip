@@ -28,7 +28,15 @@ function started(): TripState {
     ],
   }
   const settings = { categories: ['history' as const], difficulty: 'mixed' as const, questionsPerPlayer: 2, timeLimit: 0 as const }
-  return startRound(trip, pack.questions, settings, { id: 'r1', startedAt: '2026-09-19T10:00:00Z' }, seededRng(7))
+  return startRound(trip, pack.questions, settings, { id: 'r1', startedAt: '2026-09-19T10:00:00Z' }, seededRng(7), new Set())
+}
+
+/** A round of one easy question each for Ali and Can, dealt on a trip that has asked `asked`. */
+function easyRound(asked: string[], askedElsewhere: ReadonlySet<string> = new Set()): string[] {
+  const trip = { ...started(), currentRound: undefined, askedQuestionIds: asked }
+  const settings = { categories: ['history' as const], difficulty: 'easy' as const, questionsPerPlayer: 1, timeLimit: 0 as const }
+  const next = startRound(trip, pack.questions, settings, { id: 'r2', startedAt: PLAYED_AT }, seededRng(3), askedElsewhere)
+  return next.currentRound!.turns.map((turn) => turn.question.id).sort()
 }
 
 /** Answers the current turn right or wrong. */
@@ -45,6 +53,11 @@ describe('a quiz round', () => {
     expect(trip.currentRound?.turns.map((turn) => turn.playerId)).toEqual(['a', 'b', 'a', 'b'])
     expect(trip.currentRound?.answers).toEqual([])
     expect(trip.quizSettings?.questionsPerPlayer).toBe(2)
+  })
+
+  it('counts the questions of the device’s other trips as asked', () => {
+    const elsewhere = new Set(['history-easy-1', 'history-easy-2', 'history-easy-3', 'history-easy-4'])
+    expect(easyRound([], elsewhere)).toEqual(['history-easy-5', 'history-easy-6'])
   })
 
   it('marks each answered question as asked, moving a repeated one to the end', () => {
@@ -153,12 +166,19 @@ describe('resetGames', () => {
       rounds: [{ id: 'r1', playedAt: '2026-10-15T10:00:00Z', scores: { a: 3 } }],
     }
     const reset = resetGames(trip)
-    expect(reset).toMatchObject({ players: [], params: {}, askedQuestionIds: [], rounds: [], predictions: [] })
+    expect(reset).toMatchObject({ players: [], params: {}, rounds: [], predictions: [] })
     expect(reset.currentRound).toBeUndefined()
     expect(reset.checklist).toBe(trip.checklist)
     expect(reset.souvenirs).toBe(trip.souvenirs)
     expect(reset.tastes).toBe(trip.tastes)
     expect(reset.startDate).toBe('2026-10-14')
+  })
+
+  it('remembers the questions already asked, so the next round starts with unasked ones', () => {
+    const asked = ['history-easy-1', 'history-easy-2', 'history-easy-3', 'history-easy-4']
+    const reset = resetGames({ ...started(), askedQuestionIds: asked })
+    expect(reset.askedQuestionIds).toEqual(asked)
+    expect(easyRound(reset.askedQuestionIds)).toEqual(['history-easy-5', 'history-easy-6'])
   })
 
   it('starts a new trip with both lists empty', () => {

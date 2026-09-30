@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import { useTrip } from '../app/appData.ts'
+import { useAppData, useTrip } from '../app/appData.ts'
 import { href, navigate } from '../app/router.ts'
-import { MAX_QUESTIONS_PER_PLAYER, questionPool } from '../game/quiz.ts'
+import { askedOnOtherTrips, MAX_QUESTIONS_PER_PLAYER, questionPool } from '../game/quiz.ts'
 import { startRound } from '../game/trip.ts'
 import type { DifficultyChoice, QuizSettings } from '../game/types.ts'
 import { Button, LinkButton } from 'kitshelf-ui/ui/Button.tsx'
@@ -26,6 +26,8 @@ function summary(poolSize: number, needed: number, neverAsked: number): string {
 
 export default function QuizSettingsScreen({ tripId }: { tripId: string }) {
   const { collection, trip, saveTrip } = useTrip(tripId)
+  const { trips } = useAppData()
+  const askedElsewhere = askedOnOtherTrips(trips, tripId)
   // One group per pack, with only the categories that pack has questions in.
   const groups = collection.categoryGroups.filter((group) => group.categories.length > 0)
   const available = groups.flatMap((group) => group.categories)
@@ -83,7 +85,9 @@ export default function QuizSettingsScreen({ tripId }: { tripId: string }) {
     settings.difficulty === 'mixed' || difficulty === settings.difficulty
   const pool = questionPool(collection.questions, settings)
   const needed = trip.players.length * settings.questionsPerPlayer
-  const neverAsked = pool.filter((question) => !trip.askedQuestionIds.includes(question.id)).length
+  const neverAsked = pool.filter(
+    (question) => !trip.askedQuestionIds.includes(question.id) && !askedElsewhere.has(question.id),
+  ).length
 
   const toggleCategory = (id: string) => {
     const chosen = settings.categories.includes(id)
@@ -100,7 +104,7 @@ export default function QuizSettingsScreen({ tripId }: { tripId: string }) {
 
   const start = () => {
     const round = { id: crypto.randomUUID(), startedAt: new Date().toISOString() }
-    saveTrip(startRound(trip, collection.questions, settings, round, Math.random))
+    saveTrip(startRound(trip, collection.questions, settings, round, Math.random, askedElsewhere))
     navigate({ screen: 'play', tripId }, { replace: true })
   }
 

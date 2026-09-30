@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest'
 import type { Question } from '../packs/types.ts'
-import { buildRound, type RoundInput } from './quiz.ts'
+import { askedOnOtherTrips, buildRound, type RoundInput } from './quiz.ts'
 import { makeQuestions, seededRng } from './test-helpers.ts'
+import { newTrip } from './trip.ts'
 import type { QuizSettings, RoundTurn } from './types.ts'
 
 const settings = (overrides: Partial<QuizSettings> = {}): QuizSettings => ({
@@ -18,6 +19,7 @@ const deal = (questions: Question[], overrides: Partial<RoundInput> = {}) =>
     settings: settings(),
     playerIds: ['a', 'b', 'c'],
     askedQuestionIds: [],
+    askedElsewhere: new Set(),
     roundsPlayed: 0,
     rng: seededRng(1),
     ...overrides,
@@ -81,6 +83,41 @@ describe('buildRound', () => {
     expect(ids(turns).sort()).toEqual(['history-easy-1', 'history-easy-3', 'history-easy-5'])
   })
 
+  it('asks what this device never asked first, then what only other trips asked, then this trip’s oldest', () => {
+    const six = easy.slice(0, 6)
+    for (let seed = 1; seed <= 20; seed++) {
+      const turns = deal(six, {
+        settings: settings({ difficulty: 'easy', questionsPerPlayer: 2 }),
+        askedQuestionIds: ['history-easy-5', 'history-easy-3', 'history-easy-1'], // oldest first
+        askedElsewhere: new Set(['history-easy-2', 'history-easy-4', 'history-easy-1']),
+        rng: seededRng(seed),
+      })
+      expect(turns[0].question.id).toBe('history-easy-6')
+      expect(ids(turns.slice(1, 3)).sort()).toEqual(['history-easy-2', 'history-easy-4'])
+      expect(ids(turns.slice(3))).toEqual(['history-easy-5', 'history-easy-3', 'history-easy-1'])
+    }
+  })
+
+  it('takes the difficulty with the most new questions left when none has enough for everyone', () => {
+    // One new easy, two new medium, no new hard: whichever difficulty is next in turn, medium gives the most.
+    const asked = [...easy.slice(0, 9), ...medium.slice(0, 8), ...hard].map((question) => question.id)
+    for (let seed = 1; seed <= 20; seed++) {
+      const here = deal(all, { settings: settings({ questionsPerPlayer: 1 }), askedQuestionIds: asked, rng: seededRng(seed) })
+      expect(ids(here).sort()).toEqual(['history-medium-1', 'history-medium-10', 'history-medium-9'])
+      const elsewhere = deal(all, { settings: settings({ questionsPerPlayer: 1 }), askedElsewhere: new Set(asked), rng: seededRng(seed) })
+      expect(elsewhere.map((turn) => turn.question.difficulty)).toEqual(['medium', 'medium', 'medium'])
+      expect(ids(elsewhere)).toEqual(expect.arrayContaining(['history-medium-9', 'history-medium-10']))
+    }
+  })
+
+  it('does not hand one new question to several players of the same question number', () => {
+    const turns = deal([hard[0], ...medium], {
+      settings: settings({ questionsPerPlayer: 1 }),
+      askedQuestionIds: medium.map((question) => question.id),
+    })
+    expect(turns.map((turn) => turn.question.difficulty)).toEqual(['medium', 'medium', 'medium'])
+  })
+
   it('repeats questions evenly within the round when there are not enough', () => {
     const two = easy.slice(0, 2)
     const turns = deal(two, { settings: settings({ difficulty: 'easy', questionsPerPlayer: 2 }) })
@@ -116,5 +153,13 @@ describe('buildRound', () => {
 
   it('deals nothing when no question matches', () => {
     expect(deal(all, { settings: settings({ categories: ['food'] }) })).toEqual([])
+  })
+})
+
+describe('askedOnOtherTrips', () => {
+  it('collects what every other trip on the device has asked, whatever pack it came from', () => {
+    const trip = (id: string, askedQuestionIds: string[]) => ({ ...newTrip(id, id), askedQuestionIds })
+    const trips = [trip('a', ['eg:q1', 'eg:q2']), trip('b', ['eg:q2', 'tr:q9']), trip('c', ['eg:q3'])]
+    expect([...askedOnOtherTrips(trips, 'c')].sort()).toEqual(['eg:q1', 'eg:q2', 'tr:q9'])
   })
 })
