@@ -38,6 +38,7 @@
   padding: 16px;
   border-radius: var(--radius);
   text-decoration: none;
+  container-type: inline-size;
 }
 
 /* The quiz: the one dark tile, the game to reach for first. */
@@ -90,7 +91,28 @@
 }
 
 .tileAction {
+  align-items: flex-start;
   color: var(--color-mint);
+}
+
+/* Beside the first line when the count wraps: (21px line - 16px arrow) / 2. */
+.tileAction svg {
+  margin-top: 2.5px;
+}
+
+.progress {
+  white-space: nowrap;
+}
+
+/* Too narrow for one line (every phone): the count goes under "Tura devam et", without a dot left hanging. */
+@container (max-width: 170px) {
+  .progress {
+    display: block;
+  }
+
+  .dot {
+    display: none;
+  }
 }
 
 .waiting {

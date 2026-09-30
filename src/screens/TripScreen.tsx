@@ -103,7 +103,17 @@ export default function TripScreen({ tripId }: { tripId: string }) {
               </span>
               <span className={styles.tileTitle}>Bilgi yarışması</span>
               <span className={styles.tileAction}>
-                {round ? `Tura devam et · ${round.answers.length + 1} / ${round.turns.length}` : 'Tura başla'}
+                {round ? (
+                  <span>
+                    Tura devam et
+                    <span className={styles.progress}>
+                      <span className={styles.dot}> · </span>
+                      {round.answers.length + 1} / {round.turns.length}
+                    </span>
+                  </span>
+                ) : (
+                  'Tura başla'
+                )}
                 <ArrowRightIcon size={16} />
               </span>
             </a>
