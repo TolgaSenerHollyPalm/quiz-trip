@@ -20,6 +20,16 @@
       "file": "nick-land-of-legends.json",
       "questionCount": 70,
       "updatedAt": "2026-09-28"
+    },
+    {
+      "id": "tr-mardin",
+      "title": "Türkiye — Mardin",
+      "country": "TR",
+      "cityId": "mardin",
+      "version": 1,
+      "file": "tr-mardin.json",
+      "questionCount": 49,
+      "updatedAt": "2026-09-30"
     }
   ]
 }

@@ -6,7 +6,8 @@
       "name": "Türkiye",
       "cities": [
         { "id": "antalya", "name": "Antalya" },
-        { "id": "istanbul", "name": "İstanbul" }
+        { "id": "istanbul", "name": "İstanbul" },
+        { "id": "mardin", "name": "Mardin" }
       ]
     },
     {

@@ -1,0 +1,824 @@
+{
+  "schemaVersion": 1,
+  "id": "tr-mardin",
+  "title": "Türkiye — Mardin",
+  "country": "TR",
+  "city": "Mardin",
+  "cityId": "mardin",
+  "version": 1,
+  "updatedAt": "2026-09-30",
+  "categories": [
+    { "id": "history", "label": "Tarih" },
+    { "id": "architecture", "label": "Mimari" },
+    { "id": "geography", "label": "Coğrafya" },
+    { "id": "food", "label": "Yemek" },
+    { "id": "culture", "label": "Kültür" }
+  ],
+  "questions": [
+    {
+      "id": "mrd-hist-001",
+      "category": "history",
+      "difficulty": "easy",
+      "text": "Mardin, 12. yüzyılın başından 15. yüzyılın başına kadar hangi Türk hanedanının bir kolunun merkeziydi?",
+      "options": [
+        "Karamanoğulları",
+        "Artuklular",
+        "Saltuklular",
+        "Danişmendliler"
+      ],
+      "answerIndex": 1,
+      "explanation": "Artukluların Mardin kolu, 12. yüzyılın başından 15. yüzyılın başına kadar Mardin'i merkez edindi."
+    },
+    {
+      "id": "mrd-hist-002",
+      "category": "history",
+      "difficulty": "medium",
+      "text": "Mardin'in eski şehrinin bulunduğu merkez ilçenin adı nedir?",
+      "options": [
+        "Kızıltepe",
+        "Nusaybin",
+        "Midyat",
+        "Artuklu"
+      ],
+      "answerIndex": 3,
+      "explanation": "Mardin 2012'de büyükşehir olunca merkezde Artuklu ilçesi kuruldu; adını Artuklulardan alır."
+    },
+    {
+      "id": "mrd-hist-003",
+      "category": "history",
+      "difficulty": "medium",
+      "text": "Mardin'deki Zinciriye Medresesi'nin diğer adı nedir?",
+      "options": [
+        "Sultan İsa Medresesi",
+        "Şehidiye Medresesi",
+        "Hatuniye Medresesi",
+        "Kasımiye Medresesi"
+      ],
+      "answerIndex": 0,
+      "explanation": "Artuklu hükümdarı Sultan İsa yaptırdığı için Sultan İsa Medresesi olarak da bilinir; 1385'te tamamlandı."
+    },
+    {
+      "id": "mrd-hist-004",
+      "category": "history",
+      "difficulty": "hard",
+      "text": "Mardin'deki Kasımiye Medresesi adını kimden alır?",
+      "options": [
+        "Akkoyunlu hükümdarı Sultan Kasım",
+        "Osmanlı veziri Kasım Paşa",
+        "Karakoyunlu hükümdarı Kara Yusuf",
+        "Mimar Kasım Ağa"
+      ],
+      "answerIndex": 0,
+      "explanation": "Yapımına Artuklular döneminde başlanan medrese, Akkoyunlu hükümdarı Sultan Kasım döneminde tamamlandı ve onun adını taşır."
+    },
+    {
+      "id": "mrd-hist-005",
+      "category": "history",
+      "difficulty": "medium",
+      "text": "Dara antik kenti 6. yüzyılın başında hangi devlete karşı bir sınır kalesi olarak kuruldu?",
+      "options": [
+        "Sasani İmparatorluğu",
+        "Büyük Selçuklu Devleti",
+        "Urartu Krallığı",
+        "Hitit Krallığı"
+      ],
+      "answerIndex": 0,
+      "explanation": "Doğu Roma, Dara'yı 6. yüzyılın başında Sasani sınırına karşı bir garnizon kenti olarak inşa etti."
+    },
+    {
+      "id": "mrd-hist-006",
+      "category": "history",
+      "difficulty": "hard",
+      "text": "Dara kentini kurduran Doğu Roma (Bizans) imparatoru kimdir?",
+      "options": [
+        "Büyük Konstantin",
+        "I. Justinianos",
+        "I. Anastasios",
+        "II. Theodosius"
+      ],
+      "answerIndex": 2,
+      "explanation": "Kent, kurucusu I. Anastasios'un adıyla Anastasiopolis olarak da anıldı."
+    },
+    {
+      "id": "mrd-hist-007",
+      "category": "history",
+      "difficulty": "easy",
+      "text": "Dara antik kentinde kayalara oyulmuş mezarların bulunduğu alana ne ad verilir?",
+      "options": [
+        "Agora",
+        "Stoa",
+        "Nekropol",
+        "Akropol"
+      ],
+      "answerIndex": 2,
+      "explanation": "Nekropol 'ölüler şehri' demektir; Dara'da kayalara oyulmuş mezarların bulunduğu geniş bir nekropol vardır."
+    },
+    {
+      "id": "mrd-hist-008",
+      "category": "history",
+      "difficulty": "medium",
+      "text": "Nusaybin'in antik çağdaki adı nedir?",
+      "options": [
+        "Edessa",
+        "Amida",
+        "Harran",
+        "Nisibis"
+      ],
+      "answerIndex": 3,
+      "explanation": "Nusaybin antik çağda Nisibis diye bilinirdi. Edessa Şanlıurfa'nın, Amida Diyarbakır'ın eski adıdır."
+    },
+    {
+      "id": "mrd-hist-009",
+      "category": "history",
+      "difficulty": "medium",
+      "text": "Midyat yakınlarındaki Mor Gabriel Manastırı'nın kuruluş yılı olarak hangisi kabul edilir?",
+      "options": [
+        "MS 1923",
+        "MS 1453",
+        "MS 1071",
+        "MS 397"
+      ],
+      "answerIndex": 3,
+      "explanation": "Kaynaklara göre 397'de kurulan manastır, bugün hâlâ kullanılan en eski manastırlardan biridir."
+    },
+    {
+      "id": "mrd-hist-010",
+      "category": "history",
+      "difficulty": "medium",
+      "text": "Deyrulzafaran Manastırı yüzyıllar boyunca hangi kilisenin patrikhanesiydi?",
+      "options": [
+        "Süryani Ortodoks Kilisesi",
+        "Roma Katolik Kilisesi",
+        "Ermeni Apostolik Kilisesi",
+        "Rum Ortodoks Kilisesi"
+      ],
+      "answerIndex": 0,
+      "explanation": "Deyrulzafaran 1293'ten 1932'ye kadar Süryani Ortodoks Patrikhanesi'ydi."
+    },
+    {
+      "id": "mrd-hist-011",
+      "category": "history",
+      "difficulty": "hard",
+      "text": "Süryani Ortodoks Patrikhanesi 1930'larda Deyrulzafaran'dan hangi ülkeye taşındı?",
+      "options": [
+        "Suriye",
+        "Irak",
+        "Ürdün",
+        "Lübnan"
+      ],
+      "answerIndex": 0,
+      "explanation": "Patrikhane önce Humus'a, daha sonra Şam'a taşındı."
+    },
+    {
+      "id": "mrd-hist-012",
+      "category": "history",
+      "difficulty": "easy",
+      "text": "2015 Nobel Kimya Ödülü'nü paylaşan Mardinli bilim insanı kimdir?",
+      "options": [
+        "Cahit Arf",
+        "Aziz Sancar",
+        "Gazi Yaşargil",
+        "Oktay Sinanoğlu"
+      ],
+      "answerIndex": 1,
+      "explanation": "Aziz Sancar, DNA onarımı üzerine çalışmalarıyla 2015 Nobel Kimya Ödülü'nü paylaştı."
+    },
+    {
+      "id": "mrd-hist-013",
+      "category": "history",
+      "difficulty": "medium",
+      "text": "Nobel ödüllü Aziz Sancar Mardin'in hangi ilçesinde doğdu?",
+      "options": [
+        "Derik",
+        "Savur",
+        "Midyat",
+        "Nusaybin"
+      ],
+      "answerIndex": 1,
+      "explanation": "Aziz Sancar 1946'da Mardin'in Savur ilçesinde doğdu."
+    },
+    {
+      "id": "mrd-hist-014",
+      "category": "history",
+      "difficulty": "hard",
+      "text": "Nusaybin'deki Mor Yakup Kilisesi hangi yüzyılda yapıldı?",
+      "options": [
+        "14. yüzyıl",
+        "10. yüzyıl",
+        "4. yüzyıl",
+        "18. yüzyıl"
+      ],
+      "answerIndex": 2,
+      "explanation": "Mor Yakup Kilisesi 4. yüzyılda yapıldı ve bölgenin ayakta kalan en eski kiliselerinden biridir."
+    },
+    {
+      "id": "mrd-hist-015",
+      "category": "history",
+      "difficulty": "hard",
+      "text": "Mardin Kalesi'ne halk arasında verilen ad nedir?",
+      "options": [
+        "Kuşkonmaz",
+        "Yedikule",
+        "Aslanlı Kale",
+        "Kartal Yuvası"
+      ],
+      "answerIndex": 3,
+      "explanation": "Sarp bir tepenin üstündeki Mardin Kalesi, yüksekliği ve erişilmezliği nedeniyle Kartal Yuvası diye anılır."
+    },
+    {
+      "id": "mrd-hist-016",
+      "category": "history",
+      "difficulty": "medium",
+      "text": "Mardin hangi Osmanlı padişahı döneminde Osmanlı topraklarına katıldı?",
+      "options": [
+        "Fatih Sultan Mehmet",
+        "II. Bayezid",
+        "Kanuni Sultan Süleyman",
+        "Yavuz Sultan Selim"
+      ],
+      "answerIndex": 3,
+      "explanation": "Mardin, Yavuz Sultan Selim döneminde, 1517'de Osmanlı topraklarına katıldı."
+    },
+    {
+      "id": "mrd-hist-017",
+      "category": "history",
+      "difficulty": "medium",
+      "text": "Mardin Ulu Camii hangi dönemde yapıldı?",
+      "options": [
+        "Cumhuriyet",
+        "Artuklu",
+        "Osmanlı",
+        "Akkoyunlu"
+      ],
+      "answerIndex": 1,
+      "explanation": "Ulu Cami, 12. yüzyılda Artuklular döneminde yapıldı ve Mardin'in simgelerinden biridir."
+    },
+    {
+      "id": "mrd-hist-018",
+      "category": "history",
+      "difficulty": "medium",
+      "text": "Mardin Müzesi hangi tarihî binada hizmet verir?",
+      "options": [
+        "Eski Süryani Katolik Patrikhanesi",
+        "Eski kervansaray",
+        "Eski hapishane",
+        "Eski tren istasyonu"
+      ],
+      "answerIndex": 0,
+      "explanation": "Müze, 1895'te yapılan eski Süryani Katolik Patrikhanesi binasındadır."
+    },
+    {
+      "id": "mrd-hist-019",
+      "category": "history",
+      "difficulty": "medium",
+      "text": "Sakıp Sabancı Mardin Kent Müzesi'nin binası daha önce ne olarak kullanılıyordu?",
+      "options": [
+        "Okul",
+        "Han",
+        "Kışla",
+        "Hastane"
+      ],
+      "answerIndex": 2,
+      "explanation": "Müze, restore edilen eski bir askerî kışla binasında açıldı."
+    },
+    {
+      "id": "mrd-arch-001",
+      "category": "architecture",
+      "difficulty": "easy",
+      "text": "Mardin'in eski evleri çoğunlukla hangi taştan yapılmıştır?",
+      "options": [
+        "Mermer",
+        "Granit",
+        "Bazalt",
+        "Kireçtaşı (kalker)"
+      ],
+      "answerIndex": 3,
+      "explanation": "Mardin evleri bölgede çıkan, kolay işlenen açık renkli kireçtaşından yapılır. Komşu Diyarbakır'ın surları ise koyu renkli bazalttandır."
+    },
+    {
+      "id": "mrd-arch-002",
+      "category": "architecture",
+      "difficulty": "medium",
+      "text": "Mardin'in dar sokaklarında evlerin altından geçen tonozlu geçitlere ne ad verilir?",
+      "options": [
+        "Eyvan",
+        "Cumba",
+        "Abbara",
+        "Revak"
+      ],
+      "answerIndex": 2,
+      "explanation": "Evlerin altından geçen, üstü örtülü bu sokak geçitlerine abbara denir."
+    },
+    {
+      "id": "mrd-arch-003",
+      "category": "architecture",
+      "difficulty": "medium",
+      "text": "Mardin evlerinde bir yanı tamamen açık, üstü tonozlu oturma bölümüne ne denir?",
+      "options": [
+        "Eyvan",
+        "Abbara",
+        "Kiler",
+        "Cumba"
+      ],
+      "answerIndex": 0,
+      "explanation": "Eyvan, üç yanı kapalı, bir yanı avluya ya da terasa açık tonozlu mekândır."
+    },
+    {
+      "id": "mrd-arch-004",
+      "category": "architecture",
+      "difficulty": "easy",
+      "text": "Mardin eski şehri, kalenin bulunduğu tepenin hangi yamacına basamak basamak kurulmuştur?",
+      "options": [
+        "Batı",
+        "Doğu",
+        "Kuzey",
+        "Güney"
+      ],
+      "answerIndex": 3,
+      "explanation": "Evler güney yamaçta basamak basamak dizilir; bu yüzden birçok evden güneydeki ova görünür."
+    },
+    {
+      "id": "mrd-arch-005",
+      "category": "architecture",
+      "difficulty": "medium",
+      "text": "Mardin'deki Kırklar Kilisesi hangi topluluğa aittir?",
+      "options": [
+        "Ermeni",
+        "Rum",
+        "Gürcü",
+        "Süryani"
+      ],
+      "answerIndex": 3,
+      "explanation": "Mor Behnam ve kız kardeşi Saro adına yapılan Kırklar Kilisesi, Süryani Ortodoks (Süryani Kadim) topluluğuna aittir."
+    },
+    {
+      "id": "mrd-arch-006",
+      "category": "architecture",
+      "difficulty": "hard",
+      "text": "Eski Midyat ile birleşerek bugünkü Midyat şehrini oluşturan yerleşim hangisidir?",
+      "options": [
+        "Savur",
+        "Estel",
+        "Dara",
+        "Ömerli"
+      ],
+      "answerIndex": 1,
+      "explanation": "Estel, Osmanlı döneminde eski Midyat'ın yakınında ayrı bir yerleşimdi; daha sonra Midyat ile tek belediye altında birleştirildi."
+    },
+    {
+      "id": "mrd-arch-007",
+      "category": "architecture",
+      "difficulty": "hard",
+      "text": "Deyrulzafaran Manastırı'nın diğer adı nedir?",
+      "options": [
+        "Mor Yakup",
+        "Mor Behnam",
+        "Mor Hananyo",
+        "Mor Gabriel"
+      ],
+      "answerIndex": 2,
+      "explanation": "Manastır, 8. yüzyılda onu kapsamlı biçimde yeniden yaptıran Metropolit Hananyo'nun adıyla Mor Hananyo Manastırı olarak da bilinir."
+    },
+    {
+      "id": "mrd-arch-008",
+      "category": "architecture",
+      "difficulty": "easy",
+      "text": "Hangisi Mardin'deki Artuklu dönemi yapılarından biridir?",
+      "options": [
+        "Topkapı Sarayı",
+        "Süleymaniye Camii",
+        "Zinciriye Medresesi",
+        "Selimiye Camii"
+      ],
+      "answerIndex": 2,
+      "explanation": "Zinciriye (Sultan İsa) Medresesi Artuklu dönemindendir. Diğerleri Osmanlı yapılarıdır ve Edirne ile İstanbul'dadır."
+    },
+    {
+      "id": "mrd-geo-001",
+      "category": "geography",
+      "difficulty": "easy",
+      "text": "Mardin hangi coğrafi bölgededir?",
+      "options": [
+        "İç Anadolu",
+        "Doğu Anadolu",
+        "Akdeniz",
+        "Güneydoğu Anadolu"
+      ],
+      "answerIndex": 3,
+      "explanation": "Mardin, Güneydoğu Anadolu Bölgesi'ndedir."
+    },
+    {
+      "id": "mrd-geo-002",
+      "category": "geography",
+      "difficulty": "easy",
+      "text": "Mardin'in plaka kodu kaçtır?",
+      "options": [
+        "73",
+        "47",
+        "63",
+        "21"
+      ],
+      "answerIndex": 1,
+      "explanation": "Mardin'in plaka kodu 47'dir. 21 Diyarbakır'ın, 63 Şanlıurfa'nın, 73 Şırnak'ın kodudur."
+    },
+    {
+      "id": "mrd-geo-003",
+      "category": "geography",
+      "difficulty": "easy",
+      "text": "Mardin hangi ülkeyle sınır komşusudur?",
+      "options": [
+        "İran",
+        "Suriye",
+        "Gürcistan",
+        "Irak"
+      ],
+      "answerIndex": 1,
+      "explanation": "Mardin'in güney sınırı Suriye sınırıdır."
+    },
+    {
+      "id": "mrd-geo-004",
+      "category": "geography",
+      "difficulty": "medium",
+      "text": "Hangisi Mardin'e komşu bir il değildir?",
+      "options": [
+        "Diyarbakır",
+        "Şırnak",
+        "Şanlıurfa",
+        "Adıyaman"
+      ],
+      "answerIndex": 3,
+      "explanation": "Adıyaman'ın Mardin'le sınırı yoktur. Şıklardaki Şanlıurfa, Diyarbakır ve Şırnak ise Mardin'e komşudur."
+    },
+    {
+      "id": "mrd-geo-005",
+      "category": "geography",
+      "difficulty": "easy",
+      "text": "Dicle ile Fırat nehirleri arasındaki bölgeye verilen tarihî ad nedir?",
+      "options": [
+        "Trakya",
+        "Kapadokya",
+        "Mezopotamya",
+        "Anadolu"
+      ],
+      "answerIndex": 2,
+      "explanation": "Mezopotamya, Yunanca 'iki nehir arası' demektir; Mardin bu bölgenin kuzeyindedir."
+    },
+    {
+      "id": "mrd-geo-006",
+      "category": "geography",
+      "difficulty": "medium",
+      "text": "Nusaybin'in hemen karşısında, sınırın öbür yanındaki Suriye şehri hangisidir?",
+      "options": [
+        "Halep",
+        "Kamışlı",
+        "Rakka",
+        "Şam"
+      ],
+      "answerIndex": 1,
+      "explanation": "Nusaybin ile Kamışlı, sınırın iki yanında birbirine bitişik iki şehirdir."
+    },
+    {
+      "id": "mrd-geo-007",
+      "category": "geography",
+      "difficulty": "medium",
+      "text": "Nüfusu en kalabalık Mardin ilçesi hangisidir?",
+      "options": [
+        "Kızıltepe",
+        "Nusaybin",
+        "Midyat",
+        "Artuklu"
+      ],
+      "answerIndex": 0,
+      "explanation": "Kızıltepe, Mardin'in en kalabalık ilçesidir."
+    },
+    {
+      "id": "mrd-geo-008",
+      "category": "geography",
+      "difficulty": "medium",
+      "text": "Midyat, Mardin şehir merkezinin hangi yönündedir?",
+      "options": [
+        "Güney",
+        "Batı",
+        "Doğu",
+        "Kuzey"
+      ],
+      "answerIndex": 2,
+      "explanation": "Midyat, Mardin merkezinin doğusundadır."
+    },
+    {
+      "id": "mrd-geo-009",
+      "category": "geography",
+      "difficulty": "hard",
+      "text": "Midyat çevresindeki, çok sayıda eski manastır ve köy barındıran yaylaya ne ad verilir?",
+      "options": [
+        "Nemrut",
+        "Tur Abdin",
+        "Karacadağ",
+        "Harran"
+      ],
+      "answerIndex": 1,
+      "explanation": "Tur Abdin, Süryanicede 'Tanrı'nın kullarının dağı' anlamına gelir ve Süryani kültürünün merkezlerinden biridir."
+    },
+    {
+      "id": "mrd-food-001",
+      "category": "food",
+      "difficulty": "easy",
+      "text": "Mardin ve çevresinde küçük fincanlarda ikram edilen, çok koyu ve acı kahveye ne denir?",
+      "options": [
+        "Salep",
+        "Menengiç kahvesi",
+        "Mırra",
+        "Dibek kahvesi"
+      ],
+      "answerIndex": 2,
+      "explanation": "Mırra, uzun süre kaynatılarak koyulaştırılan acı bir kahvedir ve fincanın dibinde az miktarda ikram edilir."
+    },
+    {
+      "id": "mrd-food-002",
+      "category": "food",
+      "difficulty": "medium",
+      "text": "Mardin ve Midyat'a özgü, içine kıyma konulup yarım ay biçiminde kapatılan hamur işi hangisidir?",
+      "options": [
+        "Pişi",
+        "Katmer",
+        "Sembusek",
+        "Gözleme"
+      ],
+      "answerIndex": 2,
+      "explanation": "Sembusek, kıymalı harçla doldurulup yarım ay biçiminde kapatılan bir hamur işidir; 'Mardin Sembusek' adıyla coğrafi işaretle tescillidir."
+    },
+    {
+      "id": "mrd-food-003",
+      "category": "food",
+      "difficulty": "medium",
+      "text": "Mardin'in ünlü kaburga dolmasında kuzu kaburganın içine genellikle ne doldurulur?",
+      "options": [
+        "Kırmızı mercimek",
+        "Baharatlı pirinç (iç pilav)",
+        "Haşlanmış patates",
+        "Beyaz peynir"
+      ],
+      "answerIndex": 1,
+      "explanation": "Kaburganın içi baharatlı, etli pirinçle (iç pilav) doldurulup uzun süre pişirilir."
+    },
+    {
+      "id": "mrd-food-004",
+      "category": "food",
+      "difficulty": "hard",
+      "text": "Mardin mutfağındaki alluciye yemeğine adını veren meyve hangisidir?",
+      "options": [
+        "Erik",
+        "Kayısı",
+        "Ayva",
+        "Nar"
+      ],
+      "answerIndex": 0,
+      "explanation": "Alluciye, adını Arapçada 'alluc' denen papaz eriğinden alır; kuzu eti, soğan ve taze ya da salamura papaz eriğiyle pişirilen bir Mardin yemeğidir."
+    },
+    {
+      "id": "mrd-food-005",
+      "category": "food",
+      "difficulty": "medium",
+      "text": "Mardin'de özellikle bayramlarda yapılan, mahlep ve çörek otuyla hazırlanan geleneksel çörek hangisidir?",
+      "options": [
+        "Kliçe",
+        "Simit",
+        "Poğaça",
+        "Açma"
+      ],
+      "answerIndex": 0,
+      "explanation": "Kliçe (kiliçe), mahlep, çörek otu, rezene ve tarçın gibi baharatlarla yoğrulup halka biçiminde fırında pişirilen bir çörektir; Mardin'de bayramlarda ve düğün, nişan gibi özel günlerde yapılır."
+    },
+    {
+      "id": "mrd-food-006",
+      "category": "food",
+      "difficulty": "hard",
+      "text": "Üzüm pekmezi ve unla muhallebi kıvamında pişirilen, üzerine ceviz serpilen Mardin tatlısı hangisidir?",
+      "options": [
+        "Harire",
+        "Aşure",
+        "Kazandibi",
+        "Künefe"
+      ],
+      "answerIndex": 0,
+      "explanation": "Harire; üzüm pekmezi, un, şeker, tarçın ve yenibaharla pişirilip soğutulan, üzerine ceviz konan bir tatlıdır ve 'Mardin Harire' adıyla coğrafi işaretle tescillidir."
+    },
+    {
+      "id": "mrd-food-007",
+      "category": "food",
+      "difficulty": "hard",
+      "text": "Mardin mutfağındaki dobo nasıl bir yemektir?",
+      "options": [
+        "Pekmezli bir tatlı",
+        "Sarımsakla doldurulup baharatla pişirilen kuzu eti",
+        "Mercimekli bir çorba",
+        "Bulgurlu bir köfte"
+      ],
+      "answerIndex": 1,
+      "explanation": "Dobo, kuzu etinin sarımsakla (çoğu tarifte bademle de) doldurulup baharatla, ağır ateşte uzun süre pişirilmesiyle yapılan bir Mardin yemeğidir."
+    },
+    {
+      "id": "mrd-food-008",
+      "category": "food",
+      "difficulty": "medium",
+      "text": "Mardin'in hediyelik tatlılarından, şekerle kaplanmış bir kuruyemiş olan hangisidir?",
+      "options": [
+        "Badem şekeri",
+        "Pişmaniye",
+        "Lokum",
+        "Cezerye"
+      ],
+      "answerIndex": 0,
+      "explanation": "Mardin'de imlebbes de denen badem şekeri, soyulmuş bademin şeker şurubuyla kaplanmasıyla yapılır ve coğrafi işaretle tescillidir."
+    },
+    {
+      "id": "mrd-cult-001",
+      "category": "culture",
+      "difficulty": "easy",
+      "text": "Midyat ve Mardin hangi el sanatıyla, özellikle ince gümüş tellerin işlenmesiyle ünlüdür?",
+      "options": [
+        "Ebru",
+        "Telkari",
+        "Çini",
+        "Hat"
+      ],
+      "answerIndex": 1,
+      "explanation": "Telkari, ince gümüş tellerin bükülüp birleştirilmesiyle yapılan bir süsleme sanatıdır."
+    },
+    {
+      "id": "mrd-cult-002",
+      "category": "culture",
+      "difficulty": "medium",
+      "text": "Mardin'deki Süryani kiliselerinde ayinler hangi dilde yapılır?",
+      "options": [
+        "Grekçe",
+        "Ermenice",
+        "Latince",
+        "Süryanice"
+      ],
+      "answerIndex": 3,
+      "explanation": "Süryanice, Aramicenin bir koludur; Deyrulzafaran ve Mor Gabriel'de ayinler Süryanice yapılır."
+    },
+    {
+      "id": "mrd-cult-003",
+      "category": "culture",
+      "difficulty": "medium",
+      "text": "Deyrulzafaran adının anlamı nedir?",
+      "options": [
+        "Taş Manastır",
+        "Kırk Şehitler Manastırı",
+        "Zeytin Manastırı",
+        "Safran Manastırı"
+      ],
+      "answerIndex": 3,
+      "explanation": "Adı 'safran manastırı' anlamına gelir; taşlarının sarımsı renginden ya da çevrede yetişen safrandan geldiği söylenir."
+    },
+    {
+      "id": "mrd-cult-004",
+      "category": "culture",
+      "difficulty": "medium",
+      "text": "Mardin'de üretilen, menengiç ağacının meyvesinden elde edilen yağla yapılan geleneksel sabuna ne ad verilir?",
+      "options": [
+        "Bıttım sabunu",
+        "Arap sabunu",
+        "Defne sabunu",
+        "Kükürtlü sabun"
+      ],
+      "answerIndex": 0,
+      "explanation": "Bıttım sabunu, yörede bıttım da denen menengiç meyvesinin yağıyla yapılan doğal bir sabundur; Mardin'deki yerel sabunlar arasında en çok ilgi göreni budur. Siirt Bıttım Sabunu ise coğrafi işaretle tescillidir."
+    },
+    {
+      "id": "mrd-cult-005",
+      "category": "culture",
+      "difficulty": "easy",
+      "text": "Telkari işçiliğinde en çok hangi maden kullanılır?",
+      "options": [
+        "Kurşun",
+        "Demir",
+        "Gümüş",
+        "Alüminyum"
+      ],
+      "answerIndex": 2,
+      "explanation": "Telkari genellikle gümüşten, bazen altından yapılır."
+    }
+  ],
+  "predictionTemplates": [
+    {
+      "id": "hotel-floor",
+      "type": "number",
+      "text": "Odamız kaçıncı katta olacak?",
+      "unit": "kat",
+      "step": 1,
+      "params": {
+        "min": {
+          "key": "minFloor",
+          "label": "En alt kat"
+        },
+        "max": {
+          "key": "maxFloor",
+          "label": "En üst kat"
+        }
+      }
+    },
+    {
+      "id": "hotel-room-number",
+      "type": "number",
+      "text": "Oda numaramız kaç olacak?",
+      "step": 1,
+      "params": {
+        "min": {
+          "key": "minRoom",
+          "label": "En küçük oda numarası"
+        },
+        "max": {
+          "key": "maxRoom",
+          "label": "En büyük oda numarası"
+        }
+      }
+    },
+    {
+      "id": "hotel-room-view",
+      "type": "choice",
+      "text": "Odamızın penceresi nereye bakacak?",
+      "options": [
+        "Ova",
+        "Eski şehir",
+        "Avlu",
+        "Diğer"
+      ]
+    },
+    {
+      "id": "flight-delay",
+      "type": "number",
+      "text": "Uçak planlanan saatten kaç dakika geç kalkacak? (Zamanında veya erken kalkarsa 0)",
+      "unit": "dk",
+      "format": "duration",
+      "min": 0,
+      "max": 600,
+      "step": 1
+    },
+    {
+      "id": "arrival-temperature",
+      "type": "number",
+      "text": "Mardin'e vardığımızda hava kaç derece olacak?",
+      "unit": "°C",
+      "min": -10,
+      "max": 50,
+      "step": 1
+    },
+    {
+      "id": "first-day-steps",
+      "type": "number",
+      "text": "Eski şehirdeki ilk günün sonunda telefonun adımsayarı kaç adım gösterecek?",
+      "unit": "adım",
+      "min": 0,
+      "max": 50000,
+      "step": 100
+    },
+    {
+      "id": "mirra-cups",
+      "type": "number",
+      "text": "Seyahat boyunca toplam kaç fincan mırra içeceğiz?",
+      "unit": "fincan",
+      "min": 0,
+      "max": 30,
+      "step": 1
+    },
+    {
+      "id": "local-dishes",
+      "type": "number",
+      "text": "Seyahat boyunca kaç farklı Mardin yemeği tadacağız?",
+      "unit": "çeşit",
+      "min": 0,
+      "max": 30,
+      "step": 1
+    },
+    {
+      "id": "dara-photos",
+      "type": "number",
+      "text": "Dara antik kentinde toplam kaç fotoğraf çekeceğiz?",
+      "unit": "fotoğraf",
+      "min": 0,
+      "max": 1000,
+      "step": 1
+    },
+    {
+      "id": "bargain-discount",
+      "type": "number",
+      "text": "Çarşıdaki ilk pazarlığımızda ilk söylenen fiyattan yüzde kaç indirim alacağız?",
+      "unit": "%",
+      "min": 0,
+      "max": 95,
+      "step": 1
+    },
+    {
+      "id": "souvenir-count",
+      "type": "number",
+      "text": "Seyahat sonunda toplam kaç parça hediyelik almış olacağız?",
+      "unit": "adet",
+      "min": 0,
+      "max": 100,
+      "step": 1
+    }
+  ]
+}
