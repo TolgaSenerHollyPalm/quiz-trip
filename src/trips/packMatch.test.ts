@@ -1,7 +1,16 @@
 import { describe, expect, it } from 'vitest'
 import { newTrip } from '../game/trip.ts'
 import type { TripState } from '../game/types.ts'
-import { matchesDestination, orphanPacks, packsOfTrip, wantedByTrips } from './packMatch.ts'
+import {
+  addedText,
+  defaultPacks,
+  matchesDestination,
+  orphanPacks,
+  packOfferOnCreate,
+  packsOfTrip,
+  shortPackTitle,
+  wantedByTrips,
+} from './packMatch.ts'
 
 const trip = (destination: Partial<TripState>): TripState => ({ ...newTrip('t', 'Gezi'), ...destination })
 
@@ -48,6 +57,79 @@ describe('wantedByTrips', () => {
 
   it('wants nothing while there are no trips', () => {
     expect(wantedByTrips(antalya, [])).toBe(false)
+  })
+
+  it('stops wanting a declined trip’s destination, but keeps the packs it still plays with', () => {
+    expect(wantedByTrips(antalya, [trip({ country: 'TR', cityId: 'antalya', packOffer: 'declined' })])).toBe(false)
+    expect(wantedByTrips(antalya, [trip({ country: 'TR', cityId: 'antalya', packIds: ['nick'], packOffer: 'declined' })])).toBe(true)
+  })
+})
+
+// The three packs published today (public/packs/index.json).
+const published = [
+  { id: 'eg-sharm-el-sheikh', country: 'EG', cityId: 'sharm-el-sheikh' },
+  { id: 'nick-land-of-legends', country: 'TR', cityId: 'antalya' },
+  { id: 'tr-mardin', country: 'TR', cityId: 'mardin' },
+]
+
+describe('defaultPacks', () => {
+  it('checks the chosen city’s pack', () => {
+    expect(defaultPacks({ country: 'TR', cityId: 'mardin' }, published)).toEqual(['tr-mardin'])
+  })
+
+  it('checks a whole country’s pack only when it has exactly one', () => {
+    expect(defaultPacks({ country: 'EG' }, published)).toEqual(['eg-sharm-el-sheikh'])
+    expect(defaultPacks({ country: 'TR' }, published)).toEqual([])
+  })
+
+  it('checks nothing without a country or for a city without its own pack', () => {
+    expect(defaultPacks({}, published)).toEqual([])
+    expect(defaultPacks({ country: 'TR', cityId: 'istanbul' }, published)).toEqual([])
+  })
+
+  it('counts a pack known twice (on the phone and in the list) once', () => {
+    expect(defaultPacks({ country: 'EG' }, [...published, published[0]])).toEqual(['eg-sharm-el-sheikh'])
+  })
+})
+
+describe('shortPackTitle', () => {
+  it('drops the country the player already chose', () => {
+    expect(shortPackTitle('Türkiye — Mardin', 'Türkiye')).toBe('Mardin')
+    expect(shortPackTitle('Land of Legends — Nickelodeon', 'Türkiye')).toBe('Land of Legends — Nickelodeon')
+    expect(shortPackTitle('Türkiye — Mardin', undefined)).toBe('Türkiye — Mardin')
+  })
+})
+
+describe('packOfferOnCreate', () => {
+  it('declines when the player unchecked a pack the rule checked', () => {
+    expect(packOfferOnCreate({ defaults: ['tr-mardin'], chosen: [], listRead: true, country: 'TR' })).toBe('declined')
+  })
+
+  it('waits when the list could not be read and nothing was chosen', () => {
+    expect(packOfferOnCreate({ defaults: [], chosen: [], listRead: false, country: 'TR' })).toBe('waiting')
+  })
+
+  it('settles otherwise: the pack came along, the list said there is none, or there is no place to look up', () => {
+    expect(packOfferOnCreate({ defaults: ['tr-mardin'], chosen: ['tr-mardin'], listRead: true, country: 'TR' })).toBeUndefined()
+    expect(packOfferOnCreate({ defaults: ['eg-sharm-el-sheikh'], chosen: ['eg-sharm-el-sheikh'], listRead: false, country: 'EG' })).toBeUndefined()
+    expect(packOfferOnCreate({ defaults: [], chosen: [], listRead: true, country: 'TR' })).toBeUndefined()
+    expect(packOfferOnCreate({ defaults: [], chosen: [], listRead: false })).toBeUndefined()
+  })
+})
+
+describe('addedText', () => {
+  const questions = (n: number) => Array.from({ length: n }, () => ({}))
+
+  it('names one pack by its short title and counts the questions', () => {
+    expect(addedText([{ title: 'Türkiye — Mardin', questions: questions(49) }], 'Türkiye')).toBe('Mardin paketi eklendi: 49 soru')
+  })
+
+  it('counts several packs', () => {
+    const packs = [
+      { title: 'Türkiye — Mardin', questions: questions(49) },
+      { title: 'Land of Legends — Nickelodeon', questions: questions(70) },
+    ]
+    expect(addedText(packs, 'Türkiye')).toBe('2 paket eklendi: 119 soru')
   })
 })
 

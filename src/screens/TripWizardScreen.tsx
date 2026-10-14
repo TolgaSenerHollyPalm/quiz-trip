@@ -7,12 +7,13 @@ import { bundledPacks } from '../packs/bundled.ts'
 import { fetchPackList, type IndexEntry } from '../packs/sync.ts'
 import { applySuggestions } from '../trips/checklist.ts'
 import { destinationName, findCountry } from '../trips/destinations.ts'
-import { matchesDestination } from '../trips/packMatch.ts'
+import { defaultPacks, matchesDestination, packOfferOnCreate, shortPackTitle } from '../trips/packMatch.ts'
 import { todayIso } from '../trips/dates.ts'
 import { TRANSPORTS, TRIP_KINDS, type Transport, type TripKind } from '../trips/types.ts'
 import { Button } from 'kitshelf-ui/ui/Button.tsx'
 import ChoiceGroup from 'kitshelf-ui/ui/ChoiceGroup.tsx'
 import { CheckIcon, PlusIcon } from 'kitshelf-ui/ui/icons.tsx'
+import { CloudIcon } from '../ui/icons.tsx'
 import { TRANSPORT_LABELS, TRIP_KIND_LABELS } from '../ui/labels.ts'
 import ProgressBar from 'kitshelf-ui/ui/ProgressBar.tsx'
 import RequiredMark from 'kitshelf-ui/ui/RequiredMark.tsx'
@@ -38,6 +39,7 @@ export default function TripWizardScreen() {
   const [kind, setKind] = useState<TripKind>()
   const [typedName, setTypedName] = useState<string>() // undefined until the player renames the trip
   const [chosenPacks, setChosenPacks] = useState<string[]>([])
+  const [touched, setTouched] = useState(false) // once the player taps a pack, the rule no longer chooses
   const [offered, setOffered] = useState<IndexEntry[]>()
   const [listProblem, setListProblem] = useState<string>()
   const [busy, setBusy] = useState(false)
@@ -49,8 +51,7 @@ export default function TripWizardScreen() {
   const cities = findCountry(destinations, country)?.cities ?? []
   const countryName = findCountry(destinations, country)?.name
   // The country was the first answer, so a pack titled "Mısır — Sharm el-Şeyh" shows as "Sharm el-Şeyh".
-  const shortTitle = (title: string) =>
-    countryName && title.startsWith(`${countryName} — `) ? title.slice(countryName.length + 3) : title
+  const shortTitle = (title: string) => shortPackTitle(title, countryName)
   // What the device already has, then what the app itself carries, then what the server offers.
   const installed = packs.filter((pack) => matchesDestination(pack, destination))
   const inApp = bundledPacks().filter(
@@ -63,6 +64,11 @@ export default function TripWizardScreen() {
       .filter((entry) => !atHand.some((pack) => pack.id === entry.id))
       .map((entry) => ({ id: entry.id, title: entry.title, questionCount: entry.questionCount })),
   ]
+  // Until the player taps a pack the rule chooses, so a list that arrives late still brings its pack in.
+  const pins = [...atHand, ...(offered ?? [])]
+  const defaults = defaultPacks(destination, pins)
+  const chosen = touched ? chosenPacks : defaults
+  const place = (cityId !== ANY_CITY && cities.find((city) => city.id === cityId)?.name) || countryName || ''
 
   const steps = [
     { title: 'Nereye gidiyorsun?', ready: country !== undefined },
@@ -98,11 +104,21 @@ export default function TripWizardScreen() {
     }
   }, [step, last, offered, online, country, cityId])
 
+  // A new destination brings its own packs: whatever was chosen for the old one goes.
+  const changeDestination = (nextCountry: string | undefined, nextCity: string) => {
+    setCountry(nextCountry)
+    setCityId(nextCity)
+    setOffered(undefined)
+    setListProblem(undefined)
+    setChosenPacks([])
+    setTouched(false)
+  }
+
   const create = async () => {
     setBusy(true)
     setFailed(undefined)
-    const missing = chosenPacks.filter((id) => !packs.some((pack) => pack.id === id))
-    let linked = chosenPacks.filter((id) => packs.some((pack) => pack.id === id))
+    const missing = chosen.filter((id) => !packs.some((pack) => pack.id === id))
+    let linked = chosen.filter((id) => packs.some((pack) => pack.id === id))
     if (missing.length > 0) {
       const result = await downloadPacks(missing)
       if (result.ok) {
@@ -114,11 +130,13 @@ export default function TripWizardScreen() {
       }
     }
 
+    const offer = packOfferOnCreate({ defaults, chosen, listRead: offered !== undefined, country })
     const trip: TripState = {
       ...newTrip(crypto.randomUUID(), name.trim()),
       ...(country && { country }),
       ...(cityId !== ANY_CITY && { cityId }),
       packIds: linked,
+      ...(offer && { packOffer: offer }),
       startDate,
       ...(endDate !== '' && { endDate }),
       ...(transport && { transport }),
@@ -166,10 +184,7 @@ export default function TripWizardScreen() {
             selected={country ? [country] : []}
             pickOne
             placeholder="Ülke seç…"
-            onToggle={(code) => {
-              setCountry(code)
-              setCityId(ANY_CITY)
-            }}
+            onToggle={(code) => changeDestination(code, ANY_CITY)}
           />
           <p className={text.hint}>Ülke, seyahatinin soru ve eğlence paketlerini getirir. Gerisini sonra da değiştirebilirsin.</p>
         </>
@@ -184,7 +199,7 @@ export default function TripWizardScreen() {
               ...cities.map((city) => ({ value: city.id, label: city.name })),
             ]}
             selected={[cityId]}
-            onToggle={setCityId}
+            onToggle={(id) => changeDestination(country, id)}
             pickOne
           />
           <p className={text.hint}>
@@ -276,16 +291,17 @@ export default function TripWizardScreen() {
                 <legend className={styles.label}>{suggestedName} için paketler</legend>
                 <ul className={styles.packList}>
                   {choices.map((choice) => {
-                    const added = chosenPacks.includes(choice.id)
+                    const added = chosen.includes(choice.id)
                     return (
                       <li key={choice.id}>
                         <button
                           type="button"
                           className={styles.pack}
                           aria-pressed={added}
-                          onClick={() =>
-                            setChosenPacks(added ? chosenPacks.filter((id) => id !== choice.id) : [...chosenPacks, choice.id])
-                          }
+                          onClick={() => {
+                            setTouched(true)
+                            setChosenPacks(added ? chosen.filter((id) => id !== choice.id) : [...chosen, choice.id])
+                          }}
                         >
                           <span className={styles.packText}>
                             <span className={styles.packTitle}>{shortTitle(choice.title)}</span>
@@ -299,17 +315,28 @@ export default function TripWizardScreen() {
                 </ul>
               </fieldset>
               <p className={text.hint}>
-                {chosenPacks.length === 0
-                  ? 'Eklemek için pakete dokun. Paketler seyahatte oynanan bilgi yarışmasını ve tahmin sorularını getirir.'
-                  : 'Seçtiklerin seyahat oluşturulurken indirilir; sonra da ekleyip çıkarabilirsin.'}
+                {chosen.length === 0
+                  ? 'Gideceğin yerlerin paketine dokun. Paketler seyahatte oynanan bilgi yarışmasını ve tahmin sorularını getirir.'
+                  : chosen.length === 1
+                    ? 'İşaretli paket seyahatle birlikte iner. İstemezsen dokunup çıkarabilirsin.'
+                    : 'İşaretli paketler seyahatle birlikte iner. İstemediğine dokunup çıkarabilirsin.'}
               </p>
             </>
+          ) : !online || listProblem ? (
+            <>
+              {listProblem && online && <p className={text.hint}>{listProblem}</p>}
+              <p className={styles.later}>
+                <CloudIcon />
+                <span>
+                  {/* Online with a failed list the sentence about the connection would not be true. */}
+                  {!online && 'İnternet yok. '}
+                  {place} için bir soru paketi varsa internete bağlanınca kendiliğinden iner.
+                </span>
+              </p>
+              <p className={text.hint}>Seyahatini şimdi oluşturabilirsin.</p>
+            </>
           ) : (
-            <p className={text.hint}>
-              {!online
-                ? 'İnternet yokken paket listesi okunamıyor. Seyahat ekranından sonra ekleyebilirsin.'
-                : (listProblem ?? (offered === undefined ? 'Paketler aranıyor…' : 'Bu destinasyon için paket yok.'))}
-            </p>
+            <p className={text.hint}>{offered === undefined ? 'Paketler aranıyor…' : 'Bu destinasyon için paket yok.'}</p>
           )}
           {failed && <p className={text.problem}>{failed}</p>}
         </>

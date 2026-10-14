@@ -1,10 +1,13 @@
 import { trackDataSince } from 'kitshelf-ui/backup/state.ts'
+import { useToast } from 'kitshelf-ui/ui/toastContext.ts'
 import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react'
 import { KIT, stampTrip } from '../backup/tripkitBackup.ts'
 import type { TripState } from '../game/types.ts'
 import { bundledPacks } from '../packs/bundled.ts'
+import { offerWaitingPacks, takeBack as withoutPacks } from '../packs/offer.ts'
 import {
   countUpdatablePacks,
+  fetchPackList,
   mergePacks,
   syncPacks,
   type Fetcher,
@@ -23,9 +26,9 @@ import {
   saveTrip as storeTrip,
 } from '../storage/db.ts'
 import { cachedDestinations, fetchDestinations } from '../trips/destinationSource.ts'
-import type { Country } from '../trips/destinations.ts'
+import { findCountry, type Country } from '../trips/destinations.ts'
 import { withTrip } from '../trips/list.ts'
-import { wantedByTrips } from '../trips/packMatch.ts'
+import { addedText, wantedByTrips } from '../trips/packMatch.ts'
 import { AppDataContext, type PackSync } from './appData.ts'
 import styles from './AppDataProvider.module.css'
 
@@ -38,7 +41,13 @@ interface Loaded {
 // starting, and the trips as they are right now, which is what decides the packs to sync.
 let syncing = false
 let checking = false
+let offering = false // one automatic pack download at a time (plan 10)
+let offerAgain = false // a trip began waiting while one ran
 let currentTrips: TripState[] = []
+// What the automatic download reads after the render it started in.
+let currentPacks: Pack[] = []
+let currentDestinations: Country[] = []
+let offerWaiting = () => undefined as void
 
 // The backup reminder's clock starts with the first trip and stops when the last one is deleted.
 const noteTrips = () => trackDataSince(KIT, currentTrips.length > 0, new Date())
@@ -59,6 +68,11 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
   const [saveFailed, setSaveFailed] = useState(false)
   const [sync, setSync] = useState<PackSync>({ running: false, checking: false })
   const [destinations, setDestinations] = useState<Country[]>(cachedDestinations)
+  const show = useToast()
+  useEffect(() => {
+    currentPacks = loaded?.packs ?? []
+    currentDestinations = destinations
+  }, [loaded, destinations])
 
   /** Asks the server what it has, so the home screen only offers an update when there is one. */
   const checkPacks = useCallback(() => {
@@ -87,6 +101,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
         noteTrips()
         setLoaded({ packs: mergePacks([], packs), trips })
         checkPacks()
+        offerWaiting()
       })
       .catch((error: unknown) => {
         console.error(error)
@@ -119,7 +134,10 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
 
   // Back on a network: look again, so the button can appear without restarting the app.
   useEffect(() => {
-    const check = () => checkPacks()
+    const check = () => {
+      checkPacks()
+      offerWaiting()
+    }
     window.addEventListener('online', check)
     return () => window.removeEventListener('online', check)
   }, [checkPacks])
@@ -136,6 +154,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
       noteTrips()
       setLoaded((current) => current && { ...current, trips: withTrip(current.trips, trip) })
       storeTrip(trip).catch(report)
+      if (trip.packOffer === 'waiting') queueMicrotask(() => offerWaiting())
     },
     [report],
   )
@@ -190,6 +209,52 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
     }
     return { ok: true, outcomes: [...installed, ...result.outcomes], saved: [...fromApp, ...result.saved] }
   }, [report])
+
+  /** "Geri al" undoes an automatic add the way the Soru paketleri screen removes a pack. */
+  const takeBack = useCallback(
+    (tripId: string, packIds: readonly string[]) => {
+      const trip = currentTrips.find((candidate) => candidate.id === tripId)
+      if (!trip) return
+      const { trip: next, unused } = withoutPacks(trip, packIds, currentTrips)
+      saveTrip(next)
+      unused.forEach(deletePack)
+    },
+    [saveTrip, deletePack],
+  )
+
+  const offerPacks = useCallback(async () => {
+    if (!navigator.onLine) return
+    if (offering) {
+      offerAgain = true
+      return
+    }
+    offering = true
+    try {
+      await offerWaitingPacks({
+        trips: () => currentTrips,
+        packs: () => currentPacks,
+        bundled: bundledPacks(),
+        list: (wanted) => fetchPackList({ ...server(currentTrips), wanted }),
+        download: downloadPacks,
+        save: saveTrip,
+        added: (trip, packs) => {
+          const countryName = findCountry(currentDestinations, trip.country)?.name
+          const ids = packs.map((pack) => pack.id)
+          show(addedText(packs, countryName), { duration: 8000, action: { label: 'Geri al', onClick: () => takeBack(trip.id, ids) } })
+        },
+      })
+    } finally {
+      offering = false
+      if (offerAgain) {
+        offerAgain = false
+        offerWaiting()
+      }
+    }
+  }, [saveTrip, downloadPacks, takeBack, show])
+
+  useEffect(() => {
+    offerWaiting = () => void offerPacks()
+  }, [offerPacks])
 
   // Lives here rather than on the home screen, so a sync carries on (and cannot start twice) while players move around.
   const startSync = useCallback(() => {

@@ -48,6 +48,13 @@ describe('validateTripkitData', () => {
     for (const data of cases) expect(validateTripkitData(data)).toBe(false)
   })
 
+  it('takes a trip waiting for its pack or turning packs down, and refuses any other pack offer', () => {
+    expect(validateTripkitData({ trips: [trip({ packOffer: 'waiting', packIds: [] })], packs: [] })).toBe(true)
+    expect(validateTripkitData({ trips: [trip({ packOffer: 'declined' })], packs: [pack] })).toBe(true)
+    expect(validateTripkitData({ trips: [trip({ packOffer: 'later' as never })], packs: [pack] })).toBe(false)
+    expect(validateTripkitData({ trips: [trip({ packOffer: null as never })], packs: [pack] })).toBe(false)
+  })
+
   // Our own backup must never read as damaged, including trips that came through every migration.
   it('accepts trips carried over from the oldest stored versions', () => {
     const legacy: LegacyTrip = {

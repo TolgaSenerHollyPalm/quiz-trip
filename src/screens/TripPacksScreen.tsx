@@ -175,7 +175,7 @@ export default function TripPacksScreen({ tripId }: { tripId: string }) {
         confirmLabel="Çıkar"
         onConfirm={() => {
           if (removing) {
-            saveTrip({ ...trip, packIds: trip.packIds.filter((packId) => packId !== removing.id) })
+            saveTrip({ ...trip, packIds: trip.packIds.filter((packId) => packId !== removing.id), packOffer: 'declined' })
             if (!usedElsewhere(removing.id)) deletePack(removing.id)
           }
           setRemoving(undefined)

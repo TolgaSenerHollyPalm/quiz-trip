@@ -98,6 +98,16 @@ export function PeopleIcon({ size = 19, strokeWidth = 1.7 }: IconProps) {
   )
 }
 
+/** A download that waits for a connection. */
+export function CloudIcon({ size = 20, strokeWidth = 1.8 }: IconProps) {
+  return (
+    <svg {...lineIcon(size, strokeWidth)}>
+      <path d="M7 18.5h10a4 4 0 0 0 .6-7.95A6 6 0 0 0 6.1 9.6 4.5 4.5 0 0 0 7 18.5z" />
+      <path d="M12 11v5M9.8 14l2.2 2.2 2.2-2.2" />
+    </svg>
+  )
+}
+
 /** A question pack. */
 export function BoxIcon({ size = 19, strokeWidth = 1.7 }: IconProps) {
   return (

@@ -20,6 +20,7 @@ import Tile from 'kitshelf-ui/ui/Tile.tsx'
 import TransportIcon from '../ui/TransportIcon.tsx'
 import TripKindIcon from '../ui/TripKindIcon.tsx'
 import { tripTheme } from '../ui/tripTheme.ts'
+import PackOffer from './PackOffer.tsx'
 import TripLists from './TripLists.tsx'
 import styles from './TripScreen.module.css'
 
@@ -158,12 +159,10 @@ export default function TripScreen({ tripId }: { tripId: string }) {
             />
           </ListCard>
         </section>
-      ) : (
+      ) : trip.packIds.length > 0 ? (
         <section className={styles.section}>
           <p className={styles.notice}>
-            {trip.packIds.length > 0
-              ? 'Bu seyahatin soru paketi cihazda yok. Soru paketleri ekranından yeniden indirebilirsin.'
-              : 'Bu seyahate soru paketi bağlı değil. Paket eklersen bilgi yarışması ve tahminler açılır.'}
+            Bu seyahatin soru paketi cihazda yok. Soru paketleri ekranından yeniden indirebilirsin.
           </p>
           <ListCard as="nav" label="Soru paketleri">
             <LinkRow
@@ -173,6 +172,11 @@ export default function TripScreen({ tripId }: { tripId: string }) {
               title="Soru paketleri"
             />
           </ListCard>
+        </section>
+      ) : (
+        <section className={styles.section}>
+          <h2 className={text.sectionTitle}>Oyunlar</h2>
+          <PackOffer trip={trip} />
         </section>
       )}
 

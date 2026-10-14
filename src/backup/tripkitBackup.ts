@@ -54,6 +54,7 @@ export function isTrip(v: unknown): v is TripState {
     v.id !== '' &&
     isString(v.name) &&
     listOf(v.packIds, isString) &&
+    optional(v.packOffer, (offer) => offer === 'waiting' || offer === 'declined') &&
     ['country', 'cityId', 'startDate', 'endDate', 'transport', 'kind', 'updatedAt'].every((key) => optional(v[key], isString)) &&
     listOf(v.checklist, isChecklistItem) &&
     listOf(v.souvenirs, isNoteItem) &&

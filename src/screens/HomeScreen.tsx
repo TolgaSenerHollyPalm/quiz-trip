@@ -86,8 +86,8 @@ export default function HomeScreen() {
             </li>
             <li>
               <span className={styles.stepNumber}>3</span>
-              Gideceğin yerin soru paketini indir, bilgi yarışması ve tahmin oyunuyla yolculuğu eğlenceye
-              çevir.
+              Gideceğin yerin soru paketi seyahatle birlikte gelir; bilgi yarışması ve tahmin oyunuyla
+              yolculuğu eğlenceye çevir.
             </li>
           </ol>
           <p className={text.hint}>Her şey cihazında kalır ve internet olmadan da çalışır.</p>
