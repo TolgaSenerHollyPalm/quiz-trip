@@ -17,7 +17,7 @@ import styles from './TripPacksScreen.module.css'
 
 /** The question packs of one trip: what it plays with, and what its destination still has to offer. */
 export default function TripPacksScreen({ tripId }: { tripId: string }) {
-  const { packs, trips, destinations, deletePack, downloadPacks } = useAppData()
+  const { packs, trips, destinations, deletePack, downloadPacks, linkPacks } = useAppData()
   const { trip, collection, saveTrip } = useTrip(tripId)
   const online = useOnline()
   const [searching, setSearching] = useState(false)
@@ -43,7 +43,7 @@ export default function TripPacksScreen({ tripId }: { tripId: string }) {
   const link = async (packId: string) => {
     // A pack that is only inside the app has to be installed before the trip can play with it.
     if (!packs.some((pack) => pack.id === packId)) await downloadPacks([packId])
-    saveTrip({ ...trip, packIds: [...trip.packIds, packId] })
+    linkPacks(trip.id, [packId])
   }
 
   /** Asks the server what this destination has, downloads what is missing and links it to the trip. */
@@ -66,7 +66,7 @@ export default function TripPacksScreen({ tripId }: { tripId: string }) {
     const downloaded = ids.length > 0 ? await downloadPacks(ids) : undefined
     const installed = new Set([...packs.map((pack) => pack.id), ...(downloaded?.ok ? downloaded.saved.map((p) => p.id) : [])])
     const missing = ids.filter((id) => installed.has(id) && !trip.packIds.includes(id))
-    if (missing.length > 0) saveTrip({ ...trip, packIds: [...trip.packIds, ...missing] })
+    if (missing.length > 0) linkPacks(trip.id, missing) // the trip may have changed while the packs downloaded
     setResult(downloaded)
     setNothingNew(missing.length === 0 && (downloaded === undefined || (downloaded.ok && downloaded.outcomes.length === 0)))
     setSearching(false)

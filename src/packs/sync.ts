@@ -37,6 +37,9 @@ export interface IndexEntry {
   questionCount?: number // shown while choosing, before the pack is downloaded
 }
 
+// index.json is a few hundred bytes: a list that has not come in this long is a connection that hangs.
+const LIST_TIMEOUT_MS = 8000
+
 // A plain file name inside packs/, so an entry can never point outside that folder.
 const SAFE_FILE = /^[A-Za-z0-9][A-Za-z0-9._-]*\.json$/
 
@@ -166,7 +169,7 @@ async function syncOne(entry: IndexEntry, isNew: boolean, options: Required<Sync
  */
 export async function syncPacks(options: SyncOptions): Promise<SyncResult> {
   const settings = { timeoutMs: 20_000, ...options }
-  const index = await download(settings.fetch, `${settings.baseUrl}packs/index.json`, settings.timeoutMs)
+  const index = await download(settings.fetch, `${settings.baseUrl}packs/index.json`, Math.min(settings.timeoutMs, LIST_TIMEOUT_MS))
   if (!index.ok) return { ok: false, reason: explain(index.problem, 'liste') }
   const read = readIndex(index.data)
   if ('reason' in read) return { ok: false, reason: read.reason }
@@ -198,7 +201,7 @@ export type PackList = { ok: true; entries: IndexEntry[] } | { ok: false; reason
  */
 export async function fetchPackList(options: SyncOptions): Promise<PackList> {
   const settings = { timeoutMs: 20_000, ...options }
-  const index = await download(settings.fetch, `${settings.baseUrl}packs/index.json`, settings.timeoutMs)
+  const index = await download(settings.fetch, `${settings.baseUrl}packs/index.json`, Math.min(settings.timeoutMs, LIST_TIMEOUT_MS))
   if (!index.ok) return { ok: false, reason: explain(index.problem, 'liste') }
   const read = readIndex(index.data)
   if ('reason' in read) return { ok: false, reason: read.reason }
@@ -211,7 +214,7 @@ export async function fetchPackList(options: SyncOptions): Promise<PackList> {
  */
 export async function countUpdatablePacks(options: SyncOptions): Promise<number | undefined> {
   const settings = { timeoutMs: 20_000, ...options }
-  const index = await download(settings.fetch, `${settings.baseUrl}packs/index.json`, settings.timeoutMs)
+  const index = await download(settings.fetch, `${settings.baseUrl}packs/index.json`, Math.min(settings.timeoutMs, LIST_TIMEOUT_MS))
   if (!index.ok) return undefined
   const read = readIndex(index.data)
   if ('reason' in read) return undefined

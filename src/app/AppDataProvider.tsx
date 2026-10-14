@@ -223,6 +223,15 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
     setArriving((ids) => (on ? [...ids, tripId] : ids.filter((id) => id !== tripId)))
   }, [])
 
+  const linkPacks = useCallback(
+    (tripId: string, packIds: readonly string[]) => {
+      const latest = currentTrips.find((trip) => trip.id === tripId)
+      const next = latest && afterDownload(latest, packIds, packIds.map((id) => ({ id })))
+      if (next) saveTrip(next)
+    },
+    [saveTrip],
+  )
+
   // Nobody waits for this: the trip opens at once and its games appear when the packs are in.
   const addPacks = useCallback(
     async (tripId: string, packIds: string[]): Promise<string | undefined> => {
@@ -330,11 +339,12 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
         startSync,
         downloadPacks,
         addPacks,
+        linkPacks,
         arriving,
         checkPacks,
         reload,
       },
-    [loaded, destinations, saveTrip, deleteTrip, deletePack, sync, startSync, downloadPacks, addPacks, arriving, checkPacks, reload],
+    [loaded, destinations, saveTrip, deleteTrip, deletePack, sync, startSync, downloadPacks, addPacks, linkPacks, arriving, checkPacks, reload],
   )
 
   if (loadFailed) {

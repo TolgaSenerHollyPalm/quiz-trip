@@ -29,6 +29,8 @@ export interface AppData {
   downloadPacks: (packIds: string[]) => Promise<SyncResult>
   /** Downloads what the phone lacks in the background and links what arrives; a reason when something did not. */
   addPacks: (tripId: string, packIds: string[]) => Promise<string | undefined>
+  /** Links packs already on the phone to the trip as it is now, not as a screen saw it before a download. */
+  linkPacks: (tripId: string, packIds: readonly string[]) => void
   /** Trips whose packs are on their way down right now. */
   arriving: readonly string[]
   checkPacks: () => void

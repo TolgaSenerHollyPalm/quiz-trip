@@ -1,5 +1,5 @@
-import { describe, expect, it } from 'vitest'
-import { countUpdatablePacks, mergePacks, syncPacks, type Fetcher, type PackStore } from './sync.ts'
+import { describe, expect, it, vi } from 'vitest'
+import { countUpdatablePacks, fetchPackList, mergePacks, syncPacks, type Fetcher, type PackStore } from './sync.ts'
 import type { Pack } from './types.ts'
 
 const BASE = '/quiz-trip/'
@@ -328,6 +328,26 @@ describe('countUpdatablePacks', () => {
     expect(await count(offline, device().store)).toBeUndefined()
     const { fetch } = server({ 'index.json': '<html>Giriş</html>' })
     expect(await count(fetch, device().store)).toBeUndefined()
+  })
+})
+
+describe('a connection that hangs', () => {
+  // As fetch does: never answers, but gives up when told to.
+  const hanging: Fetcher = (_url, init) =>
+    new Promise((_resolve, reject) => init.signal?.addEventListener('abort', () => reject(new DOMException('Aborted', 'AbortError'))))
+
+  it('gives up on the list after eight seconds, however long a pack may take', async () => {
+    vi.useFakeTimers()
+    try {
+      const options = { fetch: hanging, store: device().store, baseUrl: BASE, wanted: () => true, timeoutMs: 20_000 }
+      const list = fetchPackList(options)
+      const sync = syncPacks(options)
+      await vi.advanceTimersByTimeAsync(8000)
+      expect((await list).ok).toBe(false)
+      expect((await sync).ok).toBe(false)
+    } finally {
+      vi.useRealTimers()
+    }
   })
 })
 
