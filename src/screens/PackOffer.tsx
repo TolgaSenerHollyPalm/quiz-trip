@@ -8,7 +8,6 @@ import { useAppData } from '../app/appData.ts'
 import { href, navigate } from '../app/router.ts'
 import type { TripState } from '../game/types.ts'
 import { bundledPacks } from '../packs/bundled.ts'
-import { settled } from '../packs/offer.ts'
 import { fetchPackList, type IndexEntry } from '../packs/sync.ts'
 import { findCountry } from '../trips/destinations.ts'
 import { defaultPacks, matchesDestination, shortPackTitle } from '../trips/packMatch.ts'
@@ -23,10 +22,9 @@ interface Known {
 
 /** A trip without packs (plan 10): the pack its destination has, or why there is none yet. */
 export default function PackOffer({ trip }: { trip: TripState }) {
-  const { packs, destinations, saveTrip, downloadPacks } = useAppData()
+  const { packs, destinations, addPacks, arriving } = useAppData()
   const online = useOnline()
   const [listed, setListed] = useState<IndexEntry[] | 'failed'>()
-  const [busy, setBusy] = useState(false)
   const [failed, setFailed] = useState<string>()
   const { country, cityId } = trip
 
@@ -61,23 +59,16 @@ export default function PackOffer({ trip }: { trip: TripState }) {
   const countryEntry = findCountry(destinations, country)
   const place = countryEntry?.cities.find((city) => city.id === cityId)?.name ?? countryEntry?.name ?? ''
 
+  // The games open in this card's place; the card only hears back when the pack did not come.
   const add = async (packId: string) => {
-    setBusy(true)
     setFailed(undefined)
-    if (!packs.some((pack) => pack.id === packId)) {
-      const result = await downloadPacks([packId])
-      if (!result.ok || !result.saved.some((pack) => pack.id === packId)) {
-        const trouble = result.ok ? result.outcomes.find((outcome) => outcome.status === 'failed') : result
-        setFailed(trouble && 'reason' in trouble ? trouble.reason : 'Paket indirilemedi. Tekrar dene.')
-        setBusy(false)
-        return
-      }
-    }
-    saveTrip({ ...settled(trip), packIds: [...trip.packIds.filter((id) => id !== packId), packId] }) // the games open in this card's place
+    setFailed(await addPacks(trip.id, [packId]))
   }
 
   let top: ReactNode
-  if (defaults.length === 1) {
+  if (arriving.includes(trip.id)) {
+    top = <p className={`${styles.top} ${text.hint}`}>Paket iniyor…</p>
+  } else if (defaults.length === 1) {
     const pack = known.get(defaults[0])
     const count = pack?.questionCount
     top = (
@@ -86,8 +77,8 @@ export default function PackOffer({ trip }: { trip: TripState }) {
         title={`${shortPackTitle(pack?.title ?? '', countryEntry?.name)} paketi hazır`}
         subtitle={`${count !== undefined ? `${count} soru · ` : ''}bilgi yarışması ve tahminler açılır`}
         action={
-          <Button variant="primary" disabled={busy} onClick={() => void add(defaults[0])}>
-            {busy ? 'İndiriliyor…' : 'Paketi ekle'}
+          <Button variant="primary" onClick={() => void add(defaults[0])}>
+            Paketi ekle
           </Button>
         }
         problem={failed}
@@ -106,7 +97,7 @@ export default function PackOffer({ trip }: { trip: TripState }) {
         }
       />
     )
-  } else if (trip.packOffer === 'waiting' && !online) {
+  } else if (trip.packOffer === 'waiting' && (!online || listed === 'failed')) {
     top = (
       <Offer
         tile={<Tile tone="neutral"><CloudIcon /></Tile>}

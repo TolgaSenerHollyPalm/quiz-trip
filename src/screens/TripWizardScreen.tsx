@@ -28,7 +28,7 @@ const ANY_CITY = '' // "the whole country", which brings every pack of that coun
 
 /** Creating a trip one question at a time: where, when, how, and what to play with. */
 export default function TripWizardScreen() {
-  const { destinations, packs, saveTrip, downloadPacks } = useAppData()
+  const { destinations, packs, saveTrip, downloadPacks, addPacks } = useAppData()
   const online = useOnline()
   const [step, setStep] = useState(0)
   const [country, setCountry] = useState<string>()
@@ -43,7 +43,6 @@ export default function TripWizardScreen() {
   const [offered, setOffered] = useState<IndexEntry[]>()
   const [listProblem, setListProblem] = useState<string>()
   const [busy, setBusy] = useState(false)
-  const [failed, setFailed] = useState<string>()
 
   const destination = { country, ...(cityId !== ANY_CITY && { cityId }) }
   const suggestedName = destinationName(destinations, country, cityId === ANY_CITY ? undefined : cityId)
@@ -116,19 +115,11 @@ export default function TripWizardScreen() {
 
   const create = async () => {
     setBusy(true)
-    setFailed(undefined)
-    const missing = chosen.filter((id) => !packs.some((pack) => pack.id === id))
-    let linked = chosen.filter((id) => packs.some((pack) => pack.id === id))
-    if (missing.length > 0) {
-      const result = await downloadPacks(missing)
-      if (result.ok) {
-        linked = [...linked, ...result.saved.map((pack) => pack.id)]
-        const trouble = result.outcomes.filter((outcome) => outcome.status === 'failed')
-        if (trouble.length > 0) setFailed(trouble[0].reason)
-      } else {
-        setFailed(result.reason)
-      }
-    }
+    // Only what the phone or the app itself holds is linked now; a slow or hanging network must not keep the trip waiting.
+    const fromApp = chosen.filter((id) => !packs.some((pack) => pack.id === id) && bundledPacks().some((pack) => pack.id === id))
+    if (fromApp.length > 0) await downloadPacks(fromApp)
+    const linked = chosen.filter((id) => fromApp.includes(id) || packs.some((pack) => pack.id === id))
+    const later = chosen.filter((id) => !linked.includes(id))
 
     const offer = packOfferOnCreate({ defaults, chosen, listRead: offered !== undefined, country })
     const trip: TripState = {
@@ -143,6 +134,7 @@ export default function TripWizardScreen() {
       ...(kind && { kind }),
     }
     saveTrip({ ...trip, checklist: applySuggestions(trip) })
+    if (later.length > 0) void addPacks(trip.id, later)
     setBusy(false)
     navigate({ screen: 'trip', tripId: trip.id }, { replace: true })
   }
@@ -338,7 +330,6 @@ export default function TripWizardScreen() {
           ) : (
             <p className={text.hint}>{offered === undefined ? 'Paketler aranıyor…' : 'Bu destinasyon için paket yok.'}</p>
           )}
-          {failed && <p className={text.problem}>{failed}</p>}
         </>
       )}
 

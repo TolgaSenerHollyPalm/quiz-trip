@@ -3,7 +3,7 @@ import mardinFile from '../../public/packs/tr-mardin.json'
 import sharmFile from '../../public/packs/eg-sharm-el-sheikh.json'
 import { newTrip } from '../game/trip.ts'
 import type { TripState } from '../game/types.ts'
-import { offerWaitingPacks, takeBack, type OfferDeps } from './offer.ts'
+import { afterDownload, offerWaitingPacks, takeBack, type OfferDeps } from './offer.ts'
 import { fetchPackList, syncPacks, type Fetcher, type PackStore } from './sync.ts'
 import type { Pack } from './types.ts'
 
@@ -37,7 +37,7 @@ function server(packs: Pack[], { down = false } = {}) {
 
 /** The app around offerWaitingPacks: trips and packs in memory, saves and toasts written down. */
 function app(trips: TripState[], fetch: Fetcher, onPhone: Pack[] = []) {
-  const state = { trips, packs: onPhone, toasts: [] as string[] }
+  const state = { trips, packs: onPhone, toasts: [] as string[], arriving: [] as string[] }
   const store: PackStore = {
     versions: async () => new Map(state.packs.map((pack) => [pack.id, pack.version])),
     saveIfNewer: async () => true,
@@ -56,6 +56,7 @@ function app(trips: TripState[], fetch: Fetcher, onPhone: Pack[] = []) {
       state.packs = [...state.packs, ...saved]
       return result && !result.ok ? result : { ok: true, outcomes: [], saved }
     },
+    arriving: (tripId, on) => state.arriving.push(`${tripId} ${on ? 'on' : 'off'}`),
     save: (trip) => {
       state.trips = state.trips.map((other) => (other.id === trip.id ? trip : other))
     },
@@ -75,6 +76,7 @@ describe('offerWaitingPacks', () => {
     expect(state.trips[0].packOffer).toBeUndefined()
     expect(state.packs.map((pack) => pack.id)).toEqual(['tr-mardin'])
     expect(state.toasts).toEqual(['t1: tr-mardin'])
+    expect(state.arriving).toEqual(['t1 on', 't1 off'])
   })
 
   it('keeps waiting while the list cannot be read', async () => {
@@ -136,6 +138,27 @@ describe('offerWaitingPacks', () => {
     await offerWaitingPacks(deps)
     expect(state.trips).toEqual([])
     expect(state.toasts).toEqual([])
+  })
+})
+
+describe('afterDownload', () => {
+  const pending = (fields: Partial<TripState>) => trip('t1', { country: 'TR', cityId: 'mardin', ...fields })
+
+  it('links what arrived to the trip as it is by now, and stops waiting', () => {
+    const next = afterDownload(pending({ packOffer: 'waiting', souvenirs: [{ id: 's', text: 'Sabun', done: false }] }), ['tr-mardin'], [mardin])
+    expect(next?.packIds).toEqual(['tr-mardin'])
+    expect(next?.packOffer).toBeUndefined()
+    expect(next?.souvenirs).toHaveLength(1)
+  })
+
+  it('makes a packless trip wait when nothing arrived', () => {
+    expect(afterDownload(pending({}), ['tr-mardin'], [])?.packOffer).toBe('waiting')
+  })
+
+  it('leaves a declined trip, one with other packs, or one already linked alone', () => {
+    expect(afterDownload(pending({ packOffer: 'declined' }), ['tr-mardin'], [])).toBeUndefined()
+    expect(afterDownload(pending({ packIds: ['eg-sharm-el-sheikh'] }), ['tr-mardin'], [])).toBeUndefined()
+    expect(afterDownload(pending({ packIds: ['tr-mardin'] }), ['tr-mardin'], [mardin])).toBeUndefined()
   })
 })
 

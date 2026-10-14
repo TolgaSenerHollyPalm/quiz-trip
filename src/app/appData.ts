@@ -27,6 +27,10 @@ export interface AppData {
   startSync: () => void
   /** Downloads these packs and nothing else; what the wizard does once a destination is chosen. */
   downloadPacks: (packIds: string[]) => Promise<SyncResult>
+  /** Downloads what the phone lacks in the background and links what arrives; a reason when something did not. */
+  addPacks: (tripId: string, packIds: string[]) => Promise<string | undefined>
+  /** Trips whose packs are on their way down right now. */
+  arriving: readonly string[]
   checkPacks: () => void
   /** Reads everything from IndexedDB again, e.g. after a backup was restored. */
   reload: () => Promise<void>

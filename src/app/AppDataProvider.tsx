@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react
 import { KIT, stampTrip } from '../backup/tripkitBackup.ts'
 import type { TripState } from '../game/types.ts'
 import { bundledPacks } from '../packs/bundled.ts'
-import { offerWaitingPacks, takeBack as withoutPacks } from '../packs/offer.ts'
+import { afterDownload, offerWaitingPacks, takeBack as withoutPacks } from '../packs/offer.ts'
 import {
   countUpdatablePacks,
   fetchPackList,
@@ -68,6 +68,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
   const [saveFailed, setSaveFailed] = useState(false)
   const [sync, setSync] = useState<PackSync>({ running: false, checking: false })
   const [destinations, setDestinations] = useState<Country[]>(cachedDestinations)
+  const [arriving, setArriving] = useState<readonly string[]>([])
   const show = useToast()
   useEffect(() => {
     currentPacks = loaded?.packs ?? []
@@ -138,8 +139,16 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
       checkPacks()
       offerWaiting()
     }
+    // A Wi-Fi that hangs never fires `online`; coming back to the app is the next chance.
+    const back = () => {
+      if (document.visibilityState === 'visible') offerWaiting()
+    }
     window.addEventListener('online', check)
-    return () => window.removeEventListener('online', check)
+    document.addEventListener('visibilitychange', back)
+    return () => {
+      window.removeEventListener('online', check)
+      document.removeEventListener('visibilitychange', back)
+    }
   }, [checkPacks])
 
   const report = useCallback((error: unknown) => {
@@ -210,6 +219,28 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
     return { ok: true, outcomes: [...installed, ...result.outcomes], saved: [...fromApp, ...result.saved] }
   }, [report])
 
+  const marking = useCallback((tripId: string, on: boolean) => {
+    setArriving((ids) => (on ? [...ids, tripId] : ids.filter((id) => id !== tripId)))
+  }, [])
+
+  // Nobody waits for this: the trip opens at once and its games appear when the packs are in.
+  const addPacks = useCallback(
+    async (tripId: string, packIds: string[]): Promise<string | undefined> => {
+      const missing = packIds.filter((id) => !currentPacks.some((pack) => pack.id === id))
+      if (missing.length > 0) marking(tripId, true)
+      const result = missing.length > 0 ? await downloadPacks(missing).finally(() => marking(tripId, false)) : undefined
+      const onPhone = [...(result?.ok ? result.saved : []), ...currentPacks]
+      const latest = currentTrips.find((trip) => trip.id === tripId)
+      const next = latest && afterDownload(latest, packIds, onPhone)
+      if (next) saveTrip(next)
+      if (packIds.every((id) => onPhone.some((pack) => pack.id === id))) return undefined
+      if (result && !result.ok) return result.reason
+      const trouble = result?.outcomes.find((outcome) => outcome.status === 'failed')
+      return trouble && 'reason' in trouble ? trouble.reason : 'Paket indirilemedi. Tekrar dene.'
+    },
+    [downloadPacks, saveTrip, marking],
+  )
+
   /** "Geri al" undoes an automatic add the way the Soru paketleri screen removes a pack. */
   const takeBack = useCallback(
     (tripId: string, packIds: readonly string[]) => {
@@ -236,6 +267,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
         bundled: bundledPacks(),
         list: (wanted) => fetchPackList({ ...server(currentTrips), wanted }),
         download: downloadPacks,
+        arriving: marking,
         save: saveTrip,
         added: (trip, packs) => {
           const countryName = findCountry(currentDestinations, trip.country)?.name
@@ -250,7 +282,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
         offerWaiting()
       }
     }
-  }, [saveTrip, downloadPacks, takeBack, show])
+  }, [saveTrip, downloadPacks, marking, takeBack, show])
 
   useEffect(() => {
     offerWaiting = () => void offerPacks()
@@ -288,8 +320,21 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
 
   const value = useMemo(
     () =>
-      loaded && { ...loaded, destinations, saveTrip, deleteTrip, deletePack, sync, startSync, downloadPacks, checkPacks, reload },
-    [loaded, destinations, saveTrip, deleteTrip, deletePack, sync, startSync, downloadPacks, checkPacks, reload],
+      loaded && {
+        ...loaded,
+        destinations,
+        saveTrip,
+        deleteTrip,
+        deletePack,
+        sync,
+        startSync,
+        downloadPacks,
+        addPacks,
+        arriving,
+        checkPacks,
+        reload,
+      },
+    [loaded, destinations, saveTrip, deleteTrip, deletePack, sync, startSync, downloadPacks, addPacks, arriving, checkPacks, reload],
   )
 
   if (loadFailed) {

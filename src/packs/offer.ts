@@ -16,6 +16,7 @@ export interface OfferDeps {
   bundled: readonly Pack[]
   list: (wanted: (pin: PackPin) => boolean) => Promise<PackList>
   download: (packIds: string[]) => Promise<SyncResult>
+  arriving: (tripId: string, on: boolean) => void // the trip's card says the pack is on its way
   save: (trip: TripState) => void
   added: (trip: TripState, packs: Pack[]) => void
 }
@@ -41,7 +42,8 @@ export async function offerWaitingPacks(deps: OfferDeps): Promise<void> {
       continue
     }
     const missing = wanted.filter((packId) => !deps.packs().some((pack) => pack.id === packId))
-    const result = missing.length > 0 ? await deps.download(missing) : undefined
+    if (missing.length > 0) deps.arriving(id, true)
+    const result = missing.length > 0 ? await deps.download(missing).finally(() => deps.arriving(id, false)) : undefined
     const onPhone = [...(result?.ok ? result.saved : []), ...deps.packs()]
     const added = wanted.flatMap((packId) => onPhone.find((pack) => pack.id === packId) ?? [])
     // Deleted, or settled by the player, while the packs came down.
@@ -51,6 +53,20 @@ export async function offerWaitingPacks(deps: OfferDeps): Promise<void> {
     deps.save({ ...settled(latest), packIds: [...latest.packIds, ...linked.map((pack) => pack.id)] })
     deps.added(latest, added)
   }
+}
+
+/**
+ * A background download for a trip finished: the packs that arrived join the trip as it is by now. When none did,
+ * a trip still without packs or an answer waits, so the next connection brings the rule's pack.
+ */
+export function afterDownload(trip: TripState, wanted: readonly string[], onPhone: readonly { id: string }[]): TripState | undefined {
+  const arrived = wanted.filter((id) => onPhone.some((pack) => pack.id === id) && !trip.packIds.includes(id))
+  if (arrived.length > 0) {
+    const next = { ...trip, packIds: [...trip.packIds, ...arrived] }
+    return next.packOffer === 'waiting' ? settled(next) : next
+  }
+  const missed = wanted.some((id) => !trip.packIds.includes(id))
+  return missed && trip.packIds.length === 0 && trip.packOffer === undefined ? { ...trip, packOffer: 'waiting' } : undefined
 }
 
 /** "Geri al": the trip without these packs, never offered one again, and the packs no other trip plays with. */
