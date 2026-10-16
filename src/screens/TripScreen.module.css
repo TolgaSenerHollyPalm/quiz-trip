@@ -41,10 +41,10 @@
   container-type: inline-size;
 }
 
-/* The quiz: the one dark tile, the game to reach for first. */
+/* The quiz: the kit's soft green, the game to reach for first. */
 .quiz {
-  background: var(--color-ink-tile);
-  color: var(--color-on-ink-tile);
+  background: var(--color-primary-soft);
+  color: var(--color-text);
 }
 
 .predictions {
@@ -62,8 +62,8 @@
 }
 
 .quiz .tileIcon {
-  background: var(--color-ink-tile-raised);
-  color: var(--color-mint);
+  background: var(--color-surface);
+  color: var(--color-primary-dark);
 }
 
 .predictions .tileIcon {
@@ -92,7 +92,7 @@
 
 .tileAction {
   align-items: flex-start;
-  color: var(--color-mint);
+  color: var(--color-primary-dark);
 }
 
 /* Beside the first line when the count wraps: (21px line - 16px arrow) / 2. */

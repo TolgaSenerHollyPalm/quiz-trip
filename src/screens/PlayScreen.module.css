@@ -86,8 +86,8 @@
   flex: none;
   padding: 5px 12px;
   border-radius: var(--radius-pill);
-  background: var(--color-ink-tile);
-  color: var(--color-on-ink-tile);
+  background: var(--color-primary-soft);
+  color: var(--color-primary-dark);
   font-size: 0.8125rem;
   font-weight: 700;
   font-variant-numeric: tabular-nums;

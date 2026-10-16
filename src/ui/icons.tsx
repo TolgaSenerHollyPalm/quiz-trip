@@ -129,3 +129,95 @@ export function AppIcon({ size = 32 }: IconProps) {
     </svg>
   )
 }
+
+/** A speech bubble: travel English and its "Temel ifadeler" topic; with lines, the trip screen's row. */
+export function ChatIcon({ size = 22, strokeWidth = 1.7, lines = false }: IconProps & { lines?: boolean }) {
+  return (
+    <svg {...lineIcon(size, strokeWidth)}>
+      <path d="M5 5.5h14a1.5 1.5 0 0 1 1.5 1.5v8a1.5 1.5 0 0 1-1.5 1.5h-8.5L6 20v-3.5H5A1.5 1.5 0 0 1 3.5 15V7A1.5 1.5 0 0 1 5 5.5z" />
+      {lines && <path d="M8.5 9.8h7M8.5 12.8h5" />}
+    </svg>
+  )
+}
+
+/** An aeroplane seat. */
+export function SeatIcon({ size = 22, strokeWidth = 1.7 }: IconProps) {
+  return (
+    <svg {...lineIcon(size, strokeWidth)}>
+      <path d="M8 3.5h1.5a1.5 1.5 0 0 1 1.5 1.5v7.5h5.5a2 2 0 0 1 2 2v1.5H9.5A2.5 2.5 0 0 1 7 13.5V4.5a1 1 0 0 1 1-1zM10 16v4.5M16.5 16v4.5M8 20.5h10" />
+    </svg>
+  )
+}
+
+export function PassportIcon({ size = 22, strokeWidth = 1.7 }: IconProps) {
+  return (
+    <svg {...lineIcon(size, strokeWidth)}>
+      <path d="M6.5 3.5h10.5a1.5 1.5 0 0 1 1.5 1.5v14a1.5 1.5 0 0 1-1.5 1.5H6.5z" />
+      <path d="M12.2 14a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM9.5 17h5.5" />
+    </svg>
+  )
+}
+
+export function BedIcon({ size = 22, strokeWidth = 1.7 }: IconProps) {
+  return (
+    <svg {...lineIcon(size, strokeWidth)}>
+      <path d="M3.5 18.5v-12M3.5 14.5h17v4M20.5 14.5V12a2.5 2.5 0 0 0-2.5-2.5h-7v5" />
+      <circle cx="7.2" cy="11" r="1.6" />
+    </svg>
+  )
+}
+
+/** A map pin: asking the way. */
+export function PinIcon({ size = 22, strokeWidth = 1.7 }: IconProps) {
+  return (
+    <svg {...lineIcon(size, strokeWidth)}>
+      <path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z" />
+      <circle cx="12" cy="10" r="2" />
+    </svg>
+  )
+}
+
+export function ClockIcon({ size = 22, strokeWidth = 1.7 }: IconProps) {
+  return (
+    <svg {...lineIcon(size, strokeWidth)}>
+      <circle cx="12" cy="12" r="8.5" />
+      <path d="M12 7.5V12l3 2" />
+    </svg>
+  )
+}
+
+/** The first-aid cross: health and emergencies. */
+export function MedicalIcon({ size = 22, strokeWidth = 1.7 }: IconProps) {
+  return (
+    <svg {...lineIcon(size, strokeWidth)}>
+      <path d="M9.5 4h5v5.5H20v5h-5.5V20h-5v-5.5H4v-5h5.5z" />
+    </svg>
+  )
+}
+
+/** Saved or not: filled once something is starred. */
+export function StarIcon({ size = 22, strokeWidth = 1.7, filled = false }: IconProps & { filled?: boolean }) {
+  return (
+    <svg {...lineIcon(size, strokeWidth)}>
+      <path d="M12 3.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.2-4.1 5.8-.8z" fill={filled ? 'currentColor' : 'none'} />
+    </svg>
+  )
+}
+
+export function SearchIcon({ size = 20, strokeWidth = 1.8 }: IconProps) {
+  return (
+    <svg {...lineIcon(size, strokeWidth)}>
+      <circle cx="10.5" cy="10.5" r="7" />
+      <path d="M20.5 20.5l-5-5" />
+    </svg>
+  )
+}
+
+/** Four corners: tapping shows the thing large. */
+export function ExpandIcon({ size = 16, strokeWidth = 1.8 }: IconProps) {
+  return (
+    <svg {...lineIcon(size, strokeWidth)}>
+      <path d="M9 4H4v5M15 4h5v5M9 20H4v-5M15 20h5v-5" />
+    </svg>
+  )
+}

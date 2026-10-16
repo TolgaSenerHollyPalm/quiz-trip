@@ -2,6 +2,10 @@ import { lazy, Suspense, useEffect } from 'react'
 import AddPredictionScreen from '../screens/AddPredictionScreen.tsx'
 import AppSettingsScreen from '../screens/AppSettingsScreen.tsx'
 import ChecklistScreen from '../screens/ChecklistScreen.tsx'
+import EnglishSavedScreen from '../screens/EnglishSavedScreen.tsx'
+import EnglishScreen from '../screens/EnglishScreen.tsx'
+import EnglishShowScreen from '../screens/EnglishShowScreen.tsx'
+import EnglishTopicScreen from '../screens/EnglishTopicScreen.tsx'
 import GuessScreen from '../screens/GuessScreen.tsx'
 import HomeScreen from '../screens/HomeScreen.tsx'
 import NoteListScreen from '../screens/NoteListScreen.tsx'
@@ -30,7 +34,7 @@ const DesignGallery = import.meta.env.DEV ? lazy(() => import('../dev/DesignGall
 
 export default function App() {
   const route = useRoute()
-  const address = href(route)
+  const address = place(route)
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -57,6 +61,14 @@ export default function App() {
       </div>
     </ToastProvider>
   )
+}
+
+/** The address a screen is kept by: a search, a topic's tab or a step in the big view rewrites the URL, not the screen. */
+function place(route: Route): string {
+  if (route.screen === 'english') return href({ screen: 'english', tripId: route.tripId })
+  if (route.screen === 'english-topic') return href({ screen: 'english-topic', tripId: route.tripId, topicId: route.topicId })
+  if (route.screen === 'english-show') return href({ ...route, itemId: '' })
+  return href(route)
 }
 
 function CurrentScreen({ route }: { route: Route }) {
@@ -100,5 +112,13 @@ function CurrentScreen({ route }: { route: Route }) {
       return <GuessScreen tripId={route.tripId} predictionId={route.predictionId} playerId={route.playerId} />
     case 'prediction-result':
       return <PredictionResultScreen tripId={route.tripId} predictionId={route.predictionId} />
+    case 'english':
+      return <EnglishScreen tripId={route.tripId} q={route.q} />
+    case 'english-topic':
+      return <EnglishTopicScreen tripId={route.tripId} topicId={route.topicId} tab={route.tab} />
+    case 'english-saved':
+      return <EnglishSavedScreen tripId={route.tripId} />
+    case 'english-show':
+      return <EnglishShowScreen tripId={route.tripId} itemId={route.itemId} from={route.from} q={route.q} />
   }
 }

@@ -4,6 +4,7 @@ import { href, navigate } from '../app/router.ts'
 import type { TripState } from '../game/types.ts'
 import { applySuggestions } from '../trips/checklist.ts'
 import { findCountry } from '../trips/destinations.ts'
+import { applyPlaceLists } from '../trips/placeSuggestions.ts'
 import { TRANSPORTS, TRIP_KINDS, type Transport, type TripKind } from '../trips/types.ts'
 import { Button } from 'kitshelf-ui/ui/Button.tsx'
 import ChoiceGroup from 'kitshelf-ui/ui/ChoiceGroup.tsx'
@@ -53,7 +54,13 @@ export default function TripFormScreen({ tripId }: { tripId: string }) {
     }
     // The suggestions follow the vehicle and the holiday type, so they are refreshed when those change.
     const stale = existing.transport !== transport || existing.kind !== kind || existing.checklist.length === 0
-    saveTrip(stale ? { ...trip, checklist: applySuggestions(trip) } : trip)
+    // Likewise what to buy and taste follows the place.
+    const moved = existing.country !== trip.country || existing.cityId !== trip.cityId
+    saveTrip({
+      ...trip,
+      ...(stale && { checklist: applySuggestions(trip) }),
+      ...(moved && applyPlaceLists(trip, destinations)),
+    })
     navigate({ screen: 'trip', tripId: trip.id }, { replace: true })
   }
 

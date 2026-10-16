@@ -1,11 +1,23 @@
 import bundled from '../../public/destinations.json'
 
-export interface City {
+/** Something worth buying or tasting at a place, as destinations.json lists it. */
+export interface PlaceSuggestion {
+  id: string // kebab-case, unique across the whole file
+  text: string
+  note?: string
+}
+
+interface PlaceLists {
+  souvenirs?: PlaceSuggestion[] // Almadan gelme
+  tastes?: PlaceSuggestion[] // Tatmadan gelme
+}
+
+export interface City extends PlaceLists {
   id: string // kebab-case, the id packs are pinned to
   name: string
 }
 
-export interface Country {
+export interface Country extends PlaceLists {
   code: string // ISO 3166-1 alpha-2
   name: string
   cities: City[]

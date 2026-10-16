@@ -1,6 +1,8 @@
 import type { TripState } from '../game/types.ts'
 import { qualify } from '../packs/collection.ts'
 import type { Pack } from '../packs/types.ts'
+import type { Country } from '../trips/destinations.ts'
+import { applyPlaceSuggestions, placeSuggestions, type PlaceList } from '../trips/placeSuggestions.ts'
 import type { TripKind } from '../trips/types.ts'
 
 /** A trip as the first version stored it: keyed by its pack, with no plan of its own. */
@@ -66,4 +68,15 @@ export function migrateToMultiPack(legacy: SinglePackTrip, pack?: Pick<Pack, 'co
 /** Gives a trip the two lists the user writes alone, empty; lists it somehow already has are kept. */
 export function addNoteLists(trip: TripBeforeNotes & Partial<Pick<TripState, 'souvenirs' | 'tastes'>>): TripState {
   return { ...trip, souvenirs: trip.souvenirs ?? [], tastes: trip.tastes ?? [] }
+}
+
+/** Fills a trip's empty souvenirs and tastes with its place's suggestions; a list with anything in it is the player's. */
+export function fillPlaceLists(trip: TripState, countries: readonly Country[]): TripState {
+  if (trip.country === undefined) return trip
+  // Read with care: this runs inside the database upgrade, where one throw would keep the app from opening.
+  const suggested = (list: PlaceList) => (trip[list]?.length ? [] : applyPlaceSuggestions([], placeSuggestions(countries, trip, list)))
+  const souvenirs = suggested('souvenirs')
+  const tastes = suggested('tastes')
+  if (souvenirs.length === 0 && tastes.length === 0) return trip
+  return { ...trip, ...(souvenirs.length > 0 && { souvenirs }), ...(tastes.length > 0 && { tastes }) }
 }

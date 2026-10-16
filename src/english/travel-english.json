@@ -1,0 +1,1461 @@
+{
+  "schemaVersion": 1,
+  "id": "travel-english",
+  "language": "en",
+  "title": "Seyahat İngilizcesi",
+  "version": 1,
+  "updatedAt": "2026-10-16",
+  "topics": [
+    {
+      "id": "basics",
+      "title": "Temel ifadeler",
+      "icon": "chat",
+      "tone": "teal",
+      "phrases": [
+        {
+          "id": "basics-p01",
+          "tr": "Merhaba.",
+          "en": "Hello."
+        },
+        {
+          "id": "basics-p02",
+          "tr": "Günaydın.",
+          "en": "Good morning."
+        },
+        {
+          "id": "basics-p03",
+          "tr": "Teşekkür ederim.",
+          "en": "Thank you."
+        },
+        {
+          "id": "basics-p04",
+          "tr": "Lütfen.",
+          "en": "Please."
+        },
+        {
+          "id": "basics-p05",
+          "tr": "Affedersiniz.",
+          "en": "Excuse me.",
+          "note": "Birinin dikkatini çekerken ya da yol isterken."
+        },
+        {
+          "id": "basics-p16",
+          "tr": "Bana yardım edebilir misiniz?",
+          "en": "Could you help me, please?"
+        },
+        {
+          "id": "basics-p06",
+          "tr": "Özür dilerim.",
+          "en": "I'm sorry."
+        },
+        {
+          "id": "basics-p07",
+          "tr": "Bir dakika, lütfen.",
+          "en": "Just a moment, please."
+        },
+        {
+          "id": "basics-p08",
+          "tr": "Anlamadım.",
+          "en": "I don't understand."
+        },
+        {
+          "id": "basics-p17",
+          "tr": "İngilizcem çok iyi değil.",
+          "en": "My English isn't very good."
+        },
+        {
+          "id": "basics-p09",
+          "tr": "Daha yavaş konuşabilir misiniz?",
+          "en": "Could you speak more slowly, please?"
+        },
+        {
+          "id": "basics-p10",
+          "tr": "Tekrar eder misiniz?",
+          "en": "Could you say that again, please?"
+        },
+        {
+          "id": "basics-p11",
+          "tr": "Türkçe bilen biri var mı?",
+          "en": "Does anyone here speak Turkish?"
+        },
+        {
+          "id": "basics-p12",
+          "tr": "Bunu yazabilir misiniz?",
+          "en": "Could you write it down, please?"
+        },
+        {
+          "id": "basics-p13",
+          "tr": "Tuvalet nerede?",
+          "en": "Where are the toilets?",
+          "note": "ABD’de: restroom"
+        },
+        {
+          "id": "basics-p14",
+          "tr": "Sorun değil.",
+          "en": "No problem."
+        },
+        {
+          "id": "basics-p15",
+          "tr": "İyi günler.",
+          "en": "Have a nice day.",
+          "note": "Ayrılırken söylenir."
+        }
+      ],
+      "words": [
+        {
+          "id": "basics-w01",
+          "tr": "evet",
+          "en": "yes"
+        },
+        {
+          "id": "basics-w02",
+          "tr": "hayır",
+          "en": "no"
+        },
+        {
+          "id": "basics-w03",
+          "tr": "tamam",
+          "en": "OK"
+        },
+        {
+          "id": "basics-w04",
+          "tr": "teşekkürler",
+          "en": "thanks"
+        },
+        {
+          "id": "basics-w05",
+          "tr": "hoşça kal",
+          "en": "goodbye"
+        },
+        {
+          "id": "basics-w06",
+          "tr": "bugün",
+          "en": "today"
+        },
+        {
+          "id": "basics-w07",
+          "tr": "yarın",
+          "en": "tomorrow"
+        },
+        {
+          "id": "basics-w08",
+          "tr": "dün",
+          "en": "yesterday"
+        }
+      ]
+    },
+    {
+      "id": "airport",
+      "title": "Havalimanı",
+      "icon": "plane",
+      "tone": "teal",
+      "phrases": [
+        {
+          "id": "airport-p01",
+          "tr": "Check-in bankosu nerede?",
+          "en": "Where is the check-in desk?"
+        },
+        {
+          "id": "airport-p02",
+          "tr": "Bu bavulu bagaja vermek istiyorum.",
+          "en": "I'd like to check in this bag."
+        },
+        {
+          "id": "airport-p03",
+          "tr": "Bunu kabin bagajı olarak alabilir miyim?",
+          "en": "Can I take this as hand luggage?"
+        },
+        {
+          "id": "airport-p14",
+          "tr": "Bebek arabasını kapıya kadar götürebilir miyim?",
+          "en": "Can I take the pushchair to the gate?",
+          "note": "ABD’de: stroller"
+        },
+        {
+          "id": "airport-p04",
+          "tr": "Cam kenarı alabilir miyim?",
+          "en": "Could I have a window seat, please?"
+        },
+        {
+          "id": "airport-p05",
+          "tr": "Dizüstü bilgisayarı çıkarmam gerekiyor mu?",
+          "en": "Do I need to take out my laptop?"
+        },
+        {
+          "id": "airport-p06",
+          "tr": "Hangi kapıdan bineceğiz?",
+          "en": "Which gate is it?"
+        },
+        {
+          "id": "airport-p07",
+          "tr": "Biniş saat kaçta?",
+          "en": "What time is boarding?"
+        },
+        {
+          "id": "airport-p08",
+          "tr": "Uçuş rötarlı mı?",
+          "en": "Is the flight delayed?"
+        },
+        {
+          "id": "airport-p09",
+          "tr": "Aktarmalı uçuşum var.",
+          "en": "I have a connecting flight."
+        },
+        {
+          "id": "airport-p10",
+          "tr": "Uçağı kaçırdım.",
+          "en": "I've missed my flight."
+        },
+        {
+          "id": "airport-p11",
+          "tr": "Bavulum gelmedi.",
+          "en": "My suitcase hasn't arrived."
+        },
+        {
+          "id": "airport-p12",
+          "tr": "Kayıp bagaj bürosu nerede?",
+          "en": "Where is the lost luggage office?"
+        },
+        {
+          "id": "airport-p13",
+          "tr": "Bavulum hasar görmüş.",
+          "en": "My suitcase is damaged."
+        }
+      ],
+      "words": [
+        {
+          "id": "airport-w01",
+          "tr": "biniş kartı",
+          "en": "boarding pass"
+        },
+        {
+          "id": "airport-w02",
+          "tr": "uçuş",
+          "en": "flight"
+        },
+        {
+          "id": "airport-w03",
+          "tr": "kapı",
+          "en": "gate"
+        },
+        {
+          "id": "airport-w04",
+          "tr": "bagaj",
+          "en": "luggage",
+          "note": "ABD’de: baggage"
+        },
+        {
+          "id": "airport-w05",
+          "tr": "kabin bagajı",
+          "en": "hand luggage"
+        },
+        {
+          "id": "airport-w06",
+          "tr": "rötar",
+          "en": "delay"
+        },
+        {
+          "id": "airport-w07",
+          "tr": "gidiş (kalkış)",
+          "en": "departures"
+        },
+        {
+          "id": "airport-w08",
+          "tr": "geliş (varış)",
+          "en": "arrivals"
+        },
+        {
+          "id": "airport-w09",
+          "tr": "aktarma",
+          "en": "connection"
+        },
+        {
+          "id": "airport-w10",
+          "tr": "güvenlik kontrolü",
+          "en": "security check"
+        }
+      ]
+    },
+    {
+      "id": "plane",
+      "title": "Uçakta",
+      "icon": "seat",
+      "tone": "teal",
+      "phrases": [
+        {
+          "id": "plane-p01",
+          "tr": "Sanırım burası benim yerim.",
+          "en": "I think this is my seat."
+        },
+        {
+          "id": "plane-p02",
+          "tr": "Yer değiştirebilir miyiz?",
+          "en": "Could we swap seats?"
+        },
+        {
+          "id": "plane-p03",
+          "tr": "Çantamı buraya koyabilir miyim?",
+          "en": "Can I put my bag here?"
+        },
+        {
+          "id": "plane-p04",
+          "tr": "Biraz su alabilir miyim?",
+          "en": "Could I have some water, please?"
+        },
+        {
+          "id": "plane-p05",
+          "tr": "Battaniye alabilir miyim?",
+          "en": "Could I have a blanket, please?"
+        },
+        {
+          "id": "plane-p06",
+          "tr": "Tavuk, lütfen.",
+          "en": "Chicken, please.",
+          "note": "Görevli “Chicken or pasta?” diye sorarsa."
+        },
+        {
+          "id": "plane-p07",
+          "tr": "Vejetaryen yemek var mı?",
+          "en": "Is there a vegetarian meal?"
+        },
+        {
+          "id": "plane-p08",
+          "tr": "Koltuğumu yatırsam sorun olur mu?",
+          "en": "Do you mind if I recline my seat?"
+        },
+        {
+          "id": "plane-p09",
+          "tr": "Kaleminizi ödünç alabilir miyim?",
+          "en": "Could I borrow a pen?",
+          "note": "Giriş kartını doldururken."
+        },
+        {
+          "id": "plane-p10",
+          "tr": "Kendimi iyi hissetmiyorum.",
+          "en": "I don't feel well."
+        },
+        {
+          "id": "plane-p11",
+          "tr": "İnişe ne kadar var?",
+          "en": "How long until we land?"
+        }
+      ],
+      "words": [
+        {
+          "id": "plane-w01",
+          "tr": "koltuk",
+          "en": "seat"
+        },
+        {
+          "id": "plane-w02",
+          "tr": "emniyet kemeri",
+          "en": "seat belt"
+        },
+        {
+          "id": "plane-w03",
+          "tr": "cam kenarı",
+          "en": "window seat"
+        },
+        {
+          "id": "plane-w04",
+          "tr": "koridor tarafı",
+          "en": "aisle seat"
+        },
+        {
+          "id": "plane-w05",
+          "tr": "battaniye",
+          "en": "blanket"
+        },
+        {
+          "id": "plane-w06",
+          "tr": "kulaklık",
+          "en": "headphones"
+        },
+        {
+          "id": "plane-w07",
+          "tr": "kabin görevlisi",
+          "en": "flight attendant"
+        },
+        {
+          "id": "plane-w08",
+          "tr": "iniş",
+          "en": "landing"
+        }
+      ]
+    },
+    {
+      "id": "passport",
+      "title": "Pasaport ve gümrük",
+      "icon": "passport",
+      "tone": "neutral",
+      "phrases": [
+        {
+          "id": "passport-p01",
+          "tr": "Buyurun, pasaportum.",
+          "en": "Here is my passport."
+        },
+        {
+          "id": "passport-p02",
+          "tr": "Tatil için geldim.",
+          "en": "I'm here on holiday.",
+          "note": "ABD’de: on vacation"
+        },
+        {
+          "id": "passport-p03",
+          "tr": "Bir hafta kalacağım.",
+          "en": "I'm staying for a week."
+        },
+        {
+          "id": "passport-p04",
+          "tr": "… otelinde kalacağım.",
+          "en": "I'm staying at the … hotel."
+        },
+        {
+          "id": "passport-p05",
+          "tr": "Ailemle birlikteyim.",
+          "en": "I'm with my family."
+        },
+        {
+          "id": "passport-p06",
+          "tr": "Dönüş biletim var.",
+          "en": "I have a return ticket."
+        },
+        {
+          "id": "passport-p07",
+          "tr": "Vizeyi nereden alabilirim?",
+          "en": "Where can I get a visa?"
+        },
+        {
+          "id": "passport-p08",
+          "tr": "Bu formu nasıl doldurmalıyım?",
+          "en": "How do I fill in this form?"
+        },
+        {
+          "id": "passport-p09",
+          "tr": "Hangi sıraya girmeliyim?",
+          "en": "Which queue should I join?",
+          "note": "ABD’de: line"
+        },
+        {
+          "id": "passport-p10",
+          "tr": "Beyan edecek bir şeyim yok.",
+          "en": "I have nothing to declare."
+        },
+        {
+          "id": "passport-p11",
+          "tr": "Bunlar kişisel eşyalarım.",
+          "en": "These are my personal belongings."
+        }
+      ],
+      "words": [
+        {
+          "id": "passport-w01",
+          "tr": "pasaport",
+          "en": "passport"
+        },
+        {
+          "id": "passport-w02",
+          "tr": "vize",
+          "en": "visa"
+        },
+        {
+          "id": "passport-w03",
+          "tr": "pasaport kontrolü",
+          "en": "passport control"
+        },
+        {
+          "id": "passport-w04",
+          "tr": "gümrük",
+          "en": "customs"
+        },
+        {
+          "id": "passport-w05",
+          "tr": "sıra (kuyruk)",
+          "en": "queue",
+          "note": "ABD’de: line"
+        },
+        {
+          "id": "passport-w06",
+          "tr": "form",
+          "en": "form"
+        },
+        {
+          "id": "passport-w07",
+          "tr": "gidiş-dönüş bileti",
+          "en": "return ticket",
+          "note": "ABD’de: round-trip ticket"
+        },
+        {
+          "id": "passport-w08",
+          "tr": "kalacak yer",
+          "en": "accommodation"
+        }
+      ]
+    },
+    {
+      "id": "hotel",
+      "title": "Otel",
+      "icon": "bed",
+      "tone": "amber",
+      "phrases": [
+        {
+          "id": "hotel-p01",
+          "tr": "Rezervasyonum var.",
+          "en": "I have a reservation."
+        },
+        {
+          "id": "hotel-p02",
+          "tr": "… adına.",
+          "en": "It's under the name …"
+        },
+        {
+          "id": "hotel-p03",
+          "tr": "Odaya saat kaçta girebiliriz?",
+          "en": "What time is check-in?"
+        },
+        {
+          "id": "hotel-p04",
+          "tr": "Kahvaltı saat kaçta?",
+          "en": "What time is breakfast?"
+        },
+        {
+          "id": "hotel-p05",
+          "tr": "Wi-Fi şifresi ne?",
+          "en": "What's the Wi-Fi password?"
+        },
+        {
+          "id": "hotel-p06",
+          "tr": "Klima çalışmıyor.",
+          "en": "The air conditioning isn't working."
+        },
+        {
+          "id": "hotel-p07",
+          "tr": "Sıcak su akmıyor.",
+          "en": "There's no hot water."
+        },
+        {
+          "id": "hotel-p16",
+          "tr": "Musluk suyu içilir mi?",
+          "en": "Is the tap water safe to drink?"
+        },
+        {
+          "id": "hotel-p08",
+          "tr": "Biraz daha havlu alabilir miyiz?",
+          "en": "Could we have some more towels?"
+        },
+        {
+          "id": "hotel-p09",
+          "tr": "Odamızı temizler misiniz?",
+          "en": "Could you clean our room, please?"
+        },
+        {
+          "id": "hotel-p10",
+          "tr": "Oda değiştirebilir miyiz?",
+          "en": "Could we change rooms?"
+        },
+        {
+          "id": "hotel-p11",
+          "tr": "Geç çıkış yapabilir miyiz?",
+          "en": "Could we have a late check-out?"
+        },
+        {
+          "id": "hotel-p12",
+          "tr": "Bavullarımızı burada bırakabilir miyiz?",
+          "en": "Can we leave our bags here?"
+        },
+        {
+          "id": "hotel-p13",
+          "tr": "Havalimanına servis var mı?",
+          "en": "Is there an airport shuttle?"
+        },
+        {
+          "id": "hotel-p14",
+          "tr": "Oda numaram …",
+          "en": "My room number is …"
+        },
+        {
+          "id": "hotel-p15",
+          "tr": "Bebek yatağı alabilir miyiz?",
+          "en": "Could we have a cot for the baby, please?",
+          "note": "ABD’de: crib"
+        },
+        {
+          "id": "hotel-p17",
+          "tr": "Bunun için ek ücret var mı?",
+          "en": "Is there an extra charge for this?"
+        }
+      ],
+      "words": [
+        {
+          "id": "hotel-w01",
+          "tr": "oda",
+          "en": "room"
+        },
+        {
+          "id": "hotel-w02",
+          "tr": "oda kartı",
+          "en": "key card"
+        },
+        {
+          "id": "hotel-w03",
+          "tr": "resepsiyon",
+          "en": "reception"
+        },
+        {
+          "id": "hotel-w04",
+          "tr": "asansör",
+          "en": "lift",
+          "note": "ABD’de: elevator"
+        },
+        {
+          "id": "hotel-w05",
+          "tr": "kahvaltı",
+          "en": "breakfast"
+        },
+        {
+          "id": "hotel-w06",
+          "tr": "havlu",
+          "en": "towel"
+        },
+        {
+          "id": "hotel-w07",
+          "tr": "klima",
+          "en": "air conditioning"
+        },
+        {
+          "id": "hotel-w08",
+          "tr": "kat",
+          "en": "floor"
+        },
+        {
+          "id": "hotel-w09",
+          "tr": "çıkış (otelden)",
+          "en": "check-out"
+        }
+      ]
+    },
+    {
+      "id": "transport",
+      "title": "Taksi ve ulaşım",
+      "icon": "car",
+      "tone": "amber",
+      "phrases": [
+        {
+          "id": "transport-p01",
+          "tr": "…’e ne kadar tutar?",
+          "en": "How much is it to …?"
+        },
+        {
+          "id": "transport-p02",
+          "tr": "Taksimetreyi açar mısınız?",
+          "en": "Could you turn on the meter, please?"
+        },
+        {
+          "id": "transport-p03",
+          "tr": "Beni bu adrese götürür müsünüz?",
+          "en": "Could you take me to this address?"
+        },
+        {
+          "id": "transport-p04",
+          "tr": "Burada durabilir misiniz?",
+          "en": "Could you stop here, please?"
+        },
+        {
+          "id": "transport-p05",
+          "tr": "Ne kadar sürer?",
+          "en": "How long does it take?"
+        },
+        {
+          "id": "transport-p06",
+          "tr": "Bana bir taksi çağırabilir misiniz?",
+          "en": "Could you call me a taxi?"
+        },
+        {
+          "id": "transport-p07",
+          "tr": "Otobüs durağı nerede?",
+          "en": "Where is the bus stop?"
+        },
+        {
+          "id": "transport-p08",
+          "tr": "Bu otobüs …’e gidiyor mu?",
+          "en": "Does this bus go to …?"
+        },
+        {
+          "id": "transport-p09",
+          "tr": "Sonraki durak hangisi?",
+          "en": "What's the next stop?"
+        },
+        {
+          "id": "transport-p10",
+          "tr": "Bir bilet, lütfen.",
+          "en": "One ticket, please."
+        },
+        {
+          "id": "transport-p11",
+          "tr": "Gidiş-dönüş, lütfen.",
+          "en": "A return ticket, please.",
+          "note": "ABD’de: round trip"
+        },
+        {
+          "id": "transport-p12",
+          "tr": "Araba kiralamak istiyorum.",
+          "en": "I'd like to hire a car.",
+          "note": "ABD’de: rent a car"
+        },
+        {
+          "id": "transport-p13",
+          "tr": "Daha yavaş gidebilir misiniz?",
+          "en": "Could you drive more slowly, please?"
+        }
+      ],
+      "words": [
+        {
+          "id": "transport-w01",
+          "tr": "taksi",
+          "en": "taxi"
+        },
+        {
+          "id": "transport-w02",
+          "tr": "otobüs",
+          "en": "bus"
+        },
+        {
+          "id": "transport-w03",
+          "tr": "durak",
+          "en": "stop"
+        },
+        {
+          "id": "transport-w04",
+          "tr": "bilet",
+          "en": "ticket"
+        },
+        {
+          "id": "transport-w05",
+          "tr": "adres",
+          "en": "address"
+        },
+        {
+          "id": "transport-w06",
+          "tr": "taksimetre",
+          "en": "meter"
+        },
+        {
+          "id": "transport-w07",
+          "tr": "araba kiralama",
+          "en": "car hire",
+          "note": "ABD’de: car rental"
+        },
+        {
+          "id": "transport-w08",
+          "tr": "benzin istasyonu",
+          "en": "petrol station",
+          "note": "ABD’de: gas station"
+        }
+      ]
+    },
+    {
+      "id": "restaurant",
+      "title": "Restoran ve kafe",
+      "icon": "fork",
+      "tone": "coral",
+      "phrases": [
+        {
+          "id": "restaurant-p01",
+          "tr": "Dört kişilik bir masa, lütfen.",
+          "en": "A table for four, please."
+        },
+        {
+          "id": "restaurant-p02",
+          "tr": "Menüye bakabilir miyim?",
+          "en": "Could I see the menu, please?"
+        },
+        {
+          "id": "restaurant-p03",
+          "tr": "Ne önerirsiniz?",
+          "en": "What do you recommend?"
+        },
+        {
+          "id": "restaurant-p04",
+          "tr": "Bundan alayım.",
+          "en": "I'll have this, please."
+        },
+        {
+          "id": "restaurant-p05",
+          "tr": "Acı mı?",
+          "en": "Is it spicy?"
+        },
+        {
+          "id": "restaurant-p06",
+          "tr": "Buzsuz, lütfen.",
+          "en": "No ice, please."
+        },
+        {
+          "id": "restaurant-p07",
+          "tr": "Bir şişe su, lütfen.",
+          "en": "A bottle of water, please."
+        },
+        {
+          "id": "restaurant-p08",
+          "tr": "Çocuk menünüz var mı?",
+          "en": "Do you have a children's menu?"
+        },
+        {
+          "id": "restaurant-p09",
+          "tr": "Vejetaryen yemekleriniz var mı?",
+          "en": "Do you have any vegetarian dishes?"
+        },
+        {
+          "id": "restaurant-p10",
+          "tr": "İçinde domuz eti var mı?",
+          "en": "Does this have pork in it?"
+        },
+        {
+          "id": "restaurant-p16",
+          "tr": "Helal mi?",
+          "en": "Is it halal?"
+        },
+        {
+          "id": "restaurant-p17",
+          "tr": "İçinde alkol var mı?",
+          "en": "Does this have alcohol in it?"
+        },
+        {
+          "id": "restaurant-p11",
+          "tr": "Kuruyemiş alerjim var.",
+          "en": "I'm allergic to nuts."
+        },
+        {
+          "id": "restaurant-p12",
+          "tr": "Hesabı alabilir miyiz?",
+          "en": "Could we have the bill, please?",
+          "note": "ABD’de: check"
+        },
+        {
+          "id": "restaurant-p18",
+          "tr": "Sanırım hesapta bir hata var.",
+          "en": "I think there's a mistake on the bill.",
+          "note": "ABD’de: check"
+        },
+        {
+          "id": "restaurant-p13",
+          "tr": "Servis ücreti dahil mi?",
+          "en": "Is service included?"
+        },
+        {
+          "id": "restaurant-p14",
+          "tr": "Kalanını yanıma alabilir miyim?",
+          "en": "Could I take the rest with me?"
+        },
+        {
+          "id": "restaurant-p15",
+          "tr": "Çok lezzetliydi.",
+          "en": "It was delicious."
+        }
+      ],
+      "words": [
+        {
+          "id": "restaurant-w01",
+          "tr": "menü",
+          "en": "menu"
+        },
+        {
+          "id": "restaurant-w02",
+          "tr": "hesap",
+          "en": "bill",
+          "note": "ABD’de: check"
+        },
+        {
+          "id": "restaurant-w03",
+          "tr": "su",
+          "en": "water"
+        },
+        {
+          "id": "restaurant-w04",
+          "tr": "buz",
+          "en": "ice"
+        },
+        {
+          "id": "restaurant-w05",
+          "tr": "garson",
+          "en": "waiter"
+        },
+        {
+          "id": "restaurant-w06",
+          "tr": "tatlı",
+          "en": "dessert"
+        },
+        {
+          "id": "restaurant-w07",
+          "tr": "acı",
+          "en": "spicy"
+        },
+        {
+          "id": "restaurant-w08",
+          "tr": "bahşiş",
+          "en": "tip"
+        }
+      ]
+    },
+    {
+      "id": "shopping",
+      "title": "Alışveriş",
+      "icon": "bag",
+      "tone": "coral",
+      "phrases": [
+        {
+          "id": "shopping-p01",
+          "tr": "Bu ne kadar?",
+          "en": "How much is this?"
+        },
+        {
+          "id": "shopping-p02",
+          "tr": "Sadece bakıyorum, teşekkürler.",
+          "en": "I'm just looking, thanks."
+        },
+        {
+          "id": "shopping-p03",
+          "tr": "Çok pahalı.",
+          "en": "That's too expensive."
+        },
+        {
+          "id": "shopping-p04",
+          "tr": "İndirim yapar mısınız?",
+          "en": "Can you give me a discount?"
+        },
+        {
+          "id": "shopping-p05",
+          "tr": "Son fiyatınız ne?",
+          "en": "What's your best price?"
+        },
+        {
+          "id": "shopping-p06",
+          "tr": "Kartla ödeyebilir miyim?",
+          "en": "Can I pay by card?"
+        },
+        {
+          "id": "shopping-p07",
+          "tr": "Bir beden küçüğü var mı?",
+          "en": "Do you have this in a smaller size?"
+        },
+        {
+          "id": "shopping-p08",
+          "tr": "Başka rengi var mı?",
+          "en": "Do you have it in another colour?"
+        },
+        {
+          "id": "shopping-p09",
+          "tr": "Deneyebilir miyim?",
+          "en": "Can I try it on?"
+        },
+        {
+          "id": "shopping-p10",
+          "tr": "Bunu alıyorum.",
+          "en": "I'll take it."
+        },
+        {
+          "id": "shopping-p11",
+          "tr": "Poşet alabilir miyim?",
+          "en": "Could I have a bag, please?"
+        },
+        {
+          "id": "shopping-p12",
+          "tr": "Fiş alabilir miyim?",
+          "en": "Could I have a receipt, please?"
+        }
+      ],
+      "words": [
+        {
+          "id": "shopping-w01",
+          "tr": "fiyat",
+          "en": "price"
+        },
+        {
+          "id": "shopping-w02",
+          "tr": "indirim",
+          "en": "discount"
+        },
+        {
+          "id": "shopping-w03",
+          "tr": "fiş",
+          "en": "receipt"
+        },
+        {
+          "id": "shopping-w04",
+          "tr": "beden",
+          "en": "size"
+        },
+        {
+          "id": "shopping-w06",
+          "tr": "kredi kartı",
+          "en": "credit card"
+        },
+        {
+          "id": "shopping-w07",
+          "tr": "pazarlık etmek",
+          "en": "haggle"
+        },
+        {
+          "id": "shopping-w08",
+          "tr": "hediyelik eşya",
+          "en": "souvenir"
+        }
+      ]
+    },
+    {
+      "id": "directions",
+      "title": "Yol sorma",
+      "icon": "pin",
+      "tone": "teal",
+      "phrases": [
+        {
+          "id": "directions-p01",
+          "tr": "… nerede?",
+          "en": "Where is …?"
+        },
+        {
+          "id": "directions-p02",
+          "tr": "…’e nasıl giderim?",
+          "en": "How do I get to …?"
+        },
+        {
+          "id": "directions-p03",
+          "tr": "Uzak mı?",
+          "en": "Is it far?"
+        },
+        {
+          "id": "directions-p04",
+          "tr": "Yürüyerek gidilir mi?",
+          "en": "Can I walk there?"
+        },
+        {
+          "id": "directions-p05",
+          "tr": "Haritada gösterebilir misiniz?",
+          "en": "Could you show me on the map?"
+        },
+        {
+          "id": "directions-p06",
+          "tr": "Bu yol …’e gidiyor mu?",
+          "en": "Is this the way to …?"
+        },
+        {
+          "id": "directions-p07",
+          "tr": "Kayboldum.",
+          "en": "I'm lost."
+        },
+        {
+          "id": "directions-p08",
+          "tr": "Burası neresi?",
+          "en": "Where are we now?"
+        },
+        {
+          "id": "directions-p09",
+          "tr": "Yakında bir market var mı?",
+          "en": "Is there a supermarket nearby?"
+        },
+        {
+          "id": "directions-p10",
+          "tr": "Sola mı, sağa mı?",
+          "en": "Left or right?"
+        }
+      ],
+      "words": [
+        {
+          "id": "directions-w01",
+          "tr": "sağ",
+          "en": "right"
+        },
+        {
+          "id": "directions-w02",
+          "tr": "sol",
+          "en": "left"
+        },
+        {
+          "id": "directions-w03",
+          "tr": "düz git",
+          "en": "go straight on"
+        },
+        {
+          "id": "directions-w04",
+          "tr": "köşe",
+          "en": "corner"
+        },
+        {
+          "id": "directions-w05",
+          "tr": "karşısı",
+          "en": "opposite"
+        },
+        {
+          "id": "directions-w06",
+          "tr": "yakın",
+          "en": "near"
+        },
+        {
+          "id": "directions-w07",
+          "tr": "uzak",
+          "en": "far"
+        },
+        {
+          "id": "directions-w08",
+          "tr": "harita",
+          "en": "map"
+        }
+      ]
+    },
+    {
+      "id": "beach",
+      "title": "Plaj, havuz ve turlar",
+      "icon": "sun",
+      "tone": "amber",
+      "phrases": [
+        {
+          "id": "beach-p01",
+          "tr": "Şezlong ne kadar?",
+          "en": "How much is a sunbed?"
+        },
+        {
+          "id": "beach-p02",
+          "tr": "Bu şezlong boş mu?",
+          "en": "Is this sunbed free?"
+        },
+        {
+          "id": "beach-p03",
+          "tr": "Havluları nereden alıyoruz?",
+          "en": "Where can we get towels?"
+        },
+        {
+          "id": "beach-p04",
+          "tr": "Burada yüzmek güvenli mi?",
+          "en": "Is it safe to swim here?"
+        },
+        {
+          "id": "beach-p05",
+          "tr": "Havuz saat kaçta kapanıyor?",
+          "en": "What time does the pool close?"
+        },
+        {
+          "id": "beach-p06",
+          "tr": "Tur saat kaçta başlıyor?",
+          "en": "What time does the tour start?"
+        },
+        {
+          "id": "beach-p07",
+          "tr": "Bizi otelden alıyor musunuz?",
+          "en": "Do you pick us up from the hotel?"
+        },
+        {
+          "id": "beach-p08",
+          "tr": "Öğle yemeği fiyata dahil mi?",
+          "en": "Is lunch included?"
+        },
+        {
+          "id": "beach-p09",
+          "tr": "Çocuklar için uygun mu?",
+          "en": "Is it suitable for children?"
+        },
+        {
+          "id": "beach-p10",
+          "tr": "İki yetişkin, iki çocuk.",
+          "en": "Two adults and two children."
+        },
+        {
+          "id": "beach-p11",
+          "tr": "Şnorkel takımı kiralamak istiyoruz.",
+          "en": "We'd like to hire snorkelling gear."
+        },
+        {
+          "id": "beach-p12",
+          "tr": "Saat kaçta dönüyoruz?",
+          "en": "What time do we get back?"
+        },
+        {
+          "id": "beach-p13",
+          "tr": "Fotoğrafımızı çeker misiniz?",
+          "en": "Could you take a photo of us, please?"
+        }
+      ],
+      "words": [
+        {
+          "id": "beach-w01",
+          "tr": "şezlong",
+          "en": "sunbed"
+        },
+        {
+          "id": "beach-w02",
+          "tr": "şemsiye",
+          "en": "parasol",
+          "note": "Plaj şemsiyesi; “umbrella” da denir: “ambrelı”"
+        },
+        {
+          "id": "beach-w03",
+          "tr": "güneş kremi",
+          "en": "sun cream",
+          "note": "ABD’de: sunscreen"
+        },
+        {
+          "id": "beach-w04",
+          "tr": "havuz",
+          "en": "pool"
+        },
+        {
+          "id": "beach-w05",
+          "tr": "dalga",
+          "en": "wave"
+        },
+        {
+          "id": "beach-w06",
+          "tr": "tur",
+          "en": "tour"
+        },
+        {
+          "id": "beach-w07",
+          "tr": "rehber",
+          "en": "guide"
+        },
+        {
+          "id": "beach-w08",
+          "tr": "can yeleği",
+          "en": "life jacket"
+        }
+      ]
+    },
+    {
+      "id": "money",
+      "title": "Saat ve para",
+      "icon": "clock",
+      "tone": "neutral",
+      "phrases": [
+        {
+          "id": "money-p01",
+          "tr": "Saat kaç?",
+          "en": "What time is it?"
+        },
+        {
+          "id": "money-p02",
+          "tr": "Saat kaçta açılıyor?",
+          "en": "What time does it open?"
+        },
+        {
+          "id": "money-p03",
+          "tr": "Saat kaçta kapanıyor?",
+          "en": "What time does it close?"
+        },
+        {
+          "id": "money-p04",
+          "tr": "Nerede para bozdurabilirim?",
+          "en": "Where can I change money?"
+        },
+        {
+          "id": "money-p05",
+          "tr": "Kur ne kadar?",
+          "en": "What's the exchange rate?"
+        },
+        {
+          "id": "money-p06",
+          "tr": "En yakın ATM nerede?",
+          "en": "Where is the nearest cash machine?",
+          "note": "ATM de denir: “ey-ti-em”"
+        },
+        {
+          "id": "money-p07",
+          "tr": "Dolar alıyor musunuz?",
+          "en": "Do you take dollars?"
+        },
+        {
+          "id": "money-p08",
+          "tr": "Euro alıyor musunuz?",
+          "en": "Do you take euros?"
+        },
+        {
+          "id": "money-p09",
+          "tr": "Bozuk paranız var mı?",
+          "en": "Do you have any change?"
+        },
+        {
+          "id": "money-p10",
+          "tr": "Üstü kalsın.",
+          "en": "Keep the change."
+        }
+      ],
+      "words": [
+        {
+          "id": "money-w01",
+          "tr": "nakit",
+          "en": "cash"
+        },
+        {
+          "id": "money-w02",
+          "tr": "bozuk para",
+          "en": "change"
+        },
+        {
+          "id": "money-w03",
+          "tr": "döviz bürosu",
+          "en": "bureau de change"
+        },
+        {
+          "id": "money-w04",
+          "tr": "kur",
+          "en": "exchange rate"
+        },
+        {
+          "id": "money-w05",
+          "tr": "sabah",
+          "en": "morning"
+        },
+        {
+          "id": "money-w06",
+          "tr": "öğleden sonra",
+          "en": "afternoon"
+        },
+        {
+          "id": "money-w07",
+          "tr": "akşam",
+          "en": "evening"
+        },
+        {
+          "id": "money-w08",
+          "tr": "saat (süre)",
+          "en": "hour"
+        }
+      ]
+    },
+    {
+      "id": "health",
+      "title": "Sağlık ve acil durum",
+      "icon": "cross",
+      "tone": "coral",
+      "phrases": [
+        {
+          "id": "health-p01",
+          "tr": "İmdat!",
+          "en": "Help!"
+        },
+        {
+          "id": "health-p02",
+          "tr": "Ambulans çağırın!",
+          "en": "Call an ambulance!"
+        },
+        {
+          "id": "health-p03",
+          "tr": "Polisi arayın!",
+          "en": "Call the police!"
+        },
+        {
+          "id": "health-p04",
+          "tr": "Doktora ihtiyacım var.",
+          "en": "I need a doctor."
+        },
+        {
+          "id": "health-p16",
+          "tr": "Çocuğum hasta.",
+          "en": "My child is ill.",
+          "note": "ABD’de: sick"
+        },
+        {
+          "id": "health-p05",
+          "tr": "En yakın hastane nerede?",
+          "en": "Where is the nearest hospital?"
+        },
+        {
+          "id": "health-p06",
+          "tr": "Eczane nerede?",
+          "en": "Where is the pharmacy?"
+        },
+        {
+          "id": "health-p07",
+          "tr": "Baş ağrısı için bir şeyiniz var mı?",
+          "en": "Do you have anything for a headache?"
+        },
+        {
+          "id": "health-p08",
+          "tr": "Burası acıyor.",
+          "en": "It hurts here."
+        },
+        {
+          "id": "health-p09",
+          "tr": "Ateşim var.",
+          "en": "I have a fever."
+        },
+        {
+          "id": "health-p10",
+          "tr": "Alerjim var.",
+          "en": "I have an allergy."
+        },
+        {
+          "id": "health-p11",
+          "tr": "Seyahat sigortam var.",
+          "en": "I have travel insurance."
+        },
+        {
+          "id": "health-p12",
+          "tr": "Pasaportumu kaybettim.",
+          "en": "I've lost my passport."
+        },
+        {
+          "id": "health-p13",
+          "tr": "Çantam çalındı.",
+          "en": "My bag has been stolen."
+        },
+        {
+          "id": "health-p14",
+          "tr": "Çocuğumu bulamıyorum.",
+          "en": "I can't find my child."
+        },
+        {
+          "id": "health-p15",
+          "tr": "Türkiye konsolosluğu nerede?",
+          "en": "Where is the Turkish consulate?"
+        }
+      ],
+      "words": [
+        {
+          "id": "health-w01",
+          "tr": "eczane",
+          "en": "pharmacy",
+          "note": "İngiltere’de: chemist"
+        },
+        {
+          "id": "health-w02",
+          "tr": "hastane",
+          "en": "hospital"
+        },
+        {
+          "id": "health-w03",
+          "tr": "doktor",
+          "en": "doctor"
+        },
+        {
+          "id": "health-w04",
+          "tr": "ilaç",
+          "en": "medicine"
+        },
+        {
+          "id": "health-w05",
+          "tr": "ağrı",
+          "en": "pain"
+        },
+        {
+          "id": "health-w06",
+          "tr": "ateş",
+          "en": "fever"
+        },
+        {
+          "id": "health-w07",
+          "tr": "sigorta",
+          "en": "insurance"
+        },
+        {
+          "id": "health-w08",
+          "tr": "polis",
+          "en": "police"
+        },
+        {
+          "id": "health-w09",
+          "tr": "acil servis",
+          "en": "emergency department",
+          "note": "Tabelalarda: Emergency. İngiltere’de: A&E; ABD’de: emergency room (ER)"
+        }
+      ]
+    }
+  ]
+}

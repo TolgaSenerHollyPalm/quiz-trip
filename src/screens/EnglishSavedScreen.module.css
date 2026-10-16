@@ -1,0 +1,14 @@
+/* Longer than a screen's usual one-line subtitle, so it reads a size up. */
+.intro {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+.empty {
+  padding: 4px 4px 0;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--color-muted);
+}

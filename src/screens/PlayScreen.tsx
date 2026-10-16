@@ -4,7 +4,7 @@ import { href, navigate, type Route } from '../app/router.ts'
 import { DIFFICULTY_POINTS, isCorrectChoice, roundPoints, turnPoints } from '../game/scoring.ts'
 import { answerTurn } from '../game/trip.ts'
 import type { CurrentRound, Player, RoundTurn, TurnAnswer } from '../game/types.ts'
-import { categoryLabel } from '../packs/collection.ts'
+import { ENGLISH_CATEGORY, quizCategoryLabel } from '../english/quiz.ts'
 import Avatar from 'kitshelf-ui/ui/Avatar.tsx'
 import { Button } from 'kitshelf-ui/ui/Button.tsx'
 import Countdown from '../ui/Countdown.tsx'
@@ -72,7 +72,7 @@ export default function PlayScreen({ tripId }: { tripId: string }) {
         }
       >
         <PlayerRow players={trip.players} playerId={feedback.turn.playerId} points={feedback.points} />
-        <QuestionCard turn={feedback.turn} categoryName={categoryLabel(collection, feedback.turn.question.category)} />
+        <QuestionCard turn={feedback.turn} categoryName={quizCategoryLabel(collection, feedback.turn.question.category)} />
         <Options turn={feedback.turn} answer={feedback.answer} />
         <Verdict turn={feedback.turn} answer={feedback.answer} />
       </GameScreen>
@@ -109,7 +109,7 @@ export default function PlayScreen({ tripId }: { tripId: string }) {
       round={round}
       turn={turn}
       players={trip.players}
-      categoryName={categoryLabel(collection, turn.question.category)}
+      categoryName={quizCategoryLabel(collection, turn.question.category)}
       onAnswer={answer}
     />
   )
@@ -192,7 +192,9 @@ function QuestionPhase({ theme, back, position, round, turn, players, categoryNa
           <li key={optionIndex}>
             <button type="button" className={styles.option} onClick={() => tap(position)}>
               <span className={styles.letter}>{OPTION_LETTERS[position]}</span>
-              <span className={styles.optionText}>{question.options[optionIndex]}</span>
+              <span className={styles.optionText} lang={question.category === ENGLISH_CATEGORY ? 'en' : undefined}>
+                {question.options[optionIndex]}
+              </span>
             </button>
           </li>
         ))}
@@ -252,7 +254,9 @@ function Options({ turn, answer }: { turn: RoundTurn; answer: TurnAnswer }) {
           <li key={optionIndex}>
             <div className={`${styles.option} ${state}`}>
               <span className={styles.letter}>{OPTION_LETTERS[position]}</span>
-              <span className={styles.optionText}>{question.options[optionIndex]}</span>
+              <span className={styles.optionText} lang={question.category === ENGLISH_CATEGORY ? 'en' : undefined}>
+                {question.options[optionIndex]}
+              </span>
               {right && <CheckIcon size={20} strokeWidth={2.6} />}
               {picked && !right && <CloseIcon size={18} strokeWidth={2.4} />}
               <span className={text.visuallyHidden}>{right ? ' (doğru cevap)' : picked ? ' (seçilen, yanlış)' : ''}</span>

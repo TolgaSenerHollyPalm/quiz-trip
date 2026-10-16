@@ -48,6 +48,14 @@ describe('validateTripkitData', () => {
     for (const data of cases) expect(validateTripkitData(data)).toBe(false)
   })
 
+  it('takes saved phrases and suggestions with their place, and refuses them in the wrong type', () => {
+    const suggestion = { id: 'eg-koshari', text: 'Koşari', note: 'Pirinç, makarna', source: 'EG', done: false }
+    expect(validateTripkitData({ trips: [trip({ savedEnglish: ['airport-1', 'food-3'], tastes: [suggestion] })], packs: [pack] })).toBe(true)
+    expect(validateTripkitData({ trips: [trip({ savedEnglish: 'x' as never })], packs: [pack] })).toBe(false)
+    expect(validateTripkitData({ trips: [trip({ savedEnglish: [7] as never })], packs: [pack] })).toBe(false)
+    expect(validateTripkitData({ trips: [trip({ tastes: [{ ...suggestion, source: 3 as never }] })], packs: [pack] })).toBe(false)
+  })
+
   it('takes a trip waiting for its pack or turning packs down, and refuses any other pack offer', () => {
     expect(validateTripkitData({ trips: [trip({ packOffer: 'waiting', packIds: [] })], packs: [] })).toBe(true)
     expect(validateTripkitData({ trips: [trip({ packOffer: 'declined' })], packs: [pack] })).toBe(true)
@@ -97,10 +105,31 @@ describe('summarizeTripkit', () => {
 })
 
 describe('migrateTripkit and latestChange', () => {
-  it('passes version 4 through and refuses one it does not know', () => {
+  it('passes version 5 through and refuses one it does not know', () => {
     const data = { trips: [], packs: [] }
-    expect(migrateTripkit(data, 4)).toBe(data)
-    expect(() => migrateTripkit(data, 3)).toThrow()
+    expect(migrateTripkit(data, 5)).toBe(data)
+    for (const from of [3, 6, 4.5]) expect(() => migrateTripkit(data, from)).toThrow()
+  })
+
+  it('fills the empty lists of a version 4 backup’s trips once, and nothing else', () => {
+    const empty = trip({ id: 't1', souvenirs: [], tastes: [] })
+    const own = trip({ id: 't2', tastes: [] })
+    const nowhere = trip({ id: 't3', country: undefined, souvenirs: [], tastes: [] })
+    const migrated = migrateTripkit({ trips: [empty, own, nowhere], packs: [pack] }, 4) as { trips: TripState[]; packs: Pack[] }
+
+    expect(migrated.packs).toEqual([pack])
+    expect([migrated.trips[0].souvenirs.length, migrated.trips[0].tastes.length]).toEqual([7, 4])
+    expect(migrated.trips[1].souvenirs).toEqual(own.souvenirs)
+    expect(migrated.trips[1].tastes.map((item) => item.source)).toEqual(['EG', 'EG', 'EG', 'EG'])
+    expect(migrated.trips[2]).toBe(nowhere)
+    expect(validateTripkitData(migrated)).toBe(true)
+  })
+
+  it('leaves a damaged version 4 backup for validation to refuse', () => {
+    expect(migrateTripkit('nope', 4)).toBe('nope')
+    const migrated = migrateTripkit({ trips: [{ id: 'x' }], packs: [] }, 4)
+    expect(migrated).toEqual({ trips: [{ id: 'x' }], packs: [] })
+    expect(validateTripkitData(migrated)).toBe(false)
   })
 
   it('takes the latest change of any trip, ignoring trips never stamped', () => {

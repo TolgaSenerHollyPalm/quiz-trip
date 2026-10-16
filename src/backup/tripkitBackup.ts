@@ -6,6 +6,8 @@ import { useAppData } from '../app/appData.ts'
 import type { TripState } from '../game/types.ts'
 import { validatePack } from '../packs/validate.ts'
 import { DATABASE_VERSION, restoreBackup } from '../storage/db.ts'
+import { fillPlaceLists } from '../storage/migrations.ts'
+import { BUNDLED_DESTINATIONS } from '../trips/destinations.ts'
 import type { TripkitData } from './restorePlan.ts'
 
 export const KIT = 'tripkit'
@@ -38,7 +40,7 @@ const unique = (ids: string[]) => new Set(ids).size === ids.length
 const isChecklistItem = (v: unknown) =>
   isRecord(v) && isString(v.id) && isString(v.text) && (v.group === 'pack' || v.group === 'do') && optional(v.source, isString) && typeof v.done === 'boolean'
 const isNoteItem = (v: unknown) =>
-  isRecord(v) && isString(v.id) && isString(v.text) && optional(v.note, isString) && typeof v.done === 'boolean'
+  isRecord(v) && isString(v.id) && isString(v.text) && optional(v.note, isString) && optional(v.source, isString) && typeof v.done === 'boolean'
 const isPlayer = (v: unknown) => isRecord(v) && isString(v.id) && isString(v.nickname)
 const isRound = (v: unknown) =>
   isRecord(v) && isString(v.id) && isString(v.playedAt) && isRecord(v.scores) && Object.values(v.scores).every(isNumber)
@@ -66,7 +68,8 @@ export function isTrip(v: unknown): v is TripState {
     listOf(v.rounds, isRound) &&
     listOf(v.predictions, isPrediction) &&
     optional(v.quizSettings, isRecord) &&
-    optional(v.currentRound, isCurrentRound)
+    optional(v.currentRound, isCurrentRound) &&
+    optional(v.savedEnglish, (saved) => listOf(saved, isString))
   )
 }
 
@@ -86,10 +89,21 @@ export function summarizeTripkit(data: TripkitData): CountLine[] {
   ]
 }
 
-/** Backups began with data version 4; a later version adds its step here, as db.ts does for stored trips. */
+/** Each takes a backup from its version to the next; anything unrecognisable is left for validation to refuse. */
+const BACKUP_STEPS: Record<number, (data: unknown) => unknown> = {
+  // Places gained suggestions: empty lists get them once, as stored trips do in db.ts.
+  4: (data) =>
+    isRecord(data) && Array.isArray(data.trips)
+      ? { ...data, trips: data.trips.map((trip) => (isTrip(trip) ? fillPlaceLists(trip, BUNDLED_DESTINATIONS) : trip)) }
+      : data,
+}
+
+/** Backups began with data version 4; a later version adds its step to BACKUP_STEPS, as db.ts does for stored trips. */
 export function migrateTripkit(data: unknown, from: number): unknown {
-  if (from === DATABASE_VERSION) return data
-  throw new Error(`No backup migration from data version ${from}`)
+  if (!Number.isInteger(from) || from < 4 || from > DATABASE_VERSION) throw new Error(`No backup migration from data version ${from}`)
+  let migrated = data
+  for (let version = from; version < DATABASE_VERSION; version += 1) migrated = BACKUP_STEPS[version](migrated)
+  return migrated
 }
 
 export function latestChange(trips: readonly TripState[]): string | undefined {

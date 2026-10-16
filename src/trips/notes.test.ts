@@ -45,6 +45,18 @@ describe('editNote', () => {
   it('keeps a ticked item ticked', () => {
     expect(editNote([{ ...spice, done: true }], 'b', { text: 'Baharat', note: '' })[0].done).toBe(true)
   })
+
+  it('makes a changed suggestion the player’s own', () => {
+    const suggestion: NoteItem = { id: 'eg-cotton', text: 'Mısır pamuğu', note: 'Havlu, nevresim, tişört', source: 'EG', done: false }
+    const [edited] = editNote([suggestion], 'eg-cotton', { text: 'Mısır pamuğu', note: 'Annem için havlu' })
+    expect(edited).toEqual({ id: 'eg-cotton', text: 'Mısır pamuğu', note: 'Annem için havlu', done: false })
+    expect('source' in edited).toBe(false)
+  })
+
+  it('leaves a suggestion saved without a change where it came from', () => {
+    const suggestion: NoteItem = { id: 'eg-cotton', text: 'Mısır pamuğu', note: 'Havlu, nevresim, tişört', source: 'EG', done: false }
+    expect(editNote([suggestion], 'eg-cotton', { text: ' Mısır pamuğu ', note: 'Havlu, nevresim, tişört' })[0]).toBe(suggestion)
+  })
 })
 
 describe('removeNote', () => {

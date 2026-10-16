@@ -5,15 +5,137 @@
       "code": "TR",
       "name": "Türkiye",
       "cities": [
-        { "id": "antalya", "name": "Antalya" },
-        { "id": "istanbul", "name": "İstanbul" },
-        { "id": "mardin", "name": "Mardin" }
+        {
+          "id": "antalya",
+          "name": "Antalya"
+        },
+        {
+          "id": "istanbul",
+          "name": "İstanbul"
+        },
+        {
+          "id": "mardin",
+          "name": "Mardin",
+          "souvenirs": [
+            {
+              "id": "mardin-telkari",
+              "text": "Telkari takı",
+              "note": "İnce gümüş tel işi; Gümüşçüler Çarşısı"
+            },
+            {
+              "id": "mardin-copper",
+              "text": "Bakır eşya",
+              "note": "Cezve, fincan, tepsi; Bakırcılar Çarşısı"
+            },
+            {
+              "id": "mardin-bittim",
+              "text": "Bıttım sabunu",
+              "note": "Menengiç yağından doğal sabun"
+            },
+            {
+              "id": "mardin-almond",
+              "text": "Badem şekeri",
+              "note": "Mavisi bitkisel boyadan; zamanla açılır"
+            },
+            {
+              "id": "mardin-menengic",
+              "text": "Menengiç kahvesi",
+              "note": "Mırradan yumuşak ve tatlımsı"
+            }
+          ],
+          "tastes": [
+            {
+              "id": "mardin-kaburga",
+              "text": "Kaburga dolması",
+              "note": "Kuzu kaburga; içi baharatlı iç pilav"
+            },
+            {
+              "id": "mardin-sembusek",
+              "text": "Sembusek",
+              "note": "Kıymalı, yarım ay biçiminde hamur işi"
+            },
+            {
+              "id": "mardin-harire",
+              "text": "Harire",
+              "note": "Üzüm pekmezli, cevizli tatlı"
+            },
+            {
+              "id": "mardin-mirra",
+              "text": "Mırra",
+              "note": "Küçük fincanda koyu ve acı kahve"
+            }
+          ]
+        }
       ]
     },
     {
       "code": "EG",
       "name": "Mısır",
-      "cities": [{ "id": "sharm-el-sheikh", "name": "Sharm el-Sheikh" }]
+      "souvenirs": [
+        {
+          "id": "eg-papyrus",
+          "text": "Papirüs resmi",
+          "note": "Gerçeği bükülünce çatlamaz, ışıkta lifleri görünür"
+        },
+        {
+          "id": "eg-cartouche",
+          "text": "Kartuş kolye",
+          "note": "Adın hiyerogliflerle yazılır; altın ya da gümüş"
+        },
+        {
+          "id": "eg-replica",
+          "text": "Antik Mısır replika figürü",
+          "note": "Nefertiti, Tutankamon, Bastet… Gerçek antika çıkarmak yasak"
+        },
+        {
+          "id": "eg-alabaster",
+          "text": "Kaymaktaşı vazo ya da kâse",
+          "note": "Gerçeğine ışık tutunca kehribar gibi parlar"
+        },
+        {
+          "id": "eg-cotton",
+          "text": "Mısır pamuğu",
+          "note": "Havlu, nevresim, tişört"
+        },
+        {
+          "id": "eg-spices",
+          "text": "Baharat ve karkade",
+          "note": "Kimyon, dukka, kurutulmuş hibiskus; sahte safrana dikkat"
+        },
+        {
+          "id": "eg-perfume",
+          "text": "Parfüm yağı (esans)",
+          "note": "Alkolsüz; seyreltilmiş olanlarına dikkat"
+        }
+      ],
+      "tastes": [
+        {
+          "id": "eg-koshari",
+          "text": "Koşari",
+          "note": "Pirinç, makarna, mercimek, nohut ve domates sosu"
+        },
+        {
+          "id": "eg-ful",
+          "text": "Ful medames",
+          "note": "Bakla yemeği; otel kahvaltılarında da bulunur"
+        },
+        {
+          "id": "eg-om-ali",
+          "text": "Ümmü Ali (Om Ali)",
+          "note": "Sütlü, kuruyemişli, sıcak fırın tatlısı"
+        },
+        {
+          "id": "eg-karkade",
+          "text": "Karkade",
+          "note": "Hibiskus çiçeğinden kırmızı içecek; sıcak ya da soğuk"
+        }
+      ],
+      "cities": [
+        {
+          "id": "sharm-el-sheikh",
+          "name": "Sharm el-Sheikh"
+        }
+      ]
     }
   ]
 }

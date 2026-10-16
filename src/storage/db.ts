@@ -4,8 +4,10 @@ import { planRestore, type TripkitData } from '../backup/restorePlan.ts'
 import type { TripState } from '../game/types.ts'
 import type { PackStore } from '../packs/sync.ts'
 import type { Pack } from '../packs/types.ts'
+import { BUNDLED_DESTINATIONS } from '../trips/destinations.ts'
 import {
   addNoteLists,
+  fillPlaceLists,
   migrateToMultiPack,
   migrateTrip,
   type LegacyTrip,
@@ -20,7 +22,10 @@ interface QuizTripDB extends DBSchema {
 
 export const DATABASE_NAME = 'quiz-trip'
 // Also a backup's dataVersion: raising it needs the same migrations in migrateTripkit (backup/tripkitBackup.ts).
-export const DATABASE_VERSION = 4
+export const DATABASE_VERSION = 5
+
+/** The last steps every older trip takes: the two lists of its own, filled for its place while empty. */
+const completeTrip = (trip: Parameters<typeof addNoteLists>[0]) => fillPlaceLists(addNoteLists(trip), BUNDLED_DESTINATIONS)
 
 let connection: Promise<IDBPDatabase<QuizTripDB>> | undefined
 let waitingForAnotherTab = false
@@ -41,7 +46,7 @@ function database() {
         const trips = db.createObjectStore('trips', { keyPath: 'id' })
         for (const trip of legacy) {
           const pack = packs.find((candidate) => candidate.id === trip.packId)
-          trips.put(addNoteLists(migrateToMultiPack(migrateTrip(trip, pack?.title), pack)))
+          trips.put(completeTrip(migrateToMultiPack(migrateTrip(trip, pack?.title), pack)))
         }
       }
       if (oldVersion === 2) {
@@ -50,13 +55,21 @@ function database() {
         const packs = await tx.objectStore('packs').getAll()
         const stored = (await store.getAll()) as unknown as SinglePackTrip[]
         for (const trip of stored) {
-          store.put(addNoteLists(migrateToMultiPack(trip, packs.find((pack) => pack.id === trip.packId))))
+          store.put(completeTrip(migrateToMultiPack(trip, packs.find((pack) => pack.id === trip.packId))))
         }
       }
       if (oldVersion === 3) {
         // Trips gained two lists of their own: things to buy and things to taste before coming home.
         const store = tx.objectStore('trips')
-        for (const trip of (await store.getAll()) as unknown as TripBeforeNotes[]) store.put(addNoteLists(trip))
+        for (const trip of (await store.getAll()) as unknown as TripBeforeNotes[]) store.put(completeTrip(trip))
+      }
+      if (oldVersion === 4) {
+        // Places gained suggestions: trips made before get them once, in the lists still empty.
+        const store = tx.objectStore('trips')
+        for (const trip of await store.getAll()) {
+          const filled = fillPlaceLists(trip, BUNDLED_DESTINATIONS)
+          if (filled !== trip) store.put(filled)
+        }
       }
     },
     // An upgrade cannot run while an older copy of the app still holds the database open.

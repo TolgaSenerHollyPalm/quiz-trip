@@ -42,6 +42,8 @@ export default function TripScreen({ tripId }: { tripId: string }) {
     trip.players.length > 0 || trip.rounds.length > 0 || trip.predictions.length > 0 || Object.keys(trip.params).length > 0
   const quiz: Route =
     trip.players.length === 0 ? { screen: 'players', tripId, next: 'quiz' } : { screen: 'quiz', tripId }
+  // The packs' own questions: travel English joins the quiz but is counted on its own row.
+  const packQuestions = collection.packs.reduce((sum, pack) => sum + pack.questions.length, 0)
   // Packs this trip alone plays with; they are deleted with it rather than left behind.
   const orphans = orphanPacks(trip, trips)
 
@@ -93,7 +95,7 @@ export default function TripScreen({ tripId }: { tripId: string }) {
           <div className={styles.sectionHead}>
             <h2 className={text.sectionTitle}>Oyunlar</h2>
             <span className={styles.sectionMeta}>
-              {collection.questions.length} soru · {trip.players.length} oyuncu
+              {packQuestions} soru · {trip.players.length} oyuncu
             </span>
           </div>
 

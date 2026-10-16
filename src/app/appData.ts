@@ -1,4 +1,5 @@
 import { createContext, useContext, useMemo } from 'react'
+import { withEnglish } from '../english/quiz.ts'
 import type { TripState } from '../game/types.ts'
 import { collectPacks, NO_PACKS } from '../packs/collection.ts'
 import type { SyncResult } from '../packs/sync.ts'
@@ -51,10 +52,11 @@ export function useTrip(tripId: string) {
   const { packs, trips, saveTrip, deleteTrip } = useAppData()
   const trip = trips.find((candidate) => candidate.id === tripId)
   const packIds = trip?.packIds
-  // packIds keeps its identity while the trip is saved during a round, so the pool is built once.
+  const country = trip?.country
+  // packIds keeps its identity and country is a string while the trip is saved during a round, so the pool is built once.
   const collection = useMemo(
-    () => (packIds ? collectPacks(packsOfTrip(packs, { packIds })) : NO_PACKS),
-    [packs, packIds],
+    () => (packIds ? withEnglish(collectPacks(packsOfTrip(packs, { packIds })), { country }, Math.random) : NO_PACKS),
+    [packs, packIds, country],
   )
   return { trip, collection, saveTrip, deleteTrip }
 }

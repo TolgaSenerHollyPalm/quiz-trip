@@ -1,7 +1,9 @@
 import type { ReactNode } from 'react'
 import { href } from '../app/router.ts'
+import { PHRASE_COUNT } from '../english/content.ts'
+import { isAbroad } from '../english/english.ts'
 import type { TripState } from '../game/types.ts'
-import { BagIcon, ForkKnifeIcon, SuitcaseIcon } from '../ui/icons.tsx'
+import { BagIcon, ChatIcon, ForkKnifeIcon, SuitcaseIcon } from '../ui/icons.tsx'
 import { LinkRow, ListCard } from 'kitshelf-ui/ui/ListCard.tsx'
 import ProgressBar from 'kitshelf-ui/ui/ProgressBar.tsx'
 import Tile from 'kitshelf-ui/ui/Tile.tsx'
@@ -10,7 +12,7 @@ import type { Route } from '../app/router.ts'
 import text from 'kitshelf-ui/ui/text.module.css'
 import styles from './TripLists.module.css'
 
-/** The trip's three lists, each with how much of it is done. */
+/** The trip's three lists, each with how much of it is done; abroad, travel English too. */
 export default function TripLists({ trip }: { trip: TripState }) {
   const tripId = trip.id
   const row = (to: Route, title: string, tone: Tone, icon: ReactNode, items: { done: boolean }[]) => {
@@ -33,6 +35,14 @@ export default function TripLists({ trip }: { trip: TripState }) {
         {row({ screen: 'checklist', tripId }, 'Hazırlık listesi', 'teal', <SuitcaseIcon />, trip.checklist)}
         {row({ screen: 'souvenirs', tripId }, 'Almadan gelme', 'coral', <BagIcon />, trip.souvenirs)}
         {row({ screen: 'tastes', tripId }, 'Tatmadan gelme', 'amber', <ForkKnifeIcon />, trip.tastes)}
+        {isAbroad(trip) && (
+          <LinkRow
+            to={href({ screen: 'english', tripId })}
+            tile={<Tile tone="neutral"><ChatIcon lines /></Tile>}
+            title="Seyahat İngilizcesi"
+            meta={`${PHRASE_COUNT} cümle`}
+          />
+        )}
       </ListCard>
     </section>
   )

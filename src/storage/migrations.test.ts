@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { addNoteLists, migrateToMultiPack, migrateTrip, type LegacyTrip, type SinglePackTrip } from './migrations.ts'
+import { BUNDLED_DESTINATIONS } from '../trips/destinations.ts'
+import { addNoteLists, fillPlaceLists, migrateToMultiPack, migrateTrip, type LegacyTrip, type SinglePackTrip } from './migrations.ts'
 
 const legacy: LegacyTrip = {
   packId: 'eg-sharm-el-sheikh',
@@ -117,5 +118,40 @@ describe('addNoteLists', () => {
     expect(trip.souvenirs).toEqual([])
     expect(trip.tastes).toEqual([])
     expect(trip.checklist).toEqual([])
+  })
+})
+
+describe('fillPlaceLists', () => {
+  const stored = addNoteLists(migrateToMultiPack(singlePack, { country: 'EG', cityId: 'sharm-el-sheikh' }))
+
+  it('fills both empty lists of a trip with its place’s suggestions, unticked', () => {
+    const trip = fillPlaceLists(stored, BUNDLED_DESTINATIONS)
+    expect([trip.souvenirs.length, trip.tastes.length]).toEqual([7, 4])
+    expect([...trip.souvenirs, ...trip.tastes].every((item) => item.source === 'EG' && !item.done)).toBe(true)
+    expect({ ...trip, souvenirs: [], tastes: [] }).toEqual(stored)
+  })
+
+  it('never touches a list that has anything in it', () => {
+    const souvenirs = [{ id: 's1', text: 'Lokum', done: false }]
+    const trip = fillPlaceLists({ ...stored, souvenirs }, BUNDLED_DESTINATIONS)
+    expect(trip.souvenirs).toBe(souvenirs)
+    expect(trip.tastes).toHaveLength(4)
+  })
+
+  it('leaves a trip without a country, or with nothing to suggest, as it is', () => {
+    const { country: _country, cityId: _cityId, ...nowhere } = stored
+    expect(fillPlaceLists(nowhere, BUNDLED_DESTINATIONS)).toBe(nowhere)
+    const antalya = { ...stored, country: 'TR', cityId: 'antalya' }
+    expect(fillPlaceLists(antalya, BUNDLED_DESTINATIONS)).toBe(antalya)
+  })
+
+  it('fills a trip carried over from the first version, its place taken from the pack', () => {
+    const trip = fillPlaceLists(addNoteLists(migrateToMultiPack(migrateTrip(legacy, 'Mısır'), { country: 'EG' })), BUNDLED_DESTINATIONS)
+    expect([trip.souvenirs.length, trip.tastes.length]).toEqual([7, 4])
+  })
+
+  it('changes nothing the second time', () => {
+    const once = fillPlaceLists(stored, BUNDLED_DESTINATIONS)
+    expect(fillPlaceLists(once, BUNDLED_DESTINATIONS)).toBe(once)
   })
 })

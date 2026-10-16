@@ -5,7 +5,8 @@ import { closeDatabase, DATABASE_NAME } from './db.ts'
 
 /** The keys this app owns; the origin may one day host another app, whose keys are none of our business. */
 export const OWN_KEYS = [
-  'tripkit-destinations',
+  'tripkit-destinations-2',
+  'tripkit-destinations', // the cache before places had suggestions, in case the app never cleared it
   'ios-install-hint-dismissed',
   'tripkit-appearance',
   'offline-ready-shown',

@@ -28,8 +28,26 @@ describe('routes', () => {
     { screen: 'guess', tripId: TRIP, predictionId: 'p1' },
     { screen: 'guess', tripId: TRIP, predictionId: 'p1', playerId: 'a' },
     { screen: 'prediction-result', tripId: TRIP, predictionId: 'p1' },
+    { screen: 'english', tripId: TRIP },
+    { screen: 'english', tripId: TRIP, q: 'bilet' },
+    { screen: 'english-topic', tripId: TRIP, topicId: 'airport' },
+    { screen: 'english-topic', tripId: TRIP, topicId: 'airport', tab: 'words' },
+    { screen: 'english-saved', tripId: TRIP },
+    { screen: 'english-show', tripId: TRIP, itemId: 'airport-p01', from: 'topic' },
+    { screen: 'english-show', tripId: TRIP, itemId: 'airport-p01', from: 'saved' },
+    { screen: 'english-show', tripId: TRIP, itemId: 'airport-p01', from: 'search', q: 'gidiş dönüş' },
   ])('survive a round trip through the URL: %o', (route) => {
     expect(parseRoute(href(route))).toEqual(route)
+  })
+
+  it('writes the travel English addresses the plan names', () => {
+    expect(href({ screen: 'english', tripId: TRIP, q: 'bilet' })).toBe(`#/trip/${TRIP}/english?q=bilet`)
+    expect(href({ screen: 'english-topic', tripId: TRIP, topicId: 'airport', tab: 'words' })).toBe(`#/trip/${TRIP}/english/topic/airport?tab=words`)
+    expect(href({ screen: 'english-show', tripId: TRIP, itemId: 'x', from: 'search', q: 'bilet' })).toBe(`#/trip/${TRIP}/english/show/x?from=search&q=bilet`)
+    // An empty search is no search, and an unknown list falls back to the topic's.
+    expect(href({ screen: 'english', tripId: TRIP, q: '' })).toBe(`#/trip/${TRIP}/english`)
+    expect(parseRoute(`#/trip/${TRIP}/english/show/x?from=elsewhere`)).toEqual({ screen: 'english-show', tripId: TRIP, itemId: 'x', from: 'topic' })
+    expect(parseRoute(`#/trip/${TRIP}/english/topic`)).toEqual({ screen: 'english', tripId: TRIP })
   })
 
   it('falls back to the home screen for unknown or broken addresses', () => {

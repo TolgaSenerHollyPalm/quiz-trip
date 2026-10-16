@@ -1,13 +1,15 @@
 import { useState, type ComponentType } from 'react'
 import { href } from '../app/router.ts'
-import { useTrip } from '../app/appData.ts'
+import { useAppData, useTrip } from '../app/appData.ts'
 import { addNote, editNote, removeNote, toggleNote } from '../trips/notes.ts'
+import { applyPlaceSuggestions, placeNames, placeSuggestions } from '../trips/placeSuggestions.ts'
 import type { NoteItem } from '../trips/types.ts'
 import AddField from 'kitshelf-ui/ui/AddField.tsx'
 import { Button } from 'kitshelf-ui/ui/Button.tsx'
 import CheckButton from 'kitshelf-ui/ui/CheckButton.tsx'
 import DeleteButton from 'kitshelf-ui/ui/DeleteButton.tsx'
 import Disclosure from 'kitshelf-ui/ui/Disclosure.tsx'
+import { RefreshIcon } from 'kitshelf-ui/ui/icons.tsx'
 import { BagIcon, ForkKnifeIcon } from '../ui/icons.tsx'
 import { ItemRow, ListCard } from 'kitshelf-ui/ui/ListCard.tsx'
 import Missing from 'kitshelf-ui/ui/Missing.tsx'
@@ -60,8 +62,9 @@ const NOTE_LISTS: Record<NoteList, ListWords> = {
   },
 }
 
-/** A list the user writes alone: nothing is suggested, and ticked items move down under their own heading. */
+/** A list the trip's place may fill with suggestions and the player adds to; ticked items move down under their own heading. */
 export default function NoteListScreen({ tripId, list }: { tripId: string; list: NoteList }) {
+  const { destinations } = useAppData()
   const { trip, saveTrip } = useTrip(tripId)
   const [editing, setEditing] = useState(false)
   const [openId, setOpenId] = useState<string>()
@@ -73,6 +76,7 @@ export default function NoteListScreen({ tripId, list }: { tripId: string; list:
   const pending = items.filter((item) => !item.done)
   const done = items.filter((item) => item.done)
   const inEditMode = editing && items.length > 0
+  const suggested = placeSuggestions(destinations, trip, list)
 
   const row = (item: NoteItem) => (
     <ItemRow
@@ -133,6 +137,23 @@ export default function NoteListScreen({ tripId, list }: { tripId: string; list:
           <Disclosure title={`${words.doneTitle} · ${done.length}`}>
             <ListCard>{done.map(row)}</ListCard>
           </Disclosure>
+        </div>
+      )}
+
+      {suggested.length > 0 && (
+        <div className={styles.suggestions}>
+          <Button
+            variant={items.length === 0 ? 'primary' : 'secondary'}
+            inline
+            onClick={() => save(applyPlaceSuggestions(items, suggested))}
+          >
+            <RefreshIcon />
+            {items.length === 0 ? 'Önerilen listeyi getir' : 'Önerileri yenile'}
+          </Button>
+          <p className={styles.explain}>
+            Öneriler gidilen yere göre gelir: {placeNames(destinations, suggested).join(' ve ')}. İşaretlediğin ve kendi
+            yazdığın maddeler yerinde kalır.
+          </p>
         </div>
       )}
 

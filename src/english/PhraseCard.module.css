@@ -1,0 +1,88 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.card {
+  display: flex;
+  align-items: stretch;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+}
+
+.card:has(.open:active) {
+  background: var(--color-bg);
+}
+
+@media (hover: hover) {
+  .card:has(.open:hover) {
+    background: var(--color-bg);
+  }
+}
+
+/* Everything but the star opens the item large. */
+.open {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+  padding: 14px 4px 14px 16px;
+  border-radius: calc(var(--radius) - 1px) 0 0 calc(var(--radius) - 1px);
+  color: var(--color-text);
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+
+.tr {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-muted);
+}
+
+.en {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.note {
+  margin-top: 4px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--color-amber-text);
+}
+
+.starSlot {
+  display: flex;
+  flex: none;
+  align-items: center;
+  padding: 6px 6px 6px 0;
+}
+
+.star {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: var(--tap-size);
+  height: var(--tap-size);
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--color-chevron);
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.star[aria-pressed='true'] {
+  color: var(--color-amber-strong);
+}
+
+.star:active {
+  background: var(--color-sunken);
+}

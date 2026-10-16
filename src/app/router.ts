@@ -22,6 +22,14 @@ export type Route =
   | { screen: 'prediction'; tripId: string; predictionId: string }
   | { screen: 'guess'; tripId: string; predictionId: string; playerId?: string } // playerId: change one guess
   | { screen: 'prediction-result'; tripId: string; predictionId: string }
+  | { screen: 'english'; tripId: string; q?: string } // Seyahat İngilizcesi; q: what is being searched
+  | { screen: 'english-topic'; tripId: string; topicId: string; tab?: 'words' }
+  | { screen: 'english-saved'; tripId: string }
+  | { screen: 'english-show'; tripId: string; itemId: string; from: EnglishFrom; q?: string }
+
+/** The list "Büyük göster" steps through: a topic's phrases, the saved ones, or a search's results. */
+export type EnglishFrom = 'topic' | 'saved' | 'search'
+const ENGLISH_FROM: readonly EnglishFrom[] = ['topic', 'saved', 'search']
 
 const query = (params: Record<string, string | undefined>) => {
   const entries = Object.entries(params).filter((entry): entry is [string, string] => entry[1] !== undefined)
@@ -58,6 +66,14 @@ export function href(route: Route): string {
       return `${trip}/predictions`
     case 'prediction-new':
       return `${trip}/predictions/new`
+    case 'english':
+      return `${trip}/english${query({ q: route.q || undefined })}`
+    case 'english-topic':
+      return `${trip}/english/topic/${encodeURIComponent(route.topicId)}${query({ tab: route.tab })}`
+    case 'english-saved':
+      return `${trip}/english/saved`
+    case 'english-show':
+      return `${trip}/english/show/${encodeURIComponent(route.itemId)}${query({ from: route.from, q: route.q || undefined })}`
   }
 
   const prediction = `${trip}/predictions/${encodeURIComponent(route.predictionId)}`
@@ -109,9 +125,24 @@ export function parseRoute(hash: string): Route {
     }
     case 'predictions':
       return parsePredictionRoute(tripId, id, action, params.get('player'))
+    case 'english':
+      return parseEnglishRoute(tripId, id, action, params)
     default:
       return { screen: 'trip', tripId }
   }
+}
+
+function parseEnglishRoute(tripId: string, id: string | undefined, action: string | undefined, params: URLSearchParams): Route {
+  const q = params.get('q') || undefined
+  if (id === 'topic' && action) {
+    return params.get('tab') === 'words' ? { screen: 'english-topic', tripId, topicId: action, tab: 'words' } : { screen: 'english-topic', tripId, topicId: action }
+  }
+  if (id === 'saved') return { screen: 'english-saved', tripId }
+  if (id === 'show' && action) {
+    const from = ENGLISH_FROM.find((value) => value === params.get('from')) ?? 'topic'
+    return { screen: 'english-show', tripId, itemId: action, from, ...(q && { q }) }
+  }
+  return q ? { screen: 'english', tripId, q } : { screen: 'english', tripId }
 }
 
 function parsePredictionRoute(tripId: string, id?: string, action?: string, playerId?: string | null): Route {

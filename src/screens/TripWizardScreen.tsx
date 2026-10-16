@@ -8,6 +8,7 @@ import { fetchPackList, type IndexEntry } from '../packs/sync.ts'
 import { applySuggestions } from '../trips/checklist.ts'
 import { destinationName, findCountry } from '../trips/destinations.ts'
 import { defaultPacks, matchesDestination, packOfferOnCreate, shortPackTitle } from '../trips/packMatch.ts'
+import { applyPlaceLists } from '../trips/placeSuggestions.ts'
 import { todayIso } from '../trips/dates.ts'
 import { TRANSPORTS, TRIP_KINDS, type Transport, type TripKind } from '../trips/types.ts'
 import { Button } from 'kitshelf-ui/ui/Button.tsx'
@@ -133,7 +134,7 @@ export default function TripWizardScreen() {
       ...(transport && { transport }),
       ...(kind && { kind }),
     }
-    saveTrip({ ...trip, checklist: applySuggestions(trip) })
+    saveTrip({ ...trip, checklist: applySuggestions(trip), ...applyPlaceLists(trip, destinations) })
     if (later.length > 0) void addPacks(trip.id, later)
     setBusy(false)
     navigate({ screen: 'trip', tripId: trip.id }, { replace: true })
