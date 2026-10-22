@@ -53,6 +53,9 @@ describe('validateTripkitData', () => {
     expect(validateTripkitData({ trips: [trip({ savedEnglish: ['airport-1', 'food-3'], tastes: [suggestion] })], packs: [pack] })).toBe(true)
     expect(validateTripkitData({ trips: [trip({ savedEnglish: 'x' as never })], packs: [pack] })).toBe(false)
     expect(validateTripkitData({ trips: [trip({ savedEnglish: [7] as never })], packs: [pack] })).toBe(false)
+    expect(validateTripkitData({ trips: [trip({ dismissed: { checklist: ['common-id'], souvenirs: ['eg-papyrus'] } })], packs: [pack] })).toBe(true)
+    expect(validateTripkitData({ trips: [trip({ dismissed: { elsewhere: ['x'] } as never })], packs: [pack] })).toBe(false)
+    expect(validateTripkitData({ trips: [trip({ dismissed: { tastes: 'eg-ful' } as never })], packs: [pack] })).toBe(false)
     expect(validateTripkitData({ trips: [trip({ tastes: [{ ...suggestion, source: 3 as never }] })], packs: [pack] })).toBe(false)
   })
 

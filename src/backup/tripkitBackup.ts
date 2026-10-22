@@ -41,6 +41,8 @@ const isChecklistItem = (v: unknown) =>
   isRecord(v) && isString(v.id) && isString(v.text) && (v.group === 'pack' || v.group === 'do') && optional(v.source, isString) && typeof v.done === 'boolean'
 const isNoteItem = (v: unknown) =>
   isRecord(v) && isString(v.id) && isString(v.text) && optional(v.note, isString) && optional(v.source, isString) && typeof v.done === 'boolean'
+const isDismissed = (v: unknown) =>
+  isRecord(v) && Object.entries(v).every(([list, ids]) => ['checklist', 'souvenirs', 'tastes'].includes(list) && listOf(ids, isString))
 const isPlayer = (v: unknown) => isRecord(v) && isString(v.id) && isString(v.nickname)
 const isRound = (v: unknown) =>
   isRecord(v) && isString(v.id) && isString(v.playedAt) && isRecord(v.scores) && Object.values(v.scores).every(isNumber)
@@ -69,7 +71,8 @@ export function isTrip(v: unknown): v is TripState {
     listOf(v.predictions, isPrediction) &&
     optional(v.quizSettings, isRecord) &&
     optional(v.currentRound, isCurrentRound) &&
-    optional(v.savedEnglish, (saved) => listOf(saved, isString))
+    optional(v.savedEnglish, (saved) => listOf(saved, isString)) &&
+    optional(v.dismissed, isDismissed)
   )
 }
 

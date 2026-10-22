@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { addNote, editNote, removeNote, toggleNote } from './notes.ts'
+import { addNote, editNote, toggleNote } from './notes.ts'
 import type { NoteItem } from './types.ts'
 
 const papyrus: NoteItem = { id: 'a', text: 'Papirüs tablo', note: 'Eski Pazar’da bakılacak', done: false }
@@ -56,11 +56,5 @@ describe('editNote', () => {
   it('leaves a suggestion saved without a change where it came from', () => {
     const suggestion: NoteItem = { id: 'eg-cotton', text: 'Mısır pamuğu', note: 'Havlu, nevresim, tişört', source: 'EG', done: false }
     expect(editNote([suggestion], 'eg-cotton', { text: ' Mısır pamuğu ', note: 'Havlu, nevresim, tişört' })[0]).toBe(suggestion)
-  })
-})
-
-describe('removeNote', () => {
-  it('removes only the given item', () => {
-    expect(removeNote([papyrus, spice], 'a')).toEqual([spice])
   })
 })

@@ -112,7 +112,7 @@ const BY_KIND: Partial<Record<TripKind, Suggestion[]>> = {
   ],
 }
 
-type TripChoices = Pick<TripState, 'checklist' | 'transport' | 'kind'>
+type TripChoices = Pick<TripState, 'checklist' | 'transport' | 'kind' | 'dismissed'>
 
 /** The suggestion lists that apply to this trip, in the order they are added: common, vehicle, holiday. */
 function activeLists(trip: Pick<TripChoices, 'transport' | 'kind'>): [string, Suggestion[]][] {
@@ -133,7 +133,8 @@ export function applySuggestions(trip: TripChoices): ChecklistItem[] {
   const lists = activeLists(trip)
   const active = new Set(lists.map(([source]) => source))
   const kept = trip.checklist.filter((item) => item.source === undefined || item.done || active.has(item.source))
-  const known = new Set(kept.map((item) => item.id))
+  // A suggestion the players deleted stays deleted.
+  const known = new Set([...kept.map((item) => item.id), ...(trip.dismissed?.checklist ?? [])])
   const added = lists.flatMap(([source, list]) =>
     list.filter((suggestion) => !known.has(suggestion.id)).map((suggestion) => ({ ...suggestion, source, done: false })),
   )

@@ -2,6 +2,7 @@ import { useId, useState } from 'react'
 import { href } from '../app/router.ts'
 import { useTrip } from '../app/appData.ts'
 import { applySuggestions } from '../trips/checklist.ts'
+import { deleteItem, forgetDismissed } from '../trips/dismissed.ts'
 import type { ChecklistItem } from '../trips/types.ts'
 import AddField from 'kitshelf-ui/ui/AddField.tsx'
 import { Button } from 'kitshelf-ui/ui/Button.tsx'
@@ -9,12 +10,14 @@ import CheckButton from 'kitshelf-ui/ui/CheckButton.tsx'
 import DeleteButton from 'kitshelf-ui/ui/DeleteButton.tsx'
 import Disclosure from 'kitshelf-ui/ui/Disclosure.tsx'
 import { RefreshIcon } from 'kitshelf-ui/ui/icons.tsx'
+import { SuitcaseIcon } from '../ui/icons.tsx'
 import { checklistBasis, sourceLabel } from '../ui/labels.ts'
+import ListProgress from '../ui/ListProgress.tsx'
 import { ItemRow, ListCard } from 'kitshelf-ui/ui/ListCard.tsx'
 import Missing from 'kitshelf-ui/ui/Missing.tsx'
-import ProgressBar from 'kitshelf-ui/ui/ProgressBar.tsx'
 import Screen from 'kitshelf-ui/ui/Screen.tsx'
 import SegmentedTabs from 'kitshelf-ui/ui/SegmentedTabs.tsx'
+import Tile from 'kitshelf-ui/ui/Tile.tsx'
 import text from 'kitshelf-ui/ui/text.module.css'
 import styles from './ChecklistScreen.module.css'
 
@@ -35,13 +38,18 @@ export default function ChecklistScreen({ tripId }: { tripId: string }) {
   const items = trip.checklist
   const save = (checklist: ChecklistItem[]) => saveTrip({ ...trip, checklist })
   const toggle = (id: string) => save(items.map((item) => (item.id === id ? { ...item, done: !item.done } : item)))
-  const remove = (id: string) => save(items.filter((item) => item.id !== id))
+  const remove = (id: string) => saveTrip(deleteItem(trip, 'checklist', id))
   const add = (itemText: string) => save([...items, { id: crypto.randomUUID(), text: itemText, group, done: false }])
 
   const done = items.filter((item) => item.done).length
   const open = (of: Group) => items.filter((item) => item.group === of && !item.done)
   const finished = items.filter((item) => item.group === group && item.done)
   const inEditMode = editing && items.length > 0
+  // On an empty list the button asks for the whole suggested list again, deleted suggestions included.
+  const suggest = () => {
+    const base = items.length === 0 ? forgetDismissed(trip, 'checklist') : trip
+    saveTrip({ ...base, checklist: applySuggestions(base) })
+  }
 
   const row = (item: ChecklistItem) => (
     <ItemRow
@@ -50,6 +58,7 @@ export default function ChecklistScreen({ tripId }: { tripId: string }) {
       text={item.text}
       note={item.done ? undefined : sourceLabel(item.source)} // where a done item came from no longer matters
       done={item.done}
+      strong={!item.done}
       trailing={
         inEditMode && (
           <DeleteButton item={item.text} onDelete={() => remove(item.id)} />
@@ -62,6 +71,11 @@ export default function ChecklistScreen({ tripId }: { tripId: string }) {
     <Screen
       title="Hazırlık listesi"
       subtitle={checklistBasis(trip.transport, trip.kind)}
+      mark={
+        <Tile tone="teal" size="large">
+          <SuitcaseIcon size={24} />
+        </Tile>
+      }
       back={href({ screen: 'trip', tripId })}
       aside={
         items.length > 0 && (
@@ -72,15 +86,7 @@ export default function ChecklistScreen({ tripId }: { tripId: string }) {
       }
     >
       {items.length > 0 ? (
-        <section className={styles.progress} aria-label="İlerleme">
-          <div className={styles.progressHead}>
-            <p className={styles.count}>
-              <strong>{done}</strong> / {items.length} tamam
-            </p>
-            <span className={styles.percent}>%{Math.round((done / items.length) * 100)}</span>
-          </div>
-          <ProgressBar value={done} max={items.length} tone="teal" label="Hazırlık listesi" thick />
-        </section>
+        <ListProgress done={done} total={items.length} word="tamam" tone="teal" label="Hazırlık listesi" />
       ) : (
         <p className={text.hint}>
           Liste boş. Ulaşım türüne ve tatil tarzına göre hazır bir liste getirebilir ya da maddeleri kendin yazabilirsin.
@@ -111,7 +117,7 @@ export default function ChecklistScreen({ tripId }: { tripId: string }) {
       </div>
 
       <div className={styles.suggestions}>
-        <Button variant={items.length === 0 ? 'primary' : 'secondary'} inline onClick={() => save(applySuggestions(trip))}>
+        <Button variant={items.length === 0 ? 'primary' : 'secondary'} inline onClick={suggest}>
           <RefreshIcon />
           {items.length === 0 ? 'Önerilen listeyi getir' : 'Önerileri yenile'}
         </Button>

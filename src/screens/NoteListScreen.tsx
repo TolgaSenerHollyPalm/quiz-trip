@@ -1,7 +1,8 @@
 import { useState, type ComponentType } from 'react'
 import { href } from '../app/router.ts'
 import { useAppData, useTrip } from '../app/appData.ts'
-import { addNote, editNote, removeNote, toggleNote } from '../trips/notes.ts'
+import { addNote, editNote, toggleNote } from '../trips/notes.ts'
+import { deleteItem, forgetDismissed } from '../trips/dismissed.ts'
 import { applyPlaceSuggestions, placeNames, placeSuggestions } from '../trips/placeSuggestions.ts'
 import type { NoteItem } from '../trips/types.ts'
 import AddField from 'kitshelf-ui/ui/AddField.tsx'
@@ -13,10 +14,11 @@ import { RefreshIcon } from 'kitshelf-ui/ui/icons.tsx'
 import { BagIcon, ForkKnifeIcon } from '../ui/icons.tsx'
 import { ItemRow, ListCard } from 'kitshelf-ui/ui/ListCard.tsx'
 import Missing from 'kitshelf-ui/ui/Missing.tsx'
-import ProgressBar from 'kitshelf-ui/ui/ProgressBar.tsx'
 import Screen from 'kitshelf-ui/ui/Screen.tsx'
 import Tile from 'kitshelf-ui/ui/Tile.tsx'
-import { toneClass, type Tone } from 'kitshelf-ui/ui/tone.ts'
+import text from 'kitshelf-ui/ui/text.module.css'
+import type { Tone } from 'kitshelf-ui/ui/tone.ts'
+import ListProgress from '../ui/ListProgress.tsx'
 import NoteEditDialog from './NoteEditDialog.tsx'
 import styles from './NoteListScreen.module.css'
 
@@ -77,6 +79,11 @@ export default function NoteListScreen({ tripId, list }: { tripId: string; list:
   const done = items.filter((item) => item.done)
   const inEditMode = editing && items.length > 0
   const suggested = placeSuggestions(destinations, trip, list)
+  // On an empty list the button asks for the whole suggested list again, deleted suggestions included.
+  const suggest = () => {
+    const base = items.length === 0 ? forgetDismissed(trip, list) : trip
+    saveTrip({ ...base, [list]: applyPlaceSuggestions(items, suggested, base.dismissed?.[list]) })
+  }
 
   const row = (item: NoteItem) => (
     <ItemRow
@@ -90,7 +97,7 @@ export default function NoteListScreen({ tripId, list }: { tripId: string; list:
       openLabel={`${item.text}${item.note ? `, ${item.note}` : ''}: düzenle`}
       trailing={
         inEditMode && (
-          <DeleteButton item={item.text} onDelete={() => save(removeNote(items, item.id))} />
+          <DeleteButton item={item.text} onDelete={() => saveTrip(deleteItem(trip, list, item.id))} />
         )
       }
     />
@@ -114,24 +121,23 @@ export default function NoteListScreen({ tripId, list }: { tripId: string; list:
         )
       }
     >
-      {items.length > 0 && (
-        <div className={`${styles.progress} ${toneClass(words.tone)}`}>
-          <ProgressBar value={done.length} max={items.length} tone={words.tone} label={words.title} thick />
-          <span className={styles.count}>
-            {done.length} / {items.length} {words.doneWord}
-          </span>
-        </div>
+      {items.length > 0 ? (
+        <ListProgress done={done.length} total={items.length} word={words.doneWord} tone={words.tone} label={words.title} />
+      ) : (
+        <p className={text.hint}>{words.empty}</p>
       )}
 
-      <AddField
-        label={words.addLabel}
-        placeholder={words.addPlaceholder}
-        tone={words.tone}
-        onAdd={(itemText) => save(addNote(items, itemText, crypto.randomUUID()))}
-      />
-
-      {items.length === 0 && <p className={styles.empty}>{words.empty}</p>}
-      {pending.length > 0 && <ListCard>{pending.map(row)}</ListCard>}
+      {/* The same shape as the packing list: the items, then a row to add one. */}
+      <ListCard>
+        {pending.map(row)}
+        <AddField
+          inRow
+          label={words.addLabel}
+          placeholder={words.addPlaceholder}
+          tone={words.tone}
+          onAdd={(itemText) => save(addNote(items, itemText, crypto.randomUUID()))}
+        />
+      </ListCard>
       {done.length > 0 && (
         <div className={styles.done}>
           <Disclosure title={`${words.doneTitle} · ${done.length}`}>
@@ -145,7 +151,7 @@ export default function NoteListScreen({ tripId, list }: { tripId: string; list:
           <Button
             variant={items.length === 0 ? 'primary' : 'secondary'}
             inline
-            onClick={() => save(applyPlaceSuggestions(items, suggested))}
+            onClick={suggest}
           >
             <RefreshIcon />
             {items.length === 0 ? 'Önerilen listeyi getir' : 'Önerileri yenile'}

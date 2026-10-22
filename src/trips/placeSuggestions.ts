@@ -34,10 +34,11 @@ export function placeNames(countries: readonly Country[], lists: readonly PlaceS
  * Brings a list in line with the trip's place, as applySuggestions does for the checklist: what the player
  * wrote or ticked stays, untouched suggestions of a place no longer chosen go, and missing ones are added.
  */
-export function applyPlaceSuggestions(items: NoteItem[], lists: readonly PlaceSuggestions[]): NoteItem[] {
+export function applyPlaceSuggestions(items: NoteItem[], lists: readonly PlaceSuggestions[], dismissed: readonly string[] = []): NoteItem[] {
   const active = new Set(lists.map((place) => place.source))
   const kept = items.filter((item) => item.source === undefined || item.done || active.has(item.source))
-  const known = new Set(kept.map((item) => item.id))
+  // A suggestion the players deleted stays deleted.
+  const known = new Set([...kept.map((item) => item.id), ...dismissed])
   const added = lists.flatMap(({ source, items: suggestions }) =>
     suggestions
       .filter((suggestion) => !known.has(suggestion.id))
@@ -55,9 +56,9 @@ export function applyPlaceSuggestions(items: NoteItem[], lists: readonly PlaceSu
 type PlaceLists = Pick<TripState, 'souvenirs' | 'tastes'>
 
 /** Both of a trip's place lists brought in line with where it goes now. */
-export function applyPlaceLists(trip: Destination & PlaceLists, countries: readonly Country[]): PlaceLists {
+export function applyPlaceLists(trip: Destination & PlaceLists & Pick<TripState, 'dismissed'>, countries: readonly Country[]): PlaceLists {
   return {
-    souvenirs: applyPlaceSuggestions(trip.souvenirs, placeSuggestions(countries, trip, 'souvenirs')),
-    tastes: applyPlaceSuggestions(trip.tastes, placeSuggestions(countries, trip, 'tastes')),
+    souvenirs: applyPlaceSuggestions(trip.souvenirs, placeSuggestions(countries, trip, 'souvenirs'), trip.dismissed?.souvenirs),
+    tastes: applyPlaceSuggestions(trip.tastes, placeSuggestions(countries, trip, 'tastes'), trip.dismissed?.tastes),
   }
 }

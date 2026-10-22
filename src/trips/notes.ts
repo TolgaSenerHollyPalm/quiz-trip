@@ -24,7 +24,3 @@ export function editNote(items: NoteItem[], id: string, change: { text: string; 
     return note === '' ? { ...rest, text } : { ...rest, text, note }
   })
 }
-
-export function removeNote(items: NoteItem[], id: string): NoteItem[] {
-  return items.filter((item) => item.id !== id)
-}

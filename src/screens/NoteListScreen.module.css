@@ -1,31 +1,6 @@
-.progress {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-top: 4px;
-}
-
-.progress > :first-child {
-  flex: 1;
-}
-
-.count {
-  flex: none;
-  font-size: 0.875rem;
-  font-weight: 700;
-  color: var(--tone-ink);
-  font-variant-numeric: tabular-nums;
-}
-
-.empty {
-  padding: 4px 4px 0;
-  font-size: 0.875rem;
-  line-height: 1.5;
-  color: var(--color-muted);
-}
-
+/* As far below the list as the packing list's finished items. */
 .done {
-  margin-top: calc(var(--gap-section) - var(--gap-card));
+  margin-top: 8px;
 }
 
 .suggestions {
