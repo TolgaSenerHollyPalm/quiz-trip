@@ -3,6 +3,7 @@ import { href } from '../app/router.ts'
 import { useAppData, useTrip } from '../app/appData.ts'
 import { addNote, editNote, toggleNote } from '../trips/notes.ts'
 import { deleteItem, forgetDismissed } from '../trips/dismissed.ts'
+import { moveAmong } from '../trips/order.ts'
 import { applyPlaceSuggestions, placeNames, placeSuggestions } from '../trips/placeSuggestions.ts'
 import type { NoteItem } from '../trips/types.ts'
 import AddField from 'kitshelf-ui/ui/AddField.tsx'
@@ -15,6 +16,7 @@ import { BagIcon, ForkKnifeIcon } from '../ui/icons.tsx'
 import { ItemRow, ListCard } from 'kitshelf-ui/ui/ListCard.tsx'
 import Missing from 'kitshelf-ui/ui/Missing.tsx'
 import Screen from 'kitshelf-ui/ui/Screen.tsx'
+import SortHandle from 'kitshelf-ui/ui/SortHandle.tsx'
 import Tile from 'kitshelf-ui/ui/Tile.tsx'
 import text from 'kitshelf-ui/ui/text.module.css'
 import type { Tone } from 'kitshelf-ui/ui/tone.ts'
@@ -78,6 +80,7 @@ export default function NoteListScreen({ tripId, list }: { tripId: string; list:
   const pending = items.filter((item) => !item.done)
   const done = items.filter((item) => item.done)
   const inEditMode = editing && items.length > 0
+  const sort = (from: number, to: number) => save(moveAmong(items, pending.map((item) => item.id), from, to))
   const suggested = placeSuggestions(destinations, trip, list)
   // On an empty list the button asks for the whole suggested list again, deleted suggestions included.
   const suggest = () => {
@@ -88,7 +91,14 @@ export default function NoteListScreen({ tripId, list }: { tripId: string; list:
   const row = (item: NoteItem) => (
     <ItemRow
       key={item.id}
-      control={<CheckButton checked={item.done} item={item.text} tone={words.tone} onToggle={() => save(toggleNote(items, item.id))} />}
+      control={
+        // While editing, the open items are sorted by a handle in the check's place.
+        inEditMode && !item.done ? (
+          <SortHandle id={item.id} item={item.text} onMove={sort} />
+        ) : (
+          <CheckButton checked={item.done} item={item.text} tone={words.tone} onToggle={() => save(toggleNote(items, item.id))} />
+        )
+      }
       text={item.text}
       note={item.note}
       done={item.done}

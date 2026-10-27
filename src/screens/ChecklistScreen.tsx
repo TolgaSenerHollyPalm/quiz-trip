@@ -3,6 +3,7 @@ import { href } from '../app/router.ts'
 import { useTrip } from '../app/appData.ts'
 import { applySuggestions } from '../trips/checklist.ts'
 import { deleteItem, forgetDismissed } from '../trips/dismissed.ts'
+import { moveAmong } from '../trips/order.ts'
 import type { ChecklistItem } from '../trips/types.ts'
 import AddField from 'kitshelf-ui/ui/AddField.tsx'
 import { Button } from 'kitshelf-ui/ui/Button.tsx'
@@ -17,6 +18,7 @@ import { ItemRow, ListCard } from 'kitshelf-ui/ui/ListCard.tsx'
 import Missing from 'kitshelf-ui/ui/Missing.tsx'
 import Screen from 'kitshelf-ui/ui/Screen.tsx'
 import SegmentedTabs from 'kitshelf-ui/ui/SegmentedTabs.tsx'
+import SortHandle from 'kitshelf-ui/ui/SortHandle.tsx'
 import Tile from 'kitshelf-ui/ui/Tile.tsx'
 import text from 'kitshelf-ui/ui/text.module.css'
 import styles from './ChecklistScreen.module.css'
@@ -45,6 +47,7 @@ export default function ChecklistScreen({ tripId }: { tripId: string }) {
   const open = (of: Group) => items.filter((item) => item.group === of && !item.done)
   const finished = items.filter((item) => item.group === group && item.done)
   const inEditMode = editing && items.length > 0
+  const sort = (from: number, to: number) => save(moveAmong(items, open(group).map((item) => item.id), from, to))
   // On an empty list the button asks for the whole suggested list again, deleted suggestions included.
   const suggest = () => {
     const base = items.length === 0 ? forgetDismissed(trip, 'checklist') : trip
@@ -54,7 +57,14 @@ export default function ChecklistScreen({ tripId }: { tripId: string }) {
   const row = (item: ChecklistItem) => (
     <ItemRow
       key={item.id}
-      control={<CheckButton checked={item.done} item={item.text} tone="teal" onToggle={() => toggle(item.id)} />}
+      control={
+        // While editing, the open items are sorted by a handle in the check's place.
+        inEditMode && !item.done ? (
+          <SortHandle id={item.id} item={item.text} onMove={sort} />
+        ) : (
+          <CheckButton checked={item.done} item={item.text} tone="teal" onToggle={() => toggle(item.id)} />
+        )
+      }
       text={item.text}
       note={item.done ? undefined : sourceLabel(item.source)} // where a done item came from no longer matters
       done={item.done}
